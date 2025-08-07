@@ -1,0 +1,20 @@
+{
+  "custom/cpu": {
+    "interval": 1000,
+    "execute": "bash -c \"mpstat -P ALL 1 1 | tail -n +4 | awk '{print \\\"CPU Core \" $3 \": \" 100 - $12 \"% usage\\\"}'\"",
+    "format": "{}",
+    "executeOnAction": "bash -c \"mpstat -P ALL 1 1 | tail -n +4\"",
+    "actions": {
+      "onLeftClick": "executeOnAction"
+    }
+  },
+  "custom/memory": {
+    "interval": 2000,
+    "execute": "bash -c \"free -h | awk '/Mem:/ {print \\\"RAM: \" $3 \"/\" $2}\"'\"",
+    "format": "{}",
+    "executeOnAction": "bash -c \"free -h\"",
+    "actions": {
+      "onLeftClick": "executeOnAction"
+    }
+  }
+}

@@ -1,0 +1,5 @@
+background-opacity = 0.2
+font-family = "0xProto Nerd Font"
+font-family-bold = "0xProto Nerd Font Bold"
+
+theme = "catppuccin-mocha"

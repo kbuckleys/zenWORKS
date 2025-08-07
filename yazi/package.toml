@@ -1,0 +1,19 @@
+[[plugin.deps]]
+use = "yazi-rs/plugins:mount"
+rev = "de53d90"
+hash = "f10a14e823382d90fab5b3ee54cb38fe"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:chmod"
+rev = "de53d90"
+hash = "1adc12c2b2b025411ab61eb8f0879574"
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:catppuccin-macchiato"
+rev = "9cd2ac4"
+hash = "bc3478e46ebfc411d611e1ccaf04d26a"
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:catppuccin-mocha"
+rev = "9cd2ac4"
+hash = "f54b45bdd33f607ddde47f0afad96142"
