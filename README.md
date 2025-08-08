@@ -1,6 +1,6 @@
 # dotfiles
 hyprland setup
 
-Stuff to install:
+# Stuff to install:
 
 swww, fd
