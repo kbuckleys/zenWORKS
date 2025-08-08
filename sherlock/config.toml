@@ -1,0 +1,78 @@
+[default_apps]
+teams = "teams-for-linux --enable-features=UseOzonePlatform --ozone-platform=wayland --url {meeting_url}"
+calendar_client = "thunderbird"
+terminal = "ghostty -e"
+browser = "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=launch-script.sh --file-forwarding app.zen_browser.zen @@u %u @@"
+
+[units]
+lengths = "meters"
+weights = "kg"
+volumes = "l"
+temperatures = "C"
+currency = "eur"
+
+[debug]
+try_suppress_errors = false
+try_suppress_warnings = true
+app_paths = []
+
+[appearance]
+width = 400
+height = 542
+gsk_renderer = "cairo"
+icon_paths = ["~/.config/sherlock/icons"]
+icon_size = 0
+use_base_css = false
+opacity = 1.0
+mod_key_ascii = ["⇧", "⇧", "⌘", "⌘", "⎇", "✦", "✦", "⌘"]
+
+[behavior]
+use_xdg_data_dir_icons = false
+animate = true
+
+[binds]
+up = "alt-k"
+down = "alt-j"
+left = "alt-ih"
+right = "alt-l"
+context = "alt-c"
+modifier = "alt"
+exec_inplace = "alt-return"
+
+[files]
+config = "/home/buck/.config/sherlock/config.toml"
+css = "/home/buck/.config/sherlock/main.css"
+fallback = "/home/buck/.config/sherlock/fallback.json"
+alias = "/home/buck/.config/sherlock/sherlock_alias.json"
+ignore = "/home/buck/.config/sherlock/sherlockignore"
+actions = "/home/buck/.config/sherlock/sherlock_actions.json"
+
+[runtime]
+multi = false
+center = false
+photo_mode = true
+display_raw = false
+daemonize = false
+
+[caching]
+enable = true
+cache = "/home/buck/.cache/sherlock/sherlock_desktop_cache.json"
+
+[expand]
+enable = false
+edge = "top"
+margin = 0
+
+[backdrop]
+enable = false
+opacity = 0.6
+edge = "top"
+
+[status_bar]
+enable = false
+
+[search_bar_icon]
+enable = false
+icon = "system-search-symbolic"
+icon_back = "go-previous-symbolic"
+size = 22
