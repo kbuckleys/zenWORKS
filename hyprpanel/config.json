@@ -43,7 +43,7 @@
   "theme.bar.buttons.workspaces.numbered_spacing": "0em",
   "theme.bar.buttons.workspaces.numbered_active_highlight_padding": "0.4em",
   "theme.bar.buttons.workspaces.numbered_inactive_padding": "0.4em",
-  "theme.bar.buttons.workspaces.fontSize": "1.27em",
+  "theme.bar.buttons.workspaces.fontSize": "1.12em",
   "theme.bar.buttons.windowtitle.enableBorder": false,
   "theme.bar.buttons.windowtitle.spacing": "1.0em",
   "bar.network.showWifiInfo": true,
