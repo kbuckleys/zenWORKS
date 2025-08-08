@@ -9,11 +9,6 @@ rev = "de53d90"
 hash = "1adc12c2b2b025411ab61eb8f0879574"
 
 [[flavor.deps]]
-use = "yazi-rs/flavors:catppuccin-macchiato"
-rev = "9cd2ac4"
-hash = "bc3478e46ebfc411d611e1ccaf04d26a"
-
-[[flavor.deps]]
-use = "yazi-rs/flavors:catppuccin-mocha"
-rev = "9cd2ac4"
-hash = "f54b45bdd33f607ddde47f0afad96142"
+use = "BennyOe/tokyo-night"
+rev = "5f56364"
+hash = "c0bf69ad2c44005892d586e9693993c6"
