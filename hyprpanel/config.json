@@ -87,7 +87,7 @@
   "theme.bar.floating": true,
   "bar.workspaces.showApplicationIcons": true,
   "theme.bar.buttons.workspaces.numbered_active_highlight_border": "0.2em",
-  "theme.bar.buttons.workspaces.background": "#1c2434",
+  "theme.bar.buttons.workspaces.background": "#11111b",
   "theme.bar.buttons.workspaces.active": "#89b4fa",
   "theme.bar.buttons.workspaces.occupied": "#89b4fa",
   "bar.workspaces.spacing": 1,
