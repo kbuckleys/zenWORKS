@@ -10,3 +10,4 @@ The setup is as straightforward as it gets.
 - bash-completion
 - nwg-look
 - ttf-0xproto
+- mako
