@@ -9,3 +9,4 @@ The setup is as straightforward as it gets.
 - [hyprpanel](https://hyprpanel.com/getting_started/installation.html)
 - bash-completion
 - nwg-look
+- ttf-0xproto
