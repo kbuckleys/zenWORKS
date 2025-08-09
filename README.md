@@ -8,3 +8,4 @@ The setup is as straightforward as it gets.
 - hyprshot
 - [hyprpanel](https://hyprpanel.com/getting_started/installation.html)
 - bash-completion
+- nwg-look
