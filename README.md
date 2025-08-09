@@ -3,4 +3,4 @@ hyprland setup
 
 # Stuff to install:
 
-swww fd fzf
+swww fd fzf hyprshot
