@@ -1,7 +1,7 @@
 # Premise
 The setup is as straightforward as it gets.
 
-# Stuff to install
+# Dependencies
 
 - swww
 - fd fzf
