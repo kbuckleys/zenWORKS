@@ -1,5 +1,5 @@
 # dotfiles
-The setup is as straight forward as it gets.
+The setup is as straightforward as it gets.
 
 # Stuff to install
 
