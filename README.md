@@ -3,4 +3,4 @@ hyprland setup
 
 # Stuff to install:
 
-swww fd fzf hyprshot
+swww fd fzf hyprshot bash-completion
