@@ -2,7 +2,7 @@
 
 [opener]
 play = [
-    { run = 'celluloid "$@"', orphan = true, for = "unix" },
+    { run = 'clapper "$@"', orphan = true, for = "unix" },
 ]
 edit = [
     { run = 'nvim "$@"', desc = "nvim", block = true, for = "unix" },
