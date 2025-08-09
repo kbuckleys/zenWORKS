@@ -1,7 +1,7 @@
 # dotfiles
-hyprland setup
+The setup is as straight forward as it gets.
 
-# Stuff to install:
+# Stuff to install
 
 - swww
 - fd fzf
