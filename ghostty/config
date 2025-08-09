@@ -1,5 +1,9 @@
-background-opacity = 0.2
+background-opacity = 0.6
 font-family = "0xProto Nerd Font"
 font-family-bold = "0xProto Nerd Font Bold"
 
 theme = "catppuccin-mocha"
+
+custom-shader = shaders/cursor_smear_fade.glsl
+custom-shader = shaders/cursor_smear.glsl
+custom-shader = shaders/cubes.glsl
