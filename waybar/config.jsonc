@@ -22,19 +22,11 @@
     "clock",
     "clock#simpleclock",
   ],
-  "custom/spotify": {
-    "format": "  {}",
-    "return-type": "json",
-    "on-click": "playerctl -p spotify play-pause",
-    "on-click-right": "spotifatius toggle-liked",
-    "on-click-middle": "playerctl -p spotify next",
-    "exec": "spotifatius monitor",
-  },
   "mpris": {
     "player": "spotify",
     "dynamic-order": ["artist", "title"],
     "format": "{player_icon} {dynamic}",
-    "format-paused": "{status_icon} <i>{dynamic}</i>",
+    "on-click": "playerctl -p spotify play-pause",
   },
   "hyprland/workspaces": {
     "on-click": "activate",

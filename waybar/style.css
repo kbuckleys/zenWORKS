@@ -38,7 +38,6 @@ window#waybar {
 #pulseaudio,
 #custom-logo,
 #custom-power,
-#custom-spotify,
 #custom-notification,
 #cpu,
 #tray,
@@ -51,7 +50,7 @@ window#waybar {
   color: #a6e3a1;
 }
 
-#mpris, #custom-spotify {
+#mpris {
   background-color: #a6e3a1;
   color: #11111b;
   border: 1px solid #11111b;
@@ -65,11 +64,6 @@ window#waybar {
   border: 1px solid #11111b;
   padding: 4px 8px 4px 8px;
   margin: 3px 3px 0px 3px;
-}
-
-#custom-sep {
-  padding: 0px;
-  color: #585b70;
 }
 
 window#waybar.empty #window {
