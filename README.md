@@ -11,3 +11,4 @@ The setup is as straightforward as it gets.
 - nwg-look
 - ttf-0xproto
 - mako
+- gtk-engine-murrine
