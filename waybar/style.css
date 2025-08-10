@@ -21,21 +21,16 @@ window#waybar {
   border-radius: 4px;
   /* background-color: #181825; */
   background-color: #1e1e2e;
-  color: #cdd6f4;
-}
-
-#workspaces button:hover {
-  color: #1e1e2e;
-  background-color: #cdd6f4;
 }
 
 #workspaces button.active {
-  background-color: #1e1e2e;
-  color: #89b4fa;
+  background-color: #f2cdcd;
+  border: 1px solid #11111b;
+  color: #11111b;
 }
 
 #workspaces button.urgent {
-  background-color: #1e1e2e;
+  background-color: #f38ba8;
   color: #f38ba8;
 }
 
@@ -47,15 +42,29 @@ window#waybar {
 #custom-notification,
 #cpu,
 #tray,
-#memory,
-#window,
-#mpris {
+#memory {
   padding: 4px 8px 4px 8px;
   margin: 3px 3px 0px 3px;
   border-radius: 4px;
   /* background-color: #181825; */
   background-color: #1e1e2e;
   color: #a6e3a1;
+}
+
+#mpris, #custom-spotify {
+  background-color: #a6e3a1;
+  color: #11111b;
+  border: 1px solid #11111b;
+  padding: 4px 8px 4px 8px;
+  margin: 3px 3px 0px 3px;
+}
+
+#window {
+  background-color: #89b4fa;
+  color: #11111b;
+  border: 1px solid #11111b;
+  padding: 4px 8px 4px 8px;
+  margin: 3px 3px 0px 3px;
 }
 
 #custom-sep {
@@ -81,10 +90,6 @@ window#waybar.empty #window {
 
 #clock.simpleclock {
   color: #89b4fa;
-}
-
-#window {
-  color: #cdd6f4;
 }
 
 #pulseaudio {
