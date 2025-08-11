@@ -11,6 +11,6 @@ The setup is as straightforward as it gets.
 - ttf-0xproto
 - mako
 - gtk-engine-murrine
-- wiremix
-- pamixer
+- wiremix-git
+- pamixer-git
 - waybar-module-pacman-updates-git
