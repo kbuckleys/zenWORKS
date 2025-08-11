@@ -15,12 +15,12 @@ margin=3,3,3,3
 outer-margin=20
 max-icon-size=44
 anchor=bottom-center
-border-radius=6
+border-radius=0
 ignore-timeout=0
 text-alignment=center
 default-timeout=5000
 on-button-left=dismiss-all
-font=0xProto Nerd Font Medium
+font=0xProto Nerd Font Bold 11
 icon-path=/usr/share/icons/hicolor
 
 include=~/.config/mako/mako-colors
