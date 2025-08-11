@@ -7,26 +7,21 @@
 }
 
 window#waybar {
-  transition-property: background-color;
-  transition-duration: 0.5s;
-  /* background-color: #1e1e2e; */
-  /* background-color: #181825; */
   background-color: transparent;
-  /* background-color: rgba(24, 24, 37, 0.6); */
 }
 
 #workspaces button {
   padding: 4px 8px 4px 8px;
-  margin: 3px 3px 0px 3px;
-  border-radius: 4px;
-  /* background-color: #181825; */
+  margin: 3px 0 0px 3px;
+  border-radius: 0px;
+  color: #6c7086;
   background-color: #1e1e2e;
 }
 
 #workspaces button.active {
-  background-color: #f2cdcd;
+  background-color: #1e1e2e;
   border: 1px solid #11111b;
-  color: #11111b;
+  color: #cdd6f4;
 }
 
 #workspaces button.urgent {
@@ -34,75 +29,42 @@ window#waybar {
   color: #f38ba8;
 }
 
-#clock,
 #pulseaudio,
-#custom-logo,
-#custom-power,
-#custom-notification,
 #cpu,
 #tray,
 #memory {
   padding: 4px 8px 4px 8px;
-  margin: 3px 3px 0px 3px;
-  border-radius: 4px;
-  /* background-color: #181825; */
-  background-color: #1e1e2e;
-  color: #a6e3a1;
+  margin: 3px 0 3px 0;
+  border-radius: 0;
+  background-color: #11111b;
+  color: #cdd6f4;
 }
 
 #mpris {
-  background-color: #a6e3a1;
-  color: #11111b;
+  background-color: #384c36;
+  color: #a6e3a1;
   border: 1px solid #11111b;
-  padding: 4px 8px 4px 8px;
-  margin: 3px 3px 0px 3px;
+  padding: 4px 10px 4px 10px;
+  margin: 3px 0 0px 0;
 }
 
 #window {
-  background-color: #89b4fa;
-  color: #11111b;
+  background-color: #1e1e2e;
+  color: #89b4fa;
   border: 1px solid #11111b;
-  padding: 4px 8px 4px 8px;
-  margin: 3px 3px 0px 3px;
+  padding: 4px 10px 4px 10px;
+  margin: 3px 0 0px 0;
 }
 
 window#waybar.empty #window {
   background-color: transparent;
-}
-
-#cpu {
-  color: #94e2d5;
-}
-
-#memory {
-  color: #cba6f7;
+  border: none;
 }
 
 #clock {
-  color: #74c7ec;
-}
-
-#clock.simpleclock {
-  color: #89b4fa;
-}
-
-#pulseaudio {
-  color: #b4befe;
-}
-
-#pulseaudio.muted {
-  color: #a6adc8;
-}
-
-#custom-logo {
-  color: #89b4fa;
-}
-
-#custom-power {
-  color: #f38ba8;
-}
-
-tooltip {
-  background-color: #181825;
-  border: 2px solid #89b4fa;
+  padding: 4px 8px 4px 8px;
+  margin: 3px 3px 3px 0;
+  border-radius: 0;
+  background-color: #11111b;
+  color: #cdd6f4;
 }
