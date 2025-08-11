@@ -43,7 +43,7 @@
   },
   "cpu": {
     "format": "  {usage}%",
-    "on-click": "ghostty -e btop",
+    "on-click": "kitty -e btop",
     "tooltip": true,
     "interval": 1
   },
@@ -53,7 +53,7 @@
   },
   "pulseaudio": {
     "format": "{icon} {volume}%",
-    "on-click": "ghostty --class=Wiremix -e wiremix",
+    "on-click": "kitty --class=Wiremix -e wiremix",
     "on-click-right": "pamixer -t",
     "format-muted": "  muted",
     "format-icons": {
