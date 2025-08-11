@@ -15,6 +15,7 @@ window#waybar {
 }
 
 #workspaces button {
+  border: 1px solid #11111b;
   padding: 4px 8px 4px 8px;
   margin: 3px 0px 3px 3px;
   border-radius: 0px;
@@ -34,6 +35,7 @@ window#waybar {
 }
 
 #tray-expander,
+#custom-weather,
 #pulseaudio,
 #cpu,
 #memory,
@@ -50,7 +52,7 @@ window#waybar {
   background-color: #253324;
   color: #a6e3a1;
   border: 1px solid #11111b;
-  padding: 4px 8px 4px 8px;
+  padding: 4px 14px 4px 8px;
   margin: 3px 0px 3px 0px;
 }
 
@@ -58,7 +60,7 @@ window#waybar {
   background-color: #1c2433;
   color: #89b4fa;
   border: 1px solid #11111b;
-  padding: 4px 8px 4px 8px;
+  padding: 4px 12px 4px 12px;
   margin: 3px 0px 3px 0px;
 }
 
