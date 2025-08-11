@@ -41,7 +41,7 @@ window#waybar {
 }
 
 #mpris {
-  background-color: #384c36;
+  background-color: #253324;
   color: #a6e3a1;
   border: 1px solid #11111b;
   padding: 4px 10px 4px 10px;
@@ -49,7 +49,7 @@ window#waybar {
 }
 
 #window {
-  background-color: #2a374c;
+  background-color: #1c2433;
   color: #89b4fa;
   border: 1px solid #11111b;
   padding: 4px 10px 4px 10px;
