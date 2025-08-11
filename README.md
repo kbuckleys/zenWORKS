@@ -13,3 +13,4 @@ The setup is as straightforward as it gets.
 - gtk-engine-murrine
 - wiremix
 - pamixer
+- waybar-module-pacman-updates-git
