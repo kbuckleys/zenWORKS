@@ -21,7 +21,7 @@
   ],
   "mpris": {
     "player": "spotify",
-    "dynamic-order": ["artist", "title"],
+    "dynamic-order": ["title"],
     "format": "{player_icon} {dynamic}",
     "on-click": "playerctl -p spotify play-pause"
   },
