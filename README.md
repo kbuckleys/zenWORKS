@@ -3,6 +3,7 @@ The setup is as straightforward as it gets.
 
 # Dependencies
 
+- ttf-0xproto
 - swww
 - fd
 - fzf
