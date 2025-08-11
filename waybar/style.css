@@ -1,7 +1,7 @@
 * {
   min-height: 0;
   min-width: 0;
-  font-family: Lexend, "0xProto Nerd Font";
+  font-family: "0xProto Nerd Font";
   font-size: 14px;
   font-weight: 600;
 }
@@ -70,7 +70,8 @@ window#waybar.empty #window {
   color: #cdd6f4;
 }
 
-.tooltip {
+tooltip {
+  border: 1px solid #313244;
   background-color: #11111b;
   color: #cdd6f4;
   border-radius: 0;
