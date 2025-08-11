@@ -14,3 +14,4 @@ The setup is as straightforward as it gets.
 - wiremix-git
 - pamixer-git
 - waybar-module-pacman-updates-git
+- wttrbar
