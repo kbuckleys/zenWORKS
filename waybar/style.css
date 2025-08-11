@@ -6,13 +6,17 @@
   font-weight: 600;
 }
 
+#waybar {
+  margin-bottom: 20px;
+}
+
 window#waybar {
   background-color: transparent;
 }
 
 #workspaces button {
   padding: 4px 8px 4px 8px;
-  margin: 3px 0 0px 3px;
+  margin: 3px 0px 3px 3px;
   border-radius: 0px;
   color: #6c7086;
   background-color: #1e1e2e;
@@ -35,7 +39,7 @@ window#waybar {
 #memory,
 #network {
   padding: 4px 8px 4px 8px;
-  margin: 3px 0 3px 0;
+  margin: 3px 0px 3px 0px;
   border-radius: 0;
   background-color: #11111b;
   color: #cdd6f4;
@@ -45,16 +49,16 @@ window#waybar {
   background-color: #253324;
   color: #a6e3a1;
   border: 1px solid #11111b;
-  padding: 4px 10px 4px 10px;
-  margin: 3px 0 0px 0;
+  padding: 4px 8px 4px 8px;
+  margin: 3px 0px 3px 0px;
 }
 
 #window {
   background-color: #1c2433;
   color: #89b4fa;
   border: 1px solid #11111b;
-  padding: 4px 10px 4px 10px;
-  margin: 3px 0 0px 0;
+  padding: 4px 8px 4px 8px;
+  margin: 3px 0px 3px 0px;
 }
 
 window#waybar.empty #window {
@@ -64,7 +68,7 @@ window#waybar.empty #window {
 
 #clock {
   padding: 4px 8px 4px 8px;
-  margin: 3px 3px 3px 0;
+  margin: 3px 3px 3px 0px;
   border-radius: 0;
   background-color: #11111b;
   color: #cdd6f4;
@@ -74,5 +78,5 @@ tooltip {
   border: 1px solid #313244;
   background-color: #11111b;
   color: #cdd6f4;
-  border-radius: 0;
+  border-radius: 0px;
 }
