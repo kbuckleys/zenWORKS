@@ -29,10 +29,11 @@ window#waybar {
   color: #f38ba8;
 }
 
+#tray-expander,
 #pulseaudio,
 #cpu,
-#tray,
-#memory {
+#memory,
+#network {
   padding: 4px 8px 4px 8px;
   margin: 3px 0 3px 0;
   border-radius: 0;
@@ -67,4 +68,10 @@ window#waybar.empty #window {
   border-radius: 0;
   background-color: #11111b;
   color: #cdd6f4;
+}
+
+.tooltip {
+  background-color: #11111b;
+  color: #cdd6f4;
+  border-radius: 0;
 }
