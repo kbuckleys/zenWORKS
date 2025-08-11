@@ -7,7 +7,6 @@ The setup is as straightforward as it gets.
 - fd
 - fzf
 - hyprshot
-- bash-completion
 - nwg-look
 - ttf-0xproto
 - mako
