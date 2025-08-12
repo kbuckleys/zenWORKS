@@ -16,3 +16,4 @@ The setup is as straightforward as it gets.
 - waybar-module-pacman-updates-git
 - wttrbar
 - [Oh My ZSH!](https://ohmyz.sh/)
+- [PowerLevel10k](https://github.com/romkatv/powerlevel10k)
