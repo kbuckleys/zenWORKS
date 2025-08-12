@@ -2,12 +2,8 @@
   min-height: 0;
   min-width: 0;
   font-family: "0xProto Nerd Font";
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
-}
-
-#waybar {
-  margin-bottom: 20px;
 }
 
 window#waybar {
@@ -31,7 +27,7 @@ window#waybar {
 
 #workspaces button.urgent {
   background-color: #f38ba8;
-  color: #f38ba8;
+  color: #11111b;
 }
 
 #tray-expander,
@@ -70,7 +66,7 @@ window#waybar.empty #window {
 }
 
 #custom-updates {
-  padding: 4px 8px 4px 8px;
+  padding: 4px 16px 4px 8px;
   margin: 3px 3px 3px 0px;
   border-radius: 0;
   background-color: #11111b;
