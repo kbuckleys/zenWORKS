@@ -12,7 +12,7 @@ window#waybar {
 
 #workspaces button {
   border: 1px solid #11111b;
-  padding: 4px 8px 4px 8px;
+  padding: 4px 10px 4px 10px;
   margin: 3px 0px 3px 3px;
   border-radius: 0px;
   color: #6c7086;
@@ -20,7 +20,7 @@ window#waybar {
 }
 
 #workspaces button.active {
-  background-color: #1e1e2e;
+  background-color: #11111b;
   border: 1px solid #11111b;
   color: #cdd6f4;
 }

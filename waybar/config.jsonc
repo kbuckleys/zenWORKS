@@ -36,7 +36,6 @@
   },
   "hyprland/window": {
     "format": "{title}",
-    "max-length": 80
   },
   "clock": {
     "format": " {:%I:%M %p}",
