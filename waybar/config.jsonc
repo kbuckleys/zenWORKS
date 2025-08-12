@@ -74,7 +74,7 @@
   "group/tray-expander": {
     "orientation": "inherit",
     "drawer": {
-      "transition-duration": 600,
+      "transition-duration": 150,
       "children-class": "tray"
     },
     "modules": [
