@@ -15,3 +15,4 @@ The setup is as straightforward as it gets.
 - pamixer-git
 - waybar-module-pacman-updates-git
 - wttrbar
+- [Oh My ZSH!](https://ohmyz.sh/)
