@@ -9,7 +9,7 @@ fi
 export VISUAL='nvim'
 export EDITOR='nvim'
 export TERMINAL='kitty'
-export BROWSER='zen-nightly'
+export BROWSER='firefox'
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
 # Path to your Oh My Zsh installation.
