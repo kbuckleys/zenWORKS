@@ -1,5 +1,5 @@
 # Premise
-The setup is as straightforward as it gets.
+The setup is as straightforward as it gets. The depnedencies listed are for my own reference and to insure functions of my setup work as intended.
 
 # Dependencies
 
