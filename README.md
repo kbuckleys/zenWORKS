@@ -16,4 +16,3 @@ The setup is as straightforward as it gets. The depnedencies listed are for my o
 - waybar-module-pacman-updates-git
 - wttrbar
 - [Oh My ZSH!](https://ohmyz.sh/)
-- [powerlevel10k](https://github.com/romkatv/powerlevel10k)
