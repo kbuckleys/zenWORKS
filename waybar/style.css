@@ -48,7 +48,7 @@ window#waybar {
   background-color: #253324;
   color: #a6e3a1;
   border: 1px solid #11111b;
-  padding: 4px 14px 4px 8px;
+  padding: 4px 14px 4px 14px;
   margin: 0px;
 }
 
@@ -56,7 +56,7 @@ window#waybar {
   background-color: #1c2433;
   color: #89b4fa;
   border: 1px solid #11111b;
-  padding: 4px 12px 4px 12px;
+  padding: 4px 14px 4px 14px;
   margin: 0px;
 }
 
