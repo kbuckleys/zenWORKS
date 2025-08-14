@@ -1,5 +1,6 @@
 # Premise
 The setup is as straightforward as it gets. The depnedencies listed are for my own reference and to insure functions of my setup work as intended.
+
 With that out of the way, I thought I'd drop [my own userChrome](https://pastebin.com/KApHAbx5) minimalistic setup for Firefox. Enjoy.
 
 # Dependencies
