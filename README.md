@@ -16,5 +16,5 @@ The setup is as straightforward as it gets. The depnedencies listed are for my o
 - wttrbar
 - [Oh My ZSH!](https://ohmyz.sh/)
 
-#Bonus
+# Bonus
 With that out of the way, I thought I'd drop in [my own userChrome](https://pastebin.com/KApHAbx5) minimalistic setup for Firefox. I might update this section with a complete list of addons and some flag tweaks.
