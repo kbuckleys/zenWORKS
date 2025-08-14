@@ -44,6 +44,10 @@ window#waybar {
   color: #cdd6f4;
 }
 
+#tray {
+  padding-left: 8px;
+}
+
 #custom-spotify {
   background-color: #253324;
   color: #a6e3a1;
