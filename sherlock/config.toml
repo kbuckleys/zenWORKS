@@ -17,8 +17,8 @@ try_suppress_warnings = true
 app_paths = []
 
 [appearance]
-width = 400
-height = 542
+width = 350
+height = 449
 gsk_renderer = "cairo"
 icon_paths = ["~/.config/sherlock/icons"]
 icon_size = 0
