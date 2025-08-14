@@ -2,10 +2,10 @@
   "reload_style_on_change": true,
   "layer": "top",
   "position": "top",
-  "height": 28,
+  "height": 26,
   "modules-left": [
     "hyprland/workspaces",
-    "mpris",
+    "custom/spotify",
     "hyprland/window"
   ],
   "modules-center": [
@@ -20,12 +20,12 @@
     "clock",
     "custom/updates"
   ],
-  "mpris": {
-    "player": "spotify",
-    "dynamic-order": ["title"],
-    "format": "{player_icon} {dynamic}",
-    "on-click": "playerctl -p spotify play-pause",
-    "max-length": 40
+  "custom/spotify": {
+    "format": "{text}",
+    "exec": "playerctl -p spotify metadata --format '{{ title }} ~ {{ artist }}'",
+    "exec-if": "pgrep spotify",
+    "interval": 1,
+    "max-length": 40,
   },
   "hyprland/workspaces": {
     "on-click": "activate",
@@ -36,6 +36,8 @@
   },
   "hyprland/window": {
     "format": "{title}",
+    "expand": true,
+    "max-length": 200
   },
   "clock": {
     "format": " {:%I:%M %p}",

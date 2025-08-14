@@ -13,7 +13,7 @@ window#waybar {
 #workspaces button {
   border: 1px solid #11111b;
   padding: 4px 10px 4px 10px;
-  margin: 0px 0px 3px 0px;
+  margin: 0px;
   border-radius: 0px;
   color: #6c7086;
   background-color: #1e1e2e;
@@ -38,18 +38,18 @@ window#waybar {
 #network,
 #clock {
   padding: 4px 8px 4px 8px;
-  margin: 0px 0px 3px 0px;
+  margin: 0px;
   border-radius: 0;
   background-color: #11111b;
   color: #cdd6f4;
 }
 
-#mpris {
+#custom-spotify {
   background-color: #253324;
   color: #a6e3a1;
   border: 1px solid #11111b;
   padding: 4px 14px 4px 8px;
-  margin: 0px 0px 3px 0px;
+  margin: 0px;
 }
 
 #window {
@@ -57,7 +57,7 @@ window#waybar {
   color: #89b4fa;
   border: 1px solid #11111b;
   padding: 4px 12px 4px 12px;
-  margin: 0px 0px 3px 0px;
+  margin: 0px;
 }
 
 window#waybar.empty #window {
@@ -67,7 +67,7 @@ window#waybar.empty #window {
 
 #custom-updates {
   padding: 4px 12px 4px 8px;
-  margin: 0px 0px 3px 0px;
+  margin: 0px;
   border-radius: 0;
   background-color: #11111b;
   color: #cdd6f4;
