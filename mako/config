@@ -8,7 +8,7 @@ invisible=0
 group-by=none
 format=%s\n%b
 layer=overlay
-border-size=2
+border-size=1
 padding=4
 max-visible=30
 margin=3,3,3,3
@@ -20,7 +20,7 @@ ignore-timeout=0
 text-alignment=center
 default-timeout=5000
 on-button-left=dismiss-all
-font=0xProto Nerd Font Bold 11
+font=0xProto Nerd Font Bold 10
 icon-path=/usr/share/icons/hicolor
 
 include=~/.config/mako/mako-colors
