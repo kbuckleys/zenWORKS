@@ -57,8 +57,10 @@
     "interval": 1
   },
   "pulseaudio": {
-    "format": "{icon} {volume}%",
+    "format": "{icon}",
     "on-click": "kitty --class=Wiremix -e wiremix",
+    "tooltip": true,
+    "tooltip-format": "{volume}%",
     "on-click-right": "pamixer -t",
     "format-muted": "  MUTED",
     "format-icons": {

@@ -9,25 +9,41 @@
 window#waybar {
   background-color: transparent;
 }
+window#waybar.empty #window {
+  background-color: transparent;
+}
 
 #workspaces button {
-  border: 1px solid #11111b;
   padding: 4px 10px 4px 10px;
   margin: 0px;
   border-radius: 0px;
   color: #6c7086;
   background-color: #1e1e2e;
 }
-
 #workspaces button.active {
   background-color: #11111b;
-  border: 1px solid #11111b;
   color: #cdd6f4;
 }
-
 #workspaces button.urgent {
   background-color: #f38ba8;
   color: #11111b;
+}
+#workspaces button:hover {
+  box-shadow: none;
+}
+
+#custom-spotify {
+  background-color: #11111b;
+  color: #a6e3a1;
+  padding: 4px 14px 4px 14px;
+  margin: 0px;
+}
+
+#window {
+  background-color: #11111b;
+  color: #89b4fa;
+  padding: 4px 14px 4px 14px;
+  margin: 0px;
 }
 
 #tray-expander,
@@ -48,27 +64,6 @@ window#waybar {
   padding-left: 8px;
 }
 
-#custom-spotify {
-  background-color: #253324;
-  color: #a6e3a1;
-  border: 1px solid #11111b;
-  padding: 4px 14px 4px 14px;
-  margin: 0px;
-}
-
-#window {
-  background-color: #1c2433;
-  color: #89b4fa;
-  border: 1px solid #11111b;
-  padding: 4px 14px 4px 14px;
-  margin: 0px;
-}
-
-window#waybar.empty #window {
-  background-color: transparent;
-  border: none;
-}
-
 #custom-updates {
   padding: 4px 12px 4px 8px;
   margin: 0px;
@@ -78,7 +73,6 @@ window#waybar.empty #window {
 }
 
 tooltip {
-  border: 1px solid #313244;
   background-color: #11111b;
   color: #cdd6f4;
   border-radius: 0px;
