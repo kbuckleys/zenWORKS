@@ -14,7 +14,7 @@ The setup is as straightforward as it gets. The depnedencies listed are for my o
 - pamixer-git
 - waybar-module-pacman-updates-git
 - wttrbar
-- [Tide]([https://ohmyz.sh/](https://github.com/IlanCosman/tide))
+- [Tide]([https://ohmyz.sh/](https://github.com/IlanCosman/tide)
 
 # Bonus
 I use the [Kripton theme](https://www.gnome-look.org/p/1365372). I'm typically not a fan of the macOS-like window controls, but since we're on Hyprland, we don't have to worry about that.
