@@ -17,8 +17,12 @@ The setup is as straightforward as it gets. The depnedencies listed are for my o
 - wttrbar
 - [Tide](https://github.com/IlanCosman/tide)
 
-# Bonus
-I use the [Kripton theme](https://www.gnome-look.org/p/1365372). I'm typically not a fan of the macOS-like window controls, but since we're on Hyprland, we don't have to worry about that.
+# Theme Elements
+- [Arcticons-Linux](https://github.com/Arcticons-Team/Arcticons-Linux/?tab=readme-ov-file)
+- [Kripton GTK theme](https://www.gnome-look.org/p/1365372)
+
+# Notes
+I'm not a fan of the macOS-like window controls as seen in Kripton, but since we're on Hyprland, we don't have to worry about that.
 
 I also thought I'd drop in my own userChrome minimalistic setup for Firefox. I typically remove everything from the navbr save for the extensions and downloads buttons. As for the addons I use to complete the theme's look, here you go:
 
