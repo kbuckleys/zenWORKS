@@ -20,7 +20,7 @@ The setup is as straightforward as it gets. The depnedencies listed are for my o
 # Bonus
 I use the [Kripton theme](https://www.gnome-look.org/p/1365372). I'm typically not a fan of the macOS-like window controls, but since we're on Hyprland, we don't have to worry about that.
 
-I also thought I'd drop in [my own userChrome](https://pastebin.com/KApHAbx5) minimalistic setup for Firefox. I typically remove everything from the navbr save for the extensions and downloads buttons. As for the addons I use to complete the theme's look, here you go:
+I also thought I'd drop in my own userChrome minimalistic setup for Firefox. I typically remove everything from the navbr save for the extensions and downloads buttons. As for the addons I use to complete the theme's look, here you go:
 
 - [Adaptive Tab Bar Color](https://addons.mozilla.org/en-US/firefox/addon/adaptive-tab-bar-colour/)
 - [Australis-like refresh in URL bar](https://addons.mozilla.org/en-US/firefox/addon/australis-refresh-in-url-bar/)
