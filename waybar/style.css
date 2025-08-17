@@ -1,7 +1,7 @@
 * {
   min-height: 0;
   min-width: 0;
-  font-family: "0xProto Nerd Font";
+  font-family: "0xProto Nerd Font Propo";
   font-size: 13px;
   font-weight: 700;
 }
@@ -17,8 +17,8 @@ window#waybar.empty #window {
   padding: 4px 10px 4px 10px;
   margin: 0px;
   border-radius: 0px;
-  color: #6c7086;
-  background-color: #1e1e2e;
+  color: #45475a;
+  background-color: #11111b;
 }
 #workspaces button.active {
   background-color: #11111b;
@@ -75,5 +75,6 @@ window#waybar.empty #window {
 tooltip {
   background-color: #11111b;
   color: #cdd6f4;
+  border: 0px;
   border-radius: 0px;
 }
