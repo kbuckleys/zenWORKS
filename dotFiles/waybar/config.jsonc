@@ -1,0 +1,115 @@
+{ 
+  "reload_style_on_change": true,
+  "layer": "top",
+  "position": "top",
+  "height": 26,
+  "modules-left": [
+    "hyprland/workspaces",
+    "custom/spotify",
+    "hyprland/window"
+  ],
+  "modules-center": [
+  ],
+  "modules-right": [
+    "network",
+    "memory",
+    "cpu",
+    "pulseaudio",
+    "group/tray-expander",
+    "custom/weather",
+    "clock",
+    "custom/updates"
+  ],
+  "custom/spotify": {
+    "format": "{text}",
+    "exec": "playerctl -p spotify metadata --format '{{ title }} ~ {{ artist }}'",
+    "exec-if": "pgrep spotify",
+    "interval": 1,
+    "max-length": 40,
+  },
+  "hyprland/workspaces": {
+    "on-click": "activate",
+    "format": "{icon}",
+    "all-outputs": true,
+    "disable-scroll": false,
+    "active-only": false
+  },
+  "hyprland/window": {
+    "format": "{title}",
+    "expand": true,
+    "max-length": 200
+  },
+  "clock": {
+    "format": " {:%I:%M %p}",
+    "format-alt": "󰔠 {:%A, %B %d, %Y}",
+    "tooltip": false
+  },
+  "cpu": {
+    "format": "  {usage}%",
+    "on-click": "kitty -e btop",
+    "tooltip": true,
+    "interval": 1
+  },
+  "memory": {
+    "format": "  {used:0.1f}",
+    "tooltip": true,
+    "tooltip-format": "{total:0.1f}GiB\nUsed: {used:0.1f}GiB\nAvailable: {avail:0.1f}GiB",
+    "interval": 1
+  },
+  "pulseaudio": {
+    "format": "{icon}",
+    "on-click": "kitty --class=Wiremix -e wiremix",
+    "tooltip": true,
+    "tooltip-format": "{volume}%",
+    "on-click-right": "pamixer -t",
+    "format-muted": "  MUTED",
+    "format-icons": {
+      "headphone": "",
+      "default": [" ", " ", " "]
+    }
+  },
+  "network": {
+    "format": "⇣ {bandwidthDownBytes} ~ {bandwidthUpBytes} ⇡",
+    "tooltip-format": "You has interwebs!",
+    "tooltip-format-disconnected": "You has no interwebs :/",
+    "interval": 1,
+    "nospacing": 1
+  },
+  "group/tray-expander": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 150,
+      "children-class": "tray"
+    },
+    "modules": [
+      "custom/expand-icon", "tray"
+    ]
+  },
+  "custom/expand-icon": {
+    "format": " ",
+    "tooltip": false
+  },
+  "tray": {
+    "show-passive-items": true,
+    "icon-size": 14,
+    "spacing": 12
+  },
+  "custom/updates": {
+    "format": "{} {icon}",
+    "return-type": "json",
+    "format-icons": {
+        "has-updates": "󱍷",
+        "updated": "󰚰"
+    },
+    "exec-if": "which waybar-module-pacman-updates",
+    "exec": "waybar-module-pacman-updates --interval-seconds 5 --network-interval-seconds 300",
+    "on-click": "sleep 0.1 && pamac-manager --updates"
+  },
+  "custom/weather": {
+      "format": "{}°",
+      "tooltip": true,
+      "interval": 300,
+      "exec": "wttrbar --nerd",
+      "return-type": "json"
+  }
+}
