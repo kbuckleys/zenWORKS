@@ -7,7 +7,8 @@ The setup is as straightforward as it gets. The depnedencies listed are for my o
 - fzf
 - hyprshot
 - nwg-look
-- ttf-0xproto
+- [ttf-0xproto](https://aur.archlinux.org/packages/ttf-0xproto)
+- [otf-apple-fonts](https://aur.archlinux.org/packages/otf-apple-fonts)
 - mako
 - gtk-engine-murrine
 - wiremix-git
