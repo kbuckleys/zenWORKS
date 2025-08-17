@@ -1,0 +1,104 @@
+[
+        {
+        "name": "Power Management",
+        "alias": "pm",
+        "type": "command",
+        "args": {
+            "commands": {
+                "Shutdown": {
+                    "icon": "system-shutdown",
+                    "icon_class": "reactive",
+                    "exec": "systemctl poweroff",
+                    "search_string": "Poweroff;Shutdown"
+                },
+                "Sleep": {
+                    "icon": "system-suspend",
+                    "icon_class": "reactive",
+                    "exec": "systemctl suspend",
+                    "search_string": "Sleep;"
+                },
+                "Lock": {
+                    "icon": "system-lock-screen",
+                    "icon_class": "reactive",
+                    "exec": "systemctl suspend & swaylock",
+                    "search_string": "Lock Screen;"
+                },
+                "Reboot": {
+                    "icon": "system-reboot",
+                    "icon_class": "reactive",
+                    "exec": "systemctl reboot",
+                    "search_string": "reboot;restart"
+                },
+                "Log Out": {
+                    "icon": "system-log-out",
+                    "icon_class": "reactive",
+                    "exec": "hyprctl dispatch exit",
+                    "search_string": "logout;exit"
+                }
+            }
+        },
+        "priority": 5
+    },
+    {
+    "name": "Dictionary Lookup",
+    "alias": "define",
+    "type": "bulk_text",
+    "async": true,
+    "args": {
+        "icon": "dictionary",
+        "exec": "~/.config/sherlock/scripts/sherlock-dictionary",
+        "exec-args": "{keyword}"
+    },
+    "priority": 0,
+    "shortcut": false
+    },
+    {
+        "name": "Calculator",
+        "type": "calculation",
+        "args": {
+            "capabilities": [
+                "calc.math",
+                "calc.units"
+            ]
+        },
+        "priority": 1,
+        "on_return": "copy"
+    },
+    {
+        "name": "App Launcher",
+        "alias": "app",
+        "type": "app_launcher",
+        "args": {},
+        "priority": 3,
+        "home": "Home"
+    },
+    {
+        "name": "Kill Process",
+        "alias": "kill",
+        "type": "process",
+        "args": {},
+        "priority": 0
+    },
+    {
+    "name": "Emoji Picker",
+    "type": "emoji_picker",
+    "args": {
+        "default_skin_tone": "Simpsons"
+    },
+    "priority": 4,
+    "home": "Search"
+    },
+    {
+        "name": "Web Search",
+        "display_name": "DuckDuckGo",
+        "tag_start": "{keyword}",
+        "alias": "dd",
+        "type": "web_launcher",
+        "args": {
+            "search_engine": "https://duckduckgo.com/?q={keyword}",
+            "icon": "DuckDuckGo"
+        },
+        "priority": 100
+    }
+]
+
