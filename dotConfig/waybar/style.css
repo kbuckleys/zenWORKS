@@ -4,8 +4,6 @@
   font-family: "0xProto Nerd Font Propo";
   font-size: 13px;
   font-weight: 700;
-  color: #9bbfbf;
-  background-color: #141519;
 }
 
 window#waybar {
@@ -75,6 +73,12 @@ window#waybar.empty #window {
 }
 
 tooltip {
+  background-color: #141519;
   border: 0px;
   border-radius: 0px;
+}
+
+tooltip label{
+  color: #9bbfbf;
+  border: 0px;
 }
