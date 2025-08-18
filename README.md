@@ -7,19 +7,18 @@ The setup is as straightforward as it gets. The depnedencies listed are for my o
 - fzf
 - hyprshot
 - nwg-look
-- [ttf-0xproto](https://aur.archlinux.org/packages/ttf-0xproto)
-- [otf-apple-fonts](https://aur.archlinux.org/packages/otf-apple-fonts)
 - mako
 - gtk-engine-murrine
 - wiremix-git
 - pamixer-git
 - waybar-module-pacman-updates-git
 - wttrbar
-- [Tide](https://github.com/IlanCosman/tide)
 
 # Theme Elements
 - [Arcticons-Linux](https://github.com/Arcticons-Team/Arcticons-Linux/?tab=readme-ov-file)
-- [Kripton GTK theme](https://www.gnome-look.org/p/1365372)
+- [Kripton GTK theme](https://www.gnome-look.org/p/1365372)(standard-button)
+- [ttf-0xproto](https://aur.archlinux.org/packages/ttf-0xproto)
+- [otf-apple-fonts](https://aur.archlinux.org/packages/otf-apple-fonts)
 
 # Notes
 I'm not a fan of the macOS-like window controls as seen in Kripton, but since we're on Hyprland, we don't have to worry about that.
