@@ -1,0 +1,3 @@
+Make sure to change the username in the config to yours for the theme to work:
+
+```color_theme = "/home/USER/.config/btop/themes/kripton.theme"```
