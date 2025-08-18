@@ -4,6 +4,8 @@
   font-family: "0xProto Nerd Font Propo";
   font-size: 13px;
   font-weight: 700;
+  color: #9bbfbf;
+  background-color: #141519;
 }
 
 window#waybar {
@@ -17,12 +19,12 @@ window#waybar.empty #window {
   padding: 4px 10px 4px 10px;
   margin: 0px;
   border-radius: 0px;
-  color: #56606D;
-  background-color: #131519;
+  color: #56606d;
+  background-color: #141519;
 }
 #workspaces button.active {
-  background-color: #131519;
-  color: #DFDFDD;
+  background-color: #141519;
+  color: #9bbfbf;
 }
 #workspaces button.urgent {
   background-color: #E0A4A4;
@@ -33,15 +35,15 @@ window#waybar.empty #window {
 }
 
 #custom-spotify {
-  background-color: #131519;
-  color: #C5E1A5;
+  background-color: #141519;
+  color: #c5e1a5;
   padding: 4px 14px 4px 14px;
   margin: 0px;
 }
 
 #window {
-  background-color: #131519;
-  color: #9BBFBF;
+  background-color: #141519;
+  color: #9bbfbf;
   padding: 4px 14px 4px 14px;
   margin: 0px;
 }
@@ -56,8 +58,8 @@ window#waybar.empty #window {
   padding: 4px 8px 4px 8px;
   margin: 0px;
   border-radius: 0;
-  background-color: #131519;
-  color: #DFDFDD;
+  background-color: #141519;
+  color: #9bbfbf;
 }
 
 #tray {
@@ -68,13 +70,11 @@ window#waybar.empty #window {
   padding: 4px 12px 4px 8px;
   margin: 0px;
   border-radius: 0;
-  background-color: #131519;
-  color: #DFDFDD;
+  background-color: #141519;
+  color: #9bbfbf;
 }
 
 tooltip {
-  background-color: #131519;
-  color: #DFDFDD;
   border: 0px;
   border-radius: 0px;
 }
