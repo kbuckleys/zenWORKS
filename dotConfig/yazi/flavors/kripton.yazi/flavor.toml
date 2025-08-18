@@ -80,8 +80,8 @@ btn_no = { fg = "#DFDFDD", bg = "#282726" }
 [spot]
 border = { fg = "#9BBFBF" }
 title = { fg = "#9BBFBF", bold = true }
-tbl_col = { fg = "#E0DEA4" }
-tbl_cell = { bg = "#E0DEA4" }
+tbl_col = { fg = "#9bbfbf" }
+tbl_cell = { bg = "#20242a" }
 
 [notify]
 title_info = { fg = "#C5E1A5" }
