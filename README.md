@@ -13,6 +13,7 @@ The setup is as straightforward as it gets. The depnedencies listed are for my o
 - pamixer-git
 - waybar-module-pacman-updates-git
 - wttrbar
+- [Oh My Zsh](https://ohmyz.sh/)
 
 # Theme Elements
 - [Arcticons-Linux](https://github.com/Arcticons-Team/Arcticons-Linux/?tab=readme-ov-file)
