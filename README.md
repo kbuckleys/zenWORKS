@@ -16,7 +16,7 @@ The setup is as straightforward as it gets. The depnedencies listed are for my o
 
 # Theme Elements
 - [Arcticons-Linux](https://github.com/Arcticons-Team/Arcticons-Linux/?tab=readme-ov-file)
-- [Kripton GTK theme](https://www.gnome-look.org/p/1365372)(standard-button)
+- [Kripton GTK theme](https://www.gnome-look.org/p/1365372) (standard-button)
 - [ttf-0xproto](https://aur.archlinux.org/packages/ttf-0xproto)
 - [otf-apple-fonts](https://aur.archlinux.org/packages/otf-apple-fonts)
 
