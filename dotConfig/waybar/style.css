@@ -90,7 +90,7 @@ window#waybar.empty #window {
 
 tooltip {
   background-color: #141519;
-  border: 0px;
+  border: 1px solid #20242a;
   border-radius: 0px;
 }
 
