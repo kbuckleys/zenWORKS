@@ -33,7 +33,7 @@
 
 /* Add separators between inactive tabs only */
 .tabbrowser-tab:not([selected="true"]) {
-  border-inline-start: 2px dotted #56606D !important;
+  border-inline-start: 2px dotted #64737d !important;
 }
 .tabbrowser-tab:first-child {
   border-inline-start: none !important;
