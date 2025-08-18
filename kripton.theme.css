@@ -1,0 +1,51 @@
+/**
+ * @name Kripton
+ * @description Dark pastel theme based on Kripton GTK.
+ * @author Buck
+ * @version 0.1
+ * @BDEditor DiscordRecolor
+*/
+
+@import url('https://mwittrien.github.io/BetterDiscordAddons/Themes/DiscordRecolor/DiscordRecolor.css');
+@import url('https://discordstyles.github.io/HorizontalServerList/HorizontalServerList.css');
+@import url('https://discordstyles.github.io/RadialStatus/RadialStatus.css');
+
+:root {
+  --accentcolor: 155,191,191;
+  --accentcolor2: 155,191,191;
+  --linkcolor: 155,191,191;
+  --mentioncolor: 224,222,164;
+  --textbrightest: 155,191,191;
+  --textbrighter: 155,191,191;
+  --textbright: 223,223,221;
+  --textdark: 100,115,125;
+  --textdarker: 86,96,109;
+  --textdarkest: 32,36,42;
+  --font: gg sans;
+  --backgroundaccent: 32,36,42;
+  --backgroundprimary: 32,36,42;
+  --backgroundsecondary: 20,21,25;
+  --backgroundsecondaryalt: 32,36,42;
+  --backgroundtertiary: 20,21,25;
+  --backgroundfloating: 20,21,25;
+  --settingsicons: 1;
+  --HSL-server-icon-size: 28px;
+  --HSL-server-spacing: 10px;
+  --rs-small-spacing: 0px;
+  --rs-medium-spacing: 2px;
+  --rs-large-spacing: 2px;
+  --rs-small-width: 1.5px;
+  --rs-medium-width: 2px;
+  --rs-large-width: 2px;
+  --rs-avatar-shape: 0%;
+  --rs-online-color: #C5E1A5;
+  --rs-idle-color: #E0DEA4;
+  --rs-dnd-color: #E0A4A4;
+  --rs-offline-color: #56606D;
+  --rs-streaming-color: #BCA4E0;
+  --rs-phone-visible: block;
+}
+
+/* Any custom CSS below here */
+
+
