@@ -28,7 +28,7 @@ mod_key_ascii = ["⇧", "⇧", "⌘", "⌘", "⎇", "✦", "✦", "⌘"]
 
 [behavior]
 use_xdg_data_dir_icons = false
-animate = true
+animate = false
 
 [binds]
 up = "alt-k"
