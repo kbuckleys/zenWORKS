@@ -2,7 +2,7 @@
 cwd = { fg = "#CECDC3", bold = true }
 
 # Hovered
-hovered = { fg = "#131519", bg = "#9BBFBF" }
+hovered = { fg = "#141519", bg = "#9BBFBF" }
 preview_hovered = { underline = true }
 
 # Find
@@ -10,10 +10,10 @@ find_keyword = { fg = "#AD8301", reversed = true }
 find_position = { fg = "#575653", bold = true, italic = true }
 
 # Marker
-marker_copied = { fg = "#131519", bg = "#C5E1A5" }
-marker_cut = { fg = "#131519", bg = "#E0A4A4" }
-marker_marked = { fg = "#131519", bg = "#BCA4E0" }
-marker_selected = { fg = "#131519", bg = "#E0DEA4" }
+marker_copied = { fg = "#141519", bg = "#C5E1A5" }
+marker_cut = { fg = "#141519", bg = "#E0A4A4" }
+marker_marked = { fg = "#141519", bg = "#BCA4E0" }
+marker_selected = { fg = "#141519", bg = "#E0DEA4" }
 
 # Count
 count_copied = { fg = "#879A39", bold = true, reversed = true }
@@ -22,29 +22,31 @@ count_selected = { fg = "#3AA99F", bold = true, reversed = true }
 
 # Border
 border_symbol = "│"
-border_style = { fg = "#131519" }
+border_style = { fg = "#141519" }
 
 [tabs]
-active = { fg = "#131519", bg = "#9BBFBF", bold = true }
-inactive = { fg = "#DFDFDD", bg = "#131519" }
+active = { fg = "#141519", bg = "#9BBFBF", bold = true }
+inactive = { fg = "#9BBFBF", bg = "#141519" }
 sep_inner = { open = "", close = "" }
 sep_outer = { open = "", close = "" }
 
 [mode]
 # Normal mode
-normal_main = { fg = "#131519", bg = "#9BBFBF", bold = true }
-normal_alt = { fg = "#DFDFDD", bg = "#56606D" }
+normal_main = { fg = "#141519", bg = "#9BBFBF", bold = true }
+normal_alt = { fg = "#9BBFBF", bg = "#141519" }
 
 # Select mode
-select_main = { fg = "#131519", bg = "#BCA4E0", bold = true }
-select_alt = { fg = "#131519", bg = "#BCA4E0" }
+select_main = { fg = "#141519", bg = "#BCA4E0", bold = true }
+select_alt = { fg = "#BCA4E0", bg = "#141519" }
 
 # Unset mode
 unset_main = { fg = "#100F0F", bg = "#E0DEA4", bold = true }
-unset_alt = { fg = "#3AA99F", bg = "#E0DEA4" }
+unset_alt = { fg = "#E0A4A4", bg = "#141519" }
 
 [status]
 overall = { fg = "#9BBFBF" }
+sep_left = { open = "", close = "" }
+sep_right = { open = "", close = "" }
 
 # Permissions
 perm_type = { fg = "#4385BE" }
@@ -61,9 +63,9 @@ progress_error = { bg = "#D14D41" }
 [which]
 cols = 3
 mask = { bg = "#E0DEA4" }
-cand = { fg = "#131519", bold = true }
-rest = { fg = "#131519", italic = true }
-desc = { fg = "#131519" }
+cand = { fg = "#141519", bold = true }
+rest = { fg = "#141519", italic = true }
+desc = { fg = "#141519" }
 separator = " "
 separator_style = { }
 
@@ -99,7 +101,7 @@ selected = { bg = "#9BBFBF" }
 
 [cmp]
 border = { fg = "#9BBFBF", bold = true }
-active = { fg = "#131519", bg = "#9BBFBF" }
+active = { fg = "#141519", bg = "#9BBFBF" }
 inactive = { fg = "#9BBFBF" }
 
 [tasks]
