@@ -2,7 +2,7 @@
   "reload_style_on_change": true,
   "layer": "top",
   "position": "top",
-  "height": 26,
+  "height": 22,
   "modules-left": [
     "hyprland/workspaces",
     "custom/spotify",
@@ -37,7 +37,7 @@
   "hyprland/window": {
     "format": "{title}",
     "expand": true,
-    "max-length": 200
+    "max-length": 400
   },
   "clock": {
     "format": " {:%I:%M %p}",
@@ -68,8 +68,8 @@
   },
   "network": {
     "format": "⇣ {bandwidthDownBytes} ~ {bandwidthUpBytes} ⇡",
-    "tooltip-format": "You has interwebs!",
-    "tooltip-format-disconnected": "You has no interwebs :/",
+    "tooltip-format": "Connected",
+    "tooltip-format-disconnected": "Disconnected",
     "interval": 1,
     "nospacing": 1
   },
