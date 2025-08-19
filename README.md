@@ -12,6 +12,8 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - pamixer-git
 - waybar-module-pacman-updates-git
 - wttrbar
+- [cliphist](https://github.com/sentriz/cliphist)
+- [sherlock-clipboard](https://github.com/Skxxtz/sherlock-clipboard)
 - [Oh My Zsh](https://ohmyz.sh/)
 - [powerlevel10k](https://github.com/romkatv/powerlevel10k)
 
