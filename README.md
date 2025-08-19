@@ -12,6 +12,9 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - pamixer-git
 - waybar-module-pacman-updates-git
 - wttrbar
+- [Go](https://go.dev/)
+- [wl-clipboard](https://github.com/bugaevc/wl-clipboard)
+- xdg-utils
 - [cliphist](https://github.com/sentriz/cliphist)
 - [sherlock-clipboard](https://github.com/Skxxtz/sherlock-clipboard)
 - [Oh My Zsh](https://ohmyz.sh/)
