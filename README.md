@@ -6,6 +6,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - fd
 - fzf
 - hyprshot
+- wl-clipboard
 - nwg-look
 - gtk-engine-murrine
 - wiremix-git
