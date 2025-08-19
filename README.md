@@ -7,13 +7,13 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - fzf
 - hyprshot
 - nwg-look
-- mako
 - gtk-engine-murrine
 - wiremix-git
 - pamixer-git
 - waybar-module-pacman-updates-git
 - wttrbar
 - [Oh My Zsh](https://ohmyz.sh/)
+- [powerlevel10k](https://github.com/romkatv/powerlevel10k)
 
 # Theme Elements
 - [Arcticons-Linux](https://github.com/Arcticons-Team/Arcticons-Linux/?tab=readme-ov-file)
