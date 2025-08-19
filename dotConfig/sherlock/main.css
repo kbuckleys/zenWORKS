@@ -22,7 +22,7 @@ overshoot:backdrop {
     outline-offset: -3px;
     outline-style: dashed;
     line-height: 1;
-    font-family: "0xProto Nerd Font Propo";
+    font-family: "0xProto Nerd Font";
 }
 
 label {
@@ -48,7 +48,7 @@ scrolledwindow>viewport>*,
 listview,
 gridview,
 window {
-    background: #141519;
+    background: #0B0E0E;
 }
 window:not(#backdrop) {
     color: hsl(var(--text));
@@ -60,11 +60,11 @@ window:not(#backdrop) {
 #search-bar {
     outline: none;
     border: none;
-    background: #141519;
+    background: #0B0E0E;
     min-height: 22px;
     max-height: 22px;
     color: #DFDFDD;
-    font-family: "0xProto Nerd Font Propo";
+    font-family: "0xProto Nerd Font";
     font-size: 14px;
     padding-left: 10px;
 }
@@ -299,7 +299,7 @@ gridview child:selected box {
 }
 .raw_text,
 .next_tile #content-body {
-    font-family: '0xProto Nerd Font Propo';
+    font-family: '0xProto Nerd Font';
     font-feature-settings: "kern" off;
     font-kerning: None;
 }
