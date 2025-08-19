@@ -1,47 +1,47 @@
 [mgr]
-cwd = { fg = "#CECDC3", bold = true }
+cwd = { fg = "#9bbfbf", bold = true }
 
 # Hovered
-hovered = { fg = "#141519", bg = "#9BBFBF" }
-preview_hovered = { underline = true }
+hovered = { fg = "#0B0E0E", bg = "#9BBFBF" }
+preview_hovered = { underline = false }
 
 # Find
 find_keyword = { fg = "#AD8301", reversed = true }
 find_position = { fg = "#575653", bold = true, italic = true }
 
 # Marker
-marker_copied = { fg = "#141519", bg = "#C5E1A5" }
-marker_cut = { fg = "#141519", bg = "#E0A4A4" }
-marker_marked = { fg = "#141519", bg = "#BCA4E0" }
-marker_selected = { fg = "#141519", bg = "#E0DEA4" }
+marker_copied = { fg = "#0B0E0E", bg = "#C5E1A5" }
+marker_cut = { fg = "#0B0E0E", bg = "#E0A4A4" }
+marker_marked = { fg = "#0B0E0E", bg = "#BCA4E0" }
+marker_selected = { fg = "#0B0E0E", bg = "#E0DEA4" }
 
 # Count
-count_copied = { fg = "#879A39", bold = true, reversed = true }
-count_cut = { fg = "#D14D41", bold = true, reversed = true }
-count_selected = { fg = "#3AA99F", bold = true, reversed = true }
+count_copied = { fg = "#c5e1a5", bold = true, reversed = true }
+count_cut = { fg = "#E0A4A4", bold = true, reversed = true }
+count_selected = { fg = "#BCA4E0", bold = true, reversed = true }
 
 # Border
 border_symbol = "│"
-border_style = { fg = "#141519" }
+border_style = { fg = "#0B0E0E" }
 
 [tabs]
-active = { fg = "#141519", bg = "#9BBFBF", bold = true }
-inactive = { fg = "#9BBFBF", bg = "#141519" }
+active = { fg = "#0B0E0E", bg = "#9BBFBF", bold = true }
+inactive = { fg = "#9BBFBF", bg = "#0B0E0E" }
 sep_inner = { open = "", close = "" }
 sep_outer = { open = "", close = "" }
 
 [mode]
 # Normal mode
-normal_main = { fg = "#141519", bg = "#9BBFBF", bold = true }
-normal_alt = { fg = "#9BBFBF", bg = "#141519" }
+normal_main = { fg = "#0B0E0E", bg = "#9BBFBF", bold = true }
+normal_alt = { fg = "#9BBFBF", bg = "#0B0E0E" }
 
 # Select mode
-select_main = { fg = "#141519", bg = "#BCA4E0", bold = true }
-select_alt = { fg = "#BCA4E0", bg = "#141519" }
+select_main = { fg = "#0B0E0E", bg = "#BCA4E0", bold = true }
+select_alt = { fg = "#BCA4E0", bg = "#0B0E0E" }
 
 # Unset mode
 unset_main = { fg = "#100F0F", bg = "#E0DEA4", bold = true }
-unset_alt = { fg = "#E0A4A4", bg = "#141519" }
+unset_alt = { fg = "#E0A4A4", bg = "#0B0E0E" }
 
 [status]
 overall = { fg = "#9BBFBF" }
@@ -49,23 +49,23 @@ sep_left = { open = "", close = "" }
 sep_right = { open = "", close = "" }
 
 # Permissions
-perm_type = { fg = "#4385BE" }
-perm_read = { fg = "#D0A215" }
-perm_write = { fg = "#D14D41" }
-perm_exec = { fg = "#879A39" }
-perm_sep = { fg = "#878580" }
+perm_type = { fg = "#BCA4E0" }
+perm_read = { fg = "#E0DEA4" }
+perm_write = { fg = "#E0A4A4" }
+perm_exec = { fg = "#c5e1a5" }
+perm_sep = { fg = "#9bbfbf" }
 
 # Progress
-progress_label = { fg = "#100F0F" }
-progress_normal = { fg = "#3AA99F", bg = "#1C6C66" }
-progress_error = { bg = "#D14D41" }
+progress_label = { fg = "#0B0E0E" }
+progress_normal = { fg = "#0B0E0E", bg = "#E0DEA4" }
+progress_error = { bg = "#E0A4A4" }
 
 [which]
 cols = 3
 mask = { bg = "#E0DEA4" }
-cand = { fg = "#141519", bold = true }
-rest = { fg = "#141519", italic = true }
-desc = { fg = "#141519" }
+cand = { fg = "#0B0E0E", bold = true }
+rest = { fg = "#0B0E0E", italic = true }
+desc = { fg = "#0B0E0E" }
 separator = " "
 separator_style = { }
 
@@ -101,7 +101,7 @@ selected = { bg = "#9BBFBF" }
 
 [cmp]
 border = { fg = "#9BBFBF", bold = true }
-active = { fg = "#141519", bg = "#9BBFBF" }
+active = { fg = "#0B0E0E", bg = "#9BBFBF" }
 inactive = { fg = "#9BBFBF" }
 
 [tasks]
@@ -119,22 +119,22 @@ footer = { fg = "#9BBFBF", bg = "#282726", bold = true }
 [filetype]
 rules = [
   # Images
-  { mime = "image/*", fg = "#8B7EC8" },
+  { mime = "image/*", fg = "#DFDFDD" },
 
   # Media
-  { mime = "video/*", fg = "#D0A215" },
-  { mime = "audio/*", fg = "#D0A215" },
+  { mime = "video/*", fg = "#DFDFDD" },
+  { mime = "audio/*", fg = "#DFDFDD" },
 
   # Broken symbolic link
-  { name = "*", is = "orphan", fg = "#E0A4A4", crossed = true },
-  { name = "*/", is = "orphan", fg = "#E0A4A4", crossed = true },
+  { name = "*", is = "orphan", fg = "#E0A4A4" },
+  { name = "*/", is = "orphan", fg = "#E0A4A4" },
 
   # Symbolic links
   { name = "*", is = "link", fg = "#BCA4E0" },
   { name = "*/", is = "link", fg = "#BCA4E0" },
 
   # Executable
-  { name = "*", is = "exec", fg = "#879A39" },
+  { name = "*", is = "exec", fg = "#E0DEA4" },
 
   # Empty files
   { mime = "inode/empty", fg = "#575653" },
