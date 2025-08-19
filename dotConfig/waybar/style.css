@@ -61,7 +61,7 @@ window#waybar.empty #window {
 }
 
 #cpu {
-  color: #E0A4A4;
+  color: #c8a4e0;
 }
 
 #memory {
@@ -70,10 +70,6 @@ window#waybar.empty #window {
 
 #network {
   color: #E0DEA4;
-}
-
-#custom-weather {
-  color: #BCA4E0;
 }
 
 #tray {
