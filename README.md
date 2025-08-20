@@ -20,7 +20,6 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - [Arcticons-Linux](https://github.com/Arcticons-Team/Arcticons-Linux/?tab=readme-ov-file)
 - [Kripton GTK theme](https://www.gnome-look.org/p/1365372) (standard-buttons)
 - [ttf-0xproto](https://aur.archlinux.org/packages/ttf-0xproto)
-- [otf-apple-fonts](https://aur.archlinux.org/packages/otf-apple-fonts)
 
 # Notes
 The depnedencies listed are for my own reference and to insure functions of my setup work as intended.
