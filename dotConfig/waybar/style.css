@@ -17,7 +17,7 @@ window#waybar.empty #window {
   padding: 2px 8px 2px 8px;
   margin: 0px;
   border-radius: 0px;
-  color: #56606d;
+  color: #3d4c4c;
   background-color: #0B0E0E;
 }
 #workspaces button.active {
