@@ -115,8 +115,8 @@
 
 #TabsToolbar {
   height: var(--tab-min-height) !important;
-  margin-top: -8px !important;
-  margin-bottom: -1px !important;
+  margin-top: -11px !important;
+  margin-bottom: -3px !important;
   margin-right: -1px !important;
   margin-left: -1px !important;
 }
@@ -143,7 +143,7 @@ See the above repository for updates as well as full license text. */
 /* This style hides the main toolbar and shows it when the cursor is over the tabs toolbar as well as whenever the focus is inside nav-bar, such as when urlbar is focused. */
  
 :root{
-  --uc-navbar-transform: -40px;
+  --uc-navbar-transform: -32px;
   --uc-autohide-toolbar-delay: 0s;
   --uc-autohide-toolbar-duration: 100ms;
 }
@@ -270,4 +270,22 @@ See the above repository for updates as well as full license text. */
   background-color: var(--toolbar-bgcolor) !important;
   z-index: 1 !important;
   margin-bottom: -16px !important;
+}
+
+/* Set navbar height */
+#nav-bar {
+  height: 32px !important;
+  min-height: 32px !important;
+}
+
+/* Adjust URL bar and search bar height */
+#urlbar, .searchbar-textbox {
+  min-height: 26px !important;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+/* Optional: reduce font size for compactness */
+#urlbar {
+  font-size: 14px !important;
 }
