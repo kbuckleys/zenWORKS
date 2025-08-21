@@ -50,6 +50,7 @@ window#waybar.empty #window {
 #custom-weather,
 #pulseaudio,
 #cpu,
+#temperature,
 #memory,
 #network,
 #clock {
@@ -61,11 +62,23 @@ window#waybar.empty #window {
 }
 
 #cpu {
-  color: #c8a4e0;
+  color: #BCA4E0;
+}
+
+#temperature {
+  color: #e0a4a4;
+}
+
+#custom-gpu {
+  padding: 2px 8px 2px 0px;
+  margin: 0px;
+  border-radius: 0;
+  background-color: #0B0E0E;
+  color: #e0a4a4;
 }
 
 #memory {
-  color: #E0A4A4;
+  color: #BCA4E0;
 }
 
 #network {
