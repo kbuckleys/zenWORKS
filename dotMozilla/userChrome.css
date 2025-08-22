@@ -281,8 +281,8 @@ See the above repository for updates as well as full license text. */
 /* Adjust URL bar and search bar height */
 #urlbar, .searchbar-textbox {
   min-height: 28px !important;
-  padding-top: 4px;
-  padding-bottom: 4px;
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 
 /* Optional: reduce font size for compactness */
