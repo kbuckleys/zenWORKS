@@ -14,8 +14,9 @@
     "network",
     "memory",
     "cpu",
+    "custom/gpu-info",
     "temperature",
-    "custom/gpu",
+    "custom/gpu-temp",
     "pulseaudio",
     "group/tray-expander",
     "custom/weather",
@@ -46,6 +47,13 @@
     "format-alt": "󰔠 {:%A, %B %d, %Y}",
     "tooltip": false
   },
+  "custom/gpu-info": {
+  "exec": "~/.config/waybar/scripts/gpu-info.sh",
+  "interval": 5,
+  "format": "{text}",
+  "tooltip": true,
+  "tooltip-format": "GPU Utilization"
+  },
   "cpu": {
     "format": "  {usage}%",
     "on-click": "kitty -e btop",
@@ -62,7 +70,7 @@
     "tooltip": true,
     "tooltip-format": "CPU Temperature"
   },
-  "custom/gpu": {
+  "custom/gpu-temp": {
     "exec": "~/.config/waybar/scripts/gpu-temp.sh",
     "interval": 10,
     "format": "{text}",

@@ -50,6 +50,7 @@ window#waybar.empty #window {
 #custom-weather,
 #pulseaudio,
 #cpu,
+#custom-gpu-info,
 #temperature,
 #memory,
 #network,
@@ -61,7 +62,7 @@ window#waybar.empty #window {
   color: #9bbfbf;
 }
 
-#cpu {
+#cpu, #custom-gpu-info, #memory {
   color: #BCA4E0;
 }
 
@@ -69,16 +70,12 @@ window#waybar.empty #window {
   color: #e0a4a4;
 }
 
-#custom-gpu {
+#custom-gpu-temp {
   padding: 2px 8px 2px 0px;
   margin: 0px;
   border-radius: 0;
   background-color: #0B0E0E;
   color: #e0a4a4;
-}
-
-#memory {
-  color: #BCA4E0;
 }
 
 #network {
