@@ -8,7 +8,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - hyprshot
 - wl-clipboard
 - nwg-look
-- nvtop
+- nvtop (If you have an Nvidia GPU)
 - gtk-engine-murrine
 - wiremix-git
 - pamixer-git
