@@ -1,3 +1,3 @@
-__In case the gpu-temp script isn't loading__
+__In case the scripts aren't loading__
 
-You can check the file's permission status with the ```ls -l``` command or ```chmod``` it to any status you want.
+You can check the files' permission status with the ```ls -l``` command or ```chmod``` them to any status you want.
