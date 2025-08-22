@@ -51,6 +51,7 @@
   "exec": "~/.config/waybar/scripts/gpu-info.sh",
   "interval": 5,
   "format": "{text}",
+  "on-click": "kitty -e nvtop",
   "tooltip": true,
   "tooltip-format": "GPU Utilization"
   },
