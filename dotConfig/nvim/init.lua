@@ -52,12 +52,3 @@ require("catppuccin").setup({
 })
 
 vim.cmd.colorscheme("catppuccin")
-
-local plugins = {
-  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
-}
-
-local opts = {}
-
-require("lazy").setup(plugins, opts)
-vim.cmd.colorscheme("catppuccin")
