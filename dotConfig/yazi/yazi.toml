@@ -5,6 +5,8 @@ sort_sensitive = false
 sort_reverse = false
 show_icons = true
 
+linemode = "size"
+
 [opener]
 play = [
     { run = 'clapper "$@"', orphan = true, for = "unix" },
@@ -16,7 +18,7 @@ open = [
     { run = 'xdg-open "$1"', desc = "Open", for = "unix" },
 ]
 reveal = [
-    { run = 'xdg-open "$(dirname "$1")"', desc = "Reveal", for = "unix" },
+    { run = 'thunar "$(dirname "$1")"', desc = "Reveal", for = "unix" },
     { run = '''exiftool "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
 ]
 pdf = [
