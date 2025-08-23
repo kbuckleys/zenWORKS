@@ -3,6 +3,10 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 
 # Dependencies
 - LazyVim
+- ripgrep
+- resvg
+- imagemagick
+- poppler
 - swww
 - fd
 - fzf
@@ -15,6 +19,8 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - pamixer-git
 - waybar-module-pacman-updates-git
 - wttrbar
+- zoxide
+- zsh
 - [Oh My Zsh](https://ohmyz.sh/)
 - [powerlevel10k](https://github.com/romkatv/powerlevel10k)
 
