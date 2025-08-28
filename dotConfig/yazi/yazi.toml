@@ -22,7 +22,7 @@ reveal = [
     { run = '''exiftool "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
 ]
 pdf = [
-    { run = 'zathura "$1"', desc = "Open with Zathura", for = "unix" },
+    { run = 'firefox "$1"', desc = "Open with Firefox", for = "unix" },
 ]
 markdown = [
     { run = 'glow "$1"', desc = "View with glow", for = "unix" },
