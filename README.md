@@ -36,4 +36,3 @@ I thought I'd also drop in my own userChrome minimalistic setup for Firefox. I t
 
 - [Adaptive Tab Bar Color](https://addons.mozilla.org/en-US/firefox/addon/adaptive-tab-bar-colour/)
 - [Australis-like refresh in URL bar](https://addons.mozilla.org/en-US/firefox/addon/australis-refresh-in-url-bar/)
-- [Load Progress Bar](https://addons.mozilla.org/en-US/firefox/addon/load-progress-bar/)
