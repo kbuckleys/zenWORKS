@@ -55,10 +55,6 @@
   text-align: left !important;
 }
 
-.tabbrowser-tab .tab-loading-burst {
-  display: none !important;
-}
-
 .tabbrowser-tab .tab-close-button {
   visibility: collapse !important;
 }
