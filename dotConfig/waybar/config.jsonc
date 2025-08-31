@@ -4,24 +4,23 @@
   "position": "top",
   "height": 22,
   "modules-left": [
-    "hyprland/workspaces",
-    "custom/spotify",
-    "hyprland/window"
   ],
   "modules-center": [
-  ],
-  "modules-right": [
+    "hyprland/workspaces",
+    "custom/spotify",
+    "pulseaudio",
+    "group/tray-expander",
+    "custom/weather",
+    "clock",
+    "custom/updates",
     "network",
     "memory",
     "cpu",
     "custom/gpu-info",
     "temperature",
-    "custom/gpu-temp",
-    "pulseaudio",
-    "group/tray-expander",
-    "custom/weather",
-    "clock",
-    "custom/updates"
+    "custom/gpu-temp"
+  ],
+  "modules-right": [
   ],
   "custom/spotify": {
     "format": "{text}",
