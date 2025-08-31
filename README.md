@@ -26,7 +26,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 
 # Theme Elements
 - [Arcticons-Linux](https://aur.archlinux.org/packages/arcticons-icon-theme)
-- [Kripton GTK theme]([https://www.gnome-look.org/p/1365372](https://aur.archlinux.org/packages/kripton-theme-git)) (standard-buttons)
+- [Kripton GTK theme](https://aur.archlinux.org/packages/kripton-theme-git) (standard-buttons)
 - ttf-0xproto-nerd
 
 # Notes
