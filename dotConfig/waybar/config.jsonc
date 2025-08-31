@@ -36,11 +36,6 @@
     "disable-scroll": false,
     "active-only": false
   },
-  "hyprland/window": {
-    "format": "{title}",
-    "expand": true,
-    "max-length": 400
-  },
   "clock": {
     "format": " {:%I:%M %p}",
     "format-alt": "󰔠 {:%A, %B %d, %Y}",

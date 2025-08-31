@@ -39,13 +39,6 @@ window#waybar.empty #window {
   margin: 0px;
 }
 
-#window {
-  background-color: #0B0E0E;
-  color: #9bbfbf;
-  padding: 2px 8px 2px 8px;
-  margin: 0px;
-}
-
 #tray-expander,
 #custom-weather,
 #pulseaudio,
