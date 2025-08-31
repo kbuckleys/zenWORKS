@@ -15,8 +15,8 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - nwg-look
 - nvtop
 - gtk-engine-murrine
-- wiremix-git
-- pamixer-git
+- wiremix
+- pamixer
 - waybar-module-pacman-updates-git
 - wttrbar
 - zoxide
