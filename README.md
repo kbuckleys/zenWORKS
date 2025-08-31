@@ -25,9 +25,9 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - [powerlevel10k](https://github.com/romkatv/powerlevel10k)
 
 # Theme Elements
-- [Arcticons-Linux](https://github.com/Arcticons-Team/Arcticons-Linux/?tab=readme-ov-file)
-- [Kripton GTK theme](https://www.gnome-look.org/p/1365372) (standard-buttons)
-- [ttf-0xproto](https://aur.archlinux.org/packages/ttf-0xproto)
+- [Arcticons-Linux](https://aur.archlinux.org/packages/arcticons-icon-theme)
+- [Kripton GTK theme]([https://www.gnome-look.org/p/1365372](https://aur.archlinux.org/packages/kripton-theme-git)) (standard-buttons)
+- ttf-0xproto-nerd
 
 # Notes
 The depnedencies listed are for my own reference and to insure functions of my setup work as intended.
@@ -35,4 +35,3 @@ The depnedencies listed are for my own reference and to insure functions of my s
 I thought I'd also drop in my own userChrome minimalistic setup for Firefox. I typically remove everything from the navbr save for the extensions and downloads buttons. As for the addons I use to complete the theme's look, here you go:
 
 - [Adaptive Tab Bar Color](https://addons.mozilla.org/en-US/firefox/addon/adaptive-tab-bar-colour/)
-- [Australis-like refresh in URL bar](https://addons.mozilla.org/en-US/firefox/addon/australis-refresh-in-url-bar/)
