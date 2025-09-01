@@ -27,7 +27,7 @@
     "exec": "playerctl -p spotify metadata --format '{{ title }} ~ {{ artist }}'",
     "exec-if": "pgrep spotify",
     "interval": 1,
-    "max-length": 40,
+    "max-length": 60,
   },
   "hyprland/workspaces": {
     "on-click": "activate",
