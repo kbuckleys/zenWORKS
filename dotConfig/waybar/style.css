@@ -88,7 +88,7 @@ window#waybar.empty #window {
 }
 
 tooltip {
-  background-color: rgba(11, 14, 14, 0.80);
+  background-color: #0B0E0E;
   border: 1px solid #20242a;
   border-radius: 0px;
 }
