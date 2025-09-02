@@ -13,6 +13,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - hyprpicker
 - hyprshot
 - wl-clipboard
+- tumbler
 - nwg-look
 - nvtop
 - gtk-engine-murrine
