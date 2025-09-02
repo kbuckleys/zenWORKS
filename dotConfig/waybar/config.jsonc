@@ -8,17 +8,17 @@
   "modules-center": [
     "hyprland/workspaces",
     "custom/spotify",
-    "pulseaudio",
     "group/tray-expander",
+    "custom/updates",
     "custom/weather",
     "clock",
-    "custom/updates",
-    "network",
+    "pulseaudio",
     "memory",
     "cpu",
     "custom/gpu-info",
     "temperature",
-    "custom/gpu-temp"
+    "custom/gpu-temp",
+    "network"
   ],
   "modules-right": [
   ],
