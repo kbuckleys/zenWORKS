@@ -1,0 +1,8 @@
+{
+  "hideHud": true,
+  "hideUpdateNotifications": true,
+  "grabBackFocus": true,
+  "settingsVersion": "2.3",
+  "userDefinedLinkHintCss": "div > .vimiumHintMarker {\n/* linkhint boxes */\nbackground: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b6e0a4),\n  color-stop(100%,#b6e0a4));\nborder: 1px solid #0b0e0e;\n}\n\ndiv > .vimiumHintMarker span {\n/* linkhint text */\ncolor: #0b0e0e;\nfont-weight: bold;\nfont-size: 13px;\n}\n\ndiv > .vimiumHintMarker > .matchingCharacter {\n}",
+  "exclusionRules": []
+}
