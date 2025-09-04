@@ -27,7 +27,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - [PowerLevel10k](https://github.com/romkatv/powerlevel10k)
 
 # Theme Elements
-- [Shade of Z](https://www.gnome-look.org/p/1516492)
+- [Shade of Z](https://www.gnome-look.org/p/1516492) (white)
 - [Kripton GTK theme](https://www.gnome-look.org/s/Gnome/p/1365372/) (standard-buttons)
 - [MacTahoe Cursors](https://www.gnome-look.org/p/2305688)
 - ttf-0xproto-nerd
