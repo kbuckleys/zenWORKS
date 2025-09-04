@@ -35,6 +35,6 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 # Notes
 The depnedencies listed are for my own reference and to insure functions of my setup work as intended.
 
-I thought I'd also drop in my own userChrome minimalistic setup for Firefox. I typically remove everything from the navbr save for the extensions and downloads buttons. As for the addons I use to complete the theme's look, here you go:
+I thought I'd also drop in my own userChrome minimalistic setup for Firefox. I typically remove everything from the navbr save for the extensions and downloads buttons. As for the addons I use to complete the theme's look, you only need one:
 
 - [Adaptive Tab Bar Color](https://addons.mozilla.org/en-US/firefox/addon/adaptive-tab-bar-colour/)
