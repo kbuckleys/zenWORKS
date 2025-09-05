@@ -9,9 +9,6 @@
 window#waybar {
   background-color: transparent;
 }
-window#waybar.empty #window {
-  background-color: transparent;
-}
 
 #workspaces button {
   padding: 2px 8px 2px 8px;
