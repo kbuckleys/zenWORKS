@@ -87,18 +87,5 @@
     },
     "priority": 4,
     "home": "Search"
-    },
-    {
-        "name": "Web Search",
-        "display_name": "DuckDuckGo",
-        "tag_start": "{keyword}",
-        "alias": "dd",
-        "type": "web_launcher",
-        "args": {
-            "search_engine": "https://duckduckgo.com/?q={keyword}",
-            "icon": "DuckDuckGo"
-        },
-        "priority": 100
     }
 ]
-
