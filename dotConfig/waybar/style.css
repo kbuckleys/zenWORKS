@@ -2,12 +2,9 @@
   min-height: 0;
   min-width: 0;
   font-family: "0xProto Nerd Font";
+  background-color: #0B0E0E;
   font-size: 12px;
   font-weight: 700;
-}
-
-window#waybar {
-  background-color: #0B0E0E;
 }
 
 #workspaces button {
@@ -29,7 +26,6 @@ window#waybar {
   padding: 2px 8px 2px 8px;
 }
 
-#tray-expander,
 #custom-weather,
 #pulseaudio,
 #cpu,
@@ -39,6 +35,11 @@ window#waybar {
 #network,
 #clock {
   padding: 2px 8px 2px 8px;
+  color: #9bbfbf;
+}
+
+#tray-expander {
+  padding: 2px 4px 2px 8px;
   color: #9bbfbf;
 }
 
@@ -65,7 +66,6 @@ window#waybar {
 }
 
 tooltip {
-  background-color: #0B0E0E;
   border: 1px solid #20242a;
   border-radius: 0px;
 }

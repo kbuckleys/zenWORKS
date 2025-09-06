@@ -12,22 +12,22 @@
     "network"
   ],
   "modules-center": [
-    "hyprland/workspaces",
-    "custom/spotify"
+    "hyprland/workspaces"
   ],
   "modules-right": [
-    "group/tray-expander",
     "custom/updates",
+    "group/tray-expander",
     "custom/weather",
     "clock",
-    "pulseaudio"
+    "pulseaudio",
+    "custom/spotify"
   ],
   "custom/spotify": {
     "format": "{text}",
-    "exec": "playerctl -p spotify metadata --format '{{ title }} ~ {{ artist }}'",
+    "exec": "playerctl -p spotify metadata --format '{{ title }}'",
     "exec-if": "pgrep spotify",
     "interval": 1,
-    "max-length": 100
+    "max-length": 60
   },
   "hyprland/workspaces": {
     "on-click": "activate",
@@ -37,8 +37,8 @@
     "active-only": false
   },
   "clock": {
-    "format": " {:%I:%M %p}",
-    "format-alt": "󰔠 {:%A, %B %d, %Y}",
+    "format": "{:%I:%M %p}",
+    "format-alt": "{:%A, %B %d, %Y}",
     "tooltip": false
   },
   "custom/gpu-info": {
@@ -50,7 +50,7 @@
   "tooltip-format": "GPU Utilization"
   },
   "cpu": {
-    "format": "  {usage}%",
+    "format": "CPU {usage}%",
     "on-click": "kitty -e btop",
     "tooltip": true,
     "interval": 1
@@ -73,7 +73,7 @@
     "tooltip-format": "GPU Temperature"
   },
   "memory": {
-    "format": "  {used:0.1f}",
+    "format": "RAM {used:0.1f}",
     "tooltip": true,
     "tooltip-format": "{total:0.1f}GiB\nUsed: {used:0.1f}GiB\nAvailable: {avail:0.1f}GiB",
     "interval": 1
@@ -112,7 +112,7 @@
   "tray": {
     "show-passive-items": true,
     "icon-size": 14,
-    "spacing": 12
+    "spacing": 10
   },
   "custom/updates": {
     "format": "{} {icon}",
