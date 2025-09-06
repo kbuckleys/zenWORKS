@@ -24,7 +24,7 @@
   ],
   "custom/spotify": {
     "format": "{text}",
-    "exec": "playerctl -p spotify metadata --format '{{ title }}'",
+    "exec": "playerctl -p spotify metadata --format '{{ title }} ~ {{artist}}'",
     "exec-if": "pgrep spotify",
     "interval": 1,
     "max-length": 40
@@ -58,16 +58,16 @@
   "temperature": {
     "hwmon-path-abs": "/sys/devices/platform/coretemp.0/hwmon",
     "input-filename": "temp2_input",
-    "interval": 10,
+    "interval": 5,
     "critical-threshold": 80,
-    "format": "{temperatureC}°C {icon}",
+    "format": "CT {temperatureC}°C {icon}",
     "format-critical": "󰸁 {temperatureC}°C",
     "tooltip": true,
     "tooltip-format": "CPU Temperature"
   },
   "custom/gpu-temp": {
     "exec": "~/.config/waybar/scripts/gpu-temp.sh",
-    "interval": 10,
+    "interval": 5,
     "format": "{text}",
     "tooltip": true,
     "tooltip-format": "GPU Temperature"
