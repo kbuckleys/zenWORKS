@@ -25,8 +25,8 @@
 
 #TabsToolbar {
   height: var(--tab-min-height) !important;
-  margin-top: -8px !important;
-  margin-bottom: -2px !important;
+  margin-top: -10px !important;
+  margin-bottom: -4px !important;
   margin-right: -1px !important;
   margin-left: -1px !important;
 }
