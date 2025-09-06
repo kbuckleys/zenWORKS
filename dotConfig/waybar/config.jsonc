@@ -1,6 +1,6 @@
 { 
   "reload_style_on_change": true,
-  "layer": "dock",
+  "layer": "top",
   "position": "top",
   "height": 22,
   "modules-left": [
