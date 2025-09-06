@@ -7,22 +7,17 @@
 }
 
 window#waybar {
-  background-color: transparent;
+  background-color: #0B0E0E;
 }
 
 #workspaces button {
   padding: 2px 8px 2px 8px;
-  margin: 0px;
-  border-radius: 0px;
   color: #516666;
-  background-color: rgba(11, 14, 14, 0.80);
 }
 #workspaces button.active {
-  background-color: rgba(11, 14, 14, 0.80);
   color: #9bbfbf;
 }
 #workspaces button.urgent {
-  background-color: #E0A4A4;
   color: #20242A;
 }
 #workspaces button:hover {
@@ -30,10 +25,8 @@ window#waybar {
 }
 
 #custom-spotify {
-  background-color: rgba(11, 14, 14, 0.80);
   color: #c5e1a5;
   padding: 2px 8px 2px 8px;
-  margin: 0px;
 }
 
 #tray-expander,
@@ -46,9 +39,6 @@ window#waybar {
 #network,
 #clock {
   padding: 2px 8px 2px 8px;
-  margin: 0px;
-  border-radius: 0;
-  background-color: rgba(11, 14, 14, 0.80);
   color: #9bbfbf;
 }
 
@@ -62,9 +52,6 @@ window#waybar {
 
 #custom-gpu-temp {
   padding: 2px 8px 2px 0px;
-  margin: 0px;
-  border-radius: 0;
-  background-color: rgba(11, 14, 14, 0.80);
   color: #e0a4a4;
 }
 
@@ -72,15 +59,8 @@ window#waybar {
   color: #E0DEA4;
 }
 
-#tray {
-  padding-left: 8px;
-}
-
 #custom-updates {
   padding: 2px 8px 2px 8px;
-  margin: 0px;
-  border-radius: 0;
-  background-color: rgba(11, 14, 14, 0.80);
   color: #9bbfbf;
 }
 
