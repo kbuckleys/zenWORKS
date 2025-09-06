@@ -6,10 +6,39 @@
 |____/_/   \_____|_|  |_|_|  \_\\____/|_|  |_|______|
 
 :root {
-  --tab-max-height: 10px !important;
+  --tab-min-height: 12px !important;
+  --tab-max-height: 12px !important;
 }
 .tabbrowser-tab .tab-label {
     font-size: 12px !important;
+}
+#TabsToolbar .tabbrowser-tab[selected="true"] .tab-label {
+    font-weight: 700 !important;
+}
+
+#tabbrowser-tabs, 
+#tabbrowser-tabs > #tabbrowser-arrowscrollbox,
+.tabbrowser-tabs .tabbrowser-tab {
+  min-height: var(--tab-min-height) !important;
+  max-height: var(--tab-min-height) !important;
+}
+
+#TabsToolbar {
+  height: var(--tab-min-height) !important;
+  margin-top: -8px !important;
+  margin-bottom: -4px !important;
+  margin-right: -1px !important;
+  margin-left: -1px !important;
+}
+
+/* Hide tab bar only when exactly one tab is open */
+#TabsToolbar:not(:has(tab.tabbrowser-tab:not(:only-of-type))) {
+  visibility: collapse !important;
+}
+
+#tabbrowser-tabs .tabbrowser-tab:only-of-type,
+#tabbrowser-tabs .tabbrowser-tab:only-of-type + #tabbrowser-arrowscrollbox-periphery {
+  display: none !important;
 }
 
 #sidebar-box {
@@ -100,25 +129,6 @@
   -moz-box-ordinal-group: 0 !important;
   order: -1 !important;
   margin-right: 8px !important;
-}
-
-#tabbrowser-tabs, 
-#tabbrowser-tabs > #tabbrowser-arrowscrollbox,
-.tabbrowser-tabs .tabbrowser-tab {
-  min-height: var(--tab-min-height) !important;
-  max-height: var(--tab-min-height) !important;
-}
-
-#TabsToolbar {
-  height: var(--tab-min-height) !important;
-  margin-top: -11px !important;
-  margin-bottom: -3px !important;
-  margin-right: -1px !important;
-  margin-left: -1px !important;
-}
-
-#TabsToolbar .tabbrowser-tab[selected="true"] .tab-label {
-    font-weight: 700 !important;
 }
 
 #identity-box,
@@ -222,10 +232,10 @@ See the above repository for updates as well as full license text. */
   background-position-y: -28px; /* best guess, could vary */
   border-top: none !important;
 }
- 
+
 /* Bookmarks toolbar needs so extra rules */
 #PersonalToolbar{ transition: transform var(--uc-autohide-toolbar-duration) ease var(--uc-autohide-toolbar-delay) !important; position: relative; z-index: 1 }
- 
+
 /* Move up the content view */
 :root[sessionrestored]:not([chromehidden~="toolbar"]) > body > #browser{
   margin-top: var(--uc-navbar-transform);
