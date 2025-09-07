@@ -15,7 +15,8 @@
   color: #DFDFDD;
 }
 #workspaces button.urgent {
-  color: #20242A;
+  background-color: #e0aea4;
+  color: #0b0e0e;
 }
 #workspaces button:hover {
   box-shadow: none;
