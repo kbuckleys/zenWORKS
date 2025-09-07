@@ -30,11 +30,9 @@
 }
 
 tooltip {
-  border-radius: 0px;
   border: 0px;
 }
 tooltip label{
   color: #DFDFDD;
   margin: -4px -2px -4px -2px;
-  border: 0px;
 }
