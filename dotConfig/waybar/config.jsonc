@@ -23,7 +23,7 @@
     "custom/spotify"
   ],
   "custom/spotify": {
-    "format": "|  {text}",
+    "format": "{text}",
     "exec": "playerctl -p spotify metadata --format '{{ title }} ~ {{artist}}'",
     "exec-if": "pgrep spotify",
     "interval": 1,
@@ -79,7 +79,7 @@
     "interval": 1
   },
   "pulseaudio": {
-    "format": "{icon}{volume}%",
+    "format": "|  {icon}{volume}%",
     "on-click": "kitty --class=Wiremix -e wiremix",
     "on-click-right": "pamixer -t",
     "format-muted": "  MUTED",
@@ -126,7 +126,7 @@
     "on-click": "sleep 0.1 && pamac-manager --updates"
   },
   "custom/weather": {
-      "format": "{}°C",
+      "format": "|  {}°C",
       "tooltip": true,
       "interval": 300,
       "exec": "wttrbar --nerd",
