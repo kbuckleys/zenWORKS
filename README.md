@@ -36,7 +36,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 # Notes
 The depnedencies listed are for my own reference and to insure the functions of my setup work as intended.
 
-I thought I'd also drop in my own Firefox setup, which I'm fairly certain you haven't seen anything like it before. I primarily say this because I worked on it to sing on my Hyprland setup.
+I thought I'd also drop in my own Firefox setup, which I'm fairly certain you haven't seen anything like before. I primarily say this because I specifically built it to sing on my Hyprland setup.
 
 You may as well go the extra mile and complete the look, and you only need one addon:
 
