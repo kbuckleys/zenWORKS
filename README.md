@@ -34,7 +34,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - ttf-0xproto-nerd
 
 # Notes
-The depnedencies listed are for my own reference and to insure functions of my setup work as intended.
+The depnedencies listed are for my own reference and to insure the functions of my setup work as intended.
 
 I thought I'd also drop in my own userChrome minimalistic setup for Firefox. I typically remove everything from the navbr save for the extensions and downloads buttons. As for the addons I use to complete the theme's look, you only need one:
 
