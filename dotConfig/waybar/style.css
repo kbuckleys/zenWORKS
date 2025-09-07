@@ -9,10 +9,10 @@
 
 #workspaces button {
   padding: 2px 8px 2px 8px;
-  color: #516666;
+  color: rgba(223, 223, 221, 0.5);
 }
 #workspaces button.active {
-  color: #9bbfbf;
+  color: #DFDFDD;
 }
 #workspaces button.urgent {
   color: #20242A;
@@ -21,48 +21,13 @@
   box-shadow: none;
 }
 
-#custom-spotify {
-  color: #c5e1a5;
+#network, #tray-expander, #custom-updates,
+#cpu, #custom-gpu-info, #memory, #custom-spotify,
+#temperature, #custom-gpu-temp,
+#custom-weather, #pulseaudio,
+#temperature, #network, #clock {
   padding: 2px 8px 2px 8px;
-}
-
-#custom-weather,
-#pulseaudio,
-#cpu,
-#custom-gpu-info,
-#temperature,
-#memory,
-#network,
-#clock {
-  padding: 2px 8px 2px 8px;
-  color: #9bbfbf;
-}
-
-#tray-expander {
-  padding: 2px 4px 2px 8px;
-  color: #9bbfbf;
-}
-
-#cpu, #custom-gpu-info, #memory {
-  color: #BCA4E0;
-}
-
-#temperature {
-  color: #e0a4a4;
-}
-
-#custom-gpu-temp {
-  padding: 2px 8px 2px 0px;
-  color: #e0a4a4;
-}
-
-#network {
-  color: #E0DEA4;
-}
-
-#custom-updates {
-  padding: 2px 8px 2px 8px;
-  color: #9bbfbf;
+  color: #DFDFDD;
 }
 
 tooltip {
@@ -71,7 +36,7 @@ tooltip {
 }
 
 tooltip label{
-  color: #9bbfbf;
+  color: #DFDFDD;
   margin: -4px -2px -4px -2px;
   border: 0px;
 }

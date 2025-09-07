@@ -23,7 +23,7 @@
     "custom/spotify"
   ],
   "custom/spotify": {
-    "format": "{text}",
+    "format": "|  {text}",
     "exec": "playerctl -p spotify metadata --format '{{ title }} ~ {{artist}}'",
     "exec-if": "pgrep spotify",
     "interval": 1,
@@ -44,7 +44,7 @@
   "custom/gpu-info": {
   "exec": "~/.config/waybar/scripts/gpu-info.sh",
   "interval": 5,
-  "format": "{text}",
+  "format": "{text}  |",
   "on-click": "kitty -e nvtop",
   "tooltip": true,
   "tooltip-format": "GPU Utilization"
@@ -68,7 +68,7 @@
   "custom/gpu-temp": {
     "exec": "~/.config/waybar/scripts/gpu-temp.sh",
     "interval": 5,
-    "format": "{text}",
+    "format": "{text}  |",
     "tooltip": true,
     "tooltip-format": "GPU Temperature"
   },
