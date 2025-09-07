@@ -89,7 +89,7 @@
     }
   },
   "network": {
-    "format": "⇣ {bandwidthDownBytes} ~ {bandwidthUpBytes} ⇡",
+    "format": " ⇣ {bandwidthDownBytes} ~ {bandwidthUpBytes} ⇡",
     "tooltip-format": "Connected",
     "tooltip-format-disconnected": "Disconnected",
     "interval": 1,

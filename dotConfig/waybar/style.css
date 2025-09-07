@@ -21,11 +21,10 @@
   box-shadow: none;
 }
 
-#network, #tray-expander, #custom-updates,
 #cpu, #custom-gpu-info, #memory, #custom-spotify,
-#temperature, #custom-gpu-temp,
-#custom-weather, #pulseaudio,
-#temperature, #network, #clock {
+#network, #tray-expander, #custom-updates,
+#temperature, #network, #clock,
+#custom-weather, #pulseaudio {
   padding: 2px 8px 2px 8px;
   color: #DFDFDD;
 }
@@ -34,7 +33,6 @@ tooltip {
   border-radius: 0px;
   border: 0px;
 }
-
 tooltip label{
   color: #DFDFDD;
   margin: -4px -2px -4px -2px;
