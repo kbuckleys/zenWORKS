@@ -11,6 +11,6 @@ And then insert this snippet and save the file:
 ``[theme]
 Current=kripton``
 
-Restart the sddm service:
+Restart the sddm service or simply log out:
 
 ``sudo systemctl restart sddm.service``
