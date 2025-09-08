@@ -40,7 +40,7 @@ ebook = [
 [open]
 rules = [
     # Folder
-    { name = "*/", use = ["open", "edit", "reveal"] },
+    { name = "*/", use = ["open", "thunar", "reveal"] },
     # Text
     { mime = "text/*", use = ["edit", "reveal"] },
     # Markdown
