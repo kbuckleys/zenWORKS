@@ -31,7 +31,7 @@
   },
   "hyprland/workspaces": {
     "on-click": "activate",
-    "format": "{icon}",
+    "format": "",
     "all-outputs": true,
     "disable-scroll": false,
     "active-only": false
@@ -44,7 +44,7 @@
   "custom/gpu-info": {
   "exec": "~/.config/waybar/scripts/gpu-info.sh",
   "interval": 5,
-  "format": "{text}  |",
+  "format": "{text}  󰇙",
   "on-click": "kitty -e nvtop",
   "tooltip": true,
   "tooltip-format": "GPU Utilization"
@@ -68,7 +68,7 @@
   "custom/gpu-temp": {
     "exec": "~/.config/waybar/scripts/gpu-temp.sh",
     "interval": 5,
-    "format": "{text}  |",
+    "format": "{text}  󰇙",
     "tooltip": true,
     "tooltip-format": "GPU Temperature"
   },
@@ -79,7 +79,7 @@
     "interval": 1
   },
   "pulseaudio": {
-    "format": "|  {icon}{volume}%",
+    "format": "󰇙  {icon}{volume}%",
     "on-click": "kitty --class=Wiremix -e wiremix",
     "on-click-right": "pamixer -t",
     "format-muted": "  MUTED",
@@ -125,7 +125,7 @@
     "exec": "waybar-module-pacman-updates --interval-seconds 5 --network-interval-seconds 300",
   },
   "custom/weather": {
-      "format": "|  {}°C",
+      "format": "󰇙  {}°C",
       "tooltip": true,
       "interval": 300,
       "exec": "wttrbar --nerd",
