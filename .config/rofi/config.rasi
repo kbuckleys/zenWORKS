@@ -45,11 +45,12 @@
 }
 
 configuration {
-	  modi: "combi,drun,recursivebrowser";
+	  modi: "combi,drun,recursivebrowser,filebrowser";
     show-icons: false;
     display-combi: "COMBI";
     display-drun: "DRUN";
     display-recursivebrowser: "FILES";
+    display-filebrowser: "BROWSER";
 	  drun-display-format: "{name}";
 	  window-format: "{c} · {t}";
     kb-accept-entry: "Return";
@@ -59,6 +60,9 @@ configuration {
         cancel-returns-1: true;
         filter-regex: "(.*cache.*|.*\\.o)";
         command: "kitty -e nvim";
+   }
+   filebrowser {
+        show-hidden: true;
    }
 }
 
