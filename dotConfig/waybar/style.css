@@ -22,12 +22,17 @@
   box-shadow: none;
 }
 
-#cpu, #custom-gpu-info, #memory, #custom-spotify,
 #network, #tray-expander, #custom-updates,
+#cpu, #custom-gpu-info, #memory,
 #temperature, #network, #clock,
 #custom-weather, #pulseaudio {
   padding: 2px 8px 2px 8px;
   color: #DFDFDD;
+}
+
+#custom-spotify {
+  padding: 2px 8px 2px 8px;
+  color: #b6e0a4;
 }
 
 tooltip {
