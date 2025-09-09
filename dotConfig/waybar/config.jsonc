@@ -117,6 +117,7 @@
   "custom/updates": {
     "format": "{} {icon}",
     "return-type": "json",
+    "on-click": "kitty -e sudo pacman -Syu",
     "format-icons": {
         "has-updates": "󱍷",
         "updated": "󰚰"
