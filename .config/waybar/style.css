@@ -22,10 +22,10 @@
   box-shadow: none;
 }
 
-#network, #tray-expander, #custom-updates,
 #cpu, #custom-gpu-info, #memory,
 #temperature, #network, #clock,
-#custom-weather, #pulseaudio {
+#custom-weather, #pulseaudio,
+#network, #custom-updates {
   padding: 2px 8px 2px 8px;
   color: #DFDFDD;
 }
@@ -33,6 +33,17 @@
 #mpris {
   padding: 2px 8px 2px 8px;
   color: #b6e0a4;
+}
+
+#tray-expander {
+  padding: 2px 0px 2px 8px;
+}
+#tray {
+  padding: 2px 4px 2px 0px;
+}
+
+#custom-updates.has-updates {
+  color: #c8a4e0;
 }
 
 tooltip {

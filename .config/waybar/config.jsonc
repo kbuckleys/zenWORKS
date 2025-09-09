@@ -2,7 +2,7 @@
   "reload_style_on_change": true,
   "layer": "top",
   "position": "bottom",
-  "height": 21,
+  "height": 10,
   "modules-left": [
     "memory",
     "cpu",
@@ -27,7 +27,8 @@
     "format": "{title}",
     "tooltip": true,
     "tooltip-format": "{title} ~ {artist}",
-    "interval": 0
+    "interval": 0,
+    "max-length": 40
   },
   "hyprland/workspaces": {
     "on-click": "activate",
@@ -106,7 +107,7 @@
     ]
   },
   "custom/expand-icon": {
-    "format": " ",
+    "format": "  ",
     "tooltip": false
   },
   "tray": {
@@ -115,7 +116,7 @@
     "spacing": 10
   },
   "custom/updates": {
-    "format": "{} {icon}",
+    "format": "{} {icon} ",
     "return-type": "json",
     "on-click": "kitty -e sudo pacman -Syu",
     "format-icons": {
