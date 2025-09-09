@@ -1,3 +1,12 @@
+##########################################################
+#  | |__  _   _  ___| | ____      _____  _ __| | _____   #
+#  | '_ \| | | |/ __| |/ /\ \ /\ / / _ \| '__| |/ / __|  #
+#  | |_) | |_| | (__|   <  \ v  v / (_) | |  |   <\__ \  #
+#  |_.__/ \__,_|\___|_|\_\  \_/\_/ \___/|_|  |_|\_\___/  #
+#                                                        #
+#             https://github.com/kbuckleys/              #
+##########################################################
+
 [default_apps]
 terminal = "kitty -e"
 browser = "firefox"
@@ -18,7 +27,6 @@ app_paths = []
 width = 350
 height = 449
 gsk_renderer = "cairo"
-icon_paths = ["~/.config/sherlock/icons"]
 icon_size = 0
 use_base_css = false
 opacity = 1.0
