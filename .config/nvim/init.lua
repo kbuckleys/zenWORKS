@@ -28,7 +28,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
   callback = set_transparency,
 })
 
-vim.cmd([[colorscheme tokyonight]]) -- or your colorscheme first
+vim.cmd([[colorscheme tokyonight]])
 
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
@@ -40,7 +40,6 @@ vim.api.nvim_create_autocmd("VimEnter", {
   end,
 })
 
--- Configure nvim-cmp after it's loaded
 vim.defer_fn(function()
   if pcall(require, "cmp") then
     require("cmp").setup({
