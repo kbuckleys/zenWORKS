@@ -15,8 +15,8 @@
     "hyprland/workspaces"
   ],
   "modules-right": [
-    "custom/updates",
     "group/tray-expander",
+    "custom/updates",
     "custom/weather",
     "clock",
     "pulseaudio",
