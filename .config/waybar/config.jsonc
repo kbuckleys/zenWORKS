@@ -30,15 +30,14 @@
     "custom/weather",
     "clock",
     "pulseaudio",
-    "mpris"
+    "custom/waybar-mpris"
   ],
-  "mpris": {
-    "player": "spotify",
-    "format": "{title}",
-    "tooltip": true,
-    "tooltip-format": "{title} ~ {artist}",
-    "interval": 0,
-    "max-length": 40
+  "custom/waybar-mpris": {
+    "return-type": "json",
+    "exec": "waybar-mpris --autofocus --order TITLE",
+    "on-click": "waybar-mpris --send prev",
+    "on-click-middle": "waybar-mpris --send toggle",
+    "on-click-right": "waybar-mpris --send next",
   },
   "hyprland/workspaces": {
     "on-click": "activate",
