@@ -10,10 +10,10 @@
 [global]
 # Display
 follow = mouse
-width = (200, 600)
+width = (300, 600)
 height = (0, 200)
 origin = bottom-center
-offset = (35, 35)
+offset = (12, 12)
 indicate_hidden = yes
 notification_limit = 3
 gap_size = 4
