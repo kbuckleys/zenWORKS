@@ -23,11 +23,11 @@ configuration {
         cancel-returns-1: true;
         filter-regex: "(.*cache.*|.*\\.o)";
         command: "kitty -e nvim";
-   }
-   filebrowser {
+    }
+    filebrowser {
         show-hidden: true;
         command: "thunar";
-   }
+    }
 }
 
 * {
