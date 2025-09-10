@@ -37,7 +37,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
   callback = set_transparency,
 })
 
-vim.cmd([[colorscheme vague]])
+vim.cmd([[colorscheme tokyonight]])
 
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
