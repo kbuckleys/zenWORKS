@@ -1,0 +1,78 @@
+------------------------------------------------------------
+--  | |__  _   _  ___| | ____      _____  _ __| | _____   --
+--  | '_ \| | | |/ __| |/ /\ \ /\ / / _ \| '__| |/ / __|  --
+--  | |_) | |_| | (__|   <  \ V  V / (_) | |  |   <\__ \  --
+--  |_.__/ \__,_|\___|_|\_\  \_/\_/ \___/|_|  |_|\_\___/  --
+--                                                        --
+--             https://github.com/kbuckleys/              --
+------------------------------------------------------------
+
+[global]
+# Display
+follow = mouse
+width = (200, 600)
+height = (0, 200)
+origin = bottom-center
+offset = (35, 35)
+indicate_hidden = yes
+notification_limit = 3
+gap_size = 4
+padding = 8
+horizontal_padding = 18
+frame_width = 1
+sort = no
+
+# Progress bar
+progress_bar_frame_width = 0
+progress_bar_corner_radius = 0
+
+# Colors
+foreground = "#dfdfdd"
+frame_color = "#20242a"
+
+# Text
+font = 0xProto Nerd Font Bold 9
+markup = full
+format = "<small>%a</small>\n<big><b>%s</b></big>\n%b"
+alignment = center
+vertical_alignment = center
+show_age_threshold = -1
+hide_duplicate_count = false
+
+# Icon
+icon_position = left
+min_icon_size = 64
+max_icon_size = 64
+icon_path = /usr/share/icons/Arc/status/96:/usr/share/icons/Arc/status/symbolic
+icon_corner_radius = 0
+
+# Misc/Advanced
+dmenu = rofi --show drun --prompt 'Open with'
+corner_radius = 0
+
+# Mouse
+mouse_left_click = do_action
+mouse_middle_click = close_all
+mouse_right_click = close_current
+
+[urgency_low]
+background = "#0b0e0e"
+timeout = 5
+
+[urgency_normal]
+background = "#0b0e0e"
+timeout = 5
+
+[urgency_critical]
+background = "#e0aea4"
+foreground = "#0b0e0e"
+frame_color = "#0b0e0e"
+timeout = 0
+
+# Rules
+[fullscreen_delay_everything]
+fullscreen = delay
+
+[fullscreen_show_critical]
+msg_urgency = critical
+fullscreen = show
