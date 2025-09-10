@@ -18,7 +18,7 @@ indicate_hidden = yes
 notification_limit = 3
 gap_size = 4
 padding = 8
-horizontal_padding = 18
+horizontal_padding = 16
 frame_width = 1
 sort = no
 
