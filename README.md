@@ -5,6 +5,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - LazyVim
 - ripgrep
 - resvg
+- cliphist
 - imagemagick
 - poppler
 - swww
