@@ -41,8 +41,8 @@ hide_duplicate_count = false
 
 # Icon
 icon_position = left
-min_icon_size = 64
-max_icon_size = 64
+min_icon_size = 48
+max_icon_size = 48
 icon_corner_radius = 0
 
 # Misc/Advanced
