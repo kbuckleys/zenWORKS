@@ -25,6 +25,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - wttrbar
 - zoxide
 - zsh
+- waybar-mpris-git
 - [Oh My Zsh](https://ohmyz.sh/)
 - [PowerLevel10k](https://github.com/romkatv/powerlevel10k)
 
