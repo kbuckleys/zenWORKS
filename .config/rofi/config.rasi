@@ -8,7 +8,7 @@
 ----------------------------------------------------------*/
 
 configuration {
-	  modi: "combi,drun,filebrowser";
+	  modi: "combi,drun,recursivebrowser,filebrowser";
     show-icons: false;
     display-combi: "COMBI";
     display-drun: "DRUN";
