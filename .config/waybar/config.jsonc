@@ -87,8 +87,8 @@
     "input-filename": "temp2_input",
     "interval": 5,
     "critical-threshold": 80,
-    "format": "CT {temperatureC}°C {icon}",
-    "format-critical": "󰸁 {temperatureC}°C",
+    "format": "CT {temperatureC}°C",
+    "format-critical": "CT 󰸁 {temperatureC}°C",
     "tooltip": true,
     "tooltip-format": "CPU Temperature"
   },
