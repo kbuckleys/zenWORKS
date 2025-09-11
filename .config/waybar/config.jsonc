@@ -13,6 +13,7 @@
   "layer": "top",
   "position": "bottom",
   "height": 10,
+
   "modules-left": [
     "memory",
     "cpu",
@@ -36,11 +37,13 @@
     "pulseaudio",
     "custom/waybar-mpris"
   ],
+
   "custom/separator": {
     "format": "󰇙",
     "interval": "once",
     "tooltip": "false"
   },
+
   "custom/waybar-mpris": {
     "return-type": "json",
     "exec": "waybar-mpris --autofocus --order TITLE",
@@ -48,6 +51,7 @@
     "on-click-middle": "waybar-mpris --send toggle",
     "on-click-right": "waybar-mpris --send next"
   },
+
   "hyprland/workspaces": {
     "on-click": "activate",
     "format": "",
@@ -55,25 +59,29 @@
     "disable-scroll": false,
     "active-only": false
   },
+
   "clock": {
     "format": "{:%I:%M %p}",
     "tooltip": true,
     "tooltip-format": "{:%A, %B %d, %Y}"
   },
+
   "custom/gpu-info": {
-  "exec": "~/.config/waybar/scripts/gpu-info.sh",
-  "interval": 5,
-  "format": "{text}",
-  "on-click": "kitty -e nvtop",
-  "tooltip": true,
-  "tooltip-format": "GPU Utilization"
+    "exec": "~/.config/waybar/scripts/gpu-info.sh",
+    "interval": 5,
+    "format": "{text}",
+    "on-click": "kitty -e nvtop",
+    "tooltip": true,
+    "tooltip-format": "GPU Utilization"
   },
+
   "cpu": {
     "format": "CPU {usage}%",
     "on-click": "kitty -e btop",
     "tooltip": true,
     "interval": 1
   },
+
   "temperature": {
     "hwmon-path-abs": "/sys/devices/platform/coretemp.0/hwmon",
     "input-filename": "temp2_input",
@@ -84,6 +92,7 @@
     "tooltip": true,
     "tooltip-format": "CPU Temperature"
   },
+
   "custom/gpu-temp": {
     "exec": "~/.config/waybar/scripts/gpu-temp.sh",
     "interval": 5,
@@ -91,12 +100,14 @@
     "tooltip": true,
     "tooltip-format": "GPU Temperature"
   },
+
   "memory": {
     "format": "RAM {used:0.1f}",
     "tooltip": true,
     "tooltip-format": "{total:0.1f}GiB\nUsed: {used:0.1f}GiB\nAvailable: {avail:0.1f}GiB",
     "interval": 1
   },
+  
   "pulseaudio": {
     "format": "{icon}{volume}%",
     "on-click": "kitty --class=Wiremix -e wiremix",
@@ -107,13 +118,15 @@
       "default": [" ", " ", " "]
     }
   },
+
   "network": {
     "format": "⇣ {bandwidthDownBytes} ~ {bandwidthUpBytes} ⇡",
-    "tooltip-format": "Connected",
+  "tooltip-format": "Connected",
     "tooltip-format-disconnected": "Disconnected",
     "interval": 1,
     "nospacing": 1
   },
+
   "group/tray-expander": {
     "orientation": "inherit",
     "drawer": {
@@ -124,15 +137,18 @@
       "custom/expand-icon", "tray"
     ]
   },
+
   "custom/expand-icon": {
     "format": "  ",
     "tooltip": false
   },
+
   "tray": {
     "show-passive-items": true,
     "icon-size": 14,
     "spacing": 10
   },
+
   "custom/updates": {
     "format": "{} {icon} ",
     "return-type": "json",
@@ -144,6 +160,7 @@
     "exec-if": "which waybar-module-pacman-updates",
     "exec": "waybar-module-pacman-updates --interval-seconds 5 --network-interval-seconds 300"
   },
+
   "custom/weather": {
       "format": "{}°C",
       "tooltip": true,
