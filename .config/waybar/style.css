@@ -40,7 +40,7 @@
 #custom-weather, #pulseaudio, #custom-waybar-mpris,
 #temperature, #custom-gpu-temp, #network, #clock,
 #cpu, #custom-gpu-info, #memory,
-#network, #custom-pacman {
+#network {
   padding: 2px 8px 2px 8px;
   color: #DFDFDD;
 }
@@ -49,8 +49,12 @@
   color: #b6e0a4;
 }
 
+#custom-pacman {
+  padding: 2px 8px 2px 2px;
+}
+
 #tray-expander {
-  padding: 2px 0px 2px 8px;
+  padding: 2px 2px 2px 8px;
 }
 #tray {
   padding: 2px 8px 2px 0px;

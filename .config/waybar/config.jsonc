@@ -28,8 +28,8 @@
     "hyprland/workspaces"
   ],
   "modules-right": [
-    "custom/pacman",
     "group/tray-expander",
+    "custom/pacman",
     "custom/separator",
     "custom/weather",
     "clock",
