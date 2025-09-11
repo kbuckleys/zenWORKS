@@ -28,7 +28,7 @@
     "hyprland/workspaces"
   ],
   "modules-right": [
-    "custom/updates",
+    "custom/pacman",
     "group/tray-expander",
     "custom/separator",
     "custom/weather",
@@ -149,16 +149,16 @@
     "spacing": 10
   },
 
-  "custom/updates": {
+  "custom/pacman": {
     "format": "{} {icon} ",
     "return-type": "json",
-    "on-click": "kitty -e sudo pacman -Syu",
+    "on-click": "kitty -e sh -c 'yay -Syu; read -p \"Press Return to close...\"'",
     "format-icons": {
-        "has-updates": "󱍷",
-        "updated": "󰚰"
+        "pending-updates": "",
+        "updated": ""
     },
-    "exec-if": "which waybar-module-pacman-updates",
-    "exec": "waybar-module-pacman-updates --interval-seconds 5 --network-interval-seconds 300"
+    "exec-if": "which waybar-updates",
+    "exec": "waybar-updates"
   },
 
   "custom/weather": {
