@@ -19,6 +19,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - nwg-look
 - nvtop
 - ffmpeg
+- gpu-screen-recorder
 - gtk-engine-murrine
 - wiremix
 - pamixer
