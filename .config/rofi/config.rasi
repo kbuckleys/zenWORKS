@@ -35,8 +35,8 @@ configuration {
     background-alt: #20242A;
     foreground: #DFDFDD;
     border: #20242A;
-    selected: #9BBFBF;
-    active: #E0D8A4;
+    selected: #E0D8A4;
+    active: #9BBFBF;
     urgent: #E0AEA4;
     font: "0xProto Nerd Font Medium 10";
 }
@@ -85,7 +85,7 @@ window {
 
 mainbox {
     enabled: true;
-    spacing: 1px;
+    spacing: 0px;
     margin: 0px;
     padding: 1px;
     border: 1px solid;
@@ -99,7 +99,7 @@ inputbar {
     enabled: true;
     spacing: 4px;
     margin:  0px;
-    padding: 4px 4px;
+    padding: 2px 4px;
     border: 0px 0px 0px 0px;
     border-radius: 0px;
     border-color: @border;
@@ -140,10 +140,9 @@ listview {
     reverse: false;
     fixed-height: true;
     fixed-columns: true;
-
     spacing: 1px;
     margin: 0px;
-    padding: 1px;
+    padding: 1px 4px 1px 4px;
     border: 0px;
     border-radius: 0px;
     border-color: @border-colour;
@@ -156,7 +155,7 @@ element {
     enabled: true;
     spacing: 1px;
     margin: 0px;
-    padding: 2px;
+    padding: 0px;
     border: 0px;
     border-radius: 0px;
     border-color: @border-colour;
@@ -203,7 +202,7 @@ element alternate.active {
 element-icon {
     background-color: transparent;
     text-color: inherit;
-    size: 24px;
+    size: 14px;
     cursor: inherit;
 }
 element-text {
@@ -227,7 +226,7 @@ mode-switcher{
     text-color: @foreground-colour;
 }
 button {
-    padding: 2px 2px;
+    padding: 0px;
     border: 0px ;
     border-radius: 0px;
     border-color: @border-colour;
