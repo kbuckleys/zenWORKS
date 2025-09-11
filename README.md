@@ -23,7 +23,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - gtk-engine-murrine
 - wiremix
 - pamixer
-- waybar-module-pacman-updates-git __(If you use Arch)__
+- waybar-updates __(If you use Arch)__
 - waybar-mpris-git
 - wttrbar
 - zoxide
