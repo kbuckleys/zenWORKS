@@ -152,7 +152,7 @@
   "custom/pacman": {
     "format": "{} {icon} ",
     "return-type": "json",
-    "on-click": "kitty -e sh -c 'yay -Syu; read -p \"Press Return to close...\"'",
+    "on-click": "kitty --class waybar-updates -e sh -c 'yay -Syu; read -p \"Press Return to close...\"'",
     "format-icons": {
         "pending-updates": "",
         "updated": ""
