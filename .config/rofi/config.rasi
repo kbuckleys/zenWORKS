@@ -140,7 +140,7 @@ listview {
     reverse: false;
     fixed-height: true;
     fixed-columns: true;
-    spacing: 1px;
+    spacing: 4px;
     margin: 0px;
     padding: 1px 4px 1px 4px;
     border: 0px;
