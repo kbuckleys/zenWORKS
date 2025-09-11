@@ -17,8 +17,10 @@
     "memory",
     "cpu",
     "custom/gpu-info",
+    "custom/separator",
     "temperature",
     "custom/gpu-temp",
+    "custom/separator",
     "network"
   ],
   "modules-center": [
@@ -27,17 +29,24 @@
   "modules-right": [
     "custom/updates",
     "group/tray-expander",
+    "custom/separator",
     "custom/weather",
     "clock",
+    "custom/separator",
     "pulseaudio",
     "custom/waybar-mpris"
   ],
+  "custom/separator": {
+    "format": "󰇙",
+    "interval": "once",
+    "tooltip": "false"
+  },
   "custom/waybar-mpris": {
     "return-type": "json",
     "exec": "waybar-mpris --autofocus --order TITLE",
     "on-click": "waybar-mpris --send prev",
     "on-click-middle": "waybar-mpris --send toggle",
-    "on-click-right": "waybar-mpris --send next",
+    "on-click-right": "waybar-mpris --send next"
   },
   "hyprland/workspaces": {
     "on-click": "activate",
@@ -54,7 +63,7 @@
   "custom/gpu-info": {
   "exec": "~/.config/waybar/scripts/gpu-info.sh",
   "interval": 5,
-  "format": "{text}  󰇙",
+  "format": "{text}",
   "on-click": "kitty -e nvtop",
   "tooltip": true,
   "tooltip-format": "GPU Utilization"
@@ -78,7 +87,7 @@
   "custom/gpu-temp": {
     "exec": "~/.config/waybar/scripts/gpu-temp.sh",
     "interval": 5,
-    "format": "{text}  󰇙",
+    "format": "{text}",
     "tooltip": true,
     "tooltip-format": "GPU Temperature"
   },
@@ -89,7 +98,7 @@
     "interval": 1
   },
   "pulseaudio": {
-    "format": "󰇙  {icon}{volume}%",
+    "format": "{icon}{volume}%",
     "on-click": "kitty --class=Wiremix -e wiremix",
     "on-click-right": "pamixer -t",
     "format-muted": "  MUTED",
@@ -99,7 +108,7 @@
     }
   },
   "network": {
-    "format": " ⇣ {bandwidthDownBytes} ~ {bandwidthUpBytes} ⇡",
+    "format": "⇣ {bandwidthDownBytes} ~ {bandwidthUpBytes} ⇡",
     "tooltip-format": "Connected",
     "tooltip-format-disconnected": "Disconnected",
     "interval": 1,
@@ -133,10 +142,10 @@
         "updated": "󰚰"
     },
     "exec-if": "which waybar-module-pacman-updates",
-    "exec": "waybar-module-pacman-updates --interval-seconds 5 --network-interval-seconds 300",
+    "exec": "waybar-module-pacman-updates --interval-seconds 5 --network-interval-seconds 300"
   },
   "custom/weather": {
-      "format": "󰇙  {}°C",
+      "format": "{}°C",
       "tooltip": true,
       "interval": 300,
       "exec": "wttrbar --nerd",

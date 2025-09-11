@@ -32,6 +32,11 @@
   box-shadow: none;
 }
 
+#custom-separator {
+  padding: 2px 8px 2px 8px;
+  color: #dfdfdd;
+}
+
 #cpu, #custom-gpu-info, #memory,
 #temperature, #network, #clock,
 #custom-weather, #pulseaudio,
