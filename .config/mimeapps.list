@@ -1,0 +1,3 @@
+[Default Applications]
+text/plain=nvim.desktop
+image/jpeg/png=com.interversehq.qView.desktop
