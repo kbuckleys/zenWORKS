@@ -27,6 +27,8 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - waybar-updates __(If you use Arch or any Arch derivative)__
 - waybar-mpris-git
 - wttrbar
+- rofimoji
+- noto-fonts-emoji
 - zoxide
 - zsh
 - [Oh My Zsh](https://ohmyz.sh/)
