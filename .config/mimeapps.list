@@ -1,6 +1,5 @@
 [Default Applications]
-text/plain=userapp-kitty -e nvim-8GWDC3.desktop
 image/jpeg/png=com.interversehq.qView.desktop
-
-[Added Associations]
-text/plain=userapp-kitty -e nvim-8GWDC3.desktop;nvim.desktop;
+text/plain=nvim.desktop
+application/javascript=nvim.desktop
+application/json=nvim.desktop
