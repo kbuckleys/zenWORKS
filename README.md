@@ -28,6 +28,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - waybar-mpris-git
 - wttrbar
 - rofimoji
+- wtype
 - noto-fonts-emoji
 - zoxide
 - zsh
