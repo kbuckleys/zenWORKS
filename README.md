@@ -15,6 +15,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - hyprshot
 - cliphist
 - wl-clipboard
+- wl-clip-persist
 - tumbler
 - nwg-look
 - nvtop
