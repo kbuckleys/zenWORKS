@@ -21,7 +21,7 @@ play = [
     { run = 'clapper "$@"', orphan = true, for = "unix" },
 ]
 edit = [
-    { run = 'nvim "$@"', desc = "nvim", block = true, for = "unix" },
+    { run = 'kitty -e nvim "$@"', desc = "nvim", block = false, for = "unix" },
 ]
 open = [
     { run = 'xdg-open "$1"', desc = "Open", for = "unix" },
