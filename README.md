@@ -1,7 +1,7 @@
 <img width="1190" height="576" alt="ascii-text-art" src="https://github.com/user-attachments/assets/6b472718-46da-43e4-a598-e62f98c174cf" />
 
 # <h1 align="center">dotfiles and misc</h1>
-Hello and welcome. This is my dotfile repo for all to use, and for my own convenience. I'm also not trying to pull an Omarchy, I just love Delta Corps Priest.
+Hello and welcome. This is my dotfile repo for all to use, and for my own convenience. I'm also not trying to pull an Omarchy, I just love Delta Corps Priest. Enjoy and never stop cooking that rice!
 
 # Premise
 In my search for a GTK theme, I stumbled upon an old one called Kripton, which I found to be quite beautiful, but it didn't quite fit in with the rest of my setup. So I took it upon myself and created a Kripton color palette based on the GTK theme, and then made Kripton themes for the software I use. This is going to be a work in progress, as I'm considering taking this seriously and kickstart a project to cover as many software and websites as possible. I highly doubt it could ever be on the same level as Catppuccin's or Nord's, but it's an enticing idea all the same.
