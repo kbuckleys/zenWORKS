@@ -18,10 +18,10 @@ linemode = "size"
 
 [opener]
 play = [
-    { run = 'clapper "$@"', orphan = true, for = "unix" },
+    { run = 'xdg-open "$@"', orphan = true, for = "unix" },
 ]
 edit = [
-    { run = 'kitty -e nvim "$@"', desc = "nvim", block = false, for = "unix" },
+    { run = 'xdg-open "$@"', desc = "nvim", orpahn = "true", block = false, for = "unix" },
 ]
 open = [
     { run = 'xdg-open "$1"', desc = "Open", for = "unix" },
@@ -31,7 +31,7 @@ reveal = [
     { run = '''exiftool "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
 ]
 pdf = [
-    { run = 'firefox "$1"', desc = "Open with Firefox", for = "unix" },
+    { run = 'xdg-open "$1"', desc = "Open with Firefox", for = "unix" },
 ]
 markdown = [
     { run = 'glow "$1"', desc = "View with glow", for = "unix" },
