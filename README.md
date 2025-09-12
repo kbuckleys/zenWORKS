@@ -1,6 +1,5 @@
-<img width="1190" height="576" alt="ascii-text-art" src="https://github.com/user-attachments/assets/6b472718-46da-43e4-a598-e62f98c174cf" />
+<img width="1400" height="678" alt="buckWORKS-ASCII" src="https://github.com/user-attachments/assets/35381c98-1968-4575-9d7a-12801290c3c2" />
 
-# <h1 align="center">dotfiles and misc</h1>
 Hello and welcome. This is my dotfile repo for all to use, and for my own convenience. I'm also not trying to pull an Omarchy, I just love Delta Corps Priest. Enjoy and never stop cooking that rice!
 
 # Premise
