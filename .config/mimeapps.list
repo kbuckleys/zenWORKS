@@ -1,5 +1,5 @@
 [Default Applications]
 image/jpeg/png=com.interversehq.qView.desktop
-text/plain=nvim.desktop
 application/javascript=nvim.desktop
 application/json=nvim.desktop
+text/plain=nvim.desktop
