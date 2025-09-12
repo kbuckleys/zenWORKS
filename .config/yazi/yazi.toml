@@ -15,6 +15,10 @@ sort_reverse = false
 show_icons = true
 linemode = "size"
 
+system_default = [
+    { run = "yazi \"$1\"", desc = "Yazi (Default)", for = "linux" }
+]   
+
 [open]
 rules = [
     { name = "*/", use = ["reveal"] },
