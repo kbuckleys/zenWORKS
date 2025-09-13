@@ -21,12 +21,12 @@
 *               https://github.com/kbuckleys/               */
 
 * {
-  min-height: 0;
   min-width: 0;
-  font-family: "0xProto Nerd Font";
+  min-height: 0;
   background-color: #000000;
-  font-size: 12px;
+  font-family: "0xProto Nerd Font";
   font-weight: 700;
+  font-size: 12px;
 }
 
 #workspaces button {
@@ -49,9 +49,9 @@
   color: #dfdfdd;
 }
 
-#temperature, #custom-gpu-temp, #network,
-#cpu, #custom-gpu-info, #memory, #clock
-#pulseaudio, #custom-waybar-mpris {
+#custom-weather, #pulseaudio, #custom-waybar-mpris,
+#temperature, #custom-gpu-temp, #network, #clock,
+#cpu, #custom-gpu-info, #memory {
   padding: 2px 8px 2px 8px;
   color: #DFDFDD;
 }
