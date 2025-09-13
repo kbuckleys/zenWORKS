@@ -56,6 +56,16 @@
   color: #DFDFDD;
 }
 
+#temperature.critical {
+  background-color: #e0aea4;
+  color: #0b0e0e;
+}
+
+#pulseaudio.muted {
+  background-color: #e0d8a4;
+  color: #0b0e0e;
+}
+
 #custom-waybar-mpris {
   color: #b6e0a4;
 }
@@ -72,7 +82,8 @@
 }
 
 #custom-pacman.pending-updates {
-  color: #c8a4e0;
+  background-color: #c8a4e0;
+  color: #0b0e0e;
 }
 
 tooltip {
