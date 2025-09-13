@@ -49,10 +49,9 @@
   color: #dfdfdd;
 }
 
-#custom-weather, #pulseaudio, #custom-waybar-mpris,
-#temperature, #custom-gpu-temp, #network, #clock,
-#cpu, #custom-gpu-info, #memory,
-#network {
+#temperature, #custom-gpu-temp, #network,
+#cpu, #custom-gpu-info, #memory, #clock
+#pulseaudio, #custom-waybar-mpris {
   padding: 2px 8px 2px 8px;
   color: #DFDFDD;
 }

@@ -44,7 +44,6 @@
     "group/tray-expander",
     "custom/pacman",
     "custom/separator",
-    "custom/weather",
     "clock",
     "custom/separator",
     "pulseaudio",
@@ -172,13 +171,5 @@
     },
     "exec-if": "which waybar-updates",
     "exec": "waybar-updates"
-  },
-
-  "custom/weather": {
-      "format": "{}°C",
-      "tooltip": true,
-      "interval": 300,
-      "exec": "wttrbar --nerd",
-      "return-type": "json"
   }
 }
