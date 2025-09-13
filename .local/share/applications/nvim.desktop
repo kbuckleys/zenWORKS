@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=Neovim Text Editor
-Comment=Edit text files in terminal
+Name=Neovim
+Comment=IDE
 Exec=kitty -e nvim %F
 Terminal=true
 Type=Application
