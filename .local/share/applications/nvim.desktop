@@ -2,7 +2,7 @@
 Name=Neovim
 Comment=IDE
 Exec=kitty -e nvim %F
-Terminal=true
+Terminal=false
 Type=Application
 Icon=terminal
 Categories=Utility;TextEditor;
