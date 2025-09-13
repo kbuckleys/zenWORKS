@@ -178,7 +178,7 @@
       "format": "{}°C",
       "tooltip": true,
       "interval": 3600,
-      "exec": "wttrbar --nerd --custom-indicator '{ICON} {temp_C}°C ~ {FeelsLikeC}°'",
+      "exec": "wttrbar --nerd --custom-indicator '{ICON} {temp_C}°C ~ {FeelsLikeC}'",
       "return-type": "json"
   }
 }
