@@ -28,7 +28,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - gtk-engine-murrine
 - wiremix
 - pamixer
-- waybar-updates __(If you use Arch or any of its derivatives)__
+- waybar-updates ```If you use Arch or any of its derivatives```
 - waybar-mpris-git
 - rofimoji
 - wtype
