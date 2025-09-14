@@ -21,9 +21,8 @@
 *               https://github.com/kbuckleys/               */
 
 configuration {
-	  modi: "combi,drun,recursivebrowser,filebrowser";
+	  modi: "drun,recursivebrowser,filebrowser";
     show-icons: false;
-    display-combi: "COMBI";
     display-drun: "DRUN";
     display-recursivebrowser: "FILES";
     display-filebrowser: "BROWSER";
