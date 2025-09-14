@@ -16,7 +16,7 @@ return {
     {
       "<leader> ",
       "<cmd>Yazi cwd<cr>",
-      desc = "Open the file manager in nvim's working directory",
+      desc = "Open Yazi",
     },
     {
       "<c-up>",
