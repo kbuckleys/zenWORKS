@@ -48,8 +48,8 @@ configuration {
     background-alt: #20242A;
     foreground: #DFDFDD;
     border: #20242A;
-    selected: #E0D8A4;
-    active: #9BBFBF;
+    selected: #9BBFBF;
+    active: #E0D8A4;
     urgent: #E0AEA4;
     font: "0xProto Nerd Font Medium 10";
 }
