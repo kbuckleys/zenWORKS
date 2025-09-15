@@ -17,7 +17,9 @@
 #  ▀███▀███▀   ▀██████▀    ███    ███   ███   ▀█▀  ▄████████▀
 #                          ███    ███   ▀
 #
-#                 https://github.com/kbuckleys/
+#
+#          Original script by https://github.com/jluttine
+#            Modified by https://github.com/kbuckleys/
 
 #!/usr/bin/env bash
 
