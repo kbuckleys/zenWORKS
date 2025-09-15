@@ -89,8 +89,6 @@ window {
     margin: 0px;
     padding: 0px;
     border: 0px;
-    border-radius: 0px;
-    border-color: @border-colour;
     cursor: "default";
     background-color: @background-colour;
 }
@@ -246,13 +244,11 @@ message {
     margin: 0px;
     padding: 4px 4px;
     border: 0px ;
-    border-radius: 0px;
     background-color: @alternate-background;
     text-color: @foreground-colour;
 }
 textbox {
     border: 0px;
-    border-color: @border-colour;
     background-color: transparent;
     text-color: @foreground-colour;
     vertical-align: 0.5;
@@ -265,8 +261,6 @@ textbox {
 error-message {
     padding: 20px;
     border: 0px ;
-    border-radius: 0px;
-    border-color: @border-colour;
     background-color: @background-colour;
     text-color: @foreground-colour;
 }

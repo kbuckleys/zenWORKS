@@ -23,7 +23,7 @@
 @theme "Arc-Dark"
 
 configuration {
-    show-icons: false;
+    show-icons: true;
     kb-accept-entry: "Return";
 }
 
@@ -46,10 +46,6 @@ configuration {
     alternate-background: var(background-alt);
     normal-background: var(background);
     normal-foreground: var(foreground);
-    urgent-background: var(urgent);
-    urgent-foreground: var(background);
-    active-background: var(active);
-    active-foreground: var(background);
     selected-normal-background: var(selected);
     selected-normal-foreground: var(background);
     selected-urgent-background: var(active);
@@ -69,7 +65,7 @@ window {
     location: center;
     anchor: center;
     fullscreen: false;
-    width: 200px;
+    width: 150px;
     enabled: true;
     margin: 0px;
     padding: 0px;
@@ -89,7 +85,7 @@ mainbox {
     background-color: transparent;
 }
 
-entry {
+entry, inputbar, element-icon {
     enabled: false;
 }
 
@@ -106,30 +102,23 @@ listview {
     fixed-columns: true;
     spacing: 2px;
     margin: 0px;
-    padding: 0px 1px 0px 1px;
+    padding: 0px;
     border: 0px;
     background-color: transparent;
     text-color: @foreground-colour;
     cursor: "default";
 }
 
-inputbar {
-    enabled: false;
-    children: [];
-    background-color: transparent;
-    padding: 0px;
-    margin: 0px;
-    border: 0px;
-}
-
 element {
-    expand: true;
-    horizontal-align: 0.5;
+    enabled: true;
+    spacing: 0px;
+    margin: 0px;
+    padding: 2px;
+    border: 0px;
+    background-color: transparent;
+    text-color: @foreground-colour;
+    cursor: pointer;
 }
 element-text {
-    horizontal-align: 0.5;
-    text-align: center;
-}
-element-icon {
     horizontal-align: 0.5;
 }
