@@ -228,7 +228,7 @@ for entry in "${all[@]}"; do
   # and regular messages never collide.
   confirmationMessages[$entry]=$(write_message "${icons[$entry]}\u200b" "Yes, ${texts[$entry]}")
 done
-confirmationMessages[cancel]=$(write_message "${icons[cancel]}" "No, cancel")
+confirmationMessages[cancel]=$(write_message "${icons[cancel]}" "No, CANCEL")
 
 if [ $# -gt 0 ]; then
   # If arguments given, use those as the selection
