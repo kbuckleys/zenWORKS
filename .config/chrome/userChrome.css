@@ -1,0 +1,312 @@
+
+# ▀█████████▄  ███    █▄   ▄████████    ▄█   ▄█▄
+#   ███    ███ ███    ███ ███    ███   ███ ▄███▀
+#   ███    ███ ███    ███ ███    █▀    ███▐██▀
+#  ▄███▄▄▄██▀  ███    ███ ███         ▄█████▀
+# ▀▀███▀▀▀██▄  ███    ███ ███        ▀▀█████▄
+#   ███    ██▄ ███    ███ ███    █▄    ███▐██▄
+#   ███    ███ ███    ███ ███    ███   ███ ▀███▄
+# ▄█████████▀  ████████▀  ████████▀    ███   ▀█▀
+#                                      ▀
+#  ▄█     █▄   ▄██████▄     ▄████████    ▄█   ▄█▄    ▄████████
+# ███     ███ ███    ███   ███    ███   ███ ▄███▀   ███    ███
+# ███     ███ ███    ███   ███    ███   ███▐██▀     ███    █▀
+# ███     ███ ███    ███  ▄███▄▄▄▄██▀  ▄█████▀      ███
+# ███     ███ ███    ███ ▀▀███▀▀▀▀▀   ▀▀█████▄    ▀███████████
+# ███     ███ ███    ███ ▀███████████   ███▐██▄            ███
+# ███ ▄█▄ ███ ███    ███   ███    ███   ███ ▀███▄    ▄█    ███
+#  ▀███▀███▀   ▀██████▀    ███    ███   ███   ▀█▀  ▄████████▀
+#                          ███    ███   ▀
+#
+#                 https://github.com/kbuckleys/
+
+:root {
+  --tab-min-height: 11px !important;
+  --tab-max-height: 11px !important;
+}
+.tabbrowser-tab .tab-label {
+    font-size: 12px !important;
+}
+#TabsToolbar .tabbrowser-tab[selected="true"] .tab-label {
+    font-weight: 700 !important;
+}
+
+#tabbrowser-tabs, 
+#tabbrowser-tabs > #tabbrowser-arrowscrollbox,
+.tabbrowser-tabs .tabbrowser-tab {
+  min-height: var(--tab-min-height) !important;
+  max-height: var(--tab-min-height) !important;
+}
+
+#TabsToolbar {
+  height: var(--tab-min-height) !important;
+  margin-top: -10px !important;
+  margin-bottom: -4px !important;
+  margin-right: -1px !important;
+  margin-left: -1px !important;
+}
+
+/* Hide tab bar only when exactly one tab is open */
+#TabsToolbar:not(:has(tab.tabbrowser-tab:not(:only-of-type))) {
+  visibility: collapse !important;
+}
+
+#tabbrowser-tabs .tabbrowser-tab:only-of-type,
+#tabbrowser-tabs .tabbrowser-tab:only-of-type + #tabbrowser-arrowscrollbox-periphery {
+  display: none !important;
+}
+
+#sidebar-box {
+  border-inline-end: none !important;
+}
+#sidebar-header {
+  border-inline-end: none !important;
+}
+
+#back-button, #forward-button {
+  display: none !important;
+}
+
+/* Character limit for tab labels */
+.tab-label {
+    max-width: 550px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+/* Add separators between inactive tabs only */
+.tabbrowser-tab:not([selected="true"]) {
+  border-inline-start: 2px dotted #64737d !important;
+}
+.tabbrowser-tab:first-child {
+  border-inline-start: none !important;
+}
+.tabbrowser-tab[selected="true"] + .tabbrowser-tab {
+  border-inline-start: none !important;
+}
+
+#sidebar-splitter {
+  width: 0px !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+#urlbar {
+  text-align: center !important;
+}
+#urlbar-results {
+  text-align: left !important;
+}
+
+.tabbrowser-tab .tab-close-button {
+  visibility: collapse !important;
+}
+
+.titlebar-min, .titlebar-max,
+.titlebar-restore, .titlebar-close {
+  display: none !important;
+}
+
+.tabbrowser-tab:not([style^="max-width"]):not([pinned]),
+.tabbrowser-tab[style^="max-width: 100px !important;"]:not([pinned]) {
+	max-width: 100% !important;
+}
+
+.tabbrowser-tab:not([style^="max-width"]):not([pinned]):not([fadein]),
+.tabbrowser-tab[style^="max-width: 100px !important;"]:not([pinned]):not([fadein]) {
+	max-width: .1px !important;
+}
+
+#TabsToolbar .titlebar-spacer {
+	display: none !important;
+}
+
+.tabbrowser-tab[usercontextid]>.tab-stack>.tab-background>.tab-bottom-line {
+	display: none;
+}
+
+#tabs-newtab-button {
+  display: none !important;
+}
+
+.tab-label {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.tab-icon-stack {
+  display: none !important;
+}
+
+#PanelUI-button {
+  -moz-box-ordinal-group: 0 !important;
+  order: -1 !important;
+  margin-right: 8px !important;
+}
+
+#identity-box,
+#urlbar-search-button {
+  display: none !important;
+}
+#urlbar-go-button {
+  display: none !important;
+}
+#urlbar *|input::placeholder {
+  color: transparent !important;
+  opacity: 0 !important;
+}
+
+/* Source file https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/autohide_main_toolbar.css made available under Mozilla Public License v. 2.0
+See the above repository for updates as well as full license text. */
+ 
+/* This style hides the main toolbar and shows it when the cursor is over the tabs toolbar as well as whenever the focus is inside nav-bar, such as when urlbar is focused. */
+ 
+:root{
+  --uc-navbar-transform: -32px;
+  --uc-autohide-toolbar-delay: 0s;
+  --uc-autohide-toolbar-duration: 100ms;
+}
+:root[uidensity="compact"]{ --uc-navbar-transform: -32px }
+ 
+#navigator-toolbox > div{ display: contents; }
+:root[sessionrestored] :where(#nav-bar,#PersonalToolbar,#tab-notification-deck,.global-notificationbox,#notifications-toolbar){
+  transform: translateY(var(--uc-navbar-transform))
+}
+:root:is([customizing],[chromehidden*="toolbar"]) :where(#nav-bar,#PersonalToolbar,#tab-notification-deck,.global-notificationbox,#notifications-toolbar){
+  transform: none !important;
+  opacity: 1 !important;
+}
+ 
+#nav-bar:not([customizing]){
+  opacity: 0;
+  transition:  transform var(--uc-autohide-toolbar-duration) ease var(--uc-autohide-toolbar-delay), opacity var(--uc-autohide-toolbar-duration) ease var(--uc-autohide-toolbar-delay) !important;
+  position: relative;
+  z-index: 2;
+}
+#titlebar{ position: relative; z-index: 3 }
+ 
+#navigator-toolbox,
+#sidebar-box,
+#sidebar-main,
+#sidebar-splitter,
+#tabbrowser-tabbox{
+  z-index: auto !important;
+}
+
+/* Show when toolbox is focused, like when urlbar has received focus */
+#navigator-toolbox:focus-within > .browser-toolbar{
+  transform: translateY(0);
+  opacity: 1;
+  transition-duration: var(--uc-autohide-toolbar-duration), var(--uc-autohide-toolbar-duration) !important;
+  transition-delay: 0s !important;
+}
+
+/* Show when toolbox is hovered */
+#titlebar:hover ~ .browser-toolbar,
+.browser-titlebar:hover ~ :is(#nav-bar,#PersonalToolbar),
+#nav-bar:hover,
+#nav-bar:hover + #PersonalToolbar{
+  transform: translateY(0);
+  opacity: 1;
+  transition-duration: var(--uc-autohide-toolbar-duration), var(--uc-autohide-toolbar-duration) !important;
+  transition-delay: 0s !important;
+}
+:root[sessionrestored] #urlbar[popover]{
+  opacity: 0;
+  pointer-events: none;
+  transition: transform var(--uc-autohide-toolbar-duration) ease var(--uc-autohide-toolbar-delay), opacity var(--uc-autohide-toolbar-duration) ease var(--uc-autohide-toolbar-delay);
+  transform: translateY(var(--uc-navbar-transform));
+}
+#mainPopupSet:has(> [panelopen]:not(#ask-chat-shortcuts,#selection-shortcut-action-panel,#chat-shortcuts-options-panel,#tab-preview-panel)) ~ toolbox #urlbar[popover],
+.browser-titlebar:is(:hover,:focus-within) ~ #nav-bar #urlbar[popover],
+#nav-bar:is(:hover,:focus-within) #urlbar[popover],
+#urlbar-container > #urlbar[popover]:is([focused],[open]){
+  opacity: 1;
+  pointer-events: auto;
+  transition-delay: 0ms;
+  transform: translateY(0);
+}
+#urlbar-container > #urlbar[popover]:is([focused],[open]){
+ transition-duration: 100ms; /* Faster when focused */
+}
+
+/* This ruleset is separate, because not having :has support breaks other selectors as well */
+#mainPopupSet:has(> [panelopen]:not(#ask-chat-shortcuts,#selection-shortcut-action-panel,#chat-shortcuts-options-panel,#tab-preview-panel)) ~ #navigator-toolbox > .browser-toolbar{
+  transition-delay: 33ms !important;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* If tabs are in sidebar then nav-bar doesn't normally have its own background - so we nee to add it back */
+#nav-bar.browser-titlebar{
+  background: inherit;
+}
+#toolbar-menubar:not([autohide="true"]) ~ #nav-bar.browser-titlebar{
+  background-position-y: -28px; /* best guess, could vary */
+  border-top: none !important;
+}
+
+/* Bookmarks toolbar needs so extra rules */
+#PersonalToolbar{ transition: transform var(--uc-autohide-toolbar-duration) ease var(--uc-autohide-toolbar-delay) !important; position: relative; z-index: 1 }
+
+/* Move up the content view */
+:root[sessionrestored]:not([chromehidden~="toolbar"]) > body > #browser{
+  margin-top: var(--uc-navbar-transform);
+}
+@media -moz-pref("browser.fullscreen.autohide"),
+  (-moz-bool-pref: "browser.fullscreen.autohide"){
+  :root[sessionrestored][sizemode="fullscreen"] > body > #browser{
+    margin-top: revert;
+  }
+}
+
+/* Disable hover effects on ALL tabs (including active tab) */
+.tabbrowser-tab:hover > .tab-stack > .tab-background {
+    background-color: unset !important;
+    background-image: unset !important;
+    box-shadow: none !important;
+}
+/* Disable active tab hover highlight (Proton UI) */
+.tabbrowser-tab[selected="true"]:hover > .tab-stack > .tab-background {
+    background: var(--lwt-tab-line-color, transparent) !important;
+    border: none !important;
+}
+/* Remove underline/line effect on active tab hover (Firefox 89+) */
+.tabbrowser-tab[selected="true"]:hover > .tab-stack > .tab-background::before,
+.tabbrowser-tab[selected="true"]:hover > .tab-stack > .tab-background::after {
+    opacity: 0 !important;
+}
+/* Optional: Force no transitions */
+.tab-background, .tab-content {
+    transition: none !important;
+}
+
+/* Move menubar to bottom */
+#toolbar-menubar {
+  position: fixed !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  background-color: var(--toolbar-bgcolor) !important;
+  z-index: 1 !important;
+  margin-bottom: -16px !important;
+}
+
+/* Set navbar height */
+#nav-bar {
+  height: 28px !important;
+  min-height: 32px !important;
+}
+
+/* Adjust URL bar and search bar height */
+#urlbar, .searchbar-textbox {
+  min-height: 26px !important;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+/* Optional: reduce font size for compactness */
+#urlbar {
+  font-size: 14px !important;
+}
