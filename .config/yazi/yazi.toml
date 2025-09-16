@@ -49,10 +49,10 @@ open = [
     { run = 'xdg-open "$@"', desc = "Open", for = "unix" },
 ]
 edit = [
-    { run = 'kitty -e nvim "$@"', desc = "Edit", for = "unix" }
+    { run = 'kitty -e nvim "$@"', orphan = true, desc = "Edit", for = "unix" }
 ]
 reveal = [
-    { run = 'thunar "$(dirname "$1")"', desc = "Reveal", for = "unix" },
+    { run = 'thunar "$1"', desc = "Reveal", for = "unix" },
 ]
 extract = [
     { run = '7z x "$1"', block = true, desc = "Extract with 7z", for = "unix" },
