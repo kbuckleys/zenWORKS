@@ -21,8 +21,8 @@
 #                 https://github.com/kbuckleys/
 
 :root {
-  --tab-min-height: 12px !important;
-  --tab-max-height: 12px !important;
+  --tab-min-height: 11px !important;
+  --tab-max-height: 11px !important;
 }
 .tabbrowser-tab .tab-label {
     font-size: 12px !important;
