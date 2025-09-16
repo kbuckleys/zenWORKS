@@ -21,8 +21,9 @@
 --            https://github.com/kbuckleys/               --
 
 
-# Main background, empty for terminal default, need to be empty if you want transparent background
-theme[main_bg]="#141519"
+# Main background, empty for terminal default,
+# need to be empty if you want transparent background
+theme[main_bg]=""
 
 # Main text color
 theme[main_fg]="#DFDFDD"
@@ -42,13 +43,15 @@ theme[selected_fg]="#141519"
 # Color of inactive/disabled text
 theme[inactive_fg]="#56606D"
 
-# Color of text appearing on top of graphs, i.e uptime and current network graph scaling
+# Color of text appearing on top of graphs,
+# i.e uptime and current network graph scaling
 theme[graph_text]="#C5E1A5"
 
 # Background color of the percentage meters
 theme[meter_bg]="#141519"
 
-# Misc colors for processes box including mini cpu graphs, details memory graph and details status text
+# Misc colors for processes box including mini cpu graphs,
+# details memory graph and details status text
 theme[proc_misc]="#C5E1A5"
 
 # CPU, Memory, Network, Proc box outline colors

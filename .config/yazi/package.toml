@@ -12,23 +12,3 @@ hash = "1adc12c2b2b025411ab61eb8f0879574"
 use = "yazi-rs/plugins:zoom"
 rev = "d7588f6"
 hash = "4a47a9cd4d8b3a963cb4cc593664b77e"
-
-[[flavor.deps]]
-use = "BennyOe/tokyo-night"
-rev = "5f56364"
-hash = "c0bf69ad2c44005892d586e9693993c6"
-
-[[flavor.deps]]
-use = "gosxrgxx/flexoki-dark"
-rev = "28e1977"
-hash = "9dbbb64ea20f9f1271c31951dea55c7b"
-
-[[flavor.deps]]
-use = "dangooddd/kanagawa"
-rev = "1f3b3c7"
-hash = "16ea0ff3583131788d57d5f7d34d0f61"
-
-[[flavor.deps]]
-use = "marcosvnmelo/kanagawa-dragon"
-rev = "4905527"
-hash = "5fd7aa0bf4e7d9753ad8a4660a6eb94f"

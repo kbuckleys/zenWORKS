@@ -43,7 +43,7 @@ count_cut = { fg = "#E0A4A4", bold = true, reversed = true }
 count_selected = { fg = "#BCA4E0", bold = true, reversed = true }
 
 # Border
-border_symbol = "│"
+border_symbol = ""
 border_style = { fg = "#0B0E0E" }
 
 [tabs]
@@ -78,9 +78,9 @@ perm_exec = { fg = "#c5e1a5" }
 perm_sep = { fg = "#9bbfbf" }
 
 # Progress
-progress_label = { fg = "#0B0E0E" }
-progress_normal = { fg = "#0B0E0E", bg = "#E0DEA4" }
-progress_error = { bg = "#E0A4A4" }
+progress_label = { fg = "#0b0e0e" }
+progress_normal = { fg = "#0b0e0e", bg = "#b6e0a4" }
+progress_error = { fg = "#0b0e0e", bg = "#e0aea4" }
 
 [which]
 cols = 3
