@@ -67,11 +67,13 @@
   },
 
   "hyprland/workspaces": {
-    "on-click": "activate",
     "format": "",
     "all-outputs": true,
     "disable-scroll": false,
-    "active-only": false
+    "active-only": false,
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1",
+    "on-click": "activate"
   },
 
   "clock": {
