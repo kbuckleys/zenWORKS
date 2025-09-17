@@ -187,6 +187,7 @@ user_pref("extensions.webextensions.uuids", "{\"formautofill@mozilla.org\":\"6e7
 user_pref("findbar.highlightAll", true);
 user_pref("font.default.x-western", "sans-serif");
 user_pref("font.minimum-size.x-western", 14);
+user_pref("font.name.monospace.x-western", "0xProto Nerd Font Mono");
 user_pref("font.size.monospace.x-western", 14);
 user_pref("font.size.variable.x-western", 14);
 user_pref("full-screen-api.warning.delay", 0);
