@@ -50,8 +50,8 @@
 }
 
 #temperature, #custom-gpu-temp, #network, #clock,
-#cpu, #custom-gpu-info, #memory,
-#custom-weather, #pulseaudio {
+#cpu, #custom-gpu-info, #memory, #custom-pacman,
+#custom-weather, #pulseaudio, #tray-expander {
   padding: 2px 8px 2px 8px;
   color: #DFDFDD;
 }
