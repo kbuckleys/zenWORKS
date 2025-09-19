@@ -12,6 +12,9 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - resvg
 - imagemagick
 - poppler
+- pipewire-pulse
+- hyprpolkitagent
+- 7zip
 - swww
 - gvfs
 - fd
