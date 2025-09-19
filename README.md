@@ -15,6 +15,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - pipewire-pulse
 - hyprpolkitagent
 - 7zip
+- unzip
 - swww
 - gvfs
 - fd
