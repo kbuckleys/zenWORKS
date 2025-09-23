@@ -168,7 +168,7 @@ See the above repository for updates as well as full license text. */
 /* This style hides the main toolbar and shows it when the cursor is over the tabs toolbar as well as whenever the focus is inside nav-bar, such as when urlbar is focused. */
  
 :root{
-  --uc-navbar-transform: -32px;
+  --uc-navbar-transform: -34px;
   --uc-autohide-toolbar-delay: 0s;
   --uc-autohide-toolbar-duration: 100ms;
 }
