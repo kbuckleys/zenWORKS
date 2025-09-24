@@ -97,7 +97,7 @@ mainbox {
     enabled: true;
     spacing: 0px;
     margin: 0px;
-    padding: 1px;
+    padding: 0px;
     border: 1px solid;
     border-radius: 0px;
     border-color: @border;
@@ -109,7 +109,7 @@ inputbar {
     enabled: true;
     spacing: 4px;
     margin:  0px;
-    padding: 4px 4px;
+    padding: 4px 8px;
     border: 0px 0px 0px 0px;
     background-color: transparent;
     text-color: @foreground-colour;
@@ -149,8 +149,8 @@ listview {
     fixed-height: true;
     fixed-columns: true;
     spacing: 2px;
+    padding: 1px 0px 1px 0px;
     margin: 0px;
-    padding: 1px 4px 1px 4px;
     border: 0px;
     background-color: transparent;
     text-color: @foreground-colour;
@@ -161,7 +161,7 @@ element {
     enabled: true;
     spacing: 0px;
     margin: 0px;
-    padding: 2px;
+    padding: 2px 8px 2px 8px;
     border: 0px;
     background-color: transparent;
     text-color: @foreground-colour;
@@ -224,6 +224,7 @@ mode-switcher{
 button {
     padding: 2px;
     border: 0px ;
+    margin: 0px;
     background-color: @alternate-background;
     text-color: inherit;
     cursor: pointer;
@@ -236,7 +237,7 @@ button selected {
 message {
     enabled: true;
     margin: 0px;
-    padding: 4px 4px;
+    padding: 4px 8px;
     border: 0px ;
     background-color: @alternate-background;
     text-color: @foreground-colour;
