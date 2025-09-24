@@ -25,7 +25,7 @@
   "output": "HDMI-A-1",
   "layer": "top",
   "position": "bottom",
-  "height": 10,
+  "height": 24,
 
   "modules-left": [
     "memory",
