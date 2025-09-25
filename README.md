@@ -1,6 +1,8 @@
-<img width="1400" height="678" alt="buckWORKS-ASCII" src="https://github.com/user-attachments/assets/35381c98-1968-4575-9d7a-12801290c3c2" />
 
-Hello and welcome. This is my dotfile repo for all to use, and for my own convenience. I'm also not trying to pull an Omarchy, I just love Delta Corps Priest. Enjoy and never stop cooking that rice!
+<img width="1190" height="576" alt="zenworks" src="https://github.com/user-attachments/assets/99eb5170-91ff-4710-9bd0-f407cff6a485" />
+
+Hello and welcome. This is my dotfile repo![Uploading zenworks.png…]()
+ for all to use, and for my own convenience. I'm also not trying to pull an Omarchy, I just love Delta Corps Priest. Enjoy and never stop cooking that rice!
 
 # Premise
 In my search for a GTK theme, I stumbled upon an old one called Kripton, which I found to be quite beautiful, but it didn't quite fit in with the rest of my setup. So I took it upon myself and created a Kripton color palette based on the GTK theme, and then made Kripton themes for the software I use. This is going to be a work in progress, as I'm considering taking this seriously and kickstart a project to cover as many software and websites as possible. I highly doubt it could ever be on the same level as Catppuccin's or Nord's, but it's an enticing idea all the same.
