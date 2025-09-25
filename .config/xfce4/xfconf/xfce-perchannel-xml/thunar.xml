@@ -7,10 +7,10 @@
   <property name="last-statusbar-visible" type="bool" value="false"/>
   <property name="last-menubar-visible" type="bool" value="false"/>
   <property name="last-toolbar-items" type="string" value="menu:1,back:0,forward:0,open-parent:0,open-home:0,new-tab:0,new-window:0,toggle-split-view:0,undo:0,redo:0,zoom-out:0,zoom-in:0,zoom-reset:0,view-as-icons:0,view-as-detailed-list:0,view-as-compact-list:0,view-switcher:0,location-bar:1,reload:0,search:0,uca-action-1756660449957826-1:0"/>
-  <property name="last-side-pane" type="string" value="THUNAR_SIDEPANE_TYPE_SHORTCUTS"/>
+  <property name="last-side-pane" type="string" value="THUNAR_SIDEPANE_TYPE_TREE"/>
   <property name="last-show-hidden" type="bool" value="true"/>
   <property name="last-renamer-dialog-maximized" type="bool" value="true"/>
-  <property name="last-separator-position" type="int" value="185"/>
+  <property name="last-separator-position" type="int" value="170"/>
   <property name="last-details-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_38_PERCENT"/>
   <property name="last-details-view-column-widths" type="string" value="50,140,135,50,88,1184,50,50,514,50,50,80,50,156"/>
   <property name="last-image-preview-visible" type="bool" value="false"/>

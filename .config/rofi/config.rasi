@@ -20,6 +20,8 @@
 *
 *               https://github.com/kbuckleys/               */
 
+@theme "Arc-Dark"
+
 configuration {
 	  modi: "drun,recursivebrowser,filebrowser";
     show-icons: false;
@@ -54,10 +56,10 @@ configuration {
 }
 
 * {
-    border-colour: var(background-alt);
-    handle-colour: var(selected);
-    background-colour: var(background);
-    foreground-colour: var(foreground);
+    border-color: var(background-alt);
+    handle-color: var(selected);
+    background-color: var(background);
+    foreground-color: var(foreground);
     alternate-background: var(background-alt);
     normal-background: var(background);
     normal-foreground: var(foreground);
@@ -90,7 +92,7 @@ window {
     padding: 0px;
     border: 0px;
     cursor: "default";
-    background-color: @background-colour;
+    background-color: @background-color;
 }
 
 mainbox {
@@ -112,7 +114,7 @@ inputbar {
     padding: 4px 8px;
     border: 0px 0px 0px 0px;
     background-color: transparent;
-    text-color: @foreground-colour;
+    text-color: @foreground-color;
     children: [ "textbox-prompt-colon", "entry" ];
 }
 
@@ -153,7 +155,7 @@ listview {
     margin: 0px;
     border: 0px;
     background-color: transparent;
-    text-color: @foreground-colour;
+    text-color: @foreground-color;
     cursor: "default";
 }
 
@@ -164,8 +166,8 @@ element {
     padding: 2px 8px 2px 8px;
     border: 0px;
     background-color: transparent;
-    text-color: @foreground-colour;
-    cursor: pointer;
+    text-color: @foreground-color;
+    cursor: "default";
 }
 element normal.normal {
     background-color: var(normal-background);
@@ -208,8 +210,6 @@ element-text {
     text-color: inherit;
     highlight: inherit;
     cursor: inherit;
-    vertical-align: 0.5;
-    horizontal-align: 0.0;
 }
 
 mode-switcher{
@@ -217,17 +217,17 @@ mode-switcher{
     spacing: 1px;
     margin: 0px;
     padding: 0px;
-    border: 0px ;
+    border: 0px;
     background-color: transparent;
-    text-color: @foreground-colour;
+    text-color: @foreground-color;
 }
 button {
     padding: 2px;
-    border: 0px ;
+    border: 0px;
     margin: 0px;
     background-color: @alternate-background;
     text-color: inherit;
-    cursor: pointer;
+    cursor: "default";
 }
 button selected {
     background-color: var(active);
@@ -238,24 +238,22 @@ message {
     enabled: true;
     margin: 0px;
     padding: 4px 8px;
-    border: 0px ;
+    border: 0px;
     background-color: @alternate-background;
-    text-color: @foreground-colour;
+    text-color: @foreground-color;
 }
 textbox {
     border: 0px;
     background-color: transparent;
-    text-color: @foreground-colour;
-    vertical-align: 0.5;
-    horizontal-align: 0.0;
+    text-color: @foreground-color;
     highlight: none;
-    placeholder-color: @foreground-colour;
+    placeholder-color: @foreground-color;
     blink: true;
     markup: true;
 }
 error-message {
     padding: 20px;
-    border: 0px ;
-    background-color: @background-colour;
-    text-color: @foreground-colour;
+    border: 0px;
+    background-color: @background-color;
+    text-color: @foreground-color;
 }

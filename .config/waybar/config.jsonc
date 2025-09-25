@@ -1,22 +1,22 @@
 /**
-* ▀█████████▄  ███    █▄   ▄████████    ▄█   ▄█▄
-*   ███    ███ ███    ███ ███    ███   ███ ▄███▀
-*   ███    ███ ███    ███ ███    █▀    ███▐██▀
-*  ▄███▄▄▄██▀  ███    ███ ███         ▄█████▀
-* ▀▀███▀▀▀██▄  ███    ███ ███        ▀▀█████▄
-*   ███    ██▄ ███    ███ ███    █▄    ███▐██▄
-*   ███    ███ ███    ███ ███    ███   ███ ▀███▄
-* ▄█████████▀  ████████▀  ████████▀    ███   ▀█▀
-*                                      ▀
+*  ▄███████▄     ▄████████ ███▄▄▄▄                            
+* ██▀     ▄██   ███    ███ ███▀▀▀██▄                          
+*       ▄███▀   ███    █▀  ███   ███                          
+*  ▀█▀▄███▀▄▄  ▄███▄▄▄     ███   ███                          
+*   ▄███▀   ▀ ▀▀███▀▀▀     ███   ███                          
+* ▄███▀         ███    █▄  ███   ███                          
+* ███▄     ▄█   ███    ███ ███   ███                          
+*  ▀████████▀   ██████████  ▀█   █▀                           
+*                                                             
 *  ▄█     █▄   ▄██████▄     ▄████████    ▄█   ▄█▄    ▄████████
 * ███     ███ ███    ███   ███    ███   ███ ▄███▀   ███    ███
 * ███     ███ ███    ███   ███    ███   ███▐██▀     ███    █▀ 
-* ███     ███ ███    ███  ▄███▄▄▄▄██▀  ▄█████▀      ███
+* ███     ███ ███    ███  ▄███▄▄▄▄██▀  ▄█████▀      ███       
 * ███     ███ ███    ███ ▀▀███▀▀▀▀▀   ▀▀█████▄    ▀███████████
 * ███     ███ ███    ███ ▀███████████   ███▐██▄            ███
 * ███ ▄█▄ ███ ███    ███   ███    ███   ███ ▀███▄    ▄█    ███
-*  ▀███▀███▀   ▀██████▀    ███    ███   ███   ▀█▀  ▄████████▀
-*                          ███    ███   ▀
+*  ▀███▀███▀   ▀██████▀    ███    ███   ███   ▀█▀  ▄████████▀ 
+*                          ███    ███   ▀                     
 *
 *               https://github.com/kbuckleys/               */
 
@@ -137,8 +137,9 @@
 
   "network": {
     "format": "⇣ {bandwidthDownBytes} ~ {bandwidthUpBytes} ⇡",
-  "tooltip-format": "Connected",
-    "tooltip-format-disconnected": "Disconnected",
+    "format-disconnected": "NO NETWORK SIGNAL",
+    "tooltip-format": "Network ONLINE",
+    "tooltip-format-disconnected": "Network OFFLINE",
     "interval": 1,
     "nospacing": 1
   },
@@ -168,7 +169,7 @@
   "custom/pacman": {
     "format": "{} {icon} ",
     "return-type": "json",
-    "on-click": "kitty --class waybar-updates -e sh -c 'cat ~/.config/waybar/logo.txt; yay -Syu; read -p Press\\ Return\\ to\\ close...'",
+    "on-click": "kitty --class waybar-updates -e sh -c 'cat ~/.config/waybar/logo; yay -Syu; read -p Press\\ Return\\ to\\ close...'",
     "format-icons": {
         "pending-updates": "",
         "updated": ""
