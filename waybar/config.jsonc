@@ -1,0 +1,188 @@
+/**
+*  ▄███████▄     ▄████████ ███▄▄▄▄                            
+* ██▀     ▄██   ███    ███ ███▀▀▀██▄                          
+*       ▄███▀   ███    █▀  ███   ███                          
+*  ▀█▀▄███▀▄▄  ▄███▄▄▄     ███   ███                          
+*   ▄███▀   ▀ ▀▀███▀▀▀     ███   ███                          
+* ▄███▀         ███    █▄  ███   ███                          
+* ███▄     ▄█   ███    ███ ███   ███                          
+*  ▀████████▀   ██████████  ▀█   █▀                           
+*                                                             
+*  ▄█     █▄   ▄██████▄     ▄████████    ▄█   ▄█▄    ▄████████
+* ███     ███ ███    ███   ███    ███   ███ ▄███▀   ███    ███
+* ███     ███ ███    ███   ███    ███   ███▐██▀     ███    █▀ 
+* ███     ███ ███    ███  ▄███▄▄▄▄██▀  ▄█████▀      ███       
+* ███     ███ ███    ███ ▀▀███▀▀▀▀▀   ▀▀█████▄    ▀███████████
+* ███     ███ ███    ███ ▀███████████   ███▐██▄            ███
+* ███ ▄█▄ ███ ███    ███   ███    ███   ███ ▀███▄    ▄█    ███
+*  ▀███▀███▀   ▀██████▀    ███    ███   ███   ▀█▀  ▄████████▀ 
+*                          ███    ███   ▀                     
+*
+*               https://github.com/kbuckleys/               */
+
+{ 
+  "reload_style_on_change": true,
+  "output": "HDMI-A-1",
+  "layer": "top",
+  "position": "bottom",
+  "height": 24,
+
+  "modules-left": [
+    "memory",
+    "cpu",
+    "custom/gpu-info",
+    "custom/separator",
+    "temperature",
+    "custom/gpu-temp",
+    "custom/separator",
+    "network"
+  ],
+  "modules-center": [
+    "hyprland/workspaces"
+  ],
+  "modules-right": [
+    "group/tray-expander",
+    "custom/pacman",
+    "custom/separator",
+    "custom/weather",
+    "clock",
+    "custom/separator",
+    "pulseaudio",
+    "custom/waybar-mpris"
+  ],
+
+  "custom/separator": {
+    "format": "󰇙",
+    "interval": "once",
+    "tooltip": false
+  },
+
+  "custom/waybar-mpris": {
+    "return-type": "json",
+    "exec": "waybar-mpris --autofocus --order TITLE",
+    "max-length": 40,
+    "on-click": "waybar-mpris --send prev",
+    "on-click-middle": "waybar-mpris --send toggle",
+    "on-click-right": "waybar-mpris --send next"
+  },
+
+  "hyprland/workspaces": {
+    "format": "",
+    "all-outputs": true,
+    "disable-scroll": false,
+    "active-only": false,
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1",
+    "on-click": "activate"
+  },
+
+  "clock": {
+    "format": "{:%I:%M %p}",
+    "tooltip": true,
+    "tooltip-format": "{:%A, %B %d, %Y}"
+  },
+
+  "custom/gpu-info": {
+    "exec": "~/.config/waybar/scripts/gpu-info.sh",
+    "interval": 5,
+    "format": "{text}",
+    "on-click": "kitty -e nvtop",
+    "tooltip": true,
+    "tooltip-format": "GPU Utilization"
+  },
+
+  "cpu": {
+    "format": "CPU {usage}%",
+    "on-click": "kitty -e btop",
+    "tooltip": true,
+    "interval": 1
+  },
+
+  "temperature": {
+    "hwmon-path-abs": "/sys/devices/platform/coretemp.0/hwmon",
+    "input-filename": "temp2_input",
+    "interval": 5,
+    "critical-threshold": 80,
+    "format": "CT {temperatureC}°C",
+    "format-critical": "CT 󰸁 {temperatureC}°C",
+    "tooltip": true,
+    "tooltip-format": "CPU Temperature"
+  },
+
+  "custom/gpu-temp": {
+    "exec": "~/.config/waybar/scripts/gpu-temp.sh",
+    "interval": 5,
+    "format": "{text}",
+    "tooltip": true,
+    "tooltip-format": "GPU Temperature"
+  },
+
+  "memory": {
+    "format": "RAM {used:0.1f}",
+    "tooltip": true,
+    "tooltip-format": "{total:0.1f}GiB\nUsed: {used:0.1f}GiB\nAvailable: {avail:0.1f}GiB",
+    "interval": 1
+  },
+  
+  "pulseaudio": {
+    "format": "{icon}{volume}%",
+    "on-click": "kitty --class=Wiremix -e wiremix",
+    "on-click-right": "pamixer -t",
+    "format-muted": "  MUTED",
+    "format-icons": {
+      "headphone": "",
+      "default": [" ", " ", " "]
+    }
+  },
+
+  "network": {
+    "format": "⇣ {bandwidthDownBytes} ~ {bandwidthUpBytes} ⇡",
+    "format-disconnected": "NO NETWORK SIGNAL",
+    "tooltip-format": "Network ONLINE",
+    "tooltip-format-disconnected": "Network OFFLINE",
+    "interval": 1,
+    "nospacing": 1
+  },
+
+  "group/tray-expander": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 150,
+      "children-class": "tray"
+    },
+    "modules": [
+      "custom/expand-icon", "tray"
+    ]
+  },
+
+  "custom/expand-icon": {
+    "format": "  ",
+    "tooltip": false
+  },
+
+  "tray": {
+    "show-passive-items": true,
+    "icon-size": 14,
+    "spacing": 10
+  },
+
+  "custom/pacman": {
+    "format": "{} {icon} ",
+    "return-type": "json",
+    "on-click": "kitty --class waybar-updates -e sh -c 'cat ~/.config/waybar/logo; yay -Syu; read -p Press\\ Return\\ to\\ close...'",
+    "format-icons": {
+        "pending-updates": "",
+        "updated": ""
+    },
+    "exec-if": "which waybar-updates",
+    "exec": "waybar-updates"
+  },
+
+  "custom/weather": {
+      "format": "{}°C",
+      "tooltip": true,
+      "interval": 3600,
+      "exec": "wttrbar --nerd --custom-indicator '{ICON} {temp_C}°C ~ {FeelsLikeC}'",
+      "return-type": "json"
+  }
+}

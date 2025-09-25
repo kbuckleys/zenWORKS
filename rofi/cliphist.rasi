@@ -1,0 +1,147 @@
+/**
+* ▀█████████▄  ███    █▄   ▄████████    ▄█   ▄█▄
+*   ███    ███ ███    ███ ███    ███   ███ ▄███▀
+*   ███    ███ ███    ███ ███    █▀    ███▐██▀
+*  ▄███▄▄▄██▀  ███    ███ ███         ▄█████▀
+* ▀▀███▀▀▀██▄  ███    ███ ███        ▀▀█████▄
+*   ███    ██▄ ███    ███ ███    █▄    ███▐██▄
+*   ███    ███ ███    ███ ███    ███   ███ ▀███▄
+* ▄█████████▀  ████████▀  ████████▀    ███   ▀█▀
+*                                      ▀
+*  ▄█     █▄   ▄██████▄     ▄████████    ▄█   ▄█▄    ▄████████
+* ███     ███ ███    ███   ███    ███   ███ ▄███▀   ███    ███
+* ███     ███ ███    ███   ███    ███   ███▐██▀     ███    █▀
+* ███     ███ ███    ███  ▄███▄▄▄▄██▀  ▄█████▀      ███
+* ███     ███ ███    ███ ▀▀███▀▀▀▀▀   ▀▀█████▄    ▀███████████
+* ███     ███ ███    ███ ▀███████████   ███▐██▄            ███
+* ███ ▄█▄ ███ ███    ███   ███    ███   ███ ▀███▄    ▄█    ███
+*  ▀███▀███▀   ▀██████▀    ███    ███   ███   ▀█▀  ▄████████▀
+*                          ███    ███   ▀
+*
+*               https://github.com/kbuckleys/               */
+
+@theme "Arc-Dark"
+
+configuration {
+    show-icons: false;
+    kb-accept-entry: "Return";
+}
+
+* {
+    background: #0B0E0E;
+    background-alt: #20242A;
+    foreground: #DFDFDD;
+    border: #20242A;
+    selected: #b6e0a4;
+    active: #E0D8A4;
+    urgent: #E0AEA4;
+    font: "0xProto Nerd Font Medium 10";
+}
+
+* {
+    border-colour: var(background-alt);
+    handle-colour: var(selected);
+    background-colour: var(background);
+    foreground-colour: var(foreground);
+    alternate-background: var(background-alt);
+    normal-background: var(background);
+    normal-foreground: var(foreground);
+    selected-normal-background: var(selected);
+    selected-normal-foreground: var(background);
+    selected-urgent-background: var(active);
+    selected-urgent-foreground: var(background);
+    selected-active-background: var(urgent);
+    selected-active-foreground: var(background);
+    alternate-normal-background: var(background);
+    alternate-normal-foreground: var(foreground);
+    alternate-urgent-background: var(urgent);
+    alternate-urgent-foreground: var(background);
+    alternate-active-background: var(active);
+    alternate-active-foreground: var(background);
+}
+
+window {
+    transparency: "none";
+    location: center;
+    anchor: center;
+    fullscreen: false;
+    width: 900px;
+    enabled: true;
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    cursor: "default";
+    background-color: @background-colour;
+}
+
+mainbox {
+    enabled: true;
+    spacing: 0px;
+    margin: 0px;
+    padding: 0px;
+    border: 1px solid;
+    border-radius: 0px;
+    border-color: @border;
+    background-color: transparent;
+}
+
+inputbar {
+    enabled: true;
+    spacing: 4px;
+    margin:  0px;
+    padding: 4px 8px;
+    border: 0px;
+    background-color: transparent;
+    children: [ "textbox-prompt-colon", "entry" ];
+}
+prompt {
+    enabled: true;
+    background-color: inherit;
+    text-color: inherit;
+}
+textbox-prompt-colon {
+    enabled: true;
+    expand: false;
+    str: ">";
+    background-color: inherit;
+    text-color: inherit;
+}
+entry {
+    enabled: true;
+    background-color: inherit;
+    text-color: inherit;
+    cursor: text;
+    placeholder: "...";
+    placeholder-color: inherit;
+}
+
+listview {
+    enabled: true;
+    columns: 2;
+    lines: 12;
+    cycle: true;
+    dynamic: true;
+    scrollbar: false;
+    layout: vertical;
+    reverse: false;
+    fixed-height: true;
+    fixed-columns: true;
+    spacing: 2px;
+    margin: 0px;
+    padding: 0px 0px 0px 0px;
+    border: 0px;
+    background-color: transparent;
+    text-color: @foreground-colour;
+    cursor: "default";
+}
+
+element {
+    enabled: true;
+    spacing: 0px;
+    margin: 0px;
+    padding: 2px 8px 2px 8px;
+    border: 0px;
+    background-color: transparent;
+    text-color: @foreground-colour;
+    cursor: "default";
+}

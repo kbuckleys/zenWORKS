@@ -1,0 +1,14 @@
+[[plugin.deps]]
+use = "yazi-rs/plugins:mount"
+rev = "de53d90"
+hash = "f10a14e823382d90fab5b3ee54cb38fe"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:chmod"
+rev = "de53d90"
+hash = "1adc12c2b2b025411ab61eb8f0879574"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:zoom"
+rev = "d7588f6"
+hash = "4a47a9cd4d8b3a963cb4cc593664b77e"

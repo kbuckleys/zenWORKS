@@ -1,0 +1,109 @@
+
+ ▄███████▄     ▄████████ ███▄▄▄▄                            
+██▀     ▄██   ███    ███ ███▀▀▀██▄                          
+      ▄███▀   ███    █▀  ███   ███                          
+ ▀█▀▄███▀▄▄  ▄███▄▄▄     ███   ███                          
+  ▄███▀   ▀ ▀▀███▀▀▀     ███   ███                          
+▄███▀         ███    █▄  ███   ███                          
+███▄     ▄█   ███    ███ ███   ███                          
+ ▀████████▀   ██████████  ▀█   █▀                           
+                                                            
+ ▄█     █▄   ▄██████▄     ▄████████    ▄█   ▄█▄    ▄████████
+███     ███ ███    ███   ███    ███   ███ ▄███▀   ███    ███
+███     ███ ███    ███   ███    ███   ███▐██▀     ███    █▀ 
+███     ███ ███    ███  ▄███▄▄▄▄██▀  ▄█████▀      ███       
+███     ███ ███    ███ ▀▀███▀▀▀▀▀   ▀▀█████▄    ▀███████████
+███     ███ ███    ███ ▀███████████   ███▐██▄            ███
+███ ▄█▄ ███ ███    ███   ███    ███   ███ ▀███▄    ▄█    ███
+ ▀███▀███▀   ▀██████▀    ███    ███   ███   ▀█▀  ▄████████▀ 
+                         ███    ███   ▀                     
+
+--            https://github.com/kbuckleys/               --
+
+
+# Main background, empty for terminal default,
+# need to be empty if you want transparent background
+theme[main_bg]=""
+
+# Main text color
+theme[main_fg]="#DFDFDD"
+
+# Title color for boxes
+theme[title]="#9BBFBF"
+
+# Highlight color for keyboard shortcuts
+theme[hi_fg]="#E0DEA4"
+
+# Background color of selected item in processes box
+theme[selected_bg]="#9BBFBF"
+
+# Foreground color of selected item in processes box
+theme[selected_fg]="#141519"
+
+# Color of inactive/disabled text
+theme[inactive_fg]="#56606D"
+
+# Color of text appearing on top of graphs,
+# i.e uptime and current network graph scaling
+theme[graph_text]="#C5E1A5"
+
+# Background color of the percentage meters
+theme[meter_bg]="#141519"
+
+# Misc colors for processes box including mini cpu graphs,
+# details memory graph and details status text
+theme[proc_misc]="#C5E1A5"
+
+# CPU, Memory, Network, Proc box outline colors
+theme[cpu_box]="#9BBFBF"
+theme[mem_box]="#9BBFBF"
+theme[net_box]="#9BBFBF"
+theme[proc_box]="#9BBFBF"
+
+# Box divider line and small boxes line color
+theme[div_line]="#20242A"
+
+# Temperature graph color
+theme[temp_start]="#9BBFBF"
+theme[temp_mid]="#9BBFBF"
+theme[temp_end]="#9BBFBF"
+
+# CPU graph colors
+theme[cpu_start]="#9BBFBF"
+theme[cpu_mid]="#9BBFBF"
+theme[cpu_end]="#9BBFBF"
+
+# Mem/Disk free meter
+theme[free_start]="#9BBFBF"
+theme[free_mid]="#9BBFBF"
+theme[free_end]="#9BBFBF"
+
+# Mem/Disk cached meter
+theme[cached_start]="#9BBFBF"
+theme[cached_mid]="#9BBFBF"
+theme[cached_end]="#9BBFBF"
+
+# Mem/Disk available meter
+theme[available_start]="#9BBFBF"
+theme[available_mid]="#9BBFBF"
+theme[available_end]="#9BBFBF"
+
+# Mem/Disk used meter
+theme[used_start]="#9BBFBF"
+theme[used_mid]="#9BBFBF"
+theme[used_end]="#9BBFBF"
+
+# Download graph colors
+theme[download_start]="#9BBFBF"
+theme[download_mid]="#9BBFBF"
+theme[download_end]="#9BBFBF"
+
+# Upload graph colors
+theme[upload_start]="#9BBFBF"
+theme[upload_mid]="#9BBFBF"
+theme[upload_end]="#9BBFBF"
+
+# Process box color gradient for threads, mem and cpu usage
+theme[process_start]="#9BBFBF"
+theme[process_mid]="#9BBFBF"
+theme[process_end]="#9BBFBF"

@@ -1,0 +1,259 @@
+/**
+* ▀█████████▄  ███    █▄   ▄████████    ▄█   ▄█▄
+*   ███    ███ ███    ███ ███    ███   ███ ▄███▀
+*   ███    ███ ███    ███ ███    █▀    ███▐██▀
+*  ▄███▄▄▄██▀  ███    ███ ███         ▄█████▀
+* ▀▀███▀▀▀██▄  ███    ███ ███        ▀▀█████▄
+*   ███    ██▄ ███    ███ ███    █▄    ███▐██▄
+*   ███    ███ ███    ███ ███    ███   ███ ▀███▄
+* ▄█████████▀  ████████▀  ████████▀    ███   ▀█▀
+*                                      ▀
+*  ▄█     █▄   ▄██████▄     ▄████████    ▄█   ▄█▄    ▄████████
+* ███     ███ ███    ███   ███    ███   ███ ▄███▀   ███    ███
+* ███     ███ ███    ███   ███    ███   ███▐██▀     ███    █▀
+* ███     ███ ███    ███  ▄███▄▄▄▄██▀  ▄█████▀      ███
+* ███     ███ ███    ███ ▀▀███▀▀▀▀▀   ▀▀█████▄    ▀███████████
+* ███     ███ ███    ███ ▀███████████   ███▐██▄            ███
+* ███ ▄█▄ ███ ███    ███   ███    ███   ███ ▀███▄    ▄█    ███
+*  ▀███▀███▀   ▀██████▀    ███    ███   ███   ▀█▀  ▄████████▀
+*                          ███    ███   ▀
+*
+*               https://github.com/kbuckleys/               */
+
+@theme "Arc-Dark"
+
+configuration {
+	  modi: "drun,recursivebrowser,filebrowser";
+    show-icons: false;
+    display-drun: "DRUN";
+    display-recursivebrowser: "FILES";
+    display-filebrowser: "BROWSER";
+	  drun-display-format: "{name}";
+	  window-format: "{c} · {t}";
+    kb-accept-entry: "Return";
+    kb-remove-to-eol: "";
+    recursivebrowser {
+        directory: "~";
+        cancel-returns-1: true;
+        filter-regex: "(.*cache.*|.*\\.o)";
+        command: "xdg-open";
+    }
+    filebrowser {
+        show-hidden: true;
+        command: "kitty -e yazi";
+    }
+}
+
+* {
+    background: #0B0E0E;
+    background-alt: #20242A;
+    foreground: #DFDFDD;
+    border: #20242A;
+    selected: #9BBFBF;
+    active: #E0D8A4;
+    urgent: #E0AEA4;
+    font: "0xProto Nerd Font Medium 10";
+}
+
+* {
+    border-color: var(background-alt);
+    handle-color: var(selected);
+    background-color: var(background);
+    foreground-color: var(foreground);
+    alternate-background: var(background-alt);
+    normal-background: var(background);
+    normal-foreground: var(foreground);
+    urgent-background: var(urgent);
+    urgent-foreground: var(background);
+    active-background: var(active);
+    active-foreground: var(background);
+    selected-normal-background: var(selected);
+    selected-normal-foreground: var(background);
+    selected-urgent-background: var(active);
+    selected-urgent-foreground: var(background);
+    selected-active-background: var(urgent);
+    selected-active-foreground: var(background);
+    alternate-normal-background: var(background);
+    alternate-normal-foreground: var(foreground);
+    alternate-urgent-background: var(urgent);
+    alternate-urgent-foreground: var(background);
+    alternate-active-background: var(active);
+    alternate-active-foreground: var(background);
+}
+
+window {
+    transparency: "none";
+    location: center;
+    anchor: center;
+    fullscreen: false;
+    width: 800px;
+    enabled: true;
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    cursor: "default";
+    background-color: @background-color;
+}
+
+mainbox {
+    enabled: true;
+    spacing: 0px;
+    margin: 0px;
+    padding: 0px;
+    border: 1px solid;
+    border-radius: 0px;
+    border-color: @border;
+    background-color: transparent;
+    children: [ "inputbar", "message", "listview", "mode-switcher" ];
+}
+
+inputbar {
+    enabled: true;
+    spacing: 4px;
+    margin:  0px;
+    padding: 4px 8px;
+    border: 0px 0px 0px 0px;
+    background-color: transparent;
+    text-color: @foreground-color;
+    children: [ "textbox-prompt-colon", "entry" ];
+}
+
+prompt {
+    enabled: true;
+    background-color: inherit;
+    text-color: inherit;
+}
+textbox-prompt-colon {
+    enabled: true;
+    expand: false;
+    str: ">";
+    background-color: inherit;
+    text-color: inherit;
+}
+entry {
+    enabled: true;
+    background-color: inherit;
+    text-color: inherit;
+    cursor: text;
+    placeholder: "...";
+    placeholder-color: inherit;
+}
+
+listview {
+    enabled: true;
+    columns: 2;
+    lines: 8;
+    cycle: true;
+    dynamic: true;
+    scrollbar: false;
+    layout: vertical;
+    reverse: false;
+    fixed-height: true;
+    fixed-columns: true;
+    spacing: 2px;
+    padding: 1px 0px 1px 0px;
+    margin: 0px;
+    border: 0px;
+    background-color: transparent;
+    text-color: @foreground-color;
+    cursor: "default";
+}
+
+element {
+    enabled: true;
+    spacing: 0px;
+    margin: 0px;
+    padding: 2px 8px 2px 8px;
+    border: 0px;
+    background-color: transparent;
+    text-color: @foreground-color;
+    cursor: "default";
+}
+element normal.normal {
+    background-color: var(normal-background);
+    text-color: var(normal-foreground);
+}
+element normal.urgent {
+    background-color: var(urgent-background);
+    text-color: var(urgent-foreground);
+}
+element normal.active {
+    background-color: var(active-background);
+    text-color: var(active-foreground);
+}
+element selected.normal {
+    background-color: var(selected-normal-background);
+    text-color: var(selected-normal-foreground);
+}
+element selected.urgent {
+    background-color: var(selected-urgent-background);
+    text-color: var(selected-urgent-foreground);
+}
+element selected.active {
+    background-color: var(selected-active-background);
+    text-color: var(selected-active-foreground);
+}
+element alternate.normal {
+    background-color: var(alternate-normal-background);
+    text-color: var(alternate-normal-foreground);
+}
+element alternate.urgent {
+    background-color: var(alternate-urgent-background);
+    text-color: var(alternate-urgent-foreground);
+}
+element alternate.active {
+    background-color: var(alternate-active-background);
+    text-color: var(alternate-active-foreground);
+}
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    highlight: inherit;
+    cursor: inherit;
+}
+
+mode-switcher{
+    enabled: true;
+    spacing: 1px;
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    background-color: transparent;
+    text-color: @foreground-color;
+}
+button {
+    padding: 2px;
+    border: 0px;
+    margin: 0px;
+    background-color: @alternate-background;
+    text-color: inherit;
+    cursor: "default";
+}
+button selected {
+    background-color: var(active);
+    text-color: var(selected-normal-foreground);
+}
+
+message {
+    enabled: true;
+    margin: 0px;
+    padding: 4px 8px;
+    border: 0px;
+    background-color: @alternate-background;
+    text-color: @foreground-color;
+}
+textbox {
+    border: 0px;
+    background-color: transparent;
+    text-color: @foreground-color;
+    highlight: none;
+    placeholder-color: @foreground-color;
+    blink: true;
+    markup: true;
+}
+error-message {
+    padding: 20px;
+    border: 0px;
+    background-color: @background-color;
+    text-color: @foreground-color;
+}
