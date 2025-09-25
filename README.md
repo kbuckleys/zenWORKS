@@ -1,5 +1,5 @@
 
-<img width="1190" height="576" alt="zenworks" src="https://github.com/user-attachments/assets/99eb5170-91ff-4710-9bd0-f407cff6a485" />
+<img width="1686" height="323" alt="zenworks" src="https://github.com/user-attachments/assets/b5ce90c4-8ec2-489c-8f47-1fc84abc154b" />
 
 Hello and welcome. This is my dotfile repo![Uploading zenworks.png…]()
  for all to use, and for my own convenience. I'm also not trying to pull an Omarchy, I just love Delta Corps Priest. Enjoy and never stop cooking that rice!
