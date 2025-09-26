@@ -63,7 +63,7 @@
   "clock": {
     "format": "{:%I:%M %p}",
     "tooltip": true,
-    "tooltip-format": "{:%A, %B %d, %Y}"
+    "tooltip-format": "{:%A, %B %d}"
   },
 
   "custom/gpu-info": {
