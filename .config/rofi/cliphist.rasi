@@ -23,10 +23,10 @@ configuration {
 }
 
 * {
-    border-colour: var(background-alt);
-    handle-colour: var(selected);
-    background-colour: var(background);
-    foreground-colour: var(foreground);
+    border-color: var(background-alt);
+    handle-color: var(selected);
+    background-color: var(background);
+    foreground-color: var(foreground);
     alternate-background: var(background-alt);
     normal-background: var(background);
     normal-foreground: var(foreground);
@@ -55,7 +55,7 @@ window {
     padding: 0px;
     border: 0px;
     cursor: "default";
-    background-color: @background-colour;
+    background-color: @background-color;
 }
 
 mainbox {
@@ -115,7 +115,7 @@ listview {
     padding: 0px 0px 0px 0px;
     border: 0px;
     background-color: transparent;
-    text-color: @foreground-colour;
+    text-color: @foreground-color;
     cursor: "default";
 }
 
@@ -126,6 +126,6 @@ element {
     padding: 2px 8px 2px 8px;
     border: 0px;
     background-color: transparent;
-    text-color: @foreground-colour;
+    text-color: @foreground-color;
     cursor: "default";
 }
