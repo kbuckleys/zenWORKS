@@ -16,6 +16,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - gst-plugins-good
 - gst-plugins-bad
 - gst-plugins-ugly
+- xdg-desktop-portal-wlr
 - 7zip
 - unzip
 - swww
