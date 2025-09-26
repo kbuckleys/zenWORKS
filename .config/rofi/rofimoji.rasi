@@ -7,7 +7,7 @@
 @theme "Arc-Dark"
 
 configuration {
-    show-icons: true;
+    show-icons: false;
     kb-accept-entry: "Return";
 }
 
