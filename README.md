@@ -1,8 +1,7 @@
 <img width="1686" height="323" alt="zenworks" src="https://github.com/user-attachments/assets/b5ce90c4-8ec2-489c-8f47-1fc84abc154b" />
 
-This is my dotfile repo for all to use, and for my own convenience. Enjoy and never stop cooking that rice!
+<h3>This is my dotfile repo for all to use, and for my own convenience. Enjoy and never stop cooking that rice!</h3>
 
-# Premise
 In my search for a GTK theme, I stumbled upon an old one called Kripton, which I found to be quite beautiful, but it didn't quite fit in with the rest of my setup. So I took it upon myself and created a Kripton color palette based on the GTK theme, and then made Kripton themes for the software I use. This is going to be a work in progress, as I'm considering taking this seriously and kickstart a project to cover as many software and websites as possible. I highly doubt it could ever be on the same level as Catppuccin's or Nord's, but it's an enticing idea all the same.
 
 # Dependencies
