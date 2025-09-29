@@ -14,7 +14,7 @@
 }
 
 #workspaces button {
-  padding: 2px 8px 0px 8px;
+  padding: 0px 8px 0px 8px;
   color: rgba(223, 223, 221, 0.45);
 }
 #workspaces button.active {
@@ -29,14 +29,14 @@
 }
 
 #custom-separator {
-  padding: 2px 8px 0px 8px;
+  padding: 0px 8px 0px 8px;
   color: #dfdfdd;
 }
 
 #temperature, #custom-gpu-temp, #network, #clock,
 #custom-weather, #pulseaudio, #tray-expander,
 #cpu, #custom-gpu-info, #memory {
-  padding: 2px 8px 0px 8px;
+  padding: 0px 8px 0px 8px;
   color: #DFDFDD;
 }
 
@@ -53,23 +53,23 @@
 }
 
 #custom-waybar-mpris {
-  padding: 2px 4px 0px 8px;
+  padding: 0px 4px 0px 8px;
   color: #b6e0a4;
 }
 
 #custom-pacman {
-  padding: 2px 4px 0px 0px;
+  padding: 0px 4px 0px 0px;
 }
 #custom-pacman.pending-updates {
-  padding: 2px 4px 0px 4px;
+  padding: 0px 4px 0px 4px;
   color: #c8a4e0;
 }
 
 #tray-expander {
-  padding: 2px 2px 0px 8px;
+  padding: 0px 2px 0px 8px;
 }
 #tray {
-  padding: 2px 8px 0px 0px;
+  padding: 0px 8px 0px 0px;
 }
 
 tooltip {
