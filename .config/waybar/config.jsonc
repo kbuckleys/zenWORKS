@@ -101,12 +101,12 @@
     "tooltip-format": "GPU Temperature"
   },
 
-  "memory": {
-    "format": "RAM {used:0.1f}",
-    "tooltip": true,
-    "tooltip-format": "{total:0.1f}GiB\nUsed: {used:0.1f}GiB\nAvailable: {avail:0.1f}GiB",
-    "interval": 1
-  },
+"memory": {
+  "format": "SWAP {swapUsed:0.1f}GiB ~ RAM {swapTotal:0.1f}GiB",
+  "tooltip": true,
+  "tooltip-format": "RAM Total: {total:0.1f}GiB\nRAM Used: {used:0.1f}GiB\nRAM Available: {avail:0.1f}GiB\n\nSWAP Total: {swapTotal:0.1f}GiB\nSWAP Used: {swapUsed:0.1f}GiB\nSWAP Available: {swapAvail:0.1f}GiB",
+  "interval": 1
+},
   
   "pulseaudio": {
     "format": "{icon}{volume}%",
