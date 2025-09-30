@@ -103,7 +103,7 @@
   },
 
 "memory": {
-  "format": "SWAP {swapUsed:0.1f}GiB ~ RAM {swapTotal:0.1f}GiB",
+  "format": "SWAP {swapUsed:0.1f} GB ~ RAM {used:0.1f} GB",
   "tooltip": true,
   "tooltip-format": "RAM Total: {total:0.1f}GiB\nRAM Used: {used:0.1f}GiB\nRAM Available: {avail:0.1f}GiB\n\nSWAP Total: {swapTotal:0.1f}GiB\nSWAP Used: {swapUsed:0.1f}GiB\nSWAP Available: {swapAvail:0.1f}GiB",
   "interval": 1
