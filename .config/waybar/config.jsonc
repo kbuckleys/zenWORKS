@@ -13,6 +13,7 @@
 
   "modules-left": [
     "memory",
+    "custom/separator",
     "cpu",
     "custom/gpu-info",
     "custom/separator",
