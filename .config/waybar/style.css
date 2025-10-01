@@ -40,10 +40,7 @@
   color: #DFDFDD;
 }
 
-#temperature.critical {
-  color: #e0aea4;
-}
-
+#temperature.critical, #custom-gpu-temp.critical,
 #network.disconnected {
   color: #e0aea4;
 }

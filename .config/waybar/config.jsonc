@@ -89,7 +89,7 @@
     "interval": 5,
     "critical-threshold": 80,
     "format": "CT {temperatureC}°C",
-    "format-critical": "CT 󰸁 {temperatureC}°C",
+    "format-critical": "CT {temperatureC}°C",
     "tooltip": true,
     "tooltip-format": "CPU Temperature"
   },
@@ -98,6 +98,7 @@
     "exec": "~/.config/waybar/scripts/gpu-temp.sh",
     "interval": 5,
     "format": "{text}",
+    "format-critical": "{text}",
     "tooltip": true,
     "tooltip-format": "GPU Temperature"
   },
