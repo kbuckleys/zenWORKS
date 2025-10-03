@@ -7,7 +7,7 @@
 @theme "Arc-Dark"
 
 configuration {
-	  modi: "drun,combi,filebrowser";
+	  modi: "combi,drun,filebrowser";
     show-icons: false;
     display-drun: "DRUN";
     display-combi: "COMBI";
