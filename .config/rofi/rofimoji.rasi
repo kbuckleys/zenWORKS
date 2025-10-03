@@ -144,8 +144,3 @@ textbox {
     blink: true;
     markup: true;
 }
-error-message {
-    padding: 20px;
-    border: 0px;
-    background-color: @background-color;
-}
