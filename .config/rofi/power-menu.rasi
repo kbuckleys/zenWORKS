@@ -62,6 +62,7 @@ mainbox {
     border-radius: 0px;
     border-color: @border;
     background-color: transparent;
+    children: [ "listview" ];
 }
 
 entry, inputbar, element-icon {
