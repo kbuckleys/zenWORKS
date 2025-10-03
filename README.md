@@ -6,7 +6,6 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 
 # Dependencies
 - LazyVim
-- waypaper
 - ripgrep
 - resvg
 - imagemagick
