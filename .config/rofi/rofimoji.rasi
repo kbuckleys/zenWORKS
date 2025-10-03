@@ -6,11 +6,6 @@
 
 @theme "Arc-Dark"
 
-configuration {
-    show-icons: false;
-    kb-accept-entry: "Return";
-}
-
 * {
     background: #0B0E0E;
     background-alt: #20242A;
@@ -70,33 +65,7 @@ mainbox {
 }
 
 inputbar {
-    enabled: true;
-    spacing: 4px;
-    margin:  0px;
-    padding: 4px 8px;
-    border: 0px;
-    background-color: transparent;
-    children: [ "textbox-prompt-colon", "entry" ];
-}
-prompt {
-    enabled: true;
-    background-color: inherit;
-    text-color: inherit;
-}
-textbox-prompt-colon {
-    enabled: true;
-    expand: false;
-    str: ">";
-    background-color: inherit;
-    text-color: @handle-color;
-}
-entry {
-    enabled: true;
-    background-color: inherit;
-    text-color: inherit;
-    cursor: text;
-    placeholder: "...";
-    placeholder-color: @handle-color;
+    enabled: false;
 }
 
 listview {

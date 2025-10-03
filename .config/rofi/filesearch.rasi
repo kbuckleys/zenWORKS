@@ -6,11 +6,6 @@
 
 @theme "Arc-Dark"
 
-configuration {
-    show-icons: false;
-    kb-accept-entry: "Return";
-}
-
 * {
     background: #0B0E0E;
     background-alt: #20242A;
