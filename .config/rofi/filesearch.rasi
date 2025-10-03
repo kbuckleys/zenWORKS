@@ -83,7 +83,7 @@ textbox-prompt-colon {
     enabled: true;
     expand: false;
     str: "File Search >";
-    background-color: inherit;
+    background-color: @background-color;
     text-color: inherit;
 }
 entry {
@@ -125,6 +125,12 @@ element {
     text-color: @foreground-color;
     cursor: "default";
 }
+element-text {
+    highlight: bold #c8a4e0;
+}
+element-text selected {
+    highlight: none;
+}
 
 message {
     enabled: true;
@@ -149,4 +155,3 @@ error-message {
     background-color: @background-color;
     text-color: @foreground-color;
 }
-

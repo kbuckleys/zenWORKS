@@ -99,3 +99,9 @@ element {
     text-color: @foreground-color;
     cursor: "default";
 }
+element-text {
+    highlight: bold #b6e0a4;
+}
+element-text selected {
+    highlight: none;
+}

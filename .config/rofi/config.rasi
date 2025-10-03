@@ -126,4 +126,5 @@ element {
 }
 element-text {
     horizontal-align: 0.5;
+    highlight: none;
 }
