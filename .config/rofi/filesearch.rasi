@@ -7,25 +7,8 @@
 @theme "Arc-Dark"
 
 configuration {
-	  modi: "drun,combi,filebrowser";
     show-icons: false;
-    display-drun: "DRUN";
-    display-combi: "COMBI";
-    display-filebrowser: "BROWSER";
-	  drun-display-format: "{name}";
-	  window-format: "{c} · {t}";
     kb-accept-entry: "Return";
-    kb-remove-to-eol: "";
-    recursivebrowser {
-        directory: "~";
-        cancel-returns-1: true;
-        filter-regex: "(.*cache.*|.*\\.o)";
-        command: "xdg-open";
-    }
-    filebrowser {
-        show-hidden: true;
-        command: "kitty -e yazi";
-    }
 }
 
 * {
@@ -33,7 +16,7 @@ configuration {
     background-alt: #20242A;
     foreground: #DFDFDD;
     border: #20242A;
-    selected: #9BBFBF;
+    selected: #DFDFDD;
     active: #E0D8A4;
     urgent: #E0AEA4;
     font: "0xProto Nerd Font Medium 10";
@@ -47,10 +30,6 @@ configuration {
     alternate-background: var(background-alt);
     normal-background: var(background);
     normal-foreground: var(foreground);
-    urgent-background: var(urgent);
-    urgent-foreground: var(background);
-    active-background: var(active);
-    active-foreground: var(background);
     selected-normal-background: var(selected);
     selected-normal-foreground: var(background);
     selected-urgent-background: var(active);
@@ -70,7 +49,7 @@ window {
     location: center;
     anchor: center;
     fullscreen: false;
-    width: 800px;
+    width: 700px;
     enabled: true;
     margin: 0px;
     padding: 0px;
@@ -88,7 +67,6 @@ mainbox {
     border-radius: 0px;
     border-color: @border;
     background-color: transparent;
-    children: [ "inputbar", "message", "listview", "mode-switcher" ];
 }
 
 inputbar {
@@ -96,12 +74,10 @@ inputbar {
     spacing: 4px;
     margin:  0px;
     padding: 4px 8px;
-    border: 0px 0px 0px 0px;
+    border: 0px;
     background-color: transparent;
-    text-color: @foreground-color;
     children: [ "textbox-prompt-colon", "entry" ];
 }
-
 prompt {
     enabled: true;
     background-color: inherit;
@@ -125,8 +101,8 @@ entry {
 
 listview {
     enabled: true;
-    columns: 2;
-    lines: 8;
+    columns: 1;
+    lines: 12;
     cycle: true;
     dynamic: true;
     scrollbar: false;
@@ -135,8 +111,8 @@ listview {
     fixed-height: true;
     fixed-columns: true;
     spacing: 2px;
-    padding: 1px 0px 1px 0px;
     margin: 0px;
+    padding: 0px 0px 0px 0px;
     border: 0px;
     background-color: transparent;
     text-color: @foreground-color;
@@ -152,70 +128,6 @@ element {
     background-color: transparent;
     text-color: @foreground-color;
     cursor: "default";
-}
-element normal.normal {
-    background-color: var(normal-background);
-    text-color: var(normal-foreground);
-}
-element normal.urgent {
-    background-color: var(urgent-background);
-    text-color: var(urgent-foreground);
-}
-element normal.active {
-    background-color: var(active-background);
-    text-color: var(active-foreground);
-}
-element selected.normal {
-    background-color: var(selected-normal-background);
-    text-color: var(selected-normal-foreground);
-}
-element selected.urgent {
-    background-color: var(selected-urgent-background);
-    text-color: var(selected-urgent-foreground);
-}
-element selected.active {
-    background-color: var(selected-active-background);
-    text-color: var(selected-active-foreground);
-}
-element alternate.normal {
-    background-color: var(alternate-normal-background);
-    text-color: var(alternate-normal-foreground);
-}
-element alternate.urgent {
-    background-color: var(alternate-urgent-background);
-    text-color: var(alternate-urgent-foreground);
-}
-element alternate.active {
-    background-color: var(alternate-active-background);
-    text-color: var(alternate-active-foreground);
-}
-element-text {
-    background-color: transparent;
-    text-color: inherit;
-    highlight: inherit;
-    cursor: inherit;
-}
-
-mode-switcher{
-    enabled: true;
-    spacing: 1px;
-    margin: 0px;
-    padding: 0px;
-    border: 0px;
-    background-color: transparent;
-    text-color: @foreground-color;
-}
-button {
-    padding: 2px;
-    border: 0px;
-    margin: 0px;
-    background-color: @alternate-background;
-    text-color: inherit;
-    cursor: "default";
-}
-button selected {
-    background-color: var(active);
-    text-color: var(selected-normal-foreground);
 }
 
 message {
