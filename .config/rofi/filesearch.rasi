@@ -131,27 +131,3 @@ element-text {
 element-text selected {
     highlight: none;
 }
-
-message {
-    enabled: true;
-    margin: 0px;
-    padding: 4px 8px;
-    border: 0px;
-    background-color: @alternate-background;
-    text-color: @foreground-color;
-}
-textbox {
-    border: 0px;
-    background-color: transparent;
-    text-color: @foreground-color;
-    highlight: none;
-    placeholder-color: @foreground-color;
-    blink: true;
-    markup: true;
-}
-error-message {
-    padding: 20px;
-    border: 0px;
-    background-color: @background-color;
-    text-color: @foreground-color;
-}
