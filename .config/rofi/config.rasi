@@ -17,7 +17,7 @@ configuration {
     kb-accept-entry: "Return";
     kb-remove-to-eol: "";
     recursivebrowser {
-        directory: "~";
+        directory: "/";
         cancel-returns-1: true;
         filter-regex: "(.*cache.*|.*\\.o)";
         command: "xdg-open";
@@ -112,7 +112,7 @@ textbox-prompt-colon {
     expand: false;
     str: ">";
     background-color: inherit;
-    text-color: inherit;
+    text-color: @handle-color;
 }
 entry {
     enabled: true;
@@ -120,7 +120,7 @@ entry {
     text-color: inherit;
     cursor: text;
     placeholder: "...";
-    placeholder-color: inherit;
+    placeholder-color: @handle-color;
 }
 
 listview {

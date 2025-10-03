@@ -67,6 +67,7 @@ mainbox {
     border-radius: 0px;
     border-color: @border;
     background-color: transparent;
+    children: [inputbar, listview];
 }
 
 inputbar {
@@ -86,7 +87,7 @@ prompt {
 textbox-prompt-colon {
     enabled: true;
     expand: false;
-    str: ">";
+    str: "File Search >";
     background-color: inherit;
     text-color: inherit;
 }
@@ -153,3 +154,4 @@ error-message {
     background-color: @background-color;
     text-color: @foreground-color;
 }
+

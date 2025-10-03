@@ -86,9 +86,9 @@ prompt {
 textbox-prompt-colon {
     enabled: true;
     expand: false;
-    str: ">";
+    str: "Clipboard Search >";
     background-color: inherit;
-    text-color: inherit;
+    text-color: @handle-color;
 }
 entry {
     enabled: true;
@@ -96,7 +96,7 @@ entry {
     text-color: inherit;
     cursor: text;
     placeholder: "...";
-    placeholder-color: inherit;
+    placeholder-color: @handle-color;
 }
 
 listview {
