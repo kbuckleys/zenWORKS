@@ -277,7 +277,7 @@ See the above repository for updates as well as full license text. */
   width: 100% !important;
   background-color: var(--toolbar-bgcolor) !important;
   z-index: 1 !important;
-  margin-bottom: -16px !important;
+  margin-bottom: -20px !important;
 }
 
 /* Set navbar height */
