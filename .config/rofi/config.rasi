@@ -11,6 +11,8 @@ configuration {
 	  drun-display-format: "{name}";
 	  window-format: "{c} · {t}";
     kb-accept-entry: "Return";
+    kb-remove-to-sol: "BackSpace";
+    kb-remove-char-back: "";
     kb-remove-to-eol: "";
     recursivebrowser {
         directory: "/";
@@ -88,7 +90,7 @@ mainbox {
 }
 
 inputbar {
-    enabled: true;
+    enabled: false;
     spacing: 4px;
     margin:  0px;
     padding: 4px 8px;
@@ -122,7 +124,7 @@ entry {
 listview {
     enabled: true;
     columns: 1;
-    lines: 8;
+    lines: 12;
     cycle: true;
     dynamic: true;
     scrollbar: false;
@@ -148,4 +150,7 @@ element {
     background-color: transparent;
     text-color: @foreground-color;
     cursor: "default";
+}
+element-text {
+    horizontal-align: 0.5;
 }
