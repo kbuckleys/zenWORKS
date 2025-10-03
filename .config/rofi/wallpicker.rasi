@@ -44,7 +44,7 @@ window {
     location: center;
     anchor: center;
     fullscreen: false;
-    width: 1400px;
+    width: 1200px;
     enabled: true;
     margin: 0px;
     padding: 0px;
@@ -72,7 +72,7 @@ inputbar {
 listview {
     enabled: true;
     columns: 6;
-    lines: 2;
+    lines: 3;
     cycle: true;
     dynamic: true;
     scrollbar: false;
@@ -80,9 +80,9 @@ listview {
     reverse: false;
     fixed-height: true;
     fixed-columns: true;
-    spacing: 0px;
+    spacing: 12px;
     margin: 0px;
-    padding: 0px 0px 0px 0px;
+    padding: 2px 2px 2px 2px;
     border: 0px;
     background-color: transparent;
     text-color: @foreground-color;
@@ -104,7 +104,7 @@ element-text {
     visible: false;
 }
 element-icon {
-    size: 14em;
+    size: 12em;
     margin: 0;
     padding: 0;
 }
