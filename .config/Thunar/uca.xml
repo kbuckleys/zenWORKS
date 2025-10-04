@@ -12,4 +12,15 @@
 	<startup-notify/>
 	<directories/>
 </action>
+<action>
+	<icon></icon>
+	<name>Set as Wallpaper</name>
+	<submenu></submenu>
+	<unique-id>1758952967264232-1</unique-id>
+	<command>/home/buck/.config/Thunar/scripts/set-wallpaper.sh</command>
+	<description></description>
+	<range>*</range>
+	<patterns>*</patterns>
+	<image-files/>
+</action>
 </actions>

@@ -66,10 +66,10 @@ configuration {
 
 window {
     transparency: "none";
-    location: center;
-    anchor: center;
+    location: south;
+    anchor: south;
     fullscreen: false;
-    width: 300px;
+    width: 100%;
     enabled: true;
     margin: 0px;
     padding: 0px;
@@ -101,7 +101,7 @@ listview {
     cycle: true;
     dynamic: true;
     scrollbar: false;
-    layout: vertical;
+    layout: horizontal;
     reverse: false;
     fixed-height: true;
     fixed-columns: true;
@@ -118,7 +118,7 @@ element {
     enabled: true;
     spacing: 0px;
     margin: 0px;
-    padding: 2px 8px 2px 8px;
+    padding: 4px 10px 4px 10px;
     border: 0px;
     background-color: transparent;
     text-color: @foreground-color;
