@@ -6,18 +6,15 @@
 
 @theme "Arc-Dark"
 
-configuration {
-    scroll-method: 1;
-}
-
 * {
-    background: #0B0E0E;
+    background: #e0d8a4;
     background-alt: #20242A;
-    foreground: #DFDFDD;
-    border: #20242A;
-    selected: #64737d;
+    foreground: #0b0e0e;
+    border: #0b0e0e;
+    selected: #0b0e0e;
     active: #E0D8A4;
     urgent: #E0AEA4;
+    font: "0xProto Nerd Font Medium 10";
 }
 
 * {
@@ -28,6 +25,10 @@ configuration {
     alternate-background: var(background-alt);
     normal-background: var(background);
     normal-foreground: var(foreground);
+    urgent-background: var(urgent);
+    urgent-foreground: var(background);
+    active-background: var(active);
+    active-foreground: var(background);
     selected-normal-background: var(selected);
     selected-normal-foreground: var(background);
     selected-urgent-background: var(active);
@@ -44,18 +45,23 @@ configuration {
 
 window {
     transparency: "none";
-    location: center;
-    anchor: center;
+    location: south;
+    anchor: south;
     fullscreen: false;
-    width: 60%;
+    width: 100%;
     enabled: true;
     margin: 0px;
     padding: 0px;
     border: 0px;
     cursor: "default";
     background-color: @background-color;
+    children: [horibox];
 }
-
+horibox {
+    orientation: horizontal;
+    children: [inputbar, listview];
+    spacing: 5px;
+}
 mainbox {
     enabled: true;
     spacing: 0px;
@@ -65,44 +71,65 @@ mainbox {
     border-radius: 0px;
     border-color: @border;
     background-color: transparent;
-    children: [ "inputbar", "listview" ];
 }
 
 inputbar {
-    enabled: false;
+    enabled: true;
+    spacing: 4px;
+    margin:  0px;
+    padding: 4px 8px;
+    border: 0px;
+    background-color: transparent;
+    children: [ "textbox-prompt-colon", "entry" ];
+}
+prompt {
+    enabled: true;
+    background-color: inherit;
+    text-color: inherit;
+}
+textbox-prompt-colon {
+    enabled: true;
+    expand: false;
+    str: "Word Lookup >";
+    background-color: @background-color;
+    text-color: inherit;
+}
+entry {
+    enabled: true;
+    background-color: inherit;
+    text-color: inherit;
+    placeholder: "...";
+    width: 10em;
+    placeholder-color: inherit;
 }
 
 listview {
     enabled: true;
-    columns: 5;
-    lines: 3;
+    columns: 1;
+    lines: 12;
     cycle: true;
     dynamic: true;
-    scrollbar: true;
-    layout: vertical;
+    scrollbar: false;
+    layout: horizontal;
+    expand: true;
     reverse: false;
-    fixed-height: false;
-    fixed-columns: false;
+    fixed-height: true;
+    fixed-columns: true;
     spacing: 0px;
+    padding: 0px 0px 0px 0px;
     margin: 0px;
     border: 0px;
     background-color: transparent;
     text-color: @foreground-color;
     cursor: "default";
 }
-
 element {
     enabled: true;
     spacing: 0px;
     margin: 0px;
-    padding: 1px 1px 1px 1px;
+    padding: 4px 10px 4px 10px;
     border: 0px;
     background-color: transparent;
     text-color: @foreground-color;
-    children: [element-icon];
-    orientation: vertical;
     cursor: "default";
-}
-element-icon {
-    size: 12em;
 }
