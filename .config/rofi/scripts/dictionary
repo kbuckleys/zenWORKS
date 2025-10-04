@@ -18,7 +18,7 @@ parse_and_show() {
     definitions="No definition found."
   fi
 
-  echo -e "$word:\n$definitions" | rofi -dmenu -theme ~/.config/rofi/dictionary.rasi
+  echo -e "$word:\n$definitions" | rofi -dmenu -theme ~/.config/rofi/dict-output.rasi
 }
 
 while true; do

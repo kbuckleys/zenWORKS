@@ -55,12 +55,6 @@ window {
     border: 0px;
     cursor: "default";
     background-color: @background-color;
-    children: [horibox];
-}
-horibox {
-    orientation: horizontal;
-    children: [inputbar, listview];
-    spacing: 5px;
 }
 mainbox {
     enabled: true;
@@ -74,33 +68,7 @@ mainbox {
 }
 
 inputbar {
-    enabled: true;
-    spacing: 4px;
-    margin:  0px;
-    padding: 4px 8px;
-    border: 0px;
-    background-color: transparent;
-    children: [ "textbox-prompt-colon", "entry" ];
-}
-prompt {
-    enabled: true;
-    background-color: inherit;
-    text-color: inherit;
-}
-textbox-prompt-colon {
-    enabled: true;
-    expand: false;
-    str: "Word Lookup >";
-    background-color: @background-color;
-    text-color: inherit;
-}
-entry {
-    enabled: true;
-    background-color: inherit;
-    text-color: inherit;
-    placeholder: "...";
-    width: 40em;
-    placeholder-color: inherit;
+    enabled: false;
 }
 
 listview {
