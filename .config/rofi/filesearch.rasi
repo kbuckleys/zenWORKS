@@ -6,6 +6,11 @@
 
 @theme "Arc-Dark"
 
+configuration {
+    kb-remove-to-sol: "";
+    kb-remove-char-back: "BackSpace";
+}
+
 * {
     background: #0B0E0E;
     background-alt: #20242A;
