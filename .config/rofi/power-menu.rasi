@@ -41,10 +41,10 @@
 
 window {
     transparency: "none";
-    location: center;
-    anchor: center;
+    location: south;
+    anchor: south;
     fullscreen: false;
-    width: 150px;
+    width: 100%;
     enabled: true;
     margin: 0px;
     padding: 0px;
@@ -71,18 +71,16 @@ entry, inputbar, element-icon {
 
 listview {
     enabled: true;
-    columns: 1;
-    lines: 5;
     cycle: true;
     dynamic: true;
     scrollbar: false;
-    layout: vertical;
+    layout: horizontal;
     reverse: false;
     fixed-height: true;
     fixed-columns: true;
     spacing: 2px;
     margin: 0px;
-    padding: 0px;
+    padding: 0px 0px 0px 0px;
     border: 0px;
     background-color: transparent;
     text-color: @foreground-color;
@@ -93,7 +91,7 @@ element {
     enabled: true;
     spacing: 0px;
     margin: 0px;
-    padding: 2px;
+    padding: 4px 10px 4px 10px;
     border: 0px;
     background-color: transparent;
     text-color: @foreground-color;
