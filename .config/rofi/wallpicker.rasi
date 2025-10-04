@@ -4,7 +4,7 @@
 * └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 * https://github.com/kbuckleys/ */
 
-@theme "Arc-Dark"
+@theme "kripton"
 
 configuration {
     scroll-method: 1;
@@ -18,28 +18,6 @@ configuration {
     selected: #64737d;
     active: #E0D8A4;
     urgent: #E0AEA4;
-}
-
-* {
-    border-color: var(background-alt);
-    handle-color: var(selected);
-    background-color: var(background);
-    foreground-color: var(foreground);
-    alternate-background: var(background-alt);
-    normal-background: var(background);
-    normal-foreground: var(foreground);
-    selected-normal-background: var(selected);
-    selected-normal-foreground: var(background);
-    selected-urgent-background: var(active);
-    selected-urgent-foreground: var(background);
-    selected-active-background: var(urgent);
-    selected-active-foreground: var(background);
-    alternate-normal-background: var(background);
-    alternate-normal-foreground: var(foreground);
-    alternate-urgent-background: var(urgent);
-    alternate-urgent-foreground: var(background);
-    alternate-active-background: var(active);
-    alternate-active-foreground: var(background);
 }
 
 window {
