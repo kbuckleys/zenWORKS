@@ -83,9 +83,8 @@ listview {
     reverse: false;
     fixed-height: false;
     fixed-columns: false;
-    spacing: 12px;
+    spacing: 8px;
     margin: 0px;
-    padding: 2px 2px 2px 2px;
     border: 0px;
     background-color: transparent;
     text-color: @foreground-color;
@@ -96,7 +95,7 @@ element {
     enabled: true;
     spacing: 0px;
     margin: 0px;
-    padding: 2px 2px 2px 2px;
+    padding: 1px 1px 1px 1px;
     border: 0px;
     background-color: transparent;
     text-color: @foreground-color;
