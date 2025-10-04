@@ -9,9 +9,11 @@ selection=$(find "$folder" -type f \( \
         -iname '*.jpg' \
         -o -iname '*.jpeg' \
         -o -iname '*.png' -o \
-        -iname '*.svg' \) -print0 | \
-xargs -0 -I{} echo -en "{}\0icon\x1fthumbnail://{}\n" | \
-rofi -dmenu -i -show-icons -theme ~/.config/rofi/wallpicker.rasi)
+        -iname '*.svg' \) -printf "%T@ %p\0" | \
+    sort -zr -k1,1nr | \
+    cut -z -d' ' -f2- | \
+    xargs -0 -I{} echo -en "{}\0icon\x1fthumbnail://{}\n" | \
+    rofi -dmenu -i -show-icons -theme ~/.config/rofi/wallpicker.rasi)
 
 [ -n "$selection" ] && swww img "$selection" \
         --transition-step 1 \
