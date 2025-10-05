@@ -9,6 +9,7 @@ selection=$(find "$folder" -type f \( \
         -iname '*.jpg' \
         -o -iname '*.jpeg' \
         -o -iname '*.png' \
+        -o -iname '*.gif' \
         -o -iname '*.webp' \) -printf "%T@ %p\0" | \
         sort -zr -k1,1nr | \
         cut -z -d' ' -f2- | \
