@@ -43,7 +43,6 @@ entry, inputbar, element-icon {
 listview {
     enabled: true;
     cycle: true;
-    dynamic: true;
     scrollbar: false;
     layout: horizontal;
     reverse: false;

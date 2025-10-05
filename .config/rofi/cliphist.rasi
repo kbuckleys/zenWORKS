@@ -19,6 +19,7 @@ window {
     fullscreen: false;
     width: 100%;
     enabled: true;
+    dynamic: true;
     margin: 0px;
     padding: 0px;
     border: 0px;
@@ -44,7 +45,6 @@ listview {
     columns: 3;
     lines: 12;
     cycle: true;
-    dynamic: true;
     scrollbar: false;
     layout: vertical;
     reverse: false;

@@ -22,6 +22,7 @@ window {
     fullscreen: false;
     width: 100%;
     enabled: true;
+    dynamic: true;
     margin: 0px;
     padding: 0px;
     border: 0px;
@@ -43,10 +44,9 @@ inputbar {
 
 listview {
     enabled: true;
-    columns: 8;
-    lines: 3;
+    columns: 9;
+    lines: 2;
     cycle: true;
-    dynamic: true;
     scrollbar: true;
     layout: vertical;
     reverse: false;
@@ -59,7 +59,7 @@ element {
     enabled: true;
     spacing: 0px;
     margin: 0px;
-    padding: 1px 1px 1px 1px;
+    padding: 0px;
     border: 0px;
     orientation: vertical;
     cursor: "default";
