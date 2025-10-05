@@ -49,9 +49,6 @@ inputbar {
     border: 0px;
     children: [ "textbox-prompt-colon", "entry" ];
 }
-prompt {
-    enabled: true;
-}
 textbox-prompt-colon {
     enabled: true;
     expand: false;
