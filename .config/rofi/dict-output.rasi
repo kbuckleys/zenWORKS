@@ -8,21 +8,12 @@
 
 * {
     background: #e0d8a4;
-    background-alt: #20242A;
     foreground: #0b0e0e;
-    border: #0b0e0e;
     selected: #0b0e0e;
-    active: #E0D8A4;
-    urgent: #E0AEA4;
-    font: "0xProto Nerd Font Medium 10";
-}
-
-* {
-    foreground-color: var(foreground);
+    border: #0b0e0e;
     selected-normal-background: var(selected);
     selected-normal-foreground: var(background);
-    selected-active-background: var(urgent);
-    selected-active-foreground: var(background);
+    font: "0xProto Nerd Font Medium 10";
 }
 
 window {
@@ -36,7 +27,6 @@ window {
     padding: 0px;
     border: 0px;
     cursor: "default";
-    background-color: @background-color;
 }
 mainbox {
     enabled: true;
@@ -45,8 +35,6 @@ mainbox {
     padding: 0px;
     border: 1px solid;
     border-radius: 0px;
-    border-color: @border;
-    background-color: transparent;
 }
 
 inputbar {
@@ -69,17 +57,13 @@ listview {
     padding: 0px 0px 0px 0px;
     margin: 0px;
     border: 0px;
-    background-color: transparent;
-    text-color: @foreground-color;
     cursor: "default";
 }
 element {
     enabled: true;
     spacing: 0px;
     margin: 0px;
-    padding: 4px 10px 4px 10px;
+    padding: 4px 8px 4px 8px;
     border: 0px;
-    background-color: transparent;
-    text-color: @foreground-color;
     cursor: "default";
 }

@@ -7,17 +7,8 @@
 @theme "kripton"
 
 * {
-    background: #0B0E0E;
-    background-alt: #20242A;
-    foreground: #DFDFDD;
-    border: #20242A;
     selected: #E0AEA4;
-    active: #E0D8A4;
-    urgent: #E0AEA4;
     font: "0xProto Nerd Font Medium 10";
-}
-
-* {
     selected-normal-background: var(selected);
 }
 
@@ -32,7 +23,6 @@ window {
     padding: 0px;
     border: 0px;
     cursor: "default";
-    background-color: @background-color;
 }
 
 mainbox {
@@ -42,8 +32,6 @@ mainbox {
     padding: 0px;
     border: 1px solid;
     border-radius: 0px;
-    border-color: @border;
-    background-color: transparent;
     children: [ "listview" ];
 }
 
@@ -64,8 +52,6 @@ listview {
     margin: 0px;
     padding: 0px 0px 0px 0px;
     border: 0px;
-    background-color: transparent;
-    text-color: @foreground-color;
     cursor: "default";
 }
 
@@ -75,7 +61,5 @@ element {
     margin: 0px;
     padding: 4px 10px 4px 10px;
     border: 0px;
-    background-color: transparent;
-    text-color: @foreground-color;
     cursor: "default";
 }

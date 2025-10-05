@@ -7,36 +7,10 @@
 @theme "kripton"
 
 * {
-    background: #0B0E0E;
-    background-alt: #20242A;
-    foreground: #DFDFDD;
-    border: #20242A;
     selected: #3A414A;
-    active: #E0D8A4;
-    urgent: #E0AEA4;
-    font: "0xProto Nerd Font Medium 10";
-}
-
-* {
-    border-color: var(background-alt);
-    handle-color: var(selected);
-    background-color: var(background);
     foreground-color: var(foreground);
-    alternate-background: var(background-alt);
-    normal-background: var(background);
-    normal-foreground: var(foreground);
     selected-normal-background: var(selected);
-    selected-normal-foreground: var(background);
-    selected-urgent-background: var(active);
-    selected-urgent-foreground: var(background);
-    selected-active-background: var(urgent);
-    selected-active-foreground: var(background);
-    alternate-normal-background: var(background);
-    alternate-normal-foreground: var(foreground);
-    alternate-urgent-background: var(urgent);
-    alternate-urgent-foreground: var(background);
-    alternate-active-background: var(active);
-    alternate-active-foreground: var(background);
+    font: "0xProto Nerd Font Medium 10";
 }
 
 window {
@@ -50,7 +24,6 @@ window {
     padding: 0px;
     border: 0px;
     cursor: "default";
-    background-color: @background-color;
 }
 
 mainbox {
@@ -60,8 +33,6 @@ mainbox {
     padding: 0px;
     border: 1px solid;
     border-radius: 0px;
-    border-color: @border;
-    background-color: transparent;
     children: [ "inputbar", "listview" ];
 }
 
@@ -84,8 +55,6 @@ listview {
     margin: 0px;
     padding: 0px 0px 0px 0px;
     border: 0px;
-    background-color: transparent;
-    text-color: @foreground-color;
     cursor: "default";
 }
 
@@ -95,8 +64,6 @@ element {
     margin: 0px;
     padding: 2px 8px 2px 8px;
     border: 0px;
-    background-color: transparent;
-    text-color: @foreground-color;
     cursor: "default";
 }
 element-text {

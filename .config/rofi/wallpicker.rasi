@@ -10,16 +10,6 @@ configuration {
     scroll-method: 1;
 }
 
-* {
-    background: #0B0E0E;
-    background-alt: #20242A;
-    foreground: #DFDFDD;
-    border: #20242A;
-    selected: #64737d;
-    active: #E0D8A4;
-    urgent: #E0AEA4;
-}
-
 window {
     transparency: "none";
     location: center;
@@ -31,7 +21,6 @@ window {
     padding: 0px;
     border: 0px;
     cursor: "default";
-    background-color: @background-color;
 }
 
 mainbox {
@@ -41,8 +30,6 @@ mainbox {
     padding: 10px;
     border: 1px solid;
     border-radius: 0px;
-    border-color: @border;
-    background-color: transparent;
     children: [ "inputbar", "listview" ];
 }
 
@@ -61,11 +48,6 @@ listview {
     reverse: false;
     fixed-height: false;
     fixed-columns: false;
-    spacing: 0px;
-    margin: 0px;
-    border: 0px;
-    background-color: transparent;
-    text-color: @foreground-color;
     cursor: "default";
 }
 
@@ -75,11 +57,9 @@ element {
     margin: 0px;
     padding: 1px 1px 1px 1px;
     border: 0px;
-    background-color: transparent;
-    text-color: @foreground-color;
-    children: [element-icon];
     orientation: vertical;
     cursor: "default";
+    children: [element-icon];
 }
 element-icon {
     size: 12em;

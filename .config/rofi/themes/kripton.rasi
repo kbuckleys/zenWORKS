@@ -38,7 +38,7 @@
 window {
     background-color: @background;
     border: 1;
-    padding: 5;
+    padding: 0;
 }
 
 mainbox {
@@ -47,9 +47,9 @@ mainbox {
 }
 
 message {
-    border: 2px 0px 0px ;
+    border: 0px;
     border-color: @separatorcolor;
-    padding: 1px ;
+    padding: 0px;
 }
 
 textbox {
@@ -58,16 +58,16 @@ textbox {
 
 listview {
     fixed-height: 0;
-    border: 2px 0px 0px ;
+    border: 0px;
     border-color: @separatorcolor;
-    spacing: 2px ;
+    spacing: 2px;
     scrollbar: true;
-    padding: 2px 0px 0px ;
+    padding: 0px;
 }
 
 element {
-    border:  0;
-    padding: 1px ;
+    border: 0;
+    padding: 1px;
 }
 element-text {
     background-color: inherit;
@@ -111,15 +111,15 @@ element.alternate.active {
 }
 
 scrollbar {
-    width: 4px ;
+    width: 4px;
     border: 0;
     handle-color: @normal-foreground;
-    handle-width: 4px ;
+    handle-width: 4px;
     padding: 0;
 }
 
 mode-switcher {
-    border: 2px 0px 0px ;
+    border: 2px 0px 0px;
     border-color: @separatorcolor;
 }
 
@@ -139,13 +139,13 @@ prompt {
 textbox-prompt-colon {
     expand: false;
     str: ":";
-    margin: 0px 0.3em 0em 0em ;
+    margin: 0px 0.3em 0em 0em;
     text-color: @normal-foreground;
 }
 inputbar {
     spacing: 0;
     text-color: @normal-foreground;
-    padding: 1px ;
+    padding: 1px;
     children: [ prompt,textbox-prompt-colon,entry,case-indicator ];
 }
 
