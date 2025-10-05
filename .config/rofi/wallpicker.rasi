@@ -43,7 +43,7 @@ inputbar {
 
 listview {
     enabled: true;
-    columns: 7;
+    columns: 8;
     lines: 3;
     cycle: true;
     dynamic: true;
