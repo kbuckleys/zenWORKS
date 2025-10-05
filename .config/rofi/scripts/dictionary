@@ -11,7 +11,6 @@ parse_and_show() {
   local word="$1"
   response=$(lookup_word "$word")
 
-  # Extract definitions using jq; show first definition for brevity
   definitions=$(echo "$response" | jq -r '.[0].meanings[0].definitions[0].definition' 2>/dev/null)
 
   if [ -z "$definitions" ]; then

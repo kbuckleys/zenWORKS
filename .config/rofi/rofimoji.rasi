@@ -7,7 +7,7 @@
 @theme "kripton"
 
 * {
-    selected: #3A414A;
+    selected: #2B3038;
     foreground-color: var(foreground);
     selected-normal-background: var(selected);
     font: "0xProto Nerd Font Medium 10";

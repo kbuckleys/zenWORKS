@@ -13,7 +13,7 @@
     alternate-normal-background: @background;
     selected-urgent-foreground: #0B0E0E;
     urgent-foreground: #E0AEA4;
-    alternate-urgent-background: rgba ( 75, 81, 96, 90 % );
+    alternate-urgent-background: @urgent;
     active-foreground: @selected-normal-foreground;
     lightbg: #DFDFDD;
     selected-active-foreground: #0B0E0E;
