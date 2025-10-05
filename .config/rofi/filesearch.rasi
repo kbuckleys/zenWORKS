@@ -52,7 +52,7 @@ inputbar {
 textbox-prompt-colon {
     enabled: true;
     expand: false;
-    str: "File Search >";
+    str: "Root Search >";
 }
 entry {
     enabled: true;

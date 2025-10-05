@@ -113,7 +113,7 @@ element.alternate.active {
 scrollbar {
     width: 4px;
     border: 0;
-    handle-color: @normal-foreground;
+    handle-color: rgba(155, 191, 191, 0.2);
     handle-width: 4px;
     padding: 0;
 }
