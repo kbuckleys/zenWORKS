@@ -19,16 +19,16 @@ configuration {
 
 window {
     transparency: "none";
-    location: center;
-    anchor: center;
+    location: south;
+    anchor: south;
     fullscreen: false;
-    width: 700px;
+    width: 100%;
     enabled: true;
+    dynamic: true;
     margin: 0px;
     padding: 0px;
     border: 0px;
     cursor: "default";
-    background-color: @background-color;
 }
 
 mainbox {
@@ -66,15 +66,14 @@ entry {
 
 listview {
     enabled: true;
-    columns: 1;
+    columns: 3;
     lines: 12;
     cycle: true;
-    dynamic: true;
     scrollbar: false;
     layout: vertical;
     reverse: false;
-    fixed-height: true;
-    fixed-columns: true;
+    fixed-height: false;
+    fixed-columns: false;
     spacing: 2px;
     margin: 0px;
     padding: 0px 0px 0px 0px;

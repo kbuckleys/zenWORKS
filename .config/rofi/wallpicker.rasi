@@ -12,10 +12,10 @@ configuration {
 
 window {
     transparency: "none";
-    location: center;
-    anchor: center;
+    location: south;
+    anchor: south;
     fullscreen: false;
-    width: 60%;
+    width: 100%;
     enabled: true;
     margin: 0px;
     padding: 0px;
@@ -39,7 +39,7 @@ inputbar {
 
 listview {
     enabled: true;
-    columns: 5;
+    columns: 7;
     lines: 3;
     cycle: true;
     dynamic: true;

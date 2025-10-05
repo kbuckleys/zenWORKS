@@ -14,10 +14,10 @@
 
 window {
     transparency: "none";
-    location: center;
-    anchor: center;
+    location: south;
+    anchor: south;
     fullscreen: false;
-    width: 900px;
+    width: 100%;
     enabled: true;
     margin: 0px;
     padding: 0px;
@@ -41,14 +41,14 @@ inputbar {
 
 listview {
     enabled: true;
-    columns: 2;
+    columns: 3;
     lines: 12;
     cycle: true;
     dynamic: true;
     scrollbar: false;
     layout: vertical;
     reverse: false;
-    fixed-height: true;
+    fixed-height: false;
     fixed-columns: false;
     spacing: 2px;
     margin: 0px;
