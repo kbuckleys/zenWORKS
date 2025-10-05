@@ -7,9 +7,6 @@
 @theme "kripton"
 
 * {
-    background: #e0d8a4;
-    foreground: #0b0e0e;
-    border: #0b0e0e;
     font: "0xProto Nerd Font Medium 10";
 }
 
@@ -53,12 +50,13 @@ textbox-prompt-colon {
 entry {
     enabled: true;
     placeholder: "...";
-    width: 40em;
+    width: 100%;
     placeholder-color: inherit;
 }
 
 listview {
     enabled: true;
+    scrollbar: false;
     columns: 1;
     lines: 1;
 }

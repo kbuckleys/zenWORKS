@@ -7,12 +7,9 @@
 @theme "kripton"
 
 * {
-    background: #e0d8a4;
-    foreground: #0b0e0e;
-    selected: #0b0e0e;
-    border: #0b0e0e;
+    selected-normal-foreground: #20242A;
+    selected: #E0D8A4;
     selected-normal-background: var(selected);
-    selected-normal-foreground: var(background);
     font: "0xProto Nerd Font Medium 10";
 }
 
@@ -67,3 +64,7 @@ element {
     border: 0px;
     cursor: "default";
 }
+element-text selected {
+    background-color: transparent;
+}
+

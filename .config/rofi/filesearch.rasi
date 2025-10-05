@@ -12,9 +12,9 @@ configuration {
 }
 
 * {
-    selected: #DFDFDD;
-    font: "0xProto Nerd Font Medium 10";
+    selected: rgba(223, 223, 221, 0.1);
     selected-normal-background: var(selected);
+    font: "0xProto Nerd Font Medium 10";
 }
 
 window {
@@ -90,5 +90,5 @@ element-text {
     highlight: bold #c8a4e0;
 }
 element-text selected {
-    highlight: none;
+    background-color: transparent;
 }

@@ -10,6 +10,11 @@ configuration {
     scroll-method: 1;
 }
 
+* {
+    selected: rgba(223, 223, 221, 0.1);
+    selected-normal-background: var(selected);
+}
+
 window {
     transparency: "none";
     location: south;

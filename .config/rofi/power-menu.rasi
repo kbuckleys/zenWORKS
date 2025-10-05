@@ -8,8 +8,9 @@
 
 * {
     selected: #E0AEA4;
-    font: "0xProto Nerd Font Medium 10";
+    selected-normal-foreground: #20242A;
     selected-normal-background: var(selected);
+    font: "0xProto Nerd Font Medium 10";
 }
 
 window {
@@ -60,4 +61,7 @@ element {
     padding: 4px 10px 4px 10px;
     border: 0px;
     cursor: "default";
+}
+element-text selected {
+    background-color: transparent;
 }

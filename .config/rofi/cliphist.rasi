@@ -7,9 +7,9 @@
 @theme "kripton"
 
 * {
-    selected: #b6e0a4;
-    font: "0xProto Nerd Font Medium 10";
+    selected: rgba(223, 223, 221, 0.1);
     selected-normal-background: var(selected);
+    font: "0xProto Nerd Font Medium 10";
 }
 
 window {
@@ -69,5 +69,5 @@ element-text {
     highlight: bold #b6e0a4;
 }
 element-text selected {
-    highlight: none;
+    background-color: transparent;
 }

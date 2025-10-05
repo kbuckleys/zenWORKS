@@ -28,6 +28,9 @@ configuration {
 }
 
 * {
+    selected: #9BBFBF;
+    selected-normal-foreground: #20242A;
+    selected-normal-background: var(selected);
     font: "0xProto Nerd Font Medium 10";
 }
 
@@ -86,4 +89,7 @@ element {
 }
 element-text {
     highlight: none;
+}
+element-text selected {
+    background-color: transparent;
 }
