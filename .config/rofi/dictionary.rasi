@@ -84,6 +84,9 @@ element {
     border: 0px;
     cursor: "default";
 }
+element-text {
+    highlight: none;
+}
 element-text selected {
     background-color: transparent;
 }
