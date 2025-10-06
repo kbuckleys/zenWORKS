@@ -56,9 +56,7 @@ textbox-prompt-colon {
 }
 entry {
     enabled: true;
-    cursor: text;
-    placeholder: "...";
-    placeholder-color: inherit;
+    width: 100%;
 }
 
 listview {

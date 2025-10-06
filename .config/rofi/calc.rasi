@@ -21,7 +21,7 @@ window {
     location: south;
     anchor: south;
     fullscreen: false;
-    width: 30%;
+    width: 25%;
     enabled: true;
     dynamic: true;
     margin: 0px;
@@ -56,9 +56,7 @@ textbox-prompt-colon {
 }
 entry {
     enabled: true;
-    cursor: text;
-    placeholder: "...";
-    placeholder-color: inherit;
+    width: 100%;
 }
 
 listview {

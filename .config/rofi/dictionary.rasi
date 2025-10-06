@@ -49,9 +49,7 @@ textbox-prompt-colon {
 }
 entry {
     enabled: true;
-    placeholder: "...";
     width: 100%;
-    placeholder-color: inherit;
 }
 
 listview {
