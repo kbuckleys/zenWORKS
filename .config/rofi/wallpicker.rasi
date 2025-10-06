@@ -33,7 +33,7 @@ mainbox {
     enabled: true;
     spacing: 0px;
     margin: 0px;
-    padding: 10px;
+    padding: 0px;
     border: 1px solid;
     border-radius: 0px;
 }
@@ -45,7 +45,7 @@ inputbar {
 listview {
     enabled: true;
     columns: 9;
-    lines: 2;
+    lines: 3;
     cycle: true;
     scrollbar: true;
     layout: vertical;
