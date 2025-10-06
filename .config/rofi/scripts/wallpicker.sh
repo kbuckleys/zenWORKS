@@ -1,0 +1,25 @@
+# ┌─┐┌─┐┌┐┌┬ ┬┌─┐┬─┐┬┌─┌─┐
+# ┌─┘├┤ │││││││ │├┬┘├┴┐└─┐
+# └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
+# https://github.com/kbuckleys/
+
+folder="$HOME/Pictures/Wallpapers/"
+
+selection=$(find "$folder" -type f \( \
+        -iname '*.jpg' \
+        -o -iname '*.jpeg' \
+        -o -iname '*.png' \
+        -o -iname '*.gif' \
+        -o -iname '*.webp' \) -printf "%T@ %p\0" | \
+        sort -zr -k1,1nr | \
+        cut -z -d' ' -f2- | \
+        xargs -0 -I{} echo -en "{}\0icon\x1fthumbnail://{}\n" | \
+        rofi -dmenu -show-icons \
+        -no-match-msg "Nothing Found" \
+        -theme ~/.config/rofi/wallpicker.rasi)
+
+[ -n "$selection" ] && swww img "$selection" \
+        --transition-fps 100 \
+        --transition-step 100 \
+        --transition-type fade \
+        --transition-duration 1
