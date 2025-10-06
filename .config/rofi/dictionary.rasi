@@ -44,7 +44,7 @@ prompt {
 textbox-prompt-colon {
     enabled: true;
     expand: false;
-    str: "Definition Lookup >";
+    str: "Define >";
     text-color: #E0D8A4;
 }
 entry {
