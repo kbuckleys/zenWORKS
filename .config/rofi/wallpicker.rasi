@@ -67,3 +67,6 @@ element {
 element-icon {
     size: 12em;
 }
+element-icon selected {
+    background-color: transparent;
+}

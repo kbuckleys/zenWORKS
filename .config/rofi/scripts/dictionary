@@ -3,25 +3,31 @@
 # └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 # https://github.com/kbuckleys/
 
-lookup_word() {
-  curl -s "https://api.dictionaryapi.dev/api/v2/entries/en/$1"
-}
-
-parse_and_show() {
-  local word="$1"
-  response=$(lookup_word "$word")
-
-  definitions=$(echo "$response" | jq -r '.[0].meanings[0].definitions[0].definition' 2>/dev/null)
-
-  if [ -z "$definitions" ]; then
-    definitions="No definition found."
-  fi
-
-  echo -e "$word:\n$definitions" | rofi -dmenu -theme ~/.config/rofi/dict-output.rasi
-}
+ROFI_THEME="$HOME/.config/rofi/dictionary.rasi"
+last_definition=""
 
 while true; do
-  word=$(rofi -dmenu -theme ~/.config/rofi/dictionary.rasi)
-  [ -z "$word" ] && break
-  parse_and_show "$word"
+  if [[ -n "$last_definition" ]]; then
+    word=$(echo "$last_definition" | rofi -dmenu -theme "$ROFI_THEME" -i -p "")
+  else
+    word=$(rofi -dmenu -theme "$ROFI_THEME" -i -p "")
+  fi
+
+  [[ -z "$word" || "$word" == "$last_definition" ]] && break
+
+  response=$(curl -s "https://api.dictionaryapi.dev/api/v2/entries/en/$word")
+
+  definition=$(echo "$response" | jq -r '
+    if type=="array" and (length > 0) then
+      if (.[0].meanings and .[0].meanings[0].definitions and .[0].meanings[0].definitions[0].definition) then
+        .[0].meanings[0].definitions[0].definition
+      else
+        "No matches found"
+      end
+    else
+      "No matches found"
+    end
+  ')
+
+  last_definition="$word: $definition"
 done
