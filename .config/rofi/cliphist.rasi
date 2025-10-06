@@ -13,7 +13,6 @@
 }
 
 window {
-    transparency: "none";
     location: south;
     anchor: south;
     fullscreen: false;

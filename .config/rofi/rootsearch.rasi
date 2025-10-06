@@ -18,7 +18,6 @@ configuration {
 }
 
 window {
-    transparency: "none";
     location: south;
     anchor: south;
     fullscreen: false;
@@ -53,6 +52,7 @@ textbox-prompt-colon {
     enabled: true;
     expand: false;
     str: "Root Search >";
+    text-color: #c8a4e0;
 }
 entry {
     enabled: true;

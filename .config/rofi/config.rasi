@@ -7,6 +7,7 @@
 @theme "kripton"
 
 configuration {
+    modi: "drun";
     show-icons: false;
     case-sensitive: false;
 	  drun-display-format: "{name}";
@@ -35,7 +36,6 @@ configuration {
 }
 
 window {
-    transparency: "none";
     location: south;
     anchor: south;
     fullscreen: false;

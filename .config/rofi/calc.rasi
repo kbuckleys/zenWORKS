@@ -6,9 +6,13 @@
 
 @theme "kripton"
 
+configuration {
+    kb-remove-to-sol: "BackSpace";
+    kb-remove-char-back: "";
+}
+
 * {
-    selected-normal-foreground: #20242A;
-    selected: #E0D8A4;
+    selected: rgba(223, 223, 221, 0.1);
     selected-normal-background: var(selected);
     font: "0xProto Nerd Font Medium 10";
 }
@@ -17,13 +21,15 @@ window {
     location: south;
     anchor: south;
     fullscreen: false;
-    width: 100%;
+    width: 30%;
     enabled: true;
+    dynamic: true;
     margin: 0px;
     padding: 0px;
     border: 0px;
     cursor: "default";
 }
+
 mainbox {
     enabled: true;
     spacing: 0px;
@@ -31,38 +37,55 @@ mainbox {
     padding: 0px;
     border: 1px solid;
     border-radius: 0px;
+    children: [inputbar, listview];
 }
 
 inputbar {
-    enabled: false;
+    enabled: true;
+    spacing: 4px;
+    margin:  0px;
+    padding: 4px 8px;
+    border: 0px;
+    children: [ "textbox-prompt-colon", "entry" ];
+}
+textbox-prompt-colon {
+    enabled: true;
+    expand: false;
+    str: "CALC >";
+    text-color: #A4DBE0;
+}
+entry {
+    enabled: true;
+    cursor: text;
+    placeholder: "...";
+    placeholder-color: inherit;
 }
 
 listview {
     enabled: true;
     columns: 1;
-    lines: 2;
+    lines: 8;
     cycle: true;
     scrollbar: false;
-    layout: horizontal;
-    expand: true;
+    layout: vertical;
     reverse: false;
-    fixed-height: true;
-    fixed-columns: true;
-    spacing: 0px;
-    padding: 0px 0px 0px 0px;
+    fixed-height: false;
+    fixed-columns: false;
+    spacing: 2px;
     margin: 0px;
+    padding: 0px 0px 0px 0px;
     border: 0px;
     cursor: "default";
 }
+
 element {
     enabled: true;
     spacing: 0px;
     margin: 0px;
-    padding: 4px 8px 4px 8px;
+    padding: 2px 8px 2px 8px;
     border: 0px;
     cursor: "default";
 }
-element-text selected {
-    background-color: transparent;
+element-text {
+    highlight: none;
 }
-
