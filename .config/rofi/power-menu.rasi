@@ -7,7 +7,7 @@
 @theme "kripton"
 
 * {
-    selected: #20242A;
+    selected: #5C4743;
     foreground: #20242A;
     background-color: rgba(224, 174, 164, 0.6);
     selected-normal-background: var(selected);
@@ -18,8 +18,7 @@ window {
     location: south;
     anchor: south;
     fullscreen: false;
-    width: 100%;
-    dynamic: true;
+    width: 349px;
     enabled: true;
     margin: 0px;
     padding: 0px;
@@ -45,8 +44,6 @@ listview {
     cycle: true;
     scrollbar: false;
     layout: horizontal;
-    columns: 1;
-    lines: 5;
     reverse: false;
     spacing: 0px;
     margin: 0px;
@@ -64,5 +61,6 @@ element {
     cursor: "default";
 }
 element-text selected {
+    text-color: #DFDFDD;
     background-color: transparent;
 }
