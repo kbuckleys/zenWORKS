@@ -7,14 +7,14 @@
 * {
   min-width: 0;
   min-height: 0;
-  background-color: #0B0E0E;
+  background-color: #0b0e0e;
   font-family: "0xProto Nerd Font";
   font-weight: 700;
   font-size: 12px;
 }
 
 #workspaces button {
-  padding: 0px 8px 0px 8px;
+  padding: 3px 8px 2px 8px;
   color: rgba(223, 223, 221, 0.45);
 }
 #workspaces button.active {
@@ -28,14 +28,14 @@
 }
 
 #custom-separator {
-  padding: 0px 8px 0px 8px;
+  padding: 3px 8px 2px 8px;
   color: #dfdfdd;
 }
 
 #temperature, #custom-gpu-temp, #network, #clock,
 #custom-weather, #pulseaudio, #tray-expander,
 #cpu, #custom-gpu-info, #memory {
-  padding: 0px 8px 0px 8px;
+  padding: 3px 8px 2px 8px;
   color: #DFDFDD;
 }
 
@@ -49,23 +49,23 @@
 }
 
 #custom-waybar-mpris {
-  padding: 0px 4px 0px 8px;
+  padding: 3px 4px 2px 8px;
   color: #b6e0a4;
 }
 
 #custom-pacman {
-  padding: 0px 4px 0px 0px;
+  padding: 3px 4px 2px 0px;
 }
 #custom-pacman.pending-updates {
-  padding: 0px 4px 0px 4px;
+  padding: 3px 4px 2px 4px;
   color: #c8a4e0;
 }
 
 #tray-expander {
-  padding: 0px 2px 0px 8px;
+  padding: 3px 2px 2px 8px;
 }
 #tray {
-  padding: 0px 8px 0px 0px;
+  padding: 3px 8px 2px 0px;
 }
 
 tooltip {
