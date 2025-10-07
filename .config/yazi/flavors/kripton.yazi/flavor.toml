@@ -27,7 +27,7 @@ count_selected = { fg = "#BCA4E0", bold = true, reversed = true }
 
 # Border
 border_symbol = ""
-border_style = { fg = "#0B0E0E" }
+border_style = { fg = "#000000" }
 
 [tabs]
 active = { fg = "#0B0E0E", bg = "#9BBFBF", bold = true }
