@@ -24,7 +24,7 @@ configuration {
     }
     filebrowser {
         show-hidden: true;
-        command: "foot -e yazi";
+        command: "footclient -e yazi";
     }
 }
 
