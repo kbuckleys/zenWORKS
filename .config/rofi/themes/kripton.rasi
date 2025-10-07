@@ -24,7 +24,7 @@
     lightfg: @normal-background;
     selected-normal-background: rgba(155, 191, 191, 0.1);
     border-color: rgba(155, 191, 191, 0.1);
-    spacing: 0;
+    spacing: 2;
     separatorcolor: @foreground;
     urgent-background: #E0AEA4;
     selected-urgent-background: @urgent-background;
@@ -48,7 +48,7 @@ mainbox {
 
 message {
     border: 0px;
-    border-color: @border;
+    border-color: @separatorcolor;
     padding: 0px;
 }
 
@@ -67,7 +67,7 @@ listview {
 
 element {
     border: 0;
-    padding: 2px;
+    padding: 1px;
 }
 element-text {
     background-color: inherit;
@@ -111,15 +111,15 @@ element.alternate.active {
 }
 
 scrollbar {
-    width: 6px;
+    width: 8px;
     border: 0;
     handle-color: rgba(155, 191, 191, 0.2);
-    handle-width: 6px;
+    handle-width: 8px;
     padding: 0;
 }
 
 mode-switcher {
-    border: 0px;
+    border: 2px 0px 0px;
     border-color: @separatorcolor;
 }
 
@@ -139,7 +139,7 @@ prompt {
 textbox-prompt-colon {
     expand: false;
     str: ":";
-    margin: 0px;
+    margin: 0px 0.3em 0em 0em;
     text-color: @normal-foreground;
 }
 inputbar {
