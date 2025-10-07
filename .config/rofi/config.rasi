@@ -29,7 +29,7 @@ configuration {
 }
 
 * {
-    selected: rgba(155, 191, 191, 0.3);
+    selected: rgba(155, 191, 191, 0.1);
     selected-normal-background: var(selected);
     font: "0xProto Nerd Font Medium 10";
 }
@@ -89,5 +89,6 @@ element-text {
     highlight: none;
 }
 element-text selected {
+    text-color: #9bbfbf;
     background-color: transparent;
 }
