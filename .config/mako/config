@@ -3,10 +3,6 @@
 # └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 # https://github.com/kbuckleys/
 
-# Import Colors 
-include=~/.config/mako/colors
-
-# General
 icons=1
 markup=1
 actions=1
@@ -18,10 +14,10 @@ group-by=none
 format=%s\n%b
 layer=overlay
 border-size=1
-padding=5
+padding=8
 max-visible=10
-margin=2,2,2,2
-outer-margin=15
+margin=1,1,1,1
+outer-margin=20
 max-icon-size=42
 anchor=bottom-center
 border-radius=0
@@ -29,5 +25,6 @@ ignore-timeout=0
 text-alignment=center
 default-timeout=4000
 on-button-right=dismiss-all
+include=~/.config/mako/colors
 font=0xProto Nerd Font Bold 10
 icon-path=/usr/share/icons/hicolor

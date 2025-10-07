@@ -4,17 +4,18 @@
 # https://github.com/kbuckleys/
 
 # Colors
-background-color=#20242A1A
-text-color=#DFDFDD
+background-color=#20242A0D
 border-color=#DFDFDD0D
+text-color=#DFDFDD
 
 # Per-mode settings
+[urgency=high]
+border-color=#E0AEA40D
+
 [mode=do-not-disturb]
-invisible=1
 on-notify=none
+invisible=1
 
 [mode=silent]
 on-notify=none
 
-[urgency=high]
-border-color=#E0AEA41A
