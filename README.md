@@ -7,6 +7,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 # Dependencies
 - LazyVim
 - rofi-calc
+- playerctl
 - ripgrep
 - resvg
 - imagemagick
