@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Neovim
 Comment=IDE
-Exec=foot -e nvim %F
+Exec=footclient -e nvim %F
 Terminal=false
 Type=Application
 Icon=terminal
