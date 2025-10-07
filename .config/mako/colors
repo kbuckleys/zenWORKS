@@ -4,9 +4,9 @@
 # https://github.com/kbuckleys/
 
 # Colors
-background-color=#20242A1A
+border-color=rgba(155, 191, 191, 0.1)
+background-color=rgba(0, 0, 0, 0.5)
 text-color=#DFDFDD
-border-color=#DFDFDD0D
 
 # Per-mode settings
 [mode=do-not-disturb]
@@ -17,4 +17,5 @@ on-notify=none
 on-notify=none
 
 [urgency=high]
-border-color=#E0AEA41A
+background-color=rgba(224, 174, 164, 0.5)
+border-color=rgba(0, 0, 0, 0.5)
