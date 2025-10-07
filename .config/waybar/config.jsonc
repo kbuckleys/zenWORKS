@@ -71,14 +71,14 @@
     "exec": "~/.config/waybar/scripts/gpu-info.sh",
     "interval": 5,
     "format": "{text}",
-    "on-click": "foot -e nvtop",
+    "on-click": "footclient -e nvtop",
     "tooltip": true,
     "tooltip-format": "GPU Utilization"
   },
 
   "cpu": {
     "format": "CPU {usage}%",
-    "on-click": "foot -e btop",
+    "on-click": "footclient -e btop",
     "tooltip": true,
     "interval": 1
   },
@@ -112,7 +112,7 @@
   
   "pulseaudio": {
     "format": "{icon}{volume}%",
-    "on-click": "foot -e wiremix",
+    "on-click": "footclient -e wiremix",
     "on-click-right": "pamixer -t",
     "format-muted": "  MUTED",
     "format-icons": {
@@ -155,7 +155,7 @@
   "custom/pacman": {
     "format": "{} {icon} ",
     "return-type": "json",
-    "on-click": "foot -e sh -c 'cat ~/.config/waybar/logo; yay -Syu; read -p Press\\ Return\\ to\\ close...'",
+    "on-click": "footclient -e sh -c 'cat ~/.config/waybar/logo; yay -Syu; read -p Press\\ Return\\ to\\ close...'",
     "format-icons": {
         "pending-updates": "",
         "updated": ""
