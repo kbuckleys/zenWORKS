@@ -27,7 +27,7 @@ rules = [
 
 [opener]
 open = [{ run = 'xdg-open "$@"', desc = "Open", for = "unix" },]
-edit = [{ run = 'kitty -e nvim "$@"', orphan = true, desc = "Edit", for = "unix" }]
+edit = [{ run = 'xdg-open', orphan = true, desc = "Edit", for = "unix" }]
 reveal = [{ run = 'thunar "$1"', desc = "Reveal", for = "unix" },]
 extract = [{ run = '7z x "$1"', block = true, desc = "Extract with 7z", for = "unix" },]
 view_archive = [{ run = 'if [ -f "$1" ]; then case "$1" in *.tar) tar tf "$1" ;; *.zip) unzip -l "$1" ;; *.rar) unrar l "$1" ;; *.7z) 7z l "$1" ;; esac; echo "Press enter to exit"; read _; fi', block = true, desc = "View archive contents", for = "unix" },]

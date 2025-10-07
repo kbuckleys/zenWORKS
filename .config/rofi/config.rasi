@@ -24,13 +24,12 @@ configuration {
     }
     filebrowser {
         show-hidden: true;
-        command: "kitty -e yazi";
+        command: "foot -e yazi";
     }
 }
 
 * {
-    selected: #9BBFBF;
-    selected-normal-foreground: #20242A;
+    selected: rgba(155, 191, 191, 0.3);
     selected-normal-background: var(selected);
     font: "0xProto Nerd Font Medium 10";
 }
