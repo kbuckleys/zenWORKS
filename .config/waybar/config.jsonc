@@ -124,8 +124,7 @@
   "network": {
     "format": "⇣ {bandwidthDownBytes} ~ {bandwidthUpBytes} ⇡",
     "format-disconnected": "NO NETWORK SIGNAL",
-    "tooltip-format": "Network ONLINE",
-    "tooltip-format-disconnected": "Network OFFLINE",
+    "tooltip": false,
     "interval": 1,
     "nospacing": 1
   },

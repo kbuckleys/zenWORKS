@@ -14,7 +14,6 @@
 }
 
 #workspaces button {
-  padding: 3px 8px 2px 8px;
   color: rgba(223, 223, 221, 0.45);
 }
 #workspaces button.active {
@@ -28,14 +27,12 @@
 }
 
 #custom-separator {
-  padding: 3px 8px 2px 8px;
   color: #dfdfdd;
 }
 
-#temperature, #custom-gpu-temp, #network, #clock,
-#custom-weather, #pulseaudio, #tray-expander,
-#cpu, #custom-gpu-info, #memory {
-  padding: 3px 8px 2px 8px;
+#cpu, #custom-gpu-info, #memory, #custom-separator,
+#temperature, #custom-gpu-temp, #clock, #custom-weather {
+  padding: 2px 8px 0px 8px;
   color: #DFDFDD;
 }
 
@@ -44,36 +41,41 @@
   color: #e0aea4;
 }
 
+#network {
+  padding: 3px 8px 0px 8px;
+}
+
+#custom-waybar-mpris {
+  padding: 2px 4px 0px 8px;
+  color: #b6e0a4;
+}
+
+#pulseaudio {
+  padding: 2px 8px 0px 4px;
+}
 #pulseaudio.muted {
   color: #e0d8a4;
 }
 
-#custom-waybar-mpris {
-  padding: 3px 4px 2px 8px;
-  color: #b6e0a4;
-}
-
 #custom-pacman {
-  padding: 3px 4px 2px 0px;
+  padding: 2px 8px 0px 4px;
 }
 #custom-pacman.pending-updates {
-  padding: 3px 4px 2px 4px;
   color: #c8a4e0;
 }
 
-#tray-expander {
-  padding: 3px 2px 2px 8px;
+#tray-expander{
+  padding: 2px 0px 0px;
+  color: #DFDFDD;
 }
 #tray {
-  padding: 3px 8px 2px 0px;
+  padding: 0px 8px 0px 0px;
 }
 
 tooltip {
   border: 0px;
-  border-radius: 0px;
 }
 tooltip label{
-  border-radius: 0px;
   color: #DFDFDD;
   margin: -4px -2px -4px -2px;
 }
