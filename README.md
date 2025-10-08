@@ -8,6 +8,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - LazyVim
 - rofi-calc
 - playerctl
+- waybar-mpris-git
 - ripgrep
 - resvg
 - imagemagick
