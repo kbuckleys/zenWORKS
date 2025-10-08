@@ -34,6 +34,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
 })
 
 vim.cmd([[colorscheme evergarden]])
+vim.wo.relativenumber = false
 
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
