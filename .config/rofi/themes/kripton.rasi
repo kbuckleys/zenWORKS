@@ -18,7 +18,7 @@
     lightbg: #DFDFDD;
     selected-active-foreground: #0B0E0E;
     alternate-active-background: @normal-background;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.4);
     alternate-normal-foreground: @foreground;
     normal-background: #00000000;
     lightfg: @normal-background;
@@ -26,7 +26,7 @@
     border-color: rgba(155, 191, 191, 0.1);
     spacing: 2;
     separatorcolor: @foreground;
-    urgent-background: rgba(224, 174, 164, 0.5);
+    urgent-background: rgba(224, 174, 164, 0.4);
     selected-urgent-background: @urgent-background;
     alternate-urgent-foreground: @urgent-foreground;
     background-color: @normal-background;
