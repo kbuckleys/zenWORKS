@@ -52,7 +52,7 @@ textbox-prompt-colon {
     enabled: true;
     expand: false;
     str: "CALC >";
-    text-color: #A4DBE0;
+    text-color: #9BB1BF;
 }
 entry {
     enabled: true;
