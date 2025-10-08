@@ -7,7 +7,7 @@ ROFI_THEME="$HOME/.config/rofi/dictionary.rasi"
 last_word=""
 
 while true; do
-  word=$(rofi -dmenu -theme "$ROFI_THEME" -p "Enter word:")
+  word=$(rofi -dmenu -wayland-layer top -theme "$ROFI_THEME" -p "Enter word:")
   [[ -z "$word" || "$word" == "$last_word" ]] && break
 
   response=$(curl -s "https://api.dictionaryapi.dev/api/v2/entries/en/$word")
@@ -25,5 +25,5 @@ while true; do
   ')
 
   last_word="$word"
-  echo "$word: $definition" | rofi -dmenu -theme "$ROFI_THEME" -p "Definition" -no-sort
+  echo "$word: $definition" | rofi -dmenu -wayland-layer top -theme "$ROFI_THEME" -p "Definition" -no-sort
 done

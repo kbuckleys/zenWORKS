@@ -163,12 +163,12 @@ function print_selection {
 declare -A messages
 declare -A confirmationMessages
 for entry in "${all[@]}"; do
-  messages[$entry]=$(write_message "" "${texts[$entry]^}")  # Pass empty string for icon
+  messages[$entry]=$(write_message "" "${texts[$entry]^}") # Pass empty string for icon
 done
 for entry in "${all[@]}"; do
-  confirmationMessages[$entry]=$(write_message "" "Confirm ${texts[$entry]}")  # No icon
+  confirmationMessages[$entry]=$(write_message "" "Confirm ${texts[$entry]}") # No icon
 done
-confirmationMessages[cancel]=$(write_message "" "CANCEL")  # No icon
+confirmationMessages[cancel]=$(write_message "" "CANCEL") # No icon
 
 if [ $# -gt 0 ]; then
   selection="${@}"
