@@ -7,7 +7,7 @@
 { 
   "reload_style_on_change": true,
   "output": "HDMI-A-1",
-  "layer": "dock",
+  "layer": "top",
   "position": "bottom",
   "exclusive": true,
   "height": 24,
