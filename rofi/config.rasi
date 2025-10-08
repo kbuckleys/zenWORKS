@@ -1,0 +1,94 @@
+/**
+* ┌─┐┌─┐┌┐┌┬ ┬┌─┐┬─┐┬┌─┌─┐
+* ┌─┘├┤ │││││││ │├┬┘├┴┐└─┐
+* └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
+* https://github.com/kbuckleys/ */
+
+@theme "kripton"
+
+configuration {
+    modi: "drun";
+    show-icons: false;
+    case-sensitive: false;
+	  drun-display-format: "{name}";
+	  window-format: "{c} · {t}";
+    kb-accept-entry: "Return";
+    kb-remove-to-sol: "BackSpace";
+    kb-remove-char-back: "";
+    kb-remove-to-eol: "";
+    recursivebrowser {
+        directory: "/";
+        cancel-returns-1: true;
+        filter-regex: "(.*cache.*|.*\\.o)";
+        command: "xdg-open";
+    }
+    filebrowser {
+        show-hidden: true;
+        command: "footclient -e yazi";
+    }
+}
+
+* {
+    selected: rgba(155, 191, 191, 0.1);
+    selected-normal-background: var(selected);
+    font: "0xProto Nerd Font Medium 10";
+}
+
+window {
+    location: south;
+    anchor: south;
+    fullscreen: false;
+    width: 100%;
+    enabled: true;
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    cursor: "default";
+}
+
+mainbox {
+    enabled: true;
+    spacing: 0px;
+    margin: 0px;
+    padding: 0px;
+    border: 1px solid;
+    border-radius: 0px;
+    children: [ "inputbar", "listview" ];
+}
+
+inputbar {
+    enabled: false;
+}
+
+listview {
+    enabled: true;
+    columns: 1;
+    lines: 50;
+    cycle: true;
+    scrollbar: false;
+    layout: horizontal;
+    reverse: false;
+    fixed-height: true;
+    fixed-columns: true;
+    spacing: 0px;
+    padding: 0px 0px 0px 0px;
+    margin: 0px;
+    border: 0px;
+    cursor: "default";
+}
+
+element {
+    enabled: true;
+    spacing: 0px;
+    margin: 0px;
+    padding: 4px 10px 4px 10px;
+    border: 0px;
+    cursor: "default";
+}
+element-text {
+    highlight: none;
+}
+element-text selected {
+    text-color: #9bbfbf;
+    background-color: transparent;
+}
