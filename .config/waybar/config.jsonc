@@ -9,6 +9,7 @@
   "output": "HDMI-A-1",
   "layer": "dock",
   "position": "bottom",
+  "exclusive": true,
   "height": 24,
 
   "modules-left": [
