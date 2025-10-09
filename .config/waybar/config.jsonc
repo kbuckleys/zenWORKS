@@ -113,7 +113,7 @@
   
   "pulseaudio": {
     "format": "{icon}{volume}%",
-    "on-click": "footclient -T \\\"wiremix\\\" -e wiremix",
+    "on-click": "footclient -T wiremix -e wiremix",
     "on-click-right": "pamixer -t",
     "format-muted": "  MUTED",
     "format-icons": {
@@ -155,7 +155,7 @@
   "custom/pacman": {
     "format": "{} {icon} ",
     "return-type": "json",
-    "on-click": "footclient -T \"WaybarUpdates\" -e sh -c 'cat ~/.config/waybar/logo; yay -Syu; read -p \"Press Return to close...\"'",
+    "on-click": "footclient -T WaybarUpdates -e sh -c 'cat ~/.config/waybar/logo; yay -Syu; read -p \"Press Return to close...\"'",
     "format-icons": {
         "pending-updates": "",
         "updated": ""
