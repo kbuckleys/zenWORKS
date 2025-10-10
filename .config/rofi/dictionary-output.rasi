@@ -21,7 +21,7 @@ window {
     location: south;
     anchor: south;
     fullscreen: false;
-    width: 20%;
+    width: 44%;
     enabled: true;
     dynamic: true;
     margin: 0px;
@@ -37,28 +37,34 @@ mainbox {
     padding: 0px;
     border: 1px solid;
     border-radius: 0px;
-    children: [inputbar];
+    children: [listview];
 }
 
 inputbar {
-    enabled: true;
-    spacing: 4px;
-    margin:  0px;
-    padding: 4px 8px;
-    border: 0px;
-    children: [ "textbox-prompt-colon", "entry" ];
-}
-textbox-prompt-colon {
-    enabled: true;
-    expand: false;
-    str: "Define >";
-    text-color: #e0d8a4;
-}
-entry {
-    enabled: true;
-    width: 100%;
+    enabled: false;
 }
 
 listview {
-    enabled: false;
+    enabled: true;
+    scrollbar: false;
+    layout: vertical;
+    fixed-height: false;
+    fixed-columns: false;
+    margin: 0px;
+    padding: 12px 0px 12px 0px;
+    border: 0px;
+    cursor: "default";
+}
+
+element {
+    enabled: true;
+    cursor: "default";
+}
+element-text {
+    highlight: none;
+    text-color: #e0d8a4;
+    horizontal-align: 0.5;
+}
+element-text selected {
+    background-color: transparent;
 }

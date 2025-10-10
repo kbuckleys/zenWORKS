@@ -3,11 +3,13 @@
 # └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 # https://github.com/kbuckleys/
 
-ROFI_THEME="$HOME/.config/rofi/dictionary.rasi"
+ROFI_THEME_INPUT="$HOME/.config/rofi/dictionary.rasi"
+ROFI_THEME_RESULTS="$HOME/.config/rofi/dictionary-output.rasi"
 last_word=""
+max_line_length=100
 
 while true; do
-  word=$(rofi -dmenu -wayland-layer top -theme "$ROFI_THEME" -p "Enter word:")
+  word=$(rofi -dmenu -wayland-layer top -theme "$ROFI_THEME_INPUT")
   [[ -z "$word" || "$word" == "$last_word" ]] && break
 
   response=$(curl -s "https://api.dictionaryapi.dev/api/v2/entries/en/$word")
@@ -25,5 +27,15 @@ while true; do
   ')
 
   last_word="$word"
-  echo "$word: $definition" | rofi -dmenu -wayland-layer top -theme "$ROFI_THEME" -p "Definition" -no-sort
+  combined="<b>$word</b>: $definition"
+
+  wrapped_lines=$(echo "$combined" | fmt -w $max_line_length)
+
+  printf '%s\n' "$wrapped_lines" | rofi \
+    -dmenu -wayland-layer top \
+    -theme "$ROFI_THEME_RESULTS" \
+    -no-sort \
+    -lines 6 \
+    -p "Definition" \
+    -markup-rows
 done
