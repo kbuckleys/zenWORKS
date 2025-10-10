@@ -14,17 +14,17 @@ while true; do
 
   response=$(curl -s "https://api.dictionaryapi.dev/api/v2/entries/en/$word")
 
-  definition=$(echo "$response" | jq -r '
-    if type=="array" and (length > 0) then
-      if (.[0].meanings and .[0].meanings[0].definitions and .[0].meanings[0].definitions[0].definition) then
-        .[0].meanings[0].definitions[0].definition
-      else
-        "No matches found"
-      end
+  definition=$(echo "$response" | jq -r --arg color "#e0aea4" '
+  if type=="array" and (length > 0) then
+    if (.[0].meanings and .[0].meanings[0].definitions and .[0].meanings[0].definitions[0].definition) then
+      .[0].meanings[0].definitions[0].definition
     else
-      "No matches found"
+      "<span foreground=\"" + $color + "\">No match found</span>"
     end
-  ')
+  else
+    "<span foreground=\"" + $color + "\">No match found</span>"
+  end
+')
 
   last_word="$word"
   combined="<b>$word</b>: $definition"

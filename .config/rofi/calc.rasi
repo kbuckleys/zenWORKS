@@ -7,8 +7,8 @@
 @theme "kripton"
 
 configuration {
-    kb-remove-to-sol: "BackSpace";
-    kb-remove-char-back: "";
+    kb-remove-to-sol: "";
+    kb-remove-char-back: "BackSpace";
 }
 
 * {
