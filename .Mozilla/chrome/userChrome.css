@@ -4,8 +4,8 @@
 # https://github.com/kbuckleys/
 
 :root {
-  --tab-min-height: 11px !important;
-  --tab-max-height: 11px !important;
+  --tab-min-height: 12px !important;
+  --tab-max-height: 12px !important;
 }
 .tabbrowser-tab .tab-label {
     font-size: 12px !important;
@@ -29,8 +29,8 @@
   height: var(--tab-min-height) !important;
   margin-top: -10px !important;
   margin-bottom: -4px !important;
-  margin-right: -1px !important;
-  margin-left: -1px !important;
+  margin-right: 0px !important;
+  margin-left: 0px !important;
 }
 
 /* Hide tab bar only when exactly one tab is open */
