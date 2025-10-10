@@ -32,7 +32,7 @@
 
 #cpu, #custom-gpu-info, #memory, #custom-separator,
 #temperature, #custom-gpu-temp, #clock, #custom-weather {
-  padding: 2px 8px 0px 8px;
+  padding: 0px 8px 0px 8px;
   color: #DFDFDD;
 }
 
@@ -42,30 +42,31 @@
 }
 
 #network {
-  padding: 3px 8px 0px 8px;
+  padding: 0px 8px 0px 8px;
 }
 
 #custom-waybar-mpris {
-  padding: 2px 4px 0px 4px;
+  padding: 0px 4px 0px 4px;
   color: #b6e0a4;
 }
 
 #pulseaudio {
-  padding: 2px 12px 0px 4px;
+  padding: 0px 12px 0px 4px;
 }
 #pulseaudio.muted {
   color: #e0d8a4;
 }
 
 #custom-pacman {
-  padding: 2px 8px 0px 4px;
+  padding: 0px 8px 0px 4px;
 }
 #custom-pacman.pending-updates {
+  padding: 0px 8px 0px 8px;
   color: #c8a4e0;
 }
 
 #tray-expander{
-  padding: 2px 0px 0px;
+  padding: 0px 0px 0px;
   color: #DFDFDD;
 }
 #tray {
