@@ -32,10 +32,9 @@ mainbox {
 inputbar {
     spacing: 4px;
     padding: 4px 8px;
-    children: [ "textbox-prompt-colon", "entry" ];
+    children: [textbox-prompt-colon, entry];
 }
 textbox-prompt-colon {
-    expand: false;
     str: "CALC >";
     text-color: #9BB1BF;
 }
@@ -43,17 +42,12 @@ textbox-prompt-colon {
 listview {
     columns: 1;
     lines: 8;
-    cycle: true;
     scrollbar: false;
     layout: vertical;
-    reverse: false;
     fixed-height: false;
-    fixed-columns: false;
-    spacing: 2px;
 }
 
 element {
-    enabled: true;
     padding: 2px 8px 2px 8px;
 }
 element-text {

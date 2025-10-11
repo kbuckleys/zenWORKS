@@ -33,7 +33,6 @@ inputbar {
 listview {
     columns: 9;
     lines: 3;
-    cycle: true;
     layout: vertical;
     fixed-height: false;
     fixed-columns: false;

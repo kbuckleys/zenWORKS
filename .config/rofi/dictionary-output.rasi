@@ -15,7 +15,6 @@
 window {
     location: south;
     anchor: south;
-    fullscreen: false;
     width: 44%;
     border: 0px;
 }
@@ -28,7 +27,6 @@ mainbox {
 listview {
     scrollbar: false;
     fixed-height: false;
-    fixed-columns: false;
     padding: 12px 0px 12px 0px;
     layout: vertical;
 }

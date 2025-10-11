@@ -32,10 +32,9 @@ mainbox {
 inputbar {
     spacing: 4px;
     padding: 4px 8px;
-    children: [ "textbox-prompt-colon", "entry" ];
+    children: [textbox-prompt-colon, entry];
 }
 textbox-prompt-colon {
-    expand: false;
     str: "Root Search >";
     text-color: #c8a4e0;
 }
@@ -43,13 +42,10 @@ textbox-prompt-colon {
 listview {
     columns: 3;
     lines: 12;
-    cycle: true;
     scrollbar: false;
     layout: vertical;
-    reverse: false;
     fixed-height: false;
     fixed-columns: false;
-    spacing: 2px;
 }
 
 element {

@@ -21,7 +21,7 @@ window {
 
 mainbox {
     border: 1px solid;
-    children: [ "inputbar", "listview" ];
+    children: [inputbar, listview];
 }
 
 inputbar {
@@ -31,13 +31,10 @@ inputbar {
 listview {
     columns: 3;
     lines: 12;
-    cycle: true;
     scrollbar: false;
     layout: vertical;
-    reverse: false;
     fixed-height: false;
     fixed-columns: false;
-    spacing: 2px;
 }
 
 element {

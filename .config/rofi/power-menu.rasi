@@ -28,7 +28,6 @@ entry, inputbar, element-icon {
 }
 
 listview {
-    cycle: true;
     layout: horizontal;
 }
 
