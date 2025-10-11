@@ -20,45 +20,21 @@ configuration {
 window {
     location: south;
     anchor: south;
-    fullscreen: false;
     width: 20%;
-    enabled: true;
-    dynamic: true;
-    margin: 0px;
-    padding: 0px;
     border: 0px;
-    cursor: "default";
 }
 
 mainbox {
-    enabled: true;
-    spacing: 0px;
-    margin: 0px;
-    padding: 0px;
     border: 1px solid;
-    border-radius: 0px;
     children: [inputbar];
 }
 
 inputbar {
-    enabled: true;
     spacing: 4px;
-    margin:  0px;
     padding: 4px 8px;
-    border: 0px;
     children: [ "textbox-prompt-colon", "entry" ];
 }
 textbox-prompt-colon {
-    enabled: true;
-    expand: false;
     str: "Define >";
     text-color: #e0d8a4;
-}
-entry {
-    enabled: true;
-    width: 100%;
-}
-
-listview {
-    enabled: false;
 }

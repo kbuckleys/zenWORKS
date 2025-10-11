@@ -15,23 +15,12 @@
 window {
     location: south;
     anchor: south;
-    fullscreen: false;
     width: 100%;
-    enabled: true;
-    dynamic: true;
-    margin: 0px;
-    padding: 0px;
     border: 0px;
-    cursor: "default";
 }
 
 mainbox {
-    enabled: true;
-    spacing: 0px;
-    margin: 0px;
-    padding: 0px;
     border: 1px solid;
-    border-radius: 0px;
     children: [ "inputbar", "listview" ];
 }
 
@@ -40,7 +29,6 @@ inputbar {
 }
 
 listview {
-    enabled: true;
     columns: 3;
     lines: 12;
     cycle: true;
@@ -50,19 +38,10 @@ listview {
     fixed-height: false;
     fixed-columns: false;
     spacing: 2px;
-    margin: 0px;
-    padding: 0px 0px 0px 0px;
-    border: 0px;
-    cursor: "default";
 }
 
 element {
-    enabled: true;
-    spacing: 0px;
-    margin: 0px;
     padding: 2px 8px 2px 8px;
-    border: 0px;
-    cursor: "default";
 }
 element-text {
     highlight: bold #b6e0a4;

@@ -15,22 +15,12 @@
 window {
     location: south;
     anchor: south;
-    fullscreen: false;
     width: 100%;
-    enabled: true;
-    margin: 0px;
-    padding: 0px;
     border: 0px;
-    cursor: "default";
 }
 
 mainbox {
-    enabled: true;
-    spacing: 0px;
-    margin: 0px;
-    padding: 0px;
-    border: 0px;
-    children: [ "listview" ];
+    border: 1px solid;
 }
 
 entry, inputbar, element-icon {
@@ -38,25 +28,12 @@ entry, inputbar, element-icon {
 }
 
 listview {
-    enabled: true;
     cycle: true;
-    scrollbar: false;
     layout: horizontal;
-    reverse: false;
-    spacing: 0px;
-    margin: 0px;
-    padding: 0px 0px 0px 0px;
-    border: 0px;
-    cursor: "default";
 }
 
 element {
-    enabled: true;
-    spacing: 0px;
-    margin: 0px;
     padding: 4px 10px 4px 10px;
-    border: 0px;
-    cursor: "default";
 }
 element-text selected {
     text-color: #e0aea4;

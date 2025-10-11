@@ -6,11 +6,6 @@
 
 @theme "kripton"
 
-configuration {
-    kb-remove-to-sol: "";
-    kb-remove-char-back: "BackSpace";
-}
-
 * {
     selected: transparent;
     selected-normal-background: var(selected);
@@ -22,49 +17,23 @@ window {
     anchor: south;
     fullscreen: false;
     width: 44%;
-    enabled: true;
-    dynamic: true;
-    margin: 0px;
-    padding: 0px;
     border: 0px;
-    cursor: "default";
 }
 
 mainbox {
-    enabled: true;
-    spacing: 0px;
-    margin: 0px;
-    padding: 0px;
     border: 1px solid;
-    border-radius: 0px;
     children: [listview];
 }
 
-inputbar {
-    enabled: false;
-}
-
 listview {
-    enabled: true;
     scrollbar: false;
-    layout: vertical;
     fixed-height: false;
     fixed-columns: false;
-    margin: 0px;
     padding: 12px 0px 12px 0px;
-    border: 0px;
-    cursor: "default";
+    layout: vertical;
 }
 
-element {
-    enabled: true;
-    cursor: "default";
-}
 element-text {
-    highlight: none;
     text-color: #e0d8a4;
     horizontal-align: 0.5;
-}
-element-text selected {
-    background-color: transparent;
 }
