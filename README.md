@@ -45,10 +45,6 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - wtype
 - wttrbar
 - noto-fonts-emoji
-- zoxide
-- zsh
-- [Oh My Zsh](https://ohmyz.sh/)
-- [PowerLevel10k](https://github.com/romkatv/powerlevel10k)
 
 # Theme Elements
 - [Shade of Z](https://www.gnome-look.org/p/1516492) (white)
