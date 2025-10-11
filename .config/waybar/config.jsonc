@@ -72,14 +72,14 @@
     "exec": "~/.config/waybar/scripts/gpu-info.sh",
     "interval": 5,
     "format": "{text}",
-    "on-click": "footclient -e nvtop",
+    "on-click": "footclient -T nvtop -e nvtop",
     "tooltip": true,
     "tooltip-format": "GPU Utilization"
   },
 
   "cpu": {
     "format": "CPU {usage}%",
-    "on-click": "footclient -e btop",
+    "on-click": "footclient -T btop -e btop",
     "tooltip": true,
     "interval": 1
   },
