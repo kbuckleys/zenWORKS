@@ -15,7 +15,7 @@
 window {
     location: south;
     anchor: south;
-    width: 100%;
+    width: 80%;
     border: 0px;
 }
 
