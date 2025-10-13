@@ -2,7 +2,7 @@
 # ┌─┘├┤ │││││││ │├┬┘├┴┐└─┐
 # └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 # https://github.com/kbuckleys/
-#
+
 [[ $- != *i* ]] && return
 
 alias ls='ls --color=auto'
