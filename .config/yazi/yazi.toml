@@ -15,14 +15,13 @@ system_default = [{ run = "yazi \"$1\"", desc = "Yazi (Default)", for = "linux" 
 
 [open]
 rules = [
-    { name = "*/", use = ["reveal"] },
-    { name = "*", use = ["open", "edit", "reveal"] },
-    { mime = "image/*", use = ["open", "reveal"] },
-    { mime = "video/*", use = ["open", "reveal"] },
-    { mime = "audio/*", use = ["open", "reveal"] },
-    { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", use = ["extract", "view_archive", "reveal"] },
-    { mime = "application/pdf", use = ["open", "reveal"] },
-    { mime = "application/epub+zip", use = ["open", "reveal"] },
+    { name = "*", use = ["open", "edit"]},
+    { mime = "image/*", use = ["open"]},
+    { mime = "video/*", use = ["open"]},
+    { mime = "audio/*", use = ["open"]},
+    { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", use = ["extract", "view_archive"] },
+    { mime = "application/pdf", use = ["open"] },
+    { mime = "application/epub+zip", use = ["open"] },
 ]
 
 [opener]
