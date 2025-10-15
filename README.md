@@ -9,7 +9,6 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - rofi-calc
 - playerctl
 - ripgrep
-- resvg
 - imagemagick
 - poppler
 - pipewire-pulse
