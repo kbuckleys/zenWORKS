@@ -59,11 +59,12 @@
   color: #DFDFDD;
 }
 #custom-pacman.pending-updates {
+  padding: 0px 8px 0px 8px;
   color: #c8a4e0;
 }
 
 #tray {
-  padding: 0px 4px 0px;
+  padding: 0px 8px 0px;
 }
 #tray-expander{
   padding: 0px 0px 0px;
