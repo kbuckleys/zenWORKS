@@ -39,7 +39,6 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - waybar-mpris-git
 - rofimoji
 - wtype
-- wttrbar
 - noto-fonts-emoji
 
 # Theme Elements
