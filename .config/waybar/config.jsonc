@@ -59,7 +59,7 @@
 
   "hyprland/window": {
     "format": "{}",
-    "max-length": 60,
+    "max-length": 80,
     "tooltip": false,
   },
 
