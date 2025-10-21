@@ -30,13 +30,18 @@
   color: #DFDFDD;
 }
 
+#window {
+  padding: 0px 0px 0px 12px;
+  color: #9bbfbf;
+}
+
 #custom-waybar-mpris {
-  padding: 0px 4px 0px 4px;
+  padding: 0px 0px 0px 8px;
   color: #b6e0a4;
 }
 
 #pulseaudio {
-  padding: 0px 12px 0px 4px;
+  padding: 0px 12px 0px 12px;
   color: #DFDFDD;
 }
 #pulseaudio.muted {

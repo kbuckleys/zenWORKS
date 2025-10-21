@@ -8,33 +8,33 @@
   "reload_style_on_change": true,
   "output": "HDMI-A-1",
   "layer": "top",
-  "position": "bottom",
+  "position": "top",
   "exclusive": true,
   "height": 24,
 
   "modules-left": [
-    "memory",
+    "custom/pacman",
+    "group/tray-expander",
+    "custom/waybar-mpris",
     "custom/separator",
-    "cpu",
-    "custom/gpu-info",
+    "hyprland/workspaces",
+    "hyprland/window"
+  ],
+  "modules-center": [
+  ],
+  "modules-right": [
+    "network",
     "custom/separator",
     "temperature",
     "custom/gpu-temp",
     "custom/separator",
-    "network"
-  ],
-  "modules-center": [
-    "hyprland/workspaces"
-  ],
-  "modules-right": [
-    "group/tray-expander",
-    "custom/pacman",
+    "custom/gpu-info",
+    "cpu",
     "custom/separator",
-    "custom/weather",
+    "memory",
+    "custom/separator",
     "clock",
-    "custom/separator",
     "pulseaudio",
-    "custom/waybar-mpris"
   ],
 
   "custom/separator": {
@@ -53,13 +53,14 @@
   },
 
   "hyprland/workspaces": {
-    "format": "",
-    "all-outputs": true,
-    "disable-scroll": false,
-    "active-only": false,
-    "on-scroll-up": "hyprctl dispatch workspace e+1",
-    "on-scroll-down": "hyprctl dispatch workspace e-1",
-    "on-click": "activate"
+    "format": "{icon}",
+    "tooltip": false,
+  },
+
+  "hyprland/window": {
+    "format": "{}",
+    "max-length": 60,
+    "tooltip": false,
   },
 
   "clock": {
@@ -104,13 +105,13 @@
     "tooltip-format": "GPU Temperature"
   },
 
-"memory": {
-  "format": "SWAP {swapUsed:0.1f} GB ~ RAM {used:0.1f} GB",
-  "tooltip": true,
-  "tooltip-format": "RAM Total: {total:0.1f}GiB\nRAM Used: {used:0.1f}GiB\nRAM Available: {avail:0.1f}GiB\n\nSWAP Total: {swapTotal:0.1f}GiB\nSWAP Used: {swapUsed:0.1f}GiB\nSWAP Available: {swapAvail:0.1f}GiB",
-  "interval": 1
-},
-  
+  "memory": {
+    "format": "RAM {used:0.1f} GB ~ SWAP {swapUsed:0.1f} GB",
+    "tooltip": true,
+    "tooltip-format": "RAM Total: {total:0.1f}GiB\nRAM Used: {used:0.1f}GiB\nRAM Available: {avail:0.1f}GiB\n\nSWAP Total: {swapTotal:0.1f}GiB\nSWAP Used: {swapUsed:0.1f}GiB\nSWAP Available: {swapAvail:0.1f}GiB",
+    "interval": 1
+  },
+
   "pulseaudio": {
     "format": "{icon}{volume}%",
     "on-click": "footclient -T wiremix -e wiremix",
@@ -163,12 +164,4 @@
     "exec-if": "which waybar-updates",
     "exec": "waybar-updates"
   },
-
-  "custom/weather": {
-      "format": "{}°C",
-      "tooltip": true,
-      "interval": 3600,
-      "exec": "wttrbar --nerd --custom-indicator '{ICON} {temp_C}°C ~ {FeelsLikeC}'",
-      "return-type": "json"
-  }
 }
