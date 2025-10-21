@@ -20,8 +20,7 @@
     "hyprland/workspaces",
     "hyprland/window"
   ],
-  "modules-center": [
-  ],
+  "modules-center": [],
   "modules-right": [
     "network",
     "custom/separator",
@@ -54,9 +53,9 @@
 
   "hyprland/workspaces": {
     "format": "{icon}",
-    "tooltip": false,
     "on-scroll-up": "hyprctl dispatch workspace e+1",
     "on-scroll-down": "hyprctl dispatch workspace e-1",
+    "tooltip": false,
     "format-icons": {
       "1": "1",
       "2": "2",
