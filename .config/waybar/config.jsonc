@@ -168,7 +168,7 @@
   "custom/pacman": {
     "format": "{} {icon} ",
     "return-type": "json",
-    "on-click": "footclient -T \"System Update\" -e sh -c 'cat ~/.config/waybar/logo; yay -Syu; read -p \"Press Return to close...\"'",
+    "on-click": "footclient -T Pacseek -e pacseek -u",
     "format-icons": {
         "pending-updates": "",
         "updated": ""
