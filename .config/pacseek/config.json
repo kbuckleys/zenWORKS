@@ -21,7 +21,7 @@
 	"ShowPkgbuildCommand": "curl -s \"{url}\"|less",
 	"ShowPkgbuildInternally": true,
 	"ComputeRequiredBy": false,
-	"GlyphStyle": "Plain",
+	"GlyphStyle": "Plain-No-X",
 	"DisableNewsFeed": false,
 	"FeedURLs": "https://archlinux.org/feeds/news/",
 	"FeedMaxItems": 5,
@@ -29,6 +29,6 @@
 	"LeftProportion": 4,
 	"Transparent": true,
 	"PackageColumnWidth": 0,
-	"EnableAutoSuggest": true,
+	"EnableAutoSuggest": false,
 	"SepDepsWithNewLine": true
 }
