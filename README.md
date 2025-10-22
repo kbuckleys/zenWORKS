@@ -6,7 +6,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 
 # Dependencies
 - LazyVim
-- pacseek
+- pacseek ```If you use Arch or any of its derivatives```
 - rofi-calc
 - playerctl
 - ripgrep
