@@ -1,11 +1,11 @@
 {
-	"Package": "📦 ",
+	"Package": " ",
 	"Installed": "✔",
 	"NotInstalled": " ",
 	"PrefixState": "[",
 	"SuffixState": "]",
 	"Settings": "🖉  ",
-	"Pkgbuild": "🗒  ",
+	"Pkgbuild": "󰏖 ",
 	"Help": "🕮  ",
 	"Upgrades": "🗘  "
 }
