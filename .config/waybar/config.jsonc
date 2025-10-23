@@ -24,8 +24,8 @@
   "modules-right": [
     "network",
     "custom/separator",
-    "temperature",
     "custom/gpu-temp",
+    "temperature",
     "custom/separator",
     "custom/gpu-info",
     "cpu",
