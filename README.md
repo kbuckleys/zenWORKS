@@ -6,7 +6,6 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 
 # Dependencies
 - LazyVim
-- pacseek ```If you use Arch or any of its derivatives```
 - rofi-calc
 - playerctl
 - ripgrep
@@ -36,6 +35,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - gtk-engine-murrine
 - wiremix
 - pamixer
+- pacseek-bin ```If you use Arch or any of its derivatives```
 - waybar-updates ```If you use Arch or any of its derivatives```
 - waybar-mpris-git
 - rofimoji
