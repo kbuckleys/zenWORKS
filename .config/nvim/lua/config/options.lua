@@ -8,4 +8,4 @@
 -- Add any additional options here
 
 vim.opt.title = true
-vim.opt.titlestring = "%t ~ nvim"
+vim.opt.titlestring = "%F ~ nvim"
