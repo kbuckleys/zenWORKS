@@ -24,45 +24,34 @@
   color: #e0aea4;
 }
 
-#temperature, #custom-gpu-temp, #clock, #custom-weather, #custom-pacman.pending-updates,
-#cpu, #custom-gpu-info, #memory, #custom-separator, #network {
+#temperature, #custom-gpu-temp, #clock, #custom-weather,
+#cpu, #custom-gpu-info, #memory, #custom-separator,
+#custom-pacman.pending-updates, #tray-expander,
+#network, #pulseaudio, #custom-pacman {
   padding: 0px 8px 0px 8px;
-  color: #DFDFDD;
+  color: #dfdfdd;
 }
 
 #window {
-  padding: 0px 0px 0px 12px;
+  padding: 0px 0px 0px 8px;
   color: #9bbfbf;
 }
 
 #custom-waybar-mpris {
-  padding: 0px 0px 0px 8px;
+  padding: 0px 0px 0px 0px;
   color: #b6e0a4;
 }
 
-#pulseaudio {
-  padding: 0px 12px 0px 12px;
-  color: #DFDFDD;
-}
 #pulseaudio.muted {
   color: #e0d8a4;
 }
 
-#custom-pacman {
-  padding: 0px 8px 0px 8px;
-  color: #DFDFDD;
-}
 #custom-pacman.pending-updates {
-  padding: 0px 8px 0px 8px;
   color: #c8a4e0;
 }
 
 #tray {
   padding: 0px 8px 0px 4px;
-}
-#tray-expander{
-  padding: 0px 0px 0px 8px;
-  color: #DFDFDD;
 }
 
 tooltip {

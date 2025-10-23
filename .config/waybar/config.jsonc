@@ -69,7 +69,7 @@
   },
 
   "hyprland/window": {
-    "format": "{}",
+    "format": "{title}",
     "max-length": 80,
     "swap-icon-label": true,
     "tooltip": false,
