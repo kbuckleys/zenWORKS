@@ -26,8 +26,8 @@
 
 #temperature, #custom-gpu-temp, #clock, #custom-weather,
 #cpu, #custom-gpu-info, #memory, #custom-separator,
-#custom-pacman.pending-updates, #tray-expander,
-#network, #pulseaudio, #custom-pacman {
+#network, #pulseaudio, #custom-pacman,
+#custom-pacman.pending-updates {
   padding: 0px 8px 0px 8px;
   color: #dfdfdd;
 }
@@ -50,6 +50,9 @@
   color: #c8a4e0;
 }
 
+#tray-expander {
+  padding: 0px 0px 0px 8px;
+}
 #tray {
   padding: 0px 8px 0px 4px;
 }
