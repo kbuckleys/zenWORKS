@@ -13,9 +13,9 @@
   "height": 24,
 
   "modules-left": [
+    "custom/waybar-mpris",
     "custom/pacman",
     "group/tray-expander",
-    "custom/waybar-mpris",
     "custom/separator",
     "hyprland/workspaces",
     "hyprland/window"
