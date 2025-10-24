@@ -40,12 +40,12 @@
 #temperature, #custom-gpu-temp, #custom-weather,
 #network, #custom-pacman, #custom-separator {
   padding: 0px 8px 0px 8px;
-  color: #DFDFDD;
+  color: #9bbfbf;
 }
 
 #memory {
   padding: 0px 16px 0px 8px;
-  color: #DFDFDD;
+  color: #9bbfbf;
 }
 
 #window {
