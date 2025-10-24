@@ -7,39 +7,61 @@
 * {
   min-width: 0;
   min-height: 0;
-  background-color: #000000;
   font-family: "0xProto Nerd Font";
   font-weight: 700;
   font-size: 12px;
 }
 
+#waybar {
+  background-color: #000000;
+}
+
 #workspaces button {
-  color: #748192;
+  padding: 0px 8px 0px 8px;
+  color: #9bbfbf;
 }
 #workspaces button.active {
-  color: #DFDFDD;
+  background-color: #9bbfbf;
+  color: #20242a;
+  border: 1px solid #000000;
+  border-radius: 0;
 }
 #workspaces button.urgent, #temperature.critical,
 #custom-gpu-temp.critical, #network.disconnected {
   color: #e0aea4;
 }
 
-#temperature, #custom-gpu-temp, #clock, #custom-weather,
-#cpu, #custom-gpu-info, #memory, #custom-separator,
-#network, #pulseaudio, #custom-pacman,
-#custom-pacman.pending-updates {
+#cpu, #custom-gpu-info, #custom-pacman.pending-updates,
+#temperature, #custom-gpu-temp, #custom-weather,
+#network, #custom-pacman, #custom-separator {
   padding: 0px 8px 0px 8px;
-  color: #dfdfdd;
+  color: #9bbfbf;
+}
+
+#memory {
+  padding: 0px 16px 0px 8px;
+  color: #9bbfbf;
+}
+
+#clock, #pulseaudio {
+  background-color: #9bbfbf;
+  padding: 0px 8px 0px 8px;
+  color: #20242a;
+  border: 1px solid #000000;
+  border-radius: 0;
 }
 
 #window {
-  padding: 0px 0px 0px 8px;
+  padding: 0px 0px 0px 16px;
   color: #9bbfbf;
 }
 
 #custom-waybar-mpris {
-  padding: 0px 0px 0px 8px;
+  padding: 0px 4px 0px 12px;
+  background-color: rgba(182 ,224, 164, 0.2);
   color: #b6e0a4;
+  border: 1px solid #000000;
+  border-radius: 0;
 }
 
 #pulseaudio.muted {
@@ -52,7 +74,7 @@
 
 #tray-expander {
   padding: 0px 0px 0px 8px;
-  color: #dfdfdd;
+  color: #9bbfbf;
 }
 #tray {
   padding: 0px 8px 0px 4px;

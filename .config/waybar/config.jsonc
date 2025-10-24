@@ -31,7 +31,6 @@
     "cpu",
     "custom/separator",
     "memory",
-    "custom/separator",
     "clock",
     "pulseaudio",
   ],
