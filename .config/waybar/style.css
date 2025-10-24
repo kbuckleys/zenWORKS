@@ -74,7 +74,10 @@
 }
 
 #custom-pacman.pending-updates {
-  color: #9BB1BF;
+  background-color: rgba(182, 224, 164, 0.2);
+  color: #B6E0A4;
+  border: 1px solid #000000;
+  border-radius: 0;
 }
 
 #tray-expander {
