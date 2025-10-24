@@ -50,13 +50,13 @@
 
 #window {
   padding: 0px 0px 0px 16px;
-  color: #9bbfbf;
+  color: #b6e0a4;
 }
 
 #custom-waybar-mpris {
   padding: 0px 4px 0px 12px;
-  background-color: rgba(182 ,224, 164, 0.2);
-  color: #b6e0a4;
+  background-color: rgba(200, 164, 224, 0.2);
+  color: #c8a4e0;
   border: 1px solid #000000;
   border-radius: 0;
 }
