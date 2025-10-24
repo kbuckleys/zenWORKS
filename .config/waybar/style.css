@@ -46,14 +46,6 @@
   color: #9bbfbf;
 }
 
-#clock, #pulseaudio {
-  background-color: #9bbfbf;
-  padding: 0px 8px 0px 8px;
-  color: #20242a;
-  border: 1px solid #000000;
-  border-radius: 0;
-}
-
 #window {
   padding: 0px 0px 0px 16px;
   color: #9bbfbf;
@@ -67,8 +59,15 @@
   border-radius: 0;
 }
 
+#clock, #pulseaudio {
+  background-color: #9bbfbf;
+  padding: 0px 8px 0px 8px;
+  color: #20242a;
+  border: 1px solid #000000;
+  border-radius: 0;
+}
 #pulseaudio.muted {
-  color: #e0d8a4;
+  background-color: #e0d8a4;
 }
 
 #custom-pacman.pending-updates {
