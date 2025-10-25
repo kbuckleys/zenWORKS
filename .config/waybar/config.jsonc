@@ -16,26 +16,32 @@
     "custom/waybar-mpris",
     "custom/pacman",
     "group/tray-expander",
-    "custom/separator",
+    "custom/divider-l",
     "hyprland/workspaces",
     "hyprland/window"
   ],
   "modules-center": [],
   "modules-right": [
     "network",
-    "custom/separator",
+    "custom/divider-r",
     "custom/gpu-temp",
     "temperature",
-    "custom/separator",
+    "custom/divider-r",
     "custom/gpu-info",
     "cpu",
-    "custom/separator",
+    "custom/divider-r",
     "memory",
     "clock",
     "pulseaudio",
   ],
 
-  "custom/separator": {
+  "custom/divider-l": {
+    "format": "󰇙",
+    "interval": "once",
+    "tooltip": false
+  },
+  
+  "custom/divider-r": {
     "format": "󰇙",
     "interval": "once",
     "tooltip": false
@@ -135,7 +141,7 @@
   },
 
   "network": {
-    "format": "⇣ {bandwidthDownBytes} ~ {bandwidthUpBytes} ⇡",
+    "format": "󱞡 {bandwidthDownBytes} ~ {bandwidthUpBytes} 󱞿",
     "format-disconnected": "NO NETWORK SIGNAL",
     "tooltip": false,
     "interval": 1,
