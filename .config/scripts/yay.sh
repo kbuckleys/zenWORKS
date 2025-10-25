@@ -4,6 +4,8 @@
 # https://github.com/kbuckleys/
 
 while true; do
+  # Sync package databases with yay to ensure updated package lists
+  yay -Sy
   # Get the list of installable packages
   mapfile -t installs < <(yay -Slq)
   # Get the list of installed packages
