@@ -19,7 +19,6 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - xdg-desktop-portal-hyprland
 - 7zip
 - unzip
-- swww
 - gvfs
 - fd
 - fzf
