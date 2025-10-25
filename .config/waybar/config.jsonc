@@ -81,7 +81,7 @@
   },
 
   "custom/gpu-info": {
-    "exec": "~/.config/waybar/scripts/gpu-info.sh",
+    "exec": "~/.config/scripts/wb-gpu-info.sh",
     "interval": 5,
     "format": "{text}",
     "on-click": "footclient -T nvtop -e nvtop",
@@ -108,7 +108,7 @@
   },
 
   "custom/gpu-temp": {
-    "exec": "~/.config/waybar/scripts/gpu-temp.sh",
+    "exec": "~/.config/scripts/wb-gpu-temp.sh",
     "interval": 5,
     "format": "{text}",
     "format-critical": "{text}",
@@ -167,7 +167,7 @@
   "custom/pacman": {
     "format": "{} {icon} ",
     "return-type": "json",
-    "on-click": "footclient -T Pacseek -e pacseek -u",
+    "on-click": "footclient -T \"System Update\" -e bash -c 'cat ~/.config/logo; echo; yay -Syu; echo; read -rp \"Press Return to close...\"'",
     "format-icons": {
         "pending-updates": "",
         "updated": ""
