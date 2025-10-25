@@ -31,9 +31,9 @@
 #workspaces button.urgent, #temperature.critical,
 #custom-gpu-temp.critical, #network.disconnected {
   background-color: rgba(224, 174, 164, 0.2);
-  color: #E0AEA4;
   border: 1px solid #000000;
   border-radius: 0;
+  color: #E0AEA4;
 }
 
 #cpu, #custom-gpu-info, #temperature, #custom-gpu-temp,
@@ -55,19 +55,19 @@
 }
 
 #custom-waybar-mpris {
-  padding: 0px 4px 0px 8px;
   background-color: rgba(200, 164, 224, 0.2);
-  color: #c8a4e0;
+  padding: 0px 4px 0px 8px;
   border: 1px solid #000000;
   border-radius: 0;
+  color: #c8a4e0;
 }
 
 #clock, #pulseaudio {
   background-color: rgba(224, 216, 164, 0.2);
   padding: 0px 8px 0px 8px;
-  color: #E0D8A4;
   border: 1px solid #000000;
   border-radius: 0;
+  color: #E0D8A4;
 }
 #pulseaudio.muted {
   background-color: #e0d8a4;
@@ -76,9 +76,9 @@
 
 #custom-pacman.pending-updates {
   background-color: rgba(182, 224, 164, 0.2);
-  color: #B6E0A4;
   border: 1px solid #000000;
   border-radius: 0;
+  color: #B6E0A4;
 }
 
 #tray-expander {
