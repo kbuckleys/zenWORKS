@@ -37,13 +37,11 @@
 
   "custom/divider-l": {
     "format": "󰇙",
-    "interval": "once",
     "tooltip": false
   },
   
   "custom/divider-r": {
     "format": "󰇙",
-    "interval": "once",
     "tooltip": false
   },
 

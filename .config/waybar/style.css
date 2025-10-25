@@ -36,24 +36,22 @@
   border-radius: 0;
 }
 
-#custom-weather, #network, #custom-pacman, #custom-divider-r,
-#cpu, #custom-gpu-info, #temperature, #custom-gpu-temp {
-  padding: 0px 8px 0px 8px;
-  color: #e0d8a4;
-  font-weight: normal;
-  font-size: 12px;
-}
-
 #custom-divider-l, #custom-pacman {
   padding: 0px 8px 0px 8px;
   color: #9bbfbf;
+}
+
+#cpu, #custom-gpu-info, #temperature, #custom-gpu-temp,
+#network, #custom-divider-r {
+  padding: 0px 8px 0px 8px;
+  color: #e0d8a4;
+  font-weight: normal;
 }
 
 #memory {
   padding: 0px 16px 0px 8px;
   color: #e0d8a4;
   font-weight: normal;
-  font-size: 12px;
 }
 
 #window {
