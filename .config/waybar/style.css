@@ -16,7 +16,7 @@
   background-color: #000000;
 }
 
-#workspaces button {
+#workspaces button, #custom-divider-l, #custom-pacman {
   padding: 0px 8px 0px 8px;
   color: #9bbfbf;
 }
@@ -34,11 +34,6 @@
   color: #E0AEA4;
   border: 1px solid #000000;
   border-radius: 0;
-}
-
-#custom-divider-l, #custom-pacman {
-  padding: 0px 8px 0px 8px;
-  color: #9bbfbf;
 }
 
 #cpu, #custom-gpu-info, #temperature, #custom-gpu-temp,
