@@ -10,7 +10,6 @@ sort=-time
 invisible=0
 layer=overlay
 text-color=#20242a
-background-color=#dfdfdd
 width=600
 height=150
 padding=8
@@ -29,14 +28,13 @@ on-button-right=dismiss-all
 icon-path=/usr/share/icons/hicolor
 
 [urgency=low]
-border-color=#dfdfdd1A
+background-color=#dfdfdd
 
 [urgency=normal]
-border-color=#dfdfdd1A
+background-color=#e0d8a4
 
 [urgency=high]
 background-color=#e0aea4
-border-color=#20242a
 default-timeout=0
 
 [category=mpd]
