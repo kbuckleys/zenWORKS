@@ -3,11 +3,6 @@
 # └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 # https://github.com/kbuckleys/
 
-icons=1
-markup=1
-actions=1
-sort=-time
-invisible=0
 layer=overlay
 text-color=#20242a
 width=600
@@ -17,15 +12,12 @@ margin=0,0,0,0
 outer-margin=20
 border-size=1
 border-color=#20242a
-border-radius=0
-max-icon-size=64
 default-timeout=4000
 ignore-timeout=0
 anchor=bottom-center
 text-alignment=center
 font=0xProto Nerd Font 10
-on-button-right=dismiss-all
-icon-path=/usr/share/icons/hicolor
+default-timeout=4000
 
 [urgency=low]
 background-color=#dfdfdd
@@ -36,7 +28,3 @@ background-color=#e0d8a4
 [urgency=high]
 background-color=#e0aea4
 default-timeout=0
-
-[category=mpd]
-default-timeout=4000
-group-by=category
