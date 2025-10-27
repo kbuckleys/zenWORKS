@@ -10,14 +10,13 @@
   "layer": "dock",
   "position": "top",
   "exclusive": true,
-  "height": 24,
 
   "modules-left": [],
   "modules-center": [
     "custom/waybar-mpris",
     "custom/pacman",
     "group/tray-expander",
-    "custom/divider-l",
+    "custom/div",
     "hyprland/workspaces",
     "pulseaudio",
     "clock",
@@ -30,7 +29,7 @@
   ],
   "modules-right": [],
 
-  "custom/divider-l": {
+  "custom/div": {
     "format": "󰇙",
     "tooltip": false
   },
