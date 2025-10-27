@@ -51,7 +51,7 @@ function M.setup()
   hi("Constant", { fg = colors.green })
   hi("String", { fg = colors.green })
   hi("Character", { fg = colors.white })
-  hi("Number", { fg = colors.red })
+  hi("Number", { fg = colors.yellow })
   hi("Boolean", { fg = colors.yellow })
 
   hi("Identifier", { fg = colors.blue })
@@ -62,7 +62,7 @@ function M.setup()
   hi("Repeat", { fg = colors.red, gui = "bold" })
 
   hi("Label", { fg = colors.red })
-  hi("Operator", { fg = colors.white })
+  hi("Operator", { fg = colors.cyan })
 
   hi("Keyword", { fg = colors.magenta, gui = "bold" })
   hi("PreProc", { fg = colors.green })
