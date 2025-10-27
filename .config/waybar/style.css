@@ -26,11 +26,8 @@
 #workspaces button:hover {
   box-shadow: none;
 }
-#workspaces button.urgent, #temperature.critical,
+#workspaces button.urgent, #temperature.critical, #pulseaudio.muted,
 #custom-gpu-temp.critical, #network.disconnected {
-  background-color: rgba(224, 174, 164, 0.2);
-  border: 1px solid #000000;
-  border-radius: 0;
   color: #E0AEA4;
 }
 
@@ -59,15 +56,14 @@
   color: #b6e0a4;
 }
 
-#clock, #pulseaudio {
+#clock {
   padding: 0px 8px 0px 8px;
-  border: 1px solid #000000;
-  border-radius: 0;
   color: #E0D8A4;
 }
-#pulseaudio.muted {
-  background-color: #e0d8a4;
-  color: #20242A;
+
+#pulseaudio{
+  padding: 0px 8px 0px 16px;
+  color: #E0D8A4;
 }
 
 #custom-pacman {
