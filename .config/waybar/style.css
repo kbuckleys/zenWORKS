@@ -16,14 +16,12 @@
   background-color: #000000;
 }
 
-#workspaces button, #custom-divider-l, #custom-pacman {
+#workspaces button {
   padding: 0px 8px 0px 8px;
-  color: #9bbfbf;
+  color: #56606d;
 }
 #workspaces button.active {
-  background-color: rgba(155, 191, 191, 0.3);
-  border: 1px solid #000000;
-  border-radius: 0;
+  color: #9bbfbf;
 }
 #workspaces button:hover {
   box-shadow: none;
@@ -36,34 +34,32 @@
   color: #E0AEA4;
 }
 
-#cpu, #custom-gpu-info, #temperature, #custom-gpu-temp,
-#network, #custom-divider-r {
+#custom-divider-l {
   padding: 0px 8px 0px 8px;
-  color: #dfdfdd;
+  color: #9bbfbf;
+}
+
+#cpu, #custom-gpu-info, #temperature,
+#custom-gpu-temp, #network {
+  padding: 0px 8px 0px 8px;
   font-weight: normal;
+  color: #dfdfdd;
 }
 
 #memory {
-  padding: 0px 16px 0px 8px;
-  color: #dfdfdd;
+  padding: 0px 8px 0px 16px;
   font-weight: normal;
-}
-
-#window {
-  padding: 0px 0px 0px 16px;
-  color: #b6e0a4;
+  color: #dfdfdd;
 }
 
 #custom-waybar-mpris {
-  background-color: rgba(200, 164, 224, 0.2);
   padding: 0px 4px 0px 8px;
   border: 1px solid #000000;
   border-radius: 0;
-  color: #c8a4e0;
+  color: #b6e0a4;
 }
 
 #clock, #pulseaudio {
-  background-color: rgba(224, 216, 164, 0.2);
   padding: 0px 8px 0px 8px;
   border: 1px solid #000000;
   border-radius: 0;
@@ -74,11 +70,12 @@
   color: #20242A;
 }
 
+#custom-pacman {
+  padding: 0px 8px 0px 8px;
+  color: #9bbfbf;
+}
 #custom-pacman.pending-updates {
-  background-color: rgba(182, 224, 164, 0.2);
-  border: 1px solid #000000;
-  border-radius: 0;
-  color: #B6E0A4;
+  color: #c8a4e0;
 }
 
 #tray-expander {
