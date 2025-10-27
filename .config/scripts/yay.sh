@@ -3,30 +3,25 @@
 # └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 # https://github.com/kbuckleys/
 
+# Sync package databases once before the loop
+yay -Sy
+
 while true; do
-  # Sync package databases with yay to ensure updated package lists
-  yay -Sy
-  # Get the list of installable packages
+  # Load installable and installed package lists just once (or update on demand)
   mapfile -t installs < <(yay -Slq)
-  # Get the list of installed packages
   mapfile -t uninstalls < <(yay -Qq)
 
-  # Convert installed packages to an associative array for fast lookup
   declare -A installed_pkgs=()
   for pkg in "${uninstalls[@]}"; do
     installed_pkgs["$pkg"]=1
   done
 
   combined=()
-
-  # Only add packages to install list that are NOT installed yet
   for pkg in "${installs[@]}"; do
     if [[ -z ${installed_pkgs[$pkg]} ]]; then
       combined+=("I $pkg")
     fi
   done
-
-  # Add all installed packages for uninstall option
   for pkg in "${uninstalls[@]}"; do
     combined+=("U $pkg")
   done
