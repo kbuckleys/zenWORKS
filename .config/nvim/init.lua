@@ -4,6 +4,7 @@
 -- https://github.com/kbuckleys/
 
 require("config.lazy")
+require("themes.kripton").setup()
 
 local function set_transparency()
   vim.cmd([[
@@ -33,7 +34,6 @@ vim.api.nvim_create_autocmd("BufEnter", {
   callback = set_transparency,
 })
 
-vim.cmd([[colorscheme evergarden]])
 vim.wo.relativenumber = false
 
 vim.api.nvim_create_autocmd("VimEnter", {
