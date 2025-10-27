@@ -8,12 +8,10 @@
   min-width: 0;
   min-height: 0;
   font-family: "0xProto Nerd Font";
-  font-weight: bold;
   font-size: 12px;
-}
-
-#waybar {
-  background-color: #000000;
+  font-weight: bold;
+  background: none;
+  border: none;
 }
 
 #workspaces button {
