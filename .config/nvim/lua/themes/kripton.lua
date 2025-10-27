@@ -14,51 +14,76 @@ local colors = {
   magenta = "#c8a4e0",
   cyan = "#9bbfbf",
   white = "#dfdfdd",
+  gray = "#6C7887",
 }
 
 function M.setup()
   vim.cmd("hi clear")
+
   if vim.fn.exists("syntax_on") == 1 then
     vim.cmd("syntax reset")
   end
+
   vim.o.background = "dark"
   vim.o.termguicolors = true
 
   local hi = function(name, opts)
     local cmd = "hi " .. name
+
     if opts.fg then
       cmd = cmd .. " guifg=" .. opts.fg
     end
+
     if opts.bg then
       cmd = cmd .. " guibg=" .. opts.bg
     end
+
     if opts.gui then
       cmd = cmd .. " gui=" .. opts.gui
     end
+
     vim.cmd(cmd)
   end
 
-  hi("Normal", { fg = colors.green, bg = colors.black })
-  hi("Comment", { fg = colors.cyan, gui = "italic" })
-  hi("Constant", { fg = colors.magenta })
+  hi("Normal", { fg = colors.white, bg = colors.black })
+  hi("Comment", { fg = colors.gray, gui = "italic" })
+
+  hi("Constant", { fg = colors.green })
   hi("String", { fg = colors.green })
-  hi("Character", { fg = colors.green })
+  hi("Character", { fg = colors.white })
   hi("Number", { fg = colors.red })
   hi("Boolean", { fg = colors.yellow })
+
   hi("Identifier", { fg = colors.blue })
   hi("Function", { fg = colors.blue })
+
   hi("Statement", { fg = colors.red, gui = "bold" })
   hi("Conditional", { fg = colors.red, gui = "bold" })
   hi("Repeat", { fg = colors.red, gui = "bold" })
+
   hi("Label", { fg = colors.red })
   hi("Operator", { fg = colors.white })
-  hi("Keyword", { fg = colors.red, gui = "bold" })
-  hi("PreProc", { fg = colors.magenta })
+
+  hi("Keyword", { fg = colors.magenta, gui = "bold" })
+  hi("PreProc", { fg = colors.green })
   hi("Type", { fg = colors.yellow })
-  hi("Special", { fg = colors.green })
+  hi("Special", { fg = colors.cyan })
+
   hi("Underlined", { fg = colors.blue, gui = "underline" })
+
   hi("Error", { fg = colors.red, gui = "bold" })
   hi("Todo", { fg = colors.magenta, gui = "bold" })
+
+  hi("VertSplit", { fg = colors.red, bg = colors.black })
+
+  hi("CursorLine", { bg = "#1a1a1a" })
+  hi("LineNr", { fg = colors.gray, bg = colors.black })
+  hi("CursorLineNr", { fg = colors.cyan, bg = "#1a1a1a", gui = "bold" })
+
+  hi("Pmenu", { fg = colors.cyan, bg = colors.green })
+  hi("PmenuSel", { fg = colors.cyan, bg = colors.yellow })
+
+  hi("StatusLineSeparator", { fg = colors.red, bg = colors.black })
 
   vim.cmd([[
     hi StatusLine    guifg=]] .. colors.black .. [[ guibg=]] .. colors.red .. [[ gui=bold
@@ -69,7 +94,7 @@ end
 M.lualine_theme = {
   normal = {
     a = { fg = colors.black, bg = colors.red, gui = "bold" },
-    b = { fg = colors.white, bg = colors.red },
+    b = { fg = colors.cyan, bg = colors.red },
     c = { fg = colors.red, bg = colors.black },
     x = { fg = colors.white, bg = colors.black },
     y = { fg = colors.white, bg = colors.black },
