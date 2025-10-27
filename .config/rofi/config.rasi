@@ -11,6 +11,7 @@ configuration {
 	  drun-display-format: "{name}";
     kb-remove-to-sol: "BackSpace";
     kb-remove-char-back: "";
+    terminal: "footclient";
     recursivebrowser {
         directory: "/";
         cancel-returns-1: true;
