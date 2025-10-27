@@ -50,9 +50,7 @@
 }
 
 #custom-waybar-mpris {
-  padding: 0px 4px 0px 8px;
-  border: 1px solid #000000;
-  border-radius: 0;
+  padding: 0px 0px 0px 8px;
   color: #b6e0a4;
 }
 
