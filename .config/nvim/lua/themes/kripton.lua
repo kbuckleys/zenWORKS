@@ -67,7 +67,7 @@ function M.setup()
   hi("Keyword", { fg = colors.magenta, gui = "bold" })
   hi("PreProc", { fg = colors.green })
   hi("Type", { fg = colors.yellow })
-  hi("Special", { fg = colors.cyan })
+  hi("Special", { fg = colors.cyan, gui = "bold" })
 
   hi("Underlined", { fg = colors.blue, gui = "underline" })
 
@@ -133,7 +133,7 @@ M.lualine_theme = {
     z = { fg = colors.blue, bg = colors.black },
   },
   inactive = {
-    a = { fg = colors.white, bg = colors.black, gui = "bold" },
+    a = { fg = colors.red, bg = colors.black, gui = "bold" },
     b = { fg = colors.white, bg = colors.black },
     c = { fg = colors.white, bg = colors.black },
     x = { fg = colors.white, bg = colors.black },
