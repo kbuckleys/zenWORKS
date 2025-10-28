@@ -22,7 +22,7 @@
     alternate-normal-foreground: @foreground;
     normal-background: #00000000;
     lightfg: @normal-background;
-    selected-normal-background: rgba(0, 0, 0, 1);
+    selected-normal-background: rgba(223, 223, 221, 0.1);
     border-color: rgba(155, 191, 191, 0.2);
     spacing: 2;
     separatorcolor: @foreground;
@@ -33,16 +33,17 @@
     alternate-active-foreground: @active-foreground;
     active-background: @background;
     selected-active-background: @normal-background;
+    font: "0xProto Nerd Font Medium 10";
 }
 
 window {
     background-color: @background;
-    border: 1;
     padding: 0;
+    border: 1px;
 }
 
 mainbox {
-    border: 0;
+    border: 0px solid;
     padding: 0;
 }
 

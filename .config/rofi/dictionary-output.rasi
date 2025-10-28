@@ -7,20 +7,16 @@
 @theme "kripton"
 
 * {
-    selected: transparent;
     selected-normal-background: var(selected);
-    font: "0xProto Nerd Font Medium 10";
 }
 
 window {
     location: south;
     anchor: south;
     width: 44%;
-    border: 0px;
 }
 
 mainbox {
-    border: 1px solid;
     children: [listview];
 }
 

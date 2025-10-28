@@ -6,21 +6,10 @@
 
 @theme "kripton"
 
-* {
-    selected: rgba(224, 174, 164, 0.1);
-    selected-normal-background: var(selected);
-    font: "0xProto Nerd Font Medium 10";
-}
-
 window {
     location: south;
     anchor: south;
     width: 100%;
-    border: 0px;
-}
-
-mainbox {
-    border: 1px solid;
 }
 
 entry, inputbar, element-icon {
