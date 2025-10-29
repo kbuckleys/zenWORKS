@@ -10,8 +10,11 @@
   font-family: "0xProto Nerd Font";
   font-size: 12px;
   font-weight: bold;
-  background: none;
   border: none;
+}
+
+#waybar {
+  background: none;
 }
 
 #workspaces button {
