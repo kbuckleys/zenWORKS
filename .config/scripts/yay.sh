@@ -3,8 +3,15 @@
 # └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 # https://github.com/kbuckleys/
 
+cat <<'EOF'
+┌─┐┌─┐┌┐┌┬ ┬┌─┐┬─┐┬┌─┌─┐
+┌─┘├┤ │││││││ │├┬┘├┴┐└─┐
+└─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
+EOF
+
 yay -Sy
 
+printf '%s\n' "${combined[@]}" | fzf ...
 while true; do
   mapfile -t installs < <(yay -Slq)
   mapfile -t uninstalls < <(yay -Qq)
