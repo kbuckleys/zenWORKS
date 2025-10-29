@@ -118,8 +118,8 @@ hovered = { bg = "#56606D" }
 on = { fg = "#E0DEA4" }
 run = { fg = "#C5E1A5" }
 desc = { fg = "#DFDFDD", italic = true }
-hovered = { bg = "#56606D" }
-footer = { fg = "#9BBFBF", bg = "#282726", bold = true }
+hovered = { bg = "#20242a" }
+footer = { fg = "#dfdfdd", bg = "#20242a" }
 
 [filetype]
 rules = [
