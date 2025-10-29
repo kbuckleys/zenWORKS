@@ -3,11 +3,9 @@
 # └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 # https://github.com/kbuckleys/
 
-# Sync package databases once before the loop
 yay -Sy
 
 while true; do
-  # Load installable and installed package lists just once (or update on demand)
   mapfile -t installs < <(yay -Slq)
   mapfile -t uninstalls < <(yay -Qq)
 
