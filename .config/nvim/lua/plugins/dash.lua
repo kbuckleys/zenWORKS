@@ -1,3 +1,8 @@
+-- ┌─┐┌─┐┌┐┌┬ ┬┌─┐┬─┐┬┌─┌─┐
+-- ┌─┘├┤ │││││││ │├┬┘├┴┐└─┐
+-- └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
+-- https://github.com/kbuckleys/
+
 return {
   "folke/snacks.nvim",
   opts = {
