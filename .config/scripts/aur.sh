@@ -49,7 +49,6 @@ while true; do
   selected=$(
     printf '%s\n' "${combined[@]}" | fzf --multi \
       --preview='bash -c "prefix=$(echo {} | cut -c1); pkg=$(echo {} | cut -c3-); preview_func \"$prefix\" \"$pkg\""' --preview-window=down:70%
-    --preview-window=down:70%
   )
 
   [[ -z $selected ]] && break
