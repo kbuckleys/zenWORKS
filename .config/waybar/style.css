@@ -13,10 +13,6 @@
   border: none;
 }
 
-#waybar {
-  background: none;
-}
-
 #workspaces button {
   padding: 0px 8px 0px 8px;
   color: #56606d;
@@ -25,8 +21,8 @@
   padding: 0px 8px 0px 8px;
   color: #9bbfbf;
 }
-#workspaces button:hover {
-  box-shadow: none;
+#workspaces button:hover, #waybar {
+  background: none;
 }
 #workspaces button.urgent, #custom-gpu-temp.critical,
 #network.disconnected, #temperature.critical, #pulseaudio.muted {
