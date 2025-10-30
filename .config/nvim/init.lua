@@ -7,6 +7,17 @@ require("config.lazy")
 require("themes.kripton").setup()
 vim.wo.relativenumber = false
 
+vim.api.nvim_create_autocmd("CmdlineChanged", {
+  pattern = ":*",
+  callback = function()
+    local cmd = vim.fn.getcmdline()
+    local lineno = tonumber(cmd)
+    if lineno and lineno > 0 and lineno <= vim.api.nvim_buf_line_count(0) then
+      vim.api.nvim_win_set_cursor(0, { lineno, 0 })
+    end
+  end,
+})
+
 local function set_transparency()
   vim.cmd([[
     hi Normal guibg=NONE ctermbg=NONE
@@ -41,7 +52,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
       hi NormalFloat guibg=NONE ctermbg=NONE
       hi FloatBorder guibg=NONE ctermbg=NONE
     ]])
-    vim.o.winblend = 20
+    vim.o.winblend = 0
   end,
 })
 
