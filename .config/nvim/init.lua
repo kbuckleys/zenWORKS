@@ -5,6 +5,7 @@
 
 require("config.lazy")
 require("themes.kripton").setup()
+vim.wo.relativenumber = false
 
 local function set_transparency()
   vim.cmd([[
@@ -33,8 +34,6 @@ vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "*",
   callback = set_transparency,
 })
-
-vim.wo.relativenumber = false
 
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
