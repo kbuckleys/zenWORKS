@@ -51,7 +51,7 @@
     "tooltip": false,
     "show-special": true,
     "format-icons": {
-      "special": "SPECIAL",
+      "special": "[ ]",
       "1": "1",
       "2": "2",
       "3": "3",
