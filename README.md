@@ -25,6 +25,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - fzf
 - bat
 - feh
+- mpv
 - disktui
 - hyprpicker
 - hyprshot
