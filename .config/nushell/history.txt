@@ -1,0 +1,278 @@
+ls
+la
+ls -la
+cd /
+ls
+la
+sudi chsh -s /usr/bin/nushell
+sudo chsh -s /usr/bin/nushell
+chsh -s /usr/bin/nushell
+chsh -s /usr/local/bin/nu
+cowsay balls
+chsh -s /usr/bin/nu
+la
+ls -la
+cowsay balls
+ls
+la
+ls -la
+cd Downloads/
+ls
+cd
+cd `Pictures/KB Logos/`
+la
+ls
+qview Untitled_vectorizedw.png
+Untitled_vectorizedw.png
+ls
+ls -la
+ls Desktop/
+ls .mozilla/
+cd .mozilla/firefox/
+ls
+ff
+fastfetch 
+config nu
+exit
+la
+ls -la
+la
+ls
+la
+ls
+ff
+la
+ff
+hyprland
+exit
+ff
+ping google.com
+la
+ls -la
+size Desktop/
+cd `~/Pictures/KB Logos/`
+lsss
+ls
+..
+cd `KB Logos/`
+cd
+..
+ls
+la
+l
+ls
+ls -la
+nvim ~/.config/nushell/history.txt
+ls | sort-by date
+ls | sort-by | date
+ls | sort-by | size
+ls | sort-by size
+ls -la | sort-by size
+ls -la | sort-by size | reverse
+ps
+ps | where status = Running
+ps | where status == Running
+ps | where status == firefox
+ps | where status == Running | yaml
+ps | where status == Running | to yaml
+ps | to yaml
+ps | to yamcsv
+ps | to csv
+ps | to json
+ps | to txt
+ps | to html
+ps | to ~/apple.html
+ps | to html save pro.html
+ps | save ~/apple.html
+cowsay I got balls of steel | save balls.html
+ls | explore
+ps | where mem > 32mb
+ls | explore
+ps --help
+ps | where name =~ 'nu'
+ps | save list.json
+help  commands
+ls .config
+ls .config | all 
+grep Desktop/
+ls | explore
+yay -Syu
+ff
+ls
+ls -la
+ls -la | sort-by size | reverse
+ls -la
+nvim
+yazi
+ls -la
+hyprland
+ls -la
+ff
+ls -la
+cd ~/.config/btop/themes/
+ls -la
+ps firefox
+ps | grep firefox
+aura
+aura cache
+aura cache htop
+yay -Sc
+sudo pacman -Sc
+yay -Sc
+dust
+dust -help
+lsblk
+df -h
+ls -la
+cd .pki/
+ls
+cd nssdb/
+ls
+nvim pkcs11.txt
+nvim key4.db
+ff
+mv ~/.local/share/nvim ~/.local/share/nvim.bak<\n>mv ~/.local/state/nvim ~/.local/state/nvim.bak<\n>mv ~/.cache/nvim ~/.cache/nvim.bak
+mv ~/.local/share/nvim ~/.local/share/nvim.bak
+mv ~/.local/state/nvim ~/.local/state/nvim.bak
+rm -r ~/.local/share/nvim.bak
+rm -r ~/.local/state/nvim.bak
+rm -r ~/.cache/nvim.bak
+rm -r ~/.config/nvim/
+git clone --depth 1 https://github.com/AstroNvim/template ~/.config/nvim
+rm -rf ~/.config/nvim/.git
+rm -r ~/.local/share/nvim<\n>rm -r ~/.local/state/nvim<\n>rm -r ~/.cache/nvim
+git clone https://github.com/LazyVim/starter ~/.config/nvim
+rm -rf ~/.config/nvim/.git
+nvim
+ff
+ls -la
+ls | save balls.html
+firefox balls.html
+rm balls.html
+ls -la
+sudo pacman -S --needed base-devel
+git clone https://aur.archlinux.org/paru.git
+cd paru
+makepkg -si
+..
+rm paru/
+rm paru
+rm /paru
+killall waybar && waybar & disown
+killall waybar & waybar & disown
+waybar & disown
+waybar &
+waybar & release
+&waybar
+job spawn {waybar}
+yay -sc
+paru -sc
+paru -scc
+df -h
+rm ~/go
+ls -la
+rm -r go
+rm -r ~/go
+rm -r ~/go/
+sudo rm -r go
+ls -la
+df -h
+paru
+paru -sy
+paru -Sy
+paru
+paru -Syu
+paru
+killall waybar job spawn {waybar}
+job spawn {waybar}
+paru htop
+bat ~/.config/scripts/gsr-start.sh
+paru feh
+df -h
+df
+df -h
+paru -Sc
+sudo pacman -Sc
+ls -la
+ls 
+ls -la
+bat .zcompdump-krig-5.9
+ls -la
+bat .viminfo
+cat .viminfo
+ff
+ls -la
+ff
+df
+df -h
+paru -Sc
+df -h
+swww ~/Pictures/Wallpapers/wallhaven-951q21.png
+swww img ~/Pictures/Wallpapers/wallhaven-951q21.png
+swww-daemon
+job spawn swww-daemon
+job spawn swww
+job spawn sww
+job spawn [swww-daemon]
+job spawn {swww-daemon}
+swww img ~/Pictures/Wallpapers/wallhaven-951q21.png
+kill swww-daemon
+kill {swww-daemon}
+killall swww-daemon
+paru -Sc
+rofi -show filebrowser
+paru -Sc
+ff
+df -h
+killall waybar & job spawn {waybar}
+job spawn job spawn {waybar}
+job spawn {waybar}
+setfont -d
+setfont
+pwd
+cd /
+pwd
+cd ~
+cd `Pictures/KB Logos/`
+pwd
+paru
+hyprctl reload
+exec-once = hyprpm reload -n
+hyprpm reload -n
+hyprpm update
+paru -S cpio
+hyprpm update
+hyprpm reload -n
+hyprctl reload
+paru -sc
+paru -Sc
+feh
+cd Pictures/
+feh zenWORKS.png
+feh -help
+feh -g zenWORKS.png
+feh -g 1280x720 zenWORKS.png
+feh -g [+400+700] zenWORKS.png
+feh -g 1280x720 [+X+Y] zenWORKS.png
+feh -g 1280x720 zenWORKS.png
+feh zenWORKS.png
+feh
+feh ~/Pictures/zenWORKS.png
+paru -Sc
+df -h
+mpv ~/Pictures/zenWORKS.png
+cd /
+cd mnt/nvme0n1p1/Movies/
+mpv Helvetica.mp4
+paru -Sc
+df -h
+cd /mnt/
+rm nvme0n1p5/
+sudo rm nvme0n1p5/
+sudo rm -r nvme0n1p5/
+mpv ~/Pictures/zenWORKS.png
+mpv `~/Downloads/Wallpaper GIF.gif`
+mpv `~/Pictures/KB Logos/Untitled_vectorized.png`
+mpv --keep-open `~/Pictures/KB Logos/Untitled_vectorized.png`
+ff
+fastfetch 
