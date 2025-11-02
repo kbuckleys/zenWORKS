@@ -75,6 +75,7 @@ function M.setup()
   hi("Todo", { fg = colors.magenta, gui = "bold" })
 
   hi("VertSplit", { fg = colors.red, bg = colors.black })
+  hi("FloatBorder", { fg = colors.cyan, bg = colors.black })
 
   hi("CursorLine", { bg = "#1a1a1a" })
   hi("LineNr", { fg = colors.gray, bg = colors.black })
