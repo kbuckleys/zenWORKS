@@ -12,7 +12,7 @@ window {
     width: 100%;
 }
 
-entry, inputbar, element-icon {
+inputbar, element-icon {
     enabled: false;
 }
 
@@ -22,6 +22,9 @@ listview {
 
 element {
     padding: 4px 10px 4px 10px;
+}
+element-text {
+    highlight: none;
 }
 element-text selected {
     text-color: #e0aea4;

@@ -7,7 +7,6 @@
 @theme "kripton"
 
 configuration {
-    modi: "drun";
 	  drun-display-format: "{name}";
     kb-remove-to-sol: "BackSpace";
     kb-remove-char-back: "";
