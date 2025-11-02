@@ -11,7 +11,6 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - playerctl
 - ripgrep
 - imagemagick
-- poppler
 - pipewire-pulse
 - hyprpolkitagent
 - gst-plugins-good
