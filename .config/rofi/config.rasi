@@ -34,7 +34,6 @@ inputbar {
 }
 
 listview {
-    columns: 1;
     lines: 50;
     layout: horizontal;
 }
