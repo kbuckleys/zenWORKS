@@ -69,12 +69,13 @@ while true; do
 
   if [[ ${#to_install[@]} -gt 0 ]]; then
     paru -S "${to_install[@]}"
-    echo "Press Return to continue..."
-    read -r
   fi
 
   if [[ ${#to_uninstall[@]} -gt 0 ]]; then
     paru -Rs "${to_uninstall[@]}"
+  fi
+
+  if [[ ${#to_install[@]} -gt 0 || ${#to_uninstall[@]} -gt 0 ]]; then
     echo "Press Return to continue..."
     read -r
   fi
