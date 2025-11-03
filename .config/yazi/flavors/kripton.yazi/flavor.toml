@@ -62,7 +62,7 @@ perm_sep = { fg = "#9bbfbf" }
 
 # Progress
 progress_label = { fg = "#0b0e0e" }
-progress_normal = { fg = "#0b0e0e", bg = "#b6e0a4" }
+progress_normal = { fg = "#e0d8a4", bg = "#56606d" }
 progress_error = { fg = "#0b0e0e", bg = "#e0aea4" }
 
 [which]
