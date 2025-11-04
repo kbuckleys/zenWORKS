@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=Neovim
-Comment=IDE
-Exec=footclient -e nvim %F
-Terminal=false
-Type=Application
-Icon=terminal
-Categories=Utility;TextEditor;
-MimeType=text/plain;
