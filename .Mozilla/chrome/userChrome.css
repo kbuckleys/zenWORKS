@@ -11,7 +11,7 @@
     font-size: 12px !important;
 }
 #TabsToolbar .tabbrowser-tab[selected="true"] .tab-label {
-    font-weight: 700 !important;
+    font-weight: bold !important;
 }
 
 .tab-audio-button {
