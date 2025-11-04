@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Spotify
+Comment=Open Spotify ~ Firefox
+Exec=firefox --new-window https://open.spotify.com/
+Type=Application
+Terminal=false
+Icon=spotify
+StartupNotify=true
