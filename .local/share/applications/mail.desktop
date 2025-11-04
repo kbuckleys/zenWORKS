@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Mail
+Comment=Tutanota ~ Firefox
+Exec=firefox --new-window https://app.tuta.com/
+Type=Application
+Terminal=false
+Icon=mail-message-new
+StartupNotify=true
