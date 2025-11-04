@@ -4,6 +4,6 @@ Comment=IDE
 Exec=footclient -e nvim %f
 Type=Application
 Terminal=false
-MimeType=text/plain;text/*;application/json;application/ld+json;application/x-toml;application/x-yaml;text/csv;text/html;text/css;text/markdown;text/x-sh;application/x-shellscript;application/javascript;text/x-python;text/x-csrc;text/x-c++src;text/x-java;application/xml;application/x-perl;
+MimeType=text/plain;text/*
 Icon=neovim
 StartupNotify=true
