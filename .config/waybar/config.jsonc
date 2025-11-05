@@ -10,7 +10,7 @@
   "layer": "dock",
   "position": "top",
   "exclusive": true,
-  "height": 21,
+  "height": 22,
 
   "modules-left": [],
   "modules-center": [
