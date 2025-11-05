@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Spotify
-Comment=Open Spotify ~ Firefox
+Comment=Open Spotify
 Exec=firefox --new-window https://open.spotify.com/
 Type=Application
 Terminal=false
