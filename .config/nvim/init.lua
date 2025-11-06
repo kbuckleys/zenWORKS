@@ -6,7 +6,6 @@
 require("config.lazy")
 require("themes.kripton").setup()
 vim.wo.relativenumber = false
-vim.opt.cursorcolumn = true
 
 vim.api.nvim_create_autocmd("CmdlineChanged", {
   pattern = ":*",
