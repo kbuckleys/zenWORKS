@@ -23,6 +23,7 @@
 }
 #workspaces button:hover, #waybar {
   background: none;
+  box-shadow: none;
 }
 #workspaces button.urgent, #custom-gpu-temp.critical,
 #network.disconnected, #temperature.critical, #pulseaudio.muted {
