@@ -282,13 +282,13 @@ See the above repository for updates as well as full license text. */
 
 /* Set navbar height */
 #nav-bar {
-  height: 28px !important;
+  height: 24px !important;
   min-height: 32px !important;
 }
 
 /* Adjust URL bar and search bar height */
 #urlbar, .searchbar-textbox {
-  min-height: 26px !important;
+  min-height: 22px !important;
   padding-top: 2px;
   padding-bottom: 2px;
 }
@@ -296,4 +296,10 @@ See the above repository for updates as well as full license text. */
 /* Optional: reduce font size for compactness */
 #urlbar {
   font-size: 14px !important;
+}
+
+/* No pesky roundeed corners as of v145 */
+* {
+  border-radius: 0 !important;
+  background-clip: padding-box !important;
 }
