@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Discord
-Comment=Discord Web
-Exec=firefox --new-window https://discord.com/channels/@me
-Type=Application
-Terminal=false
-Icon=firefox
-StartupNotify=true
