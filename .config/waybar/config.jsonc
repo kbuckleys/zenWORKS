@@ -38,7 +38,7 @@
   "custom/waybar-mpris": {
     "return-type": "json",
     "exec": "waybar-mpris --autofocus --order TITLE",
-    "max-length": 40,
+    "max-length": 60,
     "on-click": "waybar-mpris --send prev",
     "on-click-middle": "waybar-mpris --send toggle",
     "on-click-right": "waybar-mpris --send next"
