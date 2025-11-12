@@ -35,7 +35,6 @@ listview {
     columns: 1;
     lines: 8;
     scrollbar: false;
-    layout: vertical;
     fixed-height: false;
 }
 

@@ -24,7 +24,6 @@ listview {
     columns: 3;
     lines: 12;
     scrollbar: false;
-    layout: vertical;
     fixed-height: false;
     fixed-columns: false;
 }

@@ -24,7 +24,6 @@ listview {
     scrollbar: false;
     fixed-height: false;
     padding: 12px 0px 12px 0px;
-    layout: vertical;
 }
 
 element-text {
