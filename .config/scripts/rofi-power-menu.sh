@@ -12,8 +12,8 @@ all=(shutdown reboot suspend hibernate logout lockscreen)
 show=("${all[@]}")
 
 declare -A texts
-texts[lockscreen]="lock"
-texts[switchuser]="switch User"
+texts[lockscreen]="Lock"
+texts[switchuser]="Switch User"
 texts[logout]="logout"
 texts[suspend]="Suspend"
 texts[hibernate]="Hibernate"
@@ -26,8 +26,8 @@ actions[lockscreen]="loginctl lock-session ${XDG_SESSION_ID-}"
 actions[logout]="loginctl terminate-session ${XDG_SESSION_ID-}"
 actions[suspend]="systemctl suspend"
 actions[hibernate]="systemctl hibernate"
-actions[reboot]="systemctl reboot now"
-actions[shutdown]="systemctl poweroff now"
+actions[reboot]="systemctl reboot"
+actions[shutdown]="systemctl poweroff"
 
 confirmations=(reboot shutdown logout)
 
