@@ -19,7 +19,6 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - xdg-desktop-portal-hyprland
 - 7zip
 - unzip
-- gvfs
 - fd
 - fzf
 - bat
@@ -35,7 +34,6 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - nvtop
 - ffmpeg
 - gpu-screen-recorder
-- gtk-engine-murrine
 - wiremix
 - pamixer
 - waybar-updates ```If you use Arch or any of its derivatives```
