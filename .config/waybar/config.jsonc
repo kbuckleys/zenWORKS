@@ -12,25 +12,35 @@
   "exclusive": true,
   "height": 24,
 
-  "modules-left": [],
-  "modules-center": [
+  "modules-left": [
     "custom/waybar-mpris",
     "custom/pacman",
     "group/tray-expander",
-    "pulseaudio",
-    "clock",
     "custom/div",
-    "hyprland/workspaces",
-    "memory",
-    "cpu",
-    "custom/gpu-info",
-    "temperature",
-    "custom/gpu-temp",
-    "network",
+    "hyprland/workspaces"
   ],
-  "modules-right": [],
+  "modules-center": [],
+  "modules-right": [
+    "network",
+    "custom/div2",
+    "custom/gpu-temp",
+    "temperature",
+    "custom/div2",
+    "custom/gpu-info",
+    "cpu",
+    "custom/div2",
+    "memory",
+    "custom/div",
+    "pulseaudio",
+    "clock"
+  ],
 
   "custom/div": {
+    "format": "󰇙",
+    "tooltip": false
+  },
+  
+  "custom/div2": {
     "format": "󰇙",
     "tooltip": false
   },
@@ -73,8 +83,6 @@
     "exec": "~/.config/scripts/wb-gpu-info.sh",
     "interval": 5,
     "format": "{text}",
-    "min-length": 7,
-    "max-length": 7,
     "on-click": "footclient -T nvtop -e nvtop",
     "tooltip": true,
     "tooltip-format": "GPU Utilization"
@@ -83,8 +91,6 @@
   "cpu": {
     "format": "CPU {usage}%",
     "on-click": "footclient -T btop -e btop",
-    "min-length": 7,
-    "max-length": 7,
     "tooltip": true,
     "interval": 1
   },
@@ -130,8 +136,6 @@
     "format": "󱞡 {bandwidthDownBytes} ~ {bandwidthUpBytes} 󱞿",
     "format-disconnected": "NO NETWORK SIGNAL",
     "tooltip": false,
-    "min-length": 23,
-    "max-length": 23,
     "interval": 1,
     "nospacing": 1
   },

@@ -35,19 +35,18 @@
   color: #9bbfbf;
 }
 
+#custom-div2 {
+  padding: 8px 8px 0px 8px;
+  color: #dfdfdd;
+}
+
 #workspaces button.special {
   color: #c8a4e0;
 }
 
 #cpu, #custom-gpu-info, #temperature,
-#custom-gpu-temp, #network {
+#custom-gpu-temp, #network, #memory {
   padding: 8px 8px 0px 8px;
-  font-weight: normal;
-  color: #dfdfdd;
-}
-
-#memory {
-  padding: 8px 8px 0px 16px;
   font-weight: normal;
   color: #dfdfdd;
 }
