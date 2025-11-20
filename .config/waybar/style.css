@@ -35,6 +35,11 @@
   color: #9bbfbf;
 }
 
+#window {
+  padding: 8px 8px 0px 12px;
+  color: #b6e0a4;
+}
+
 #custom-div2 {
   padding: 8px 8px 0px 8px;
   color: #dfdfdd;
@@ -53,7 +58,7 @@
 
 #custom-waybar-mpris {
   padding: 8px 0px 0px 8px;
-  color: #b6e0a4;
+  color: #c8a4e0;
 }
 
 #custom-pacman {

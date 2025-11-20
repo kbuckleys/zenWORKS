@@ -17,7 +17,8 @@
     "custom/pacman",
     "group/tray-expander",
     "custom/div",
-    "hyprland/workspaces"
+    "hyprland/workspaces",
+    "hyprland/window"
   ],
   "modules-center": [],
   "modules-right": [
@@ -43,6 +44,11 @@
   "custom/div2": {
     "format": "󰇙",
     "tooltip": false
+  },
+
+  "hyprland/window": {
+    "format": "{title}",
+    "max-length": 60
   },
 
   "custom/waybar-mpris": {
