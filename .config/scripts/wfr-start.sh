@@ -10,4 +10,4 @@ if [ ! -d "$output_dir" ]; then
 fi
 
 notify-send "Recording Started" "wf-recorder"
-wf-recorder --file="$output_dir/recording_$(date +'%Y-%m-%d_%H-%M-%S').mp4"
+wf-recorder --file="$output_dir/capture_$(date +'%Y-%m-%d_%H-%M-%S').mp4"
