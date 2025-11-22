@@ -33,7 +33,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - wl-clip-persist
 - nvtop
 - ffmpeg
-- gpu-screen-recorder
+- wf-recorder
 - wiremix
 - pamixer
 - waybar-updates ```If you use Arch or any of its derivatives```
