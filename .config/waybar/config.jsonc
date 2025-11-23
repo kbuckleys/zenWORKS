@@ -13,7 +13,6 @@
   "height": 24,
 
   "modules-left": [
-    "custom/waybar-mpris",
     "custom/pacman",
     "group/tray-expander",
     "custom/div",
@@ -49,15 +48,6 @@
   "hyprland/window": {
     "format": "{title}",
     "max-length": 60
-  },
-
-  "custom/waybar-mpris": {
-    "return-type": "json",
-    "exec": "waybar-mpris --autofocus --order TITLE",
-    "max-length": 40,
-    "on-click": "waybar-mpris --send prev",
-    "on-click-middle": "waybar-mpris --send toggle",
-    "on-click-right": "waybar-mpris --send next"
   },
 
   "hyprland/workspaces": {
