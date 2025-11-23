@@ -11,7 +11,6 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - playerctl
 - ripgrep
 - imagemagick
-- pipewire-pulse
 - hyprpolkitagent
 - gst-plugins-good
 - gst-plugins-bad
@@ -38,7 +37,6 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - wiremix
 - pamixer
 - waybar-updates ```If you use Arch or any of its derivatives```
-- waybar-mpris-git
 - rofi-calc
 - rofimoji
 - wtype
