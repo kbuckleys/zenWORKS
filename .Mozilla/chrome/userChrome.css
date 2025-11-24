@@ -27,8 +27,8 @@
 
 #TabsToolbar {
   height: var(--tab-min-height) !important;
-  margin-top: -10px !important;
-  margin-bottom: -4px !important;
+  margin-top: -9px !important;
+  margin-bottom: -3px !important;
   margin-right: 0px !important;
   margin-left: 0px !important;
 }
@@ -38,20 +38,13 @@
   visibility: collapse !important;
 }
 
-#tabbrowser-tabs .tabbrowser-tab:only-of-type,
+#tabbrowser-tabs .tabbrowser-tab:only-of-type, #back-button, #forward-button,
 #tabbrowser-tabs .tabbrowser-tab:only-of-type + #tabbrowser-arrowscrollbox-periphery {
   display: none !important;
 }
 
-#sidebar-box {
+#sidebar-box, #sidebar-header {
   border-inline-end: none !important;
-}
-#sidebar-header {
-  border-inline-end: none !important;
-}
-
-#back-button, #forward-button {
-  display: none !important;
 }
 
 /* Character limit for tab labels */
@@ -187,5 +180,4 @@
 /* No pesky roundeed corners as of v145 */
 * {
   border-radius: 0 !important;
-  background-clip: padding-box !important;
 }
