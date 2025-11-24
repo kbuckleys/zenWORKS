@@ -166,14 +166,8 @@
 }
 
 /* Adjust URL bar and search bar height */
-#urlbar, .searchbar-textbox {
-  min-height: 22px !important;
-  padding-top: 2px;
-  padding-bottom: 2px;
-}
-
-/* Optional: reduce font size for compactness */
 #urlbar {
+  min-height: 22px !important;
   font-size: 14px !important;
 }
 
