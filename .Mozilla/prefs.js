@@ -135,6 +135,7 @@ user_pref("extensions.webextensions.ExtensionStorageIDB.migrated.Librezam@Librez
 user_pref("extensions.webextensions.ExtensionStorageIDB.migrated.uBlock0@raymondhill.net", true);
 user_pref("extensions.webextensions.ExtensionStorageIDB.migrated.{d7742d87-e61d-4b78-b8a1-b469842139fa}", true);
 user_pref("extensions.webextensions.uuids", "{\"data-leak-blocker@mozilla.com\":\"e1521352-1bb9-44c9-acaf-d87147bf5e97\",\"formautofill@mozilla.org\":\"94a56741-3a0b-4a69-9799-8a4a31897fff\",\"ipp-activator@mozilla.com\":\"2d27ef0f-bd55-4c19-addb-38af9b799df5\",\"pictureinpicture@mozilla.org\":\"97ee84be-4da2-457b-ab1e-12973b30eb9c\",\"addons-search-detection@mozilla.com\":\"2cd4feac-a3b4-44a6-b362-51b6d7938b28\",\"webcompat@mozilla.org\":\"9a310967-e580-48bf-b3e8-4eafebbc122d\",\"newtab@mozilla.org\":\"b270f2d2-2025-4913-aead-51498d983f77\",\"default-theme@mozilla.org\":\"d48ae386-d7d4-4769-9aab-d527644a887b\",\"ATBC@EasonWong\":\"4f9be3cd-48b0-4669-a793-cb950f15996c\",\"uBlock0@raymondhill.net\":\"19899bf2-9949-40ef-82d9-225befacea87\",\"{d7742d87-e61d-4b78-b8a1-b469842139fa}\":\"de88fe93-6664-4d0e-a718-492c3d821e98\",\"Librezam@Librezam\":\"2bbaf7a2-490b-4948-8d67-651ebb5d76e8\"}");
+user_pref("full-screen-api.warning.timeout", 0);
 user_pref("gecko.handlerService.defaultHandlersVersion", 1);
 user_pref("general.autoScroll", true);
 user_pref("layout.css.prefers-color-scheme.content-override", 0);
@@ -253,7 +254,7 @@ user_pref("sidebar.notification.badge.aichat", true);
 user_pref("sidebar.visibility", "hide-sidebar");
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 user_pref("toolkit.profiles.storeID", "72baf455");
-user_pref("toolkit.startup.last_success", 1763971806);
+user_pref("toolkit.startup.last_success", 1763971824);
 user_pref("toolkit.telemetry.archive.enabled", false);
 user_pref("toolkit.telemetry.bhrPing.enabled", false);
 user_pref("toolkit.telemetry.cachedClientID", "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0");
