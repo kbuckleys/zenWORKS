@@ -9,8 +9,6 @@ cat <<'EOF'
   └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 EOF
 
-#!/usr/bin/env bash
-
 paru -Sy
 
 while true; do
