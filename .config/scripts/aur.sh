@@ -9,6 +9,8 @@ cat <<'EOF'
   └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 EOF
 
+#!/usr/bin/env bash
+
 paru -Sy
 
 while true; do
@@ -22,11 +24,13 @@ while true; do
 
   combined=()
   for pkg in "${available_pkgs[@]}"; do
+    [[ -z $pkg ]] && continue
     if [[ -z ${installed_pkgs[$pkg]} ]]; then
       combined+=("I $pkg")
     fi
   done
   for pkg in "${installed_pkgs_arr[@]}"; do
+    [[ -z $pkg ]] && continue
     combined+=("U $pkg")
   done
 
