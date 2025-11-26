@@ -3,12 +3,10 @@
 # └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 # https://github.com/kbuckleys/
 
-cat <<'EOF'
-  ┌─┐┌─┐┌┐┌┬ ┬┌─┐┬─┐┬┌─┌─┐
-  ┌─┘├┤ │││││││ │├┬┘├┴┐└─┐
-  └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
-EOF
+cat ~/.config/logo
 
+rm -rf ~/.cache/paru
+paru -Sccd --noconfirm
 paru -Sy
 
 while true; do
@@ -22,7 +20,8 @@ while true; do
 
   combined=()
   for pkg in "${available_pkgs[@]}"; do
-    if [[ -z ${installed_pkgs[$pkg]} ]]; then
+    [[ -z "$pkg" ]] && continue
+    if [[ -z ${installed_pkgs["$pkg"]} ]]; then
       combined+=("I $pkg")
     fi
   done
@@ -33,22 +32,18 @@ while true; do
   preview_func() {
     local prefix=$1
     local pkg=$2
-    local cache_file="/tmp/paru_${prefix}_${pkg}.cache"
 
-    if [[ ! -f $cache_file ]]; then
-      if [[ $prefix == I ]]; then
-        paru -Si "$pkg" >"$cache_file"
-      else
-        paru -Qi "$pkg" >"$cache_file"
-      fi
+    if [[ $prefix == I ]]; then
+      paru -Si "$pkg"
+    else
+      paru -Qi "$pkg"
     fi
-    cat "$cache_file"
   }
   export -f preview_func
 
   selected=$(
     printf '%s\n' "${combined[@]}" | fzf --multi \
-      --preview='bash -c '\''prefix="${1:0:1}"; pkg="${1:2}"; preview_func "$prefix" "$pkg"'\'' -- {}' \
+      --preview='bash -c '\''line="$1"; prefix="${line%% *}"; pkg="${line#* }"; preview_func "$prefix" "$pkg"'\'' -- {}' \
       --preview-window=down:70%
   )
 
