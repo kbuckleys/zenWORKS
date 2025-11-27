@@ -5,12 +5,12 @@
 * https://github.com/kbuckleys/ */
 
 * {
-  min-width: 0;
   min-height: 0;
-  font-family: "0xProto Nerd Font";
-  font-size: 12px;
-  font-weight: bold;
+  min-width: 0;
   border: none;
+  font-family: "0xProto Nerd Font";
+  font-weight: bold;
+  font-size: 12px;
 }
 
 #workspaces button {
