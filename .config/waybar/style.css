@@ -21,7 +21,7 @@
   padding: 0px 8px 0px 8px;
   color: #56606d;
 }
-#workspaces button.active, #clock {
+#workspaces button.active {
   padding: 0px 8px 0px 8px;
   color: #9bbfbf;
 }
@@ -39,19 +39,24 @@
   color: #9bbfbf;
 }
 
+#custom-div2 {
+  padding: 0px 8px 0px 8px;
+  color: #dfdfdd;
+}
+
 #window {
   padding: 0px 8px 0px 12px;
   color: #b6e0a4;
 }
 
-#pulseaudio {
-  padding: 0px 8px 0px 12px;
+#clock {
+  padding: 0px 12px 0px 8px;
   color: #9bbfbf;
 }
 
-#custom-div2 {
-  padding: 0px 8px 0px 8px;
-  color: #dfdfdd;
+#pulseaudio {
+  padding: 0px 8px 0px 12px;
+  color: #9bbfbf;
 }
 
 #workspaces button.special {
@@ -66,11 +71,11 @@
 }
 
 #custom-pacman {
-  padding: 0px 8px 0px 8px;
+  padding: 0px 8px 0px 12px;
   color: #9bbfbf;
 }
 #custom-pacman.pending-updates {
-  padding: 0px 8px 0px 8px;
+  padding: 0px 8px 0px 12px;
   color: #e0d8a4;
 }
 
