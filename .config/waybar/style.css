@@ -21,7 +21,7 @@
   padding: 0px 8px 0px 8px;
   color: #56606d;
 }
-#workspaces button.active, #clock, #pulseaudio {
+#workspaces button.active, #clock {
   padding: 0px 8px 0px 8px;
   color: #9bbfbf;
 }
@@ -42,6 +42,11 @@
 #window {
   padding: 0px 8px 0px 12px;
   color: #b6e0a4;
+}
+
+#pulseaudio {
+  padding: 0px 8px 0px 12px;
+  color: #9bbfbf;
 }
 
 #custom-div2 {

@@ -30,7 +30,6 @@
     "cpu",
     "custom/div2",
     "memory",
-    "custom/div",
     "pulseaudio",
     "clock"
   ],
