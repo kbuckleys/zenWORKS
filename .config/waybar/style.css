@@ -13,15 +13,19 @@
   font-size: 12px;
 }
 
+#waybar {
+  background-color: #20242a;
+}
+
 #workspaces button {
-  padding: 8px 8px 0px 8px;
+  padding: 0px 8px 0px 8px;
   color: #56606d;
 }
 #workspaces button.active, #clock, #pulseaudio {
-  padding: 8px 8px 0px 8px;
+  padding: 0px 8px 0px 8px;
   color: #9bbfbf;
 }
-#workspaces button:hover, #waybar {
+#workspaces button:hover {
   background: none;
   box-shadow: none;
 }
@@ -31,17 +35,17 @@
 }
 
 #custom-div {
-  padding: 8px 8px 0px 8px;
+  padding: 0px 8px 0px 8px;
   color: #9bbfbf;
 }
 
 #window {
-  padding: 8px 8px 0px 12px;
+  padding: 0px 8px 0px 12px;
   color: #b6e0a4;
 }
 
 #custom-div2 {
-  padding: 8px 8px 0px 8px;
+  padding: 0px 8px 0px 8px;
   color: #dfdfdd;
 }
 
@@ -51,26 +55,26 @@
 
 #cpu, #custom-gpu-info, #temperature,
 #custom-gpu-temp, #network, #memory {
-  padding: 8px 8px 0px 8px;
+  padding: 0px 8px 0px 8px;
   font-weight: normal;
   color: #dfdfdd;
 }
 
 #custom-pacman {
-  padding: 8px 8px 0px 4px;
+  padding: 0px 8px 0px 4px;
   color: #9bbfbf;
 }
 #custom-pacman.pending-updates {
-  padding: 8px 8px 0px 8px;
+  padding: 0px 8px 0px 8px;
   color: #e0d8a4;
 }
 
 #tray-expander {
-  padding: 8px 0px 0px 8px;
+  padding: 0px 0px 0px 8px;
   color: #9bbfbf;
 }
 #tray {
-  padding: 0px 8px 0px 4px;
+  padding: 0px 0px 0px 4px;
 }
 
 tooltip {
