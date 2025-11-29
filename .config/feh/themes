@@ -3,4 +3,4 @@
 # └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 # https://github.com/kbuckleys/
 
-feh --scale-down --geometry 1280x720
+feh --scale-down
