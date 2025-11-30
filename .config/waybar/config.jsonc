@@ -122,6 +122,7 @@
     "format": "{icon}{volume}%",
     "on-click": "footclient -T Wiremix -e wiremix",
     "on-click-right": "pamixer -t",
+    "on-click-middle": "footclient -T 'ALSA Mixer' -e alsamixer",
     "format-muted": "  MUTED",
     "format-icons": {
       "default": [" ", " ", " "]
