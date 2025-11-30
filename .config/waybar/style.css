@@ -29,9 +29,11 @@
   background: none;
   box-shadow: none;
 }
-#workspaces button.urgent, #custom-gpu-temp.critical,
-#network.disconnected, #temperature.critical, #pulseaudio.muted {
+#workspaces button.urgent, #network.disconnected, #temperature.critical,
+#pulseaudio.muted, #custom-gpu-temp.critical  {
+  border: 1px solid #E0AEA4;
   color: #E0AEA4;
+  border-radius: 0;
 }
 
 #custom-div {
@@ -71,16 +73,16 @@
 }
 
 #custom-pacman {
-  padding: 0px 8px 0px 12px;
+  padding: 0px 0px 0px 12px;
   color: #9bbfbf;
 }
 #custom-pacman.pending-updates {
-  padding: 0px 8px 0px 12px;
+  padding: 0px 0px 0px 12px;
   color: #e0d8a4;
 }
 
 #tray-expander {
-  padding: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 8px;
   color: #9bbfbf;
 }
 #tray {

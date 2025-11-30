@@ -158,7 +158,7 @@
   },
 
   "custom/pacman": {
-    "format": "{icon}  {text} ",
+    "format": "{icon}  {text}",
     "return-type": "json",
     "on-click": "footclient -T \"System Update\" -e bash -c 'cat ~/.config/logo; echo; paru; echo; read -rp \"Press Return to close...\"'",
     "format-icons": {
