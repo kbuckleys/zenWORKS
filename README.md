@@ -36,6 +36,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - nvtop
 - ffmpeg
 - wf-recorder
+- alsa-utils
 - wiremix
 - pamixer
 - waybar-updates ```If you use Arch or any of its derivatives```
