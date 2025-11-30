@@ -31,7 +31,8 @@
     "custom/div2",
     "memory",
     "pulseaudio",
-    "clock"
+    "clock",
+    "custom/privacydots"
   ],
 
   "custom/div": {
@@ -125,6 +126,16 @@
     "format-icons": {
       "default": [" ", " ", " "]
     }
+  },
+
+  "custom/privacydots": {
+      "exec": "~/.config/scripts/privacy-dots.sh",
+      "return-type": "json",
+      "interval": 3,
+      "format": "{text}",
+      "tooltip": true,
+      "escape": false,
+      "markup": "pango"
   },
 
   "network": {

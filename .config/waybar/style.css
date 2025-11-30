@@ -30,7 +30,7 @@
   box-shadow: none;
 }
 #workspaces button.urgent, #network.disconnected, #temperature.critical,
-#pulseaudio.muted, #custom-gpu-temp.critical  {
+#pulseaudio.muted, #custom-gpu-temp.critical {
   border: 1px solid #E0AEA4;
   color: #E0AEA4;
   border-radius: 0;
@@ -44,6 +44,10 @@
 #custom-div2 {
   padding: 0px 8px 0px 8px;
   color: #dfdfdd;
+}
+
+#custom-privacydots {
+  padding: 0px 8px 0px 8px;
 }
 
 #window {
