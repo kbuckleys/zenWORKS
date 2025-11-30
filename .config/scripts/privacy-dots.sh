@@ -63,7 +63,7 @@ purple="#c8a4e0"
 dot() {
   local on="$1" color="$2"
   if [[ "$on" -eq 1 ]]; then
-    printf '<span foreground="%s">●</span>' "$color"
+    printf '<span foreground="%s"></span>' "$color"
   else
     printf ''
   fi
@@ -78,7 +78,7 @@ loc_dot="$(dot "$loc" "$purple")"
 [[ -n "$loc_dot" ]] && dots+=("$loc_dot")
 
 text="${dots[*]}"
-tooltip="Mic: $([[ $mic -eq 1 ]] && echo on || echo off)  |  Cam: $([[ $cam -eq 1 ]] && echo on || echo off)  |  Location: $([[ $loc -eq 1 ]] && echo on || echo off)"
+tooltip="MIC: $([[ $mic -eq 1 ]] && echo ON || echo OFF)  󰇙  CAM: $([[ $cam -eq 1 ]] && echo ON || echo OFF)  󰇙  LOCATION: $([[ $loc -eq 1 ]] && echo ON || echo OFF)"
 classes="privacydot"
 [[ $mic -eq 1 ]] && classes="$classes mic-on" || classes="$classes mic-off"
 [[ $cam -eq 1 ]] && classes="$classes cam-on" || classes="$classes cam-off"
