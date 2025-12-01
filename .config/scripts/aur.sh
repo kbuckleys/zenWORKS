@@ -5,13 +5,13 @@
 
 cat ~/.config/logo
 
-rm -rf ~/.cache/paru
-paru -Sccd --noconfirm
-paru -Sy
+rm -rf ~/.cache/yay
+yay -Sccd --noconfirm
+yay -Sy
 
 while true; do
-  mapfile -t available_pkgs < <(paru -Slq)
-  mapfile -t installed_pkgs_arr < <(paru -Qq)
+  mapfile -t available_pkgs < <(yay -Slq)
+  mapfile -t installed_pkgs_arr < <(yay -Qq)
 
   declare -A installed_pkgs=()
   for pkg in "${installed_pkgs_arr[@]}"; do
@@ -34,9 +34,9 @@ while true; do
     local pkg=$2
 
     if [[ $prefix == I ]]; then
-      paru -Si "$pkg"
+      yay -Si "$pkg"
     else
-      paru -Qi "$pkg"
+      yay -Qi "$pkg"
     fi
   }
   export -f preview_func
@@ -63,11 +63,11 @@ while true; do
   done <<<"$selected"
 
   if [[ ${#to_install[@]} -gt 0 ]]; then
-    paru -S "${to_install[@]}"
+    yay -S "${to_install[@]}"
   fi
 
   if [[ ${#to_uninstall[@]} -gt 0 ]]; then
-    paru -Rs "${to_uninstall[@]}"
+    yay -Rs "${to_uninstall[@]}"
   fi
 
   if [[ ${#to_install[@]} -gt 0 || ${#to_uninstall[@]} -gt 0 ]]; then
