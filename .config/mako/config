@@ -4,20 +4,20 @@
 # https://github.com/kbuckleys/
 
 layer=overlay
+font=0xProto Nerd Font 10
+text-alignment=center
+border-color=#20242a
+default-timeout=4000
+anchor=bottom-center
+default-timeout=4000
 text-color=#000000
+ignore-timeout=0
+outer-margin=20
+margin=0,0,0,0
+border-size=1
 width=500
 height=70
 padding=4
-margin=0,0,0,0
-outer-margin=20
-border-size=1
-border-color=#20242a
-default-timeout=4000
-ignore-timeout=0
-anchor=bottom-center
-text-alignment=center
-font=0xProto Nerd Font 10
-default-timeout=4000
 
 [urgency=low]
 background-color=#dfdfdd

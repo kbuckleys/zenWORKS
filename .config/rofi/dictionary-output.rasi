@@ -21,12 +21,12 @@ mainbox {
 }
 
 listview {
-    scrollbar: false;
-    fixed-height: false;
     padding: 12px 0px 12px 0px;
+    fixed-height: false;
+    scrollbar: false;
 }
 
 element-text {
-    text-color: #e0d8a4;
     horizontal-align: 0.5;
+    text-color: #e0d8a4;
 }

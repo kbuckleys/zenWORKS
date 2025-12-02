@@ -7,8 +7,8 @@
 @theme "kripton"
 
 configuration {
-    kb-remove-to-sol: "";
     kb-remove-char-back: "BackSpace";
+    kb-remove-to-sol: "";
 }
 
 window {
@@ -22,9 +22,9 @@ mainbox {
 }
 
 inputbar {
-    spacing: 4px;
-    padding: 4px 8px;
     children: [textbox-prompt-colon, entry];
+    padding: 4px 8px;
+    spacing: 4px;
 }
 textbox-prompt-colon {
     str: "Root Search >";
@@ -32,11 +32,11 @@ textbox-prompt-colon {
 }
 
 listview {
+    fixed-columns: false;
+    fixed-height: false;
+    scrollbar: false;
     columns: 3;
     lines: 12;
-    scrollbar: false;
-    fixed-height: false;
-    fixed-columns: false;
 }
 
 element {

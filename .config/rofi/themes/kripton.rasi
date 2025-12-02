@@ -5,35 +5,35 @@
 * https://github.com/kbuckleys/ */
 
 * {
-    red: #E0AEA4;
-    blue: #9BBFBF;
-    selected-normal-foreground: #DFDFDD;
-    foreground: #DFDFDD;
-    normal-foreground: @foreground;
-    alternate-normal-background: @normal-background;
-    selected-urgent-foreground: #0B0E0E;
-    urgent-foreground: #E0AEA4;
-    alternate-urgent-background: #E0AEA4;
-    active-foreground: @selected-normal-foreground;
-    lightbg: #DFDFDD;
-    selected-active-foreground: #0B0E0E;
-    alternate-active-background: @normal-background;
-    background: rgba(0, 0, 0, 1);
-    alternate-normal-foreground: @foreground;
-    normal-background: #00000000;
-    lightfg: @normal-background;
     selected-normal-background: rgba(223, 223, 221, 0.1);
-    border-color: rgba(155, 191, 191, 0.2);
-    spacing: 2;
-    separatorcolor: @foreground;
-    urgent-background: rgba(224, 174, 164, 1);
+    alternate-normal-background: @normal-background;
     selected-urgent-background: @urgent-background;
     alternate-urgent-foreground: @urgent-foreground;
-    background-color: @normal-background;
     alternate-active-foreground: @active-foreground;
-    active-background: @background;
     selected-active-background: @normal-background;
+    alternate-active-background: @normal-background;
+    active-foreground: @selected-normal-foreground;
+    urgent-background: rgba(224, 174, 164, 1);
+    alternate-normal-foreground: @foreground;
+    border-color: rgba(155, 191, 191, 0.2);
+    alternate-urgent-background: #E0AEA4;
+    background-color: @normal-background;
+    selected-normal-foreground: #DFDFDD;
+    selected-active-foreground: #0B0E0E;
+    selected-urgent-foreground: #0B0E0E;
+    active-background: @background;
+    normal-foreground: @foreground;
+    normal-background: #00000000;
+    lightfg: @normal-background;
+    background: rgba(0, 0, 0, 1);
+    separatorcolor: @foreground;
     font: "0xProto Nerd Font 10";
+    urgent-foreground: #E0AEA4;
+    foreground: #DFDFDD;
+    lightbg: #DFDFDD;
+    blue: #9BBFBF;
+    red: #E0AEA4;
+    spacing: 2;
 }
 
 window {
@@ -48,8 +48,8 @@ mainbox {
 }
 
 message {
-    border: 0px;
     border-color: @separatorcolor;
+    border: 0px;
     padding: 0px;
 }
 
@@ -58,17 +58,17 @@ textbox {
 }
 
 listview {
-    fixed-height: 0;
-    border: 0px;
     border-color: @separatorcolor;
-    spacing: 2px;
     scrollbar: true;
+    fixed-height: 0;
+    spacing: 2px;
     padding: 0px;
+    border: 0px;
 }
 
 element {
-    border: 0;
     padding: 1px;
+    border: 0;
 }
 element-text {
     background-color: inherit;
@@ -112,21 +112,21 @@ element.alternate.active {
 }
 
 scrollbar {
-    width: 8px;
-    border: 0;
     handle-color: rgba(155, 191, 191, 0.2);
     handle-width: 8px;
+    width: 8px;
     padding: 0;
+    border: 0;
 }
 
 mode-switcher {
-    border: 2px 0px 0px;
     border-color: @separatorcolor;
+    border: 2px 0px 0px;
 }
 
 button {
-    spacing: 0;
     text-color: @normal-foreground;
+    spacing: 0;
 }
 button.selected {
     background-color: @selected-normal-background;
@@ -134,29 +134,28 @@ button.selected {
 }
 
 prompt {
-    spacing: 0;
     text-color: @normal-foreground;
+    spacing: 0;
 }
 textbox-prompt-colon {
+    text-color: @normal-foreground;
+    margin: 0px 0.3em 0em 0em;
     expand: false;
     str: ":";
-    margin: 0px 0.3em 0em 0em;
-    text-color: @normal-foreground;
 }
 inputbar {
-    spacing: 0;
+    children: [ prompt,textbox-prompt-colon,entry,case-indicator ];
     text-color: @normal-foreground;
     padding: 1px;
-    children: [ prompt,textbox-prompt-colon,entry,case-indicator ];
+    spacing: 0;
 }
 
 case-indicator {
-    spacing: 0;
     text-color: @normal-foreground;
+    spacing: 0;
 }
 
 entry {
-    spacing: 0;
     text-color: @normal-foreground;
+    spacing: 0;
 }
-

@@ -12,14 +12,14 @@ configuration {
     kb-remove-char-back: "";
     terminal: "footclient";
     recursivebrowser {
-        directory: "/";
-        cancel-returns-1: true;
         filter-regex: "(.*cache.*|.*\\.o)";
+        cancel-returns-1: true;
         command: "xdg-open";
+        directory: "/";
     }
     filebrowser {
-        show-hidden: true;
         command: "footclient -e yazi";
+        show-hidden: true;
     }
 }
 
@@ -34,8 +34,8 @@ inputbar {
 }
 
 listview {
-    lines: 50;
     layout: horizontal;
+    lines: 50;
 }
 
 element {
@@ -45,6 +45,6 @@ element-text {
     highlight: none;
 }
 element-text selected {
-    text-color: #9bbfbf;
     background-color: transparent;
+    text-color: #9bbfbf;
 }

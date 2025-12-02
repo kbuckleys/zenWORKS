@@ -21,11 +21,11 @@ inputbar {
 }
 
 listview {
+    fixed-columns: false;
+    fixed-height: false;
+    scrollbar: false;
     columns: 3;
     lines: 12;
-    scrollbar: false;
-    fixed-height: false;
-    fixed-columns: false;
 }
 
 element {
