@@ -28,6 +28,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - nwg-look
 - man-db
 - disktui
+- easyeffects
 - hyprpicker
 - hyprshot
 - cliphist
