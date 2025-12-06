@@ -6,7 +6,7 @@
 
 { 
   "reload_style_on_change": true,
-  "output": "HDMI-A-1",
+  "output": "DP-2",
   "layer": "dock",
   "position": "top",
   "exclusive": true,
