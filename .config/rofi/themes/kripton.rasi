@@ -27,7 +27,7 @@
     lightfg: @normal-background;
     background: rgba(0, 0, 0, 1);
     separatorcolor: @foreground;
-    font: "0xProto Nerd Font 10";
+    font: "0xProto Nerd Font 12";
     urgent-foreground: #E0AEA4;
     foreground: #DFDFDD;
     lightbg: #DFDFDD;
