@@ -6,7 +6,7 @@
 
 { 
   "reload_style_on_change": true,
-  "output": "DP-2",
+  "output": "DP-1",
   "layer": "dock",
   "position": "top",
   "exclusive": true,
