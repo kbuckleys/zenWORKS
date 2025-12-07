@@ -10,7 +10,7 @@
   "layer": "dock",
   "position": "top",
   "exclusive": true,
-  "height": 24,
+  "height": 28,
 
   "modules-left": [
     "custom/pacman",
