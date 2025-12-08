@@ -38,11 +38,11 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - wf-recorder
 - wiremix
 - pamixer
-- waybar-updates ```If you use Arch or any of its derivatives```
-- rofi-calc
-- rofimoji
 - wtype
 - noto-fonts-emoji
+- rofimoji
+- rofi-calc
+- waybar-updates ```If you use Arch or any of its derivatives```
 
 # Theme Elements
 - [Shade of Z](https://www.gnome-look.org/p/1516492) (white)
