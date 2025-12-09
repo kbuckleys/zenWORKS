@@ -49,7 +49,9 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - rofi
 - rofimoji
 - rofi-calc
+- waybar
 - waybar-updates ```If you use Arch or any of its derivatives```
+- yazi
 
 # Theme Elements
 - [Shade of Z](https://www.gnome-look.org/p/1516492) (white)
