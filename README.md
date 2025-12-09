@@ -6,6 +6,11 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 
 # Dependencies
 - paru
+- hyprland
+- btop
+- fastfetch
+- foot
+- mako
 - fish
 - LazyVim
 - playerctl
@@ -41,6 +46,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - pamixer
 - wtype
 - noto-fonts-emoji
+- rofi
 - rofimoji
 - rofi-calc
 - waybar-updates ```If you use Arch or any of its derivatives```
