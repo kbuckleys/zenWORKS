@@ -5,8 +5,8 @@
 
 cat ~/.config/logo
 
-rm -rf ~/.cache/paru
 paru -Sccd --noconfirm
+rm -rf ~/.cache/paru
 paru -Sy
 
 while true; do
