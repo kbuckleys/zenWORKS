@@ -8,10 +8,7 @@
   --tab-max-height: 12px !important;
 }
 .tabbrowser-tab .tab-label {
-    font-size: 12px !important;
-}
-#TabsToolbar .tabbrowser-tab[selected="true"] .tab-label {
-    font-weight: bold !important;
+    font-size: 14px !important;
 }
 
 .tab-audio-button {
