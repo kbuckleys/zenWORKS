@@ -9,7 +9,6 @@
   min-width: 0;
   border: none;
   font-family: "0xProto Nerd Font";
-  font-weight: bold;
   font-size: 14px;
 }
 
@@ -37,7 +36,7 @@
 }
 
 #custom-div {
-  padding: 2px 8px 0px 8px;
+  padding: 2px 8px 0px 4px;
   color: #9bbfbf;
 }
 
@@ -61,7 +60,7 @@
 }
 
 #pulseaudio {
-  padding: 2px 8px 0px 12px;
+  padding: 2px 8px 0px 16px;
   color: #9bbfbf;
 }
 
@@ -72,7 +71,6 @@
 #cpu, #custom-gpu-info, #temperature,
 #custom-gpu-temp, #network, #memory {
   padding: 2px 8px 0px 8px;
-  font-weight: normal;
   color: #dfdfdd;
 }
 
@@ -90,7 +88,7 @@
   color: #9bbfbf;
 }
 #tray {
-  padding: 2px 8px 0px 4px;
+  padding: 2px 12px 0px 4px;
 }
 
 tooltip {
@@ -100,7 +98,5 @@ tooltip {
 }
 tooltip label{
   color: #DFDFDD;
-  font-size: 13px;
-  font-weight: normal;
   margin: -4px;
 }
