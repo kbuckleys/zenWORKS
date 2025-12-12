@@ -1,0 +1,42 @@
+/**
+* ┌─┐┌─┐┌┐┌┬ ┬┌─┐┬─┐┬┌─┌─┐
+* ┌─┘├┤ │││││││ │├┬┘├┴┐└─┐
+* └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
+* https://github.com/kbuckleys/ */
+
+@theme "kripton"
+
+* {
+    horizontal-align: 0.5;
+}
+
+window {
+    location: south;
+    anchor: south;
+    width: 140px;
+}
+
+mainbox {
+    children: [inputbar, listview];
+}
+
+inputbar {
+    enabled: false;
+}
+
+listview {
+    fixed-height: false;
+    scrollbar: false;
+    columns: 1;
+    lines: 8;
+}
+
+element {
+    padding: 2px 8px 2px 8px;
+}
+element-text {
+    highlight: none;
+}
+element-text selected {
+    background-color: transparent;
+}
