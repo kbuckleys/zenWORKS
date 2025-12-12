@@ -46,6 +46,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - pamixer
 - wtype
 - noto-fonts-emoji
+- rsync
 - rofi
 - rofimoji
 - rofi-calc
