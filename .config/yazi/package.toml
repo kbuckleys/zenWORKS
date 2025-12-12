@@ -8,10 +8,5 @@ use = "yazi-rs/plugins:chmod"
 rev = "de53d90"
 hash = "1adc12c2b2b025411ab61eb8f0879574"
 
-[[plugin.deps]]
-use = "GianniBYoung/rsync"
-rev = "14d2828"
-hash = "7394430ba473dce1023721622438bf3d"
-
 [flavor]
 deps = []
