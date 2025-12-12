@@ -25,7 +25,7 @@ else
   }
   monitor=$(echo "$monitors" | rofi -dmenu -theme "$rofi_theme" -p "Select monitor:")
   [ -z "$monitor" ] && {
-    notify-send "Cancelled"
+    notify-send "Cancelled" "No monitor selected"
     exit 1
   }
 fi
