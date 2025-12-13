@@ -6,11 +6,8 @@
 cat ~/.config/logo
 paru -Sy
 
-echo "Fetching pacman updates..."
-pacman_updates=$(pacman -Qu --color=never | awk '{print $1}')
-
-echo "Fetching AUR updates..."
-aur_updates=$(paru -Qu --color=never | awk '{print $1}')
+echo "Fetching updates..."
+all_updates=$(paru -Qu --color=never | awk '{print $1}' | sort -u)
 
 all_updates=($(printf '%s\n' "${pacman_updates[@]}" "${aur_updates[@]}" | sort -u))
 
@@ -26,7 +23,7 @@ printf '%s\n' "${all_updates[@]}" | nl -w2 -s': '
 
 echo ""
 echo "Press RETURN to install ALL updates,"
-echo "or RETURN space-separated numbers (e.g. '1 2 3')"
+echo "or enter space-separated numbers (e.g. 1 2 3)"
 echo -n ":: "
 
 read -r input
