@@ -4,7 +4,7 @@
 # https://github.com/kbuckleys/
 
 cat ~/.config/logo
-
+echo ""
 paru -Sccd --noconfirm
 rm -rf ~/.cache/paru
 paru -Sy
