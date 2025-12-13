@@ -54,7 +54,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - yazi
 
 # Theme Elements
-- [Shade of Z](https://www.gnome-look.org/p/1516492) (white)
+- [Yet Another Monochrome Icon Set]([https://www.pling.com/p/2303161/)
 - [Kripton GTK theme](https://www.gnome-look.org/s/Gnome/p/1365372/) (standard-buttons)
 - [MacTahoe Cursors](https://www.gnome-look.org/p/2305688)
 
