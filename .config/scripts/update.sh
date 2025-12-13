@@ -7,16 +7,19 @@ cat ~/.config/logo
 paru -Sy
 
 echo "Fetching updates..."
-mapfile -t updates < <(paru -Qu --color=never | awk '{print $1 " " $2 " -> " $3}' | sort -u)
+mapfile -t updates < <(paru -Qu --color=never | sort -u)
 
 all_updates=()
-versions=()
+old_versions=()
+new_versions=()
 
 for line in "${updates[@]}"; do
   pkg=$(echo "$line" | awk '{print $1}')
-  version_info=$(echo "$line" | cut -d' ' -f2-)
+  old_ver=$(echo "$line" | awk '{print $2}')
+  new_ver=$(echo "$line" | awk -F ' -> ' '{print $2}')
   all_updates+=("$pkg")
-  versions+=("$version_info")
+  old_versions+=("$old_ver")
+  new_versions+=("$new_ver")
 done
 
 if [ ${#all_updates[@]} -eq 0 ]; then
@@ -27,14 +30,15 @@ if [ ${#all_updates[@]} -eq 0 ]; then
 fi
 
 echo ""
-echo "Available updates (${#all_updates[@]} total):"
+printf "\033[1;35mAvailable updates (%d total):\033[0m\n" ${#all_updates[@]}
+echo ""
 for i in "${!all_updates[@]}"; do
-  printf "%2d: \033[0;31m%s\033[0m \033[1;32m%s\033[0m\n" \
-    $((i + 1)) "${versions[$i]}" "${all_updates[$i]}"
+  printf "%-4d %-25s \033[1;33m%-15s\033[0m \033[1;32m%-15s\033[0m\n" \
+    $((i + 1)) "${all_updates[$i]}" "${old_versions[$i]}" "${new_versions[$i]}"
 done
 
 echo ""
-printf "\033[1;33mPress RETURN to install ALL updates,\n"
+printf "\033[1;36mPress RETURN to install ALL updates,\n"
 printf "or enter space-separated numbers (e.g. 1 2 3)\n"
 printf ":: \033[0m"
 
