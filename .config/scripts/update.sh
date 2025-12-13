@@ -4,6 +4,7 @@
 # https://github.com/kbuckleys/
 
 cat ~/.config/logo
+echo ""
 paru -Sy
 
 echo "Fetching updates..."
