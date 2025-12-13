@@ -14,9 +14,7 @@ old_versions=()
 new_versions=()
 
 for line in "${updates[@]}"; do
-  pkg=$(echo "$line" | awk '{print $1}')
-  old_ver=$(echo "$line" | awk '{print $2}')
-  new_ver=$(echo "$line" | awk -F ' -> ' '{print $2}')
+  read -r pkg old_ver _ new_ver <<<"$line"
   all_updates+=("$pkg")
   old_versions+=("$old_ver")
   new_versions+=("$new_ver")
@@ -52,9 +50,8 @@ elif [[ "$input" =~ ^[0-9]+([[:space:]]+[0-9]+)*$ ]]; then
   IFS=' ' read -ra nums <<<"$input"
   for num in "${nums[@]}"; do
     if [[ "$num" =~ ^[0-9]+$ ]] && [ "$num" -ge 1 ] && [ "$num" -le ${#all_updates[@]} ]; then
-      pkg="${all_updates[$((num - 1))]}"
-      selected+=("$pkg")
-      echo "Selected: $pkg"
+selected+=("${all_updates[$((num - 1))]})"
+echo "Selected: ${all_updates[$((num - 1))]}"
     else
       echo "Invalid number: $num"
     fi
