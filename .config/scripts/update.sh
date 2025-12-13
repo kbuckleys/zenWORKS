@@ -25,6 +25,7 @@ done
 
 if [ ${#all_updates[@]} -eq 0 ]; then
   echo "No updates available."
+  echo ""
   read -p "Press RETURN to exit..."
   exit 0
 fi
@@ -38,8 +39,8 @@ for i in "${!all_updates[@]}"; do
 done
 
 echo ""
-printf "\033[1;36mPress RETURN to install ALL updates,\n"
-printf "or enter space-separated numbers (e.g. 1 2 3)\n"
+printf "\033[1;36mInput space-separated numbers (e.g. 1 2 3),\n"
+printf "or press RETURN to sync all available updates\n"
 printf ":: \033[0m"
 
 read -r input
