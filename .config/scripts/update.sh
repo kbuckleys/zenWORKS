@@ -5,7 +5,7 @@
 
 cat ~/.config/logo
 echo ""
-paru
+paru -Sy
 
 echo "Fetching updates..."
 mapfile -t updates < <(paru -Qu --color=never | sort -u)
