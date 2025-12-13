@@ -14,7 +14,9 @@ old_versions=()
 new_versions=()
 
 for line in "${updates[@]}"; do
-  read -r pkg old_ver _ new_ver <<<"$line"
+  pkg=$(echo "$line" | awk '{print $1}')
+  old_ver=$(echo "$line" | awk '{print $2}')
+  new_ver=$(echo "$line" | awk -F ' -> ' '{print $2}')
   all_updates+=("$pkg")
   old_versions+=("$old_ver")
   new_versions+=("$new_ver")
@@ -22,7 +24,6 @@ done
 
 if [ ${#all_updates[@]} -eq 0 ]; then
   echo "No updates available."
-  echo ""
   read -p "Press RETURN to exit..."
   exit 0
 fi
@@ -45,13 +46,14 @@ read -r input
 if [ -z "$input" ]; then
   echo "Installing all updates..."
   paru -Syu
+  read -p "Press RETURN to continue..."
 elif [[ "$input" =~ ^[0-9]+([[:space:]]+[0-9]+)*$ ]]; then
   selected=()
   IFS=' ' read -ra nums <<<"$input"
   for num in "${nums[@]}"; do
     if [[ "$num" =~ ^[0-9]+$ ]] && [ "$num" -ge 1 ] && [ "$num" -le ${#all_updates[@]} ]; then
-selected+=("${all_updates[$((num - 1))]})"
-echo "Selected: ${all_updates[$((num - 1))]}"
+      selected+=("${all_updates[$((num - 1))]}")
+      echo "Selected: ${all_updates[$((num - 1))]}"
     else
       echo "Invalid number: $num"
     fi
@@ -60,14 +62,12 @@ echo "Selected: ${all_updates[$((num - 1))]}"
   if [ ${#selected[@]} -gt 0 ]; then
     echo "Installing selected packages: ${selected[*]}"
     paru -S "${selected[@]}"
+    read -p "Press RETURN to continue..."
   else
     echo "No valid packages selected."
+    read -p "Press RETURN to exit..."
   fi
 else
   echo "Invalid input. Use RETURN for all, or numbers like '1 2 3'"
   read -p "Press RETURN to exit..."
-  exit 0
 fi
-
-echo ""
-read -p "Press RETURN to exit..."
