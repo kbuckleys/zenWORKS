@@ -7,24 +7,36 @@ cat ~/.config/logo
 paru -Sy
 
 echo "Fetching updates..."
-all_updates=$(paru -Qu --color=never | awk '{print $1}' | sort -u)
+mapfile -t updates < <(paru -Qu --color=never | awk '{print $1 " " $2 " -> " $3}' | sort -u)
 
-all_updates=($(printf '%s\n' "${pacman_updates[@]}" "${aur_updates[@]}" | sort -u))
+all_updates=()
+versions=()
+
+for line in "${updates[@]}"; do
+  pkg=$(echo "$line" | awk '{print $1}')
+  version_info=$(echo "$line" | cut -d' ' -f2-)
+  all_updates+=("$pkg")
+  versions+=("$version_info")
+done
 
 if [ ${#all_updates[@]} -eq 0 ]; then
   echo "No updates available."
+  echo ""
   read -p "Press RETURN to exit..."
   exit 0
 fi
 
 echo ""
 echo "Available updates (${#all_updates[@]} total):"
-printf '%s\n' "${all_updates[@]}" | nl -w2 -s': '
+for i in "${!all_updates[@]}"; do
+  printf "%2d: \033[0;31m%s\033[0m \033[1;32m%s\033[0m\n" \
+    $((i + 1)) "${versions[$i]}" "${all_updates[$i]}"
+done
 
 echo ""
-echo "Press RETURN to install ALL updates,"
-echo "or enter space-separated numbers (e.g. 1 2 3)"
-echo -n ":: "
+printf "\033[1;33mPress RETURN to install ALL updates,\n"
+printf "or enter space-separated numbers (e.g. 1 2 3)\n"
+printf ":: \033[0m"
 
 read -r input
 
