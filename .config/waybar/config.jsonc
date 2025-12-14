@@ -48,7 +48,7 @@
 
   "mpris": {
     "format": "{title}",
-    "format-paused": "{status_icon}  {title}",
+    "format-paused": "{status_icon} {title}",
     "on-click": "playerctl previous",
     "on-click-right": "playerctl next",
     "on-click-middle": "playerctl play-pause",
