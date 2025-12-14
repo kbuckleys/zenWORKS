@@ -74,6 +74,11 @@
   color: #dfdfdd;
 }
 
+#mpris {
+  padding: 2px 8px 0px 12px;
+  color: #c8a4e0;
+}
+
 #custom-pacman {
   padding: 2px 0px 0px 12px;
   color: #9bbfbf;

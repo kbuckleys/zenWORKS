@@ -13,6 +13,7 @@
   "height": 28,
 
   "modules-left": [
+    "mpris",
     "custom/pacman",
     "group/tray-expander",
     "custom/div",
@@ -45,9 +46,21 @@
     "tooltip": false
   },
 
+  "mpris": {
+    "format": "{title}",
+    "format-paused": "{status_icon}  {title}",
+    "on-click": "playerctl previous",
+    "on-click-right": "playerctl next",
+    "on-click-middle": "playerctl play-pause",
+    "status-icons": {
+        "paused": "󰏤"
+    }
+  },
+
   "hyprland/window": {
     "format": "{title}",
-    "max-length": 80
+    "max-length": 80,
+    "swap-icon-label": true
   },
 
   "hyprland/workspaces": {
