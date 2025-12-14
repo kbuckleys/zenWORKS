@@ -19,9 +19,8 @@
   display: none !important;
 }
 
-#tabbrowser-tabs, 
-#tabbrowser-tabs > #tabbrowser-arrowscrollbox,
-.tabbrowser-tabs .tabbrowser-tab {
+#tabbrowser-tabs, .tabbrowser-tabs .tabbrowser-tab,
+#tabbrowser-tabs > #tabbrowser-arrowscrollbox {
   min-height: var(--tab-min-height) !important;
   max-height: var(--tab-min-height) !important;
 }
@@ -39,8 +38,8 @@
   visibility: collapse !important;
 }
 
-#tabbrowser-tabs .tabbrowser-tab:only-of-type,
-#tabbrowser-tabs .tabbrowser-tab:only-of-type + #tabbrowser-arrowscrollbox-periphery {
+#tabbrowser-tabs .tabbrowser-tab:only-of-type + #tabbrowser-arrowscrollbox-periphery,
+#tabbrowser-tabs .tabbrowser-tab:only-of-type {
   display: none !important;
 }
 
@@ -281,15 +280,6 @@ See the above repository for updates as well as full license text. */
   margin-bottom: -20px !important;
 }
 
-/* Set navbar height */
-#nav-bar {
-  height: 24px !important;
-  min-height: 32px !important;
-}
-
-/* Adjust URL bar and search bar height */
 #urlbar, .searchbar-textbox {
-  min-height: 22px !important;
-  padding-top: 2px;
-  padding-bottom: 2px;
+  min-height: 24px !important;
 }
