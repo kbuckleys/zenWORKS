@@ -7,7 +7,6 @@ layer=overlay
 font=0xProto Nerd Font 10
 text-alignment=center
 border-color=#20242a
-default-timeout=4000
 anchor=bottom-center
 default-timeout=4000
 text-color=#000000
