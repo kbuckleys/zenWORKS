@@ -4,11 +4,15 @@
 # https://github.com/kbuckleys/
 
 :root {
-  --tab-min-height: 12px !important;
-  --tab-max-height: 12px !important;
+  --tab-min-height: 14px !important;
+  --tab-max-height: 14px !important;
 }
-.tabbrowser-tab .tab-label {
-    font-size: 14px !important;
+
+/* No pesky roundeed corners as of v145 */
+* {
+  background-clip: padding-box !important;
+  border-radius: 0 !important;
+  font-size: 14px !important;
 }
 
 .tab-audio-button {
@@ -24,7 +28,7 @@
 
 #TabsToolbar {
   height: var(--tab-min-height) !important;
-  margin-top: -7px !important;
+  margin-top: -8px !important;
   margin-bottom: 0px !important;
   margin-right: 0px !important;
   margin-left: 0px !important;
@@ -293,10 +297,4 @@ See the above repository for updates as well as full license text. */
 /* Optional: reduce font size for compactness */
 #urlbar {
   font-size: 14px !important;
-}
-
-/* No pesky roundeed corners as of v145 */
-* {
-  border-radius: 0 !important;
-  background-clip: padding-box !important;
 }
