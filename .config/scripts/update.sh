@@ -27,6 +27,7 @@ done
 
 if [ ${#all_updates[@]} -eq 0 ]; then
   echo "No updates available."
+  paru --clean
   echo ""
   read -p "Press RETURN to exit..."
   exit 0
@@ -46,11 +47,12 @@ printf "or press RETURN to sync all available updates\n"
 printf ":: \033[0m"
 
 read -r input
+updated=false
 
 if [ -z "$input" ]; then
   echo "Installing all updates..."
   paru -Syu
-  read -p "Press RETURN to continue..."
+  updated=true
 elif [[ "$input" =~ ^[0-9]+([[:space:]]+[0-9]+)*$ ]]; then
   selected=()
   IFS=' ' read -ra nums <<<"$input"
@@ -66,12 +68,20 @@ elif [[ "$input" =~ ^[0-9]+([[:space:]]+[0-9]+)*$ ]]; then
   if [ ${#selected[@]} -gt 0 ]; then
     echo "Installing selected packages: ${selected[*]}"
     paru -S "${selected[@]}"
-    read -p "Press RETURN to continue..."
+    updated=true
   else
     echo "No valid packages selected."
-    read -p "Press RETURN to exit..."
   fi
 else
   echo "Invalid input. Use RETURN for all, or numbers like '1 2 3'"
+fi
+
+echo "Cleaning paru cache..."
+paru --clean
+
+echo ""
+if [ "$updated" = true ]; then
+  read -p "Press RETURN to continue..."
+else
   read -p "Press RETURN to exit..."
 fi
