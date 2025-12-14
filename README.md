@@ -22,7 +22,6 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - gst-plugins-ugly
 - xdg-desktop-portal-hyprland
 - pipewire-pulse
-- ttf-0xproto-nerd
 - 7zip
 - unzip
 - fd
@@ -49,6 +48,10 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - noto-fonts-cjk
 - noto-fonts-extra
 - noto-fonts-emoji
+- ttf-0xproto-nerd
+- ttf-liberation
+- ttf-roboto
+- ttf-dejavu
 - rofi
 - rofimoji
 - rofi-calc
