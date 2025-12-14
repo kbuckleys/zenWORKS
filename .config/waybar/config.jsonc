@@ -52,6 +52,7 @@
     "on-click": "playerctl previous",
     "on-click-right": "playerctl next",
     "on-click-middle": "playerctl play-pause",
+    "tooltip-format": "{title}\n{artist}\n{album}",
     "status-icons": {
         "paused": "󰏤"
     }
