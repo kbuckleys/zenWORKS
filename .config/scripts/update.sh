@@ -5,7 +5,7 @@
 
 cat ~/.config/logo
 echo ""
-paru -Scc --noconfirm && paru --clean && rm -rf ~/.cache/paru/foffs && paru -Sy
+paru -Scc --noconfirm && paru --clean && rm -rf ~/.cache/paru/foffs
 
 echo "Fetching updates..."
 mapfile -t updates < <(paru -Qu --color=never | sort -u)
