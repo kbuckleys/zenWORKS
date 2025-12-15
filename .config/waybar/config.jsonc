@@ -186,7 +186,7 @@
   "custom/pacman": {
     "format": "{icon}  {text}",
     "return-type": "json",
-    "on-click": "footclient -T \"System Update\" -e '~/.config/scripts/update.sh'",
+    "on-click": "footclient -T \"System Update\" -e ~/.config/scripts/update.sh",
     "format-icons": {
         "pending-updates": "",
         "updated": ""
