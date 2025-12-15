@@ -27,12 +27,12 @@ if [ ${#all_updates[@]} -eq 0 ]; then
   echo "No updates available."
   paru --clean
   echo ""
-  read -p "Press RETURN to exit..."
+  read -p $'\033[1;32mPress RETURN to exit...\033[0m'
   exit 0
 fi
 
 echo ""
-printf "\033[1;35mAvailable updates (%d total):\033[0m\n" ${#all_updates[@]}
+printf "\033[1;38;5;216mAvailable updates (%d total):\033[0m\n" ${#all_updates[@]}
 echo ""
 for i in "${!all_updates[@]}"; do
   printf "%-4d %-25s \033[1;33m%-15s\033[0m \033[1;32m%-15s\033[0m\n" \
@@ -79,7 +79,7 @@ paru --clean
 
 echo ""
 if [ "$updated" = true ]; then
-  read -p "Press RETURN to continue..."
+  read -p $'\033[1;32mPress RETURN to continue...\033[0m'
 else
-  read -p "Press RETURN to exit..."
+  read -p $'\033[1;32mPress RETURN to exit...\033[0m'
 fi
