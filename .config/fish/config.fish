@@ -37,5 +37,3 @@ set -g fish_color_end white
 set -g fish_color_error red
 
 alias ls="eza -G --icons"
-
-fish_add_path /home/buck/.spicetify
