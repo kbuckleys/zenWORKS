@@ -56,7 +56,6 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - rofimoji
 - rofi-calc
 - waybar
-- waybar-mpris
 - waybar-updates ```If you use Arch or any of its derivatives```
 - yazi
 
