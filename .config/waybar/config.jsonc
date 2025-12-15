@@ -187,6 +187,7 @@
     "format": "{icon}  {text}",
     "return-type": "json",
     "on-click": "footclient -T \"System Update\" -e '/home/buck/.config/scripts/update.sh'",
+    "interval": 3600,
     "format-icons": {
         "pending-updates": "",
         "updated": ""
