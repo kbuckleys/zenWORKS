@@ -87,7 +87,15 @@
   "clock": {
     "format": "{:%I:%M %p}",
     "tooltip": true,
-    "tooltip-format": "{:%A, %B %d}"
+    "tooltip-format": "<tt>{calendar}</tt>",
+     "calendar": {
+        "format": {
+            "months": "<span foreground='#9bbfbf'>{}</span>",
+            "today": "<span foreground='#000000' background='#dfdfdd' letter_spacing='2800'>{}</span>",
+            "days": "<span foreground='#dfdfdd' letter_spacing='2800'>{}</span>",
+            "weekdays": "<span foreground='#56606d'>{}</span>"
+        },
+    },
   },
 
   "custom/gpu-info": {
