@@ -188,7 +188,7 @@
   "tray": {
     "show-passive-items": true,
     "icon-size": 14,
-    "spacing": 10
+    "spacing": 18
   },
 
   "custom/pacman": {
