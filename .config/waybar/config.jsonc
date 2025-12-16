@@ -88,11 +88,11 @@
     "format": "{:%I:%M %p}",
     "tooltip": true,
     "tooltip-format": "<tt>{calendar}</tt>",
-     "calendar": {
+    "calendar": {
         "format": {
             "months": "<span foreground='#9bbfbf'>{}</span>",
-            "today": "<span foreground='#000000' background='#dfdfdd' letter_spacing='2800'>{}</span>",
-            "days": "<span foreground='#dfdfdd' letter_spacing='2800'>{}</span>",
+            "today": "<span foreground='#000000' background='#dfdfdd'>{}</span>",
+            "days": "<span foreground='#dfdfdd'>{}</span>",
             "weekdays": "<span foreground='#56606d'>{}</span>"
         },
     },
