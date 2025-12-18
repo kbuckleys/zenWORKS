@@ -32,7 +32,7 @@ if [ ${#all_updates[@]} -eq 0 ]; then
 fi
 
 echo ""
-printf "\033[1;38;5;216mAvailable updates (%d total):\033[0m\n" ${#all_updates[@]}
+printf "\033[1;38;5;216mAvailable updates (%d):\033[0m\n" ${#all_updates[@]}
 echo ""
 for i in "${!all_updates[@]}"; do
   printf "%-4d %-25s \033[1;33m%-15s\033[0m \033[1;32m%-15s\033[0m\n" \
