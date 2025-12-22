@@ -6,19 +6,15 @@
 
 { 
   "reload_style_on_change": true,
-  "output": "DP-1",
+  "output": "HDMI-A-1",
   "layer": "dock",
-  "position": "top",
+  "position": "bottom",
   "exclusive": true,
   "height": 28,
 
   "modules-left": [
-    "mpris",
     "custom/pacman",
     "group/tray-expander",
-    "custom/div",
-    "hyprland/workspaces",
-    "hyprland/window"
   ],
   "modules-center": [],
   "modules-right": [
@@ -85,7 +81,7 @@
   },
 
   "clock": {
-    "format": "{:%I:%M %p}",
+    "format": "{:%H:%M}",
     "tooltip": true,
     "tooltip-format": "<tt>{calendar}</tt>",
     "calendar": {
@@ -142,7 +138,7 @@
   },
 
   "pulseaudio": {
-    "format": "{icon}{volume}%",
+    "format": "{icon}{volume}",
     "on-click": "footclient -T Wiremix -e wiremix",
     "on-click-right": "pamixer -t",
     "format-muted": "  MUTED",
@@ -188,7 +184,7 @@
   "tray": {
     "show-passive-items": true,
     "icon-size": 14,
-    "spacing": 18
+    "spacing": 12
   },
 
   "custom/pacman": {
