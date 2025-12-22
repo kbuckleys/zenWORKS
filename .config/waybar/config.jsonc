@@ -141,7 +141,7 @@
     "format": "{icon}{volume}",
     "on-click": "footclient -T Wiremix -e wiremix",
     "on-click-right": "pamixer -t",
-    "format-muted": "  MUTED",
+    "format-muted": " ",
     "format-icons": {
       "default": [" ", " ", " "]
     }
