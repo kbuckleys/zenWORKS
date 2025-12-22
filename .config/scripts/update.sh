@@ -40,7 +40,7 @@ for i in "${!all_updates[@]}"; do
 done
 
 echo ""
-printf "\033[1;36mInput space-separated numbers (e.g. 1 2 3),\n"
+printf "\033[1;36mInput space-separated numbers/ranges (e.g. 1 2 3 OR 1-3 OR 1 3-4),\n"
 printf "or press RETURN to sync all available updates\n"
 printf ":: \033[0m"
 
@@ -51,15 +51,37 @@ if [ -z "$input" ]; then
   echo "Installing all updates..."
   paru -Syu
   updated=true
-elif [[ "$input" =~ ^[0-9]+([[:space:]]+[0-9]+)*$ ]]; then
+else
   selected=()
-  IFS=' ' read -ra nums <<<"$input"
-  for num in "${nums[@]}"; do
-    if [[ "$num" =~ ^[0-9]+$ ]] && [ "$num" -ge 1 ] && [ "$num" -le ${#all_updates[@]} ]; then
-      selected+=("${all_updates[$((num - 1))]}")
-      echo "Selected: ${all_updates[$((num - 1))]}"
+
+  # Split input into tokens (numbers or ranges)
+  IFS=' ' read -ra tokens <<<"$input"
+
+  for token in "${tokens[@]}"; do
+    if [[ "$token" =~ ^([0-9]+)-([0-9]+)$ ]]; then
+      # Range: 1-4
+      start=${BASH_REMATCH[1]}
+      end=${BASH_REMATCH[2]}
+      if [ "$start" -ge 1 ] && [ "$end" -le ${#all_updates[@]} ] && [ "$start" -le "$end" ]; then
+        for ((i = start; i <= end; i++)); do
+          idx=$((i - 1))
+          selected+=("${all_updates[$idx]}")
+          echo "Selected (range): ${all_updates[$idx]}"
+        done
+      else
+        echo "Invalid range: $token (out of 1-${#all_updates[@]} range)"
+      fi
+    elif [[ "$token" =~ ^[0-9]+$ ]]; then
+      # Single number: 2
+      num=$token
+      if [ "$num" -ge 1 ] && [ "$num" -le ${#all_updates[@]} ]; then
+        selected+=("${all_updates[$((num - 1))]}")
+        echo "Selected: ${all_updates[$((num - 1))]}"
+      else
+        echo "Invalid number: $num"
+      fi
     else
-      echo "Invalid number: $num"
+      echo "Invalid token: $token"
     fi
   done
 
@@ -70,8 +92,6 @@ elif [[ "$input" =~ ^[0-9]+([[:space:]]+[0-9]+)*$ ]]; then
   else
     echo "No valid packages selected."
   fi
-else
-  echo "Invalid input. Use RETURN for all, or numbers like '1 2 3'"
 fi
 
 echo "Cleaning paru cache..."
