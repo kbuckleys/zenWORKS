@@ -20,11 +20,11 @@
   "modules-right": [
     "network",
     "custom/div2",
-    "custom/gpu-temp",
-    "temperature",
-    "custom/div2",
     "custom/gpu-info",
+    "custom/gpu-temp",
+    "custom/div2",
     "cpu",
+    "temperature",
     "custom/div2",
     "memory",
     "pulseaudio",
@@ -115,8 +115,8 @@
     "input-filename": "temp2_input",
     "interval": 5,
     "critical-threshold": 80,
-    "format": "CT {temperatureC}°C",
-    "format-critical": "CT {temperatureC}°C",
+    "format": "{temperatureC}°C",
+    "format-critical": "{temperatureC}°C",
     "tooltip": true,
     "tooltip-format": "CPU Temperature"
   },
@@ -131,7 +131,7 @@
   },
 
   "memory": {
-    "format": "SWAP {swapUsed:0.1f} GB  RAM {used:0.1f} GB",
+    "format": "RAM {used:0.1f} GB  SWAP {swapUsed:0.1f} GB",
     "tooltip": true,
     "tooltip-format": "RAM Total: {total:0.1f}GiB\nRAM Used: {used:0.1f}GiB\nRAM Available: {avail:0.1f}GiB\n\nSWAP Total: {swapTotal:0.1f}GiB\nSWAP Used: {swapUsed:0.1f}GiB\nSWAP Available: {swapAvail:0.1f}GiB",
     "interval": 1
