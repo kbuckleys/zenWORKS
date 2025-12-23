@@ -15,6 +15,7 @@
   "modules-left": [
     "custom/pacman",
     "group/tray-expander",
+    "hyprland/workspaces"
   ],
   "modules-center": [],
   "modules-right": [
@@ -65,8 +66,12 @@
     "format": "{icon}",
     "on-scroll-up": "hyprctl dispatch workspace e+1",
     "on-scroll-down": "hyprctl dispatch workspace e-1",
-    "tooltip": false,
+    "ignore-workspaces": ["^[1-8][0-8]*$"],
+    "special-visible-only": true,
     "show-special": true,
+    "active-only": true,
+    "all-outputs": true,
+    "tooltip": false,
     "format-icons": {
       "special": "[ ]",
       "1": "1",
