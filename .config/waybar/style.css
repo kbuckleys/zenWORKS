@@ -16,40 +16,27 @@
   background-color: #20242a;
 }
 
-#workspaces button {
+#workspaces button.special {
   padding: 0px 8px 0px 8px;
-  color: #56606d;
-}
-#workspaces button.active {
-  padding: 0px 8px 0px 8px;
-  color: #9bbfbf;
+  color: #fab387;
 }
 #workspaces button:hover {
   background: none;
   box-shadow: none;
 }
-#workspaces button.urgent, #network.disconnected, #temperature.critical,
+
+#network.disconnected, #temperature.critical,
 #pulseaudio.muted, #custom-gpu-temp.critical {
   color: #E0AEA4;
 }
 
 #custom-div {
-  padding: 0px 8px 0px 4px;
-  color: #9bbfbf;
-}
-
-#custom-div2 {
   padding: 0px 8px 0px 8px;
   color: #dfdfdd;
 }
 
 #custom-privacydots {
   padding: 0px 8px 0px 8px;
-}
-
-#window {
-  padding: 0px 8px 0px 12px;
-  color: #b6e0a4;
 }
 
 #clock {
@@ -62,19 +49,10 @@
   color: #9bbfbf;
 }
 
-#workspaces button.special {
-  color: #fab387;
-}
-
 #cpu, #custom-gpu-info, #temperature,
 #custom-gpu-temp, #network, #memory {
   padding: 0px 8px 0px 8px;
   color: #dfdfdd;
-}
-
-#mpris {
-  padding: 0px 8px 0px 12px;
-  color: #fab387;
 }
 
 #custom-pacman {

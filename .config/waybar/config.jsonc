@@ -20,13 +20,13 @@
   "modules-center": [],
   "modules-right": [
     "network",
-    "custom/div2",
+    "custom/div",
     "custom/gpu-info",
     "custom/gpu-temp",
-    "custom/div2",
+    "custom/div",
     "cpu",
     "temperature",
-    "custom/div2",
+    "custom/div",
     "memory",
     "pulseaudio",
     "clock",
@@ -38,50 +38,13 @@
     "tooltip": false
   },
   
-  "custom/div2": {
-    "format": "󰇙",
-    "tooltip": false
-  },
-
-  "mpris": {
-    "format": "{title}",
-    "format-paused": "{status_icon} {title}",
-    "on-click": "playerctl previous",
-    "on-click-right": "playerctl next",
-    "on-click-middle": "playerctl play-pause",
-    "tooltip-format": "{title}\n{artist}\n{album}",
-    "max-length": 60,
-    "status-icons": {
-        "paused": "󰏤"
-    }
-  },
-
-  "hyprland/window": {
-    "format": "{title}",
-    "max-length": 60,
-    "swap-icon-label": true
-  },
-
   "hyprland/workspaces": {
     "format": "{icon}",
-    "on-scroll-up": "hyprctl dispatch workspace e+1",
-    "on-scroll-down": "hyprctl dispatch workspace e-1",
     "ignore-workspaces": ["^[1-8][0-8]*$"],
-    "special-visible-only": true,
     "show-special": true,
-    "active-only": true,
     "all-outputs": true,
-    "tooltip": false,
     "format-icons": {
       "special": "[ ]",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8"
     },
   },
 
