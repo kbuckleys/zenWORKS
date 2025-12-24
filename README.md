@@ -45,6 +45,8 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - wiremix
 - pamixer
 - wtype
+- ntfs-3g
+- udisks2
 - noto-fonts
 - noto-fonts-cjk
 - noto-fonts-extra
