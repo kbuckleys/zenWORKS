@@ -16,9 +16,18 @@
   background-color: #20242a;
 }
 
+#workspaces button.special {
+  padding: 0px 8px 0px 8px;
+  color: #fab387;
+}
+#workspaces button:hover {
+  background: none;
+  box-shadow: none;
+}
+
 #network.disconnected, #temperature.critical,
 #pulseaudio.muted, #custom-gpu-temp.critical {
-  color: #fab387;
+  color: #E0AEA4;
 }
 
 #custom-div {
