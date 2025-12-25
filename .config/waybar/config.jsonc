@@ -14,8 +14,7 @@
 
   "modules-left": [
     "custom/pacman",
-    "group/tray-expander",
-    "hyprland/workspaces"
+    "group/tray-expander"
   ],
   "modules-center": [],
   "modules-right": [
@@ -38,16 +37,6 @@
     "tooltip": false
   },
   
-  "hyprland/workspaces": {
-    "format": "{icon}",
-    "ignore-workspaces": ["^[1-8][0-8]*$"],
-    "show-special": true,
-    "all-outputs": true,
-    "format-icons": {
-      "special": "[ ]",
-    },
-  },
-
   "clock": {
     "format": "{:%H:%M}",
     "tooltip": true,
