@@ -5,7 +5,7 @@
 
 cat ~/.config/logo
 echo ""
-paru -Scc --noconfirm && paru --clean && rm -rf ~/.cache/paru/foffs && paru -Sy
+paru -Scc --noconfirm && paru --clean && rm -rf ~/.cache/paru/ && paru -Sy
 
 echo "Fetching updates..."
 mapfile -t updates < <(paru -Qu --color=never | sort -u)
@@ -40,8 +40,8 @@ for i in "${!all_updates[@]}"; do
 done
 
 echo ""
-printf "\033[1;36mInput space-separated numbers/ranges (e.g. 1 2 3 OR 1-3 OR 1 3-4),\n"
-printf "or press RETURN to sync all available updates\n"
+printf "\033[1;36mInput space-separated numbers/ranges (e.g. 1 2 3 OR 1-3 OR 1 3-4)\n"
+printf "Alternatively, press RETURN to sync all available updates\n"
 printf ":: \033[0m"
 
 read -r input
