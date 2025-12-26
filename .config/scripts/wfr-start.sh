@@ -33,15 +33,10 @@ fi
 filename="$output_dir/capture_$(date +'%Y-%m-%d_%H-%M-%S').mp4"
 audio_monitor=$(pactl list short sources | grep monitor | head -1 | awk '{print $2}')
 
-mic_source=$(pactl list short sources | grep -v monitor | awk '{print $2}' | head -1)
-
-if [ -n "$audio_monitor" ] && [ -n "$mic_source" ]; then
-  notify-send "Recording Started" "wf-recorder ($monitor + system audio + mic)"
-  wf-recorder -c libx264rgb --audio="$audio_monitor" --audio="$mic_source" -o "$monitor" --file="$filename"
-elif [ -n "$audio_monitor" ]; then
+if [ -n "$audio_monitor" ]; then
   notify-send "Recording Started" "wf-recorder ($monitor + system audio)"
   wf-recorder -c libx264rgb --audio="$audio_monitor" -o "$monitor" --file="$filename"
 else
-  notify-send "Recording Video Only" "No audio sources detected"
+  notify-send "Recording Video Only" "No system audio monitor detected"
   wf-recorder -c libx264rgb -o "$monitor" --file="$filename"
 fi
