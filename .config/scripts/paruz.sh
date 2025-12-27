@@ -5,7 +5,7 @@
 
 cat ~/.config/logo
 echo ""
-paru -Scc --noconfirm && paru --clean && rm -rf ~/.cache/paru/ && paru -Sy
+paru -Sy
 
 while true; do
   mapfile -t available_pkgs < <(paru -Slq)
