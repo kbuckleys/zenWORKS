@@ -25,7 +25,6 @@ done
 
 if [ ${#all_updates[@]} -eq 0 ]; then
   echo "No updates available."
-  paru --clean
   echo ""
   read -p $'\033[1;32mPress RETURN to exit...\033[0m'
   exit 0
@@ -93,9 +92,6 @@ else
     echo "No valid packages selected."
   fi
 fi
-
-echo "Cleaning paru cache..."
-paru --clean
 
 echo ""
 if [ "$updated" = true ]; then
