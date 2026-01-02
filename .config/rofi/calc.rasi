@@ -14,7 +14,7 @@ configuration {
 window {
     location: south;
     anchor: south;
-    width: 20%;
+    width: 500px;
 }
 
 mainbox {

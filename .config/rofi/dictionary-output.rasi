@@ -13,7 +13,7 @@
 window {
     location: south;
     anchor: south;
-    width: 44%;
+    width: 1000px;
 }
 
 mainbox {
