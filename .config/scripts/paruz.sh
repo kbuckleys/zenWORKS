@@ -5,7 +5,7 @@
 
 cat ~/.config/logo
 echo ""
-paru -Sy
+paru -Scc --noconfirm && paru --clean && rm -rf ~/.cache/paru/ && paru -Sy
 
 while true; do
   mapfile -t available_pkgs < <(paru -Slq)
@@ -69,6 +69,8 @@ while true; do
   fi
 
   if [[ ${#to_install[@]} -gt 0 || ${#to_uninstall[@]} -gt 0 ]]; then
+    echo "Cleaning paru cache..."
+    paru --clean
     echo "Press Return to continue..."
     read -r
   fi
