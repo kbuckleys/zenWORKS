@@ -9,7 +9,7 @@
 window {
     location: south;
     anchor: south;
-    width: 100%;
+    width: 421px;
 }
 
 inputbar, element-icon {
