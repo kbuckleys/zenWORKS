@@ -71,7 +71,8 @@ while true; do
   if [[ ${#to_install[@]} -gt 0 || ${#to_uninstall[@]} -gt 0 ]]; then
     echo "Cleaning paru cache..."
     paru --clean
-    echo "Press Return to continue..."
+    echo ""
+    echo $'\033[1;32mPress RETURN to continue\033[0m'
     read -r
   fi
 done
