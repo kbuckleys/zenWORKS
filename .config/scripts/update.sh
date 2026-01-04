@@ -40,11 +40,35 @@ for i in "${!all_updates[@]}"; do
 done
 
 echo ""
-printf "\033[1;36mInput space-separated numbers/ranges (e.g. 1 2 3 OR 1-3 OR 1 3-4)\n"
-printf "Alternatively, press RETURN to sync all available updates\n"
+printf "\033[1;36mInput space-separated numbers or ranges (e.g. 1 2 3 OR 1-3 OR 1 3-4)\033[0m\n"
+printf "\033[1;36mPress RETURN to sync all available updates or ESC to abort\033[0m\n"
 printf ":: \033[0m"
 
-read -r input
+input=""
+while true; do
+  read -s -n1 -t 0.1 key 2>/dev/null
+  if [ $? -eq 0 ]; then
+    if [ "$key" = $'\e' ]; then
+      echo ""
+      echo -e "\nAborted."
+      paru --clean
+      echo ""
+      read -p $'\033[1;32mPress RETURN to exit...\033[0m'
+      exit 0
+    elif [ "$key" = $'\n' ]; then
+      break
+    else
+      input+="$key"
+      printf "%s" "$key"
+    fi
+  else
+    if [ -n "$input" ]; then
+      break
+    fi
+  fi
+done
+
+echo ""
 updated=false
 
 if [ -z "$input" ]; then
@@ -54,12 +78,10 @@ if [ -z "$input" ]; then
 else
   selected=()
 
-  # Split input into tokens (numbers or ranges)
   IFS=' ' read -ra tokens <<<"$input"
 
   for token in "${tokens[@]}"; do
     if [[ "$token" =~ ^([0-9]+)-([0-9]+)$ ]]; then
-      # Range: 1-4
       start=${BASH_REMATCH[1]}
       end=${BASH_REMATCH[2]}
       if [ "$start" -ge 1 ] && [ "$end" -le ${#all_updates[@]} ] && [ "$start" -le "$end" ]; then
@@ -72,7 +94,6 @@ else
         echo "Invalid range: $token (out of 1-${#all_updates[@]} range)"
       fi
     elif [[ "$token" =~ ^[0-9]+$ ]]; then
-      # Single number: 2
       num=$token
       if [ "$num" -ge 1 ] && [ "$num" -le ${#all_updates[@]} ]; then
         selected+=("${all_updates[$((num - 1))]}")
