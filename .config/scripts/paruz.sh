@@ -61,7 +61,7 @@ while true; do
   done <<<"$selected"
 
   if [[ ${#to_install[@]} -gt 0 ]]; then
-    paru -S --noconfirm "${to_install[@]}"
+    paru -S "${to_install[@]}"
   fi
 
   if [[ ${#to_uninstall[@]} -gt 0 ]]; then
