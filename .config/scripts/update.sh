@@ -41,7 +41,7 @@ done
 
 echo ""
 printf "\033[1;36mInput space-separated numbers or ranges (e.g. 1 2 3 OR 1-3 OR 1 3-4)\033[0m\n"
-printf "\033[1;36mPress RETURN to sync all, or type selection then RETURN. Ctrl+C to abort.\033[0m\n"
+printf "\033[1;36mPress RETURN to sync all listed packages. Ctrl+C to abort.\033[0m\n"
 printf ":: \033[0m"
 
 updated=false
@@ -50,7 +50,7 @@ read -r input || input=""
 echo ""
 if [ -z "$input" ]; then
   echo "Installing all updates..."
-  paru -Syu
+  paru -Syu --noconfirm
   updated=true
 else
   selected=()
