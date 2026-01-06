@@ -85,7 +85,7 @@ else
 
   if [ ${#selected[@]} -gt 0 ]; then
     echo "Installing selected packages: ${selected[*]}"
-    paru -S "${selected[@]}"
+    paru -S --noconfirm "${selected[@]}"
     updated=true
   else
     echo "No valid packages selected."
