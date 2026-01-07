@@ -17,7 +17,7 @@
 }
 
 #workspaces button.special {
-  padding: 0px 8px 0px 8px;
+  padding: 0px 4px 0px 4px;
   color: #fab387;
 }
 #workspaces button:hover {
@@ -63,7 +63,7 @@
 }
 
 #tray-expander {
-  padding: 0px 0px 0px 8px;
+  padding: 0px 0px 0px 4px;
   color: #9bbfbf;
 }
 #tray {
