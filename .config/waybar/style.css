@@ -25,13 +25,12 @@
   box-shadow: none;
 }
 
-#network.disconnected, #temperature.critical,
-#pulseaudio.muted, #custom-gpu-temp.critical {
+#network.disconnected, #temperature.critical, #pulseaudio.muted {
   color: #E0AEA4;
 }
 
 #custom-div {
-  padding: 0px 8px 0px 8px;
+  padding: 0px 4px 0px 4px;
   color: #dfdfdd;
 }
 
@@ -40,27 +39,26 @@
 }
 
 #clock {
-  padding: 0px 12px 0px 8px;
+  padding: 0px 8px 0px 8px;
   color: #9bbfbf;
 }
 
 #pulseaudio {
-  padding: 0px 8px 0px 16px;
+  padding: 0px 8px 0px 12px;
   color: #9bbfbf;
 }
 
-#cpu, #custom-gpu-info, #temperature,
-#custom-gpu-temp, #network, #memory {
+#cpu, #temperature, #custom-nvidia, #network, #memory {
   padding: 0px 8px 0px 8px;
   color: #dfdfdd;
 }
 
 #custom-pacman {
-  padding: 0px 0px 0px 12px;
+  padding: 0px 0px 0px 8px;
   color: #9bbfbf;
 }
 #custom-pacman.pending-updates {
-  padding: 0px 12px 0px 12px;
+  padding: 0px 12px 0px 8px;
   color: #e0d8a4;
 }
 

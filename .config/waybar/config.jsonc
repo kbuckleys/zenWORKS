@@ -21,8 +21,7 @@
   "modules-right": [
     "network",
     "custom/div",
-    "custom/gpu-info",
-    "custom/gpu-temp",
+    "custom/nvidia",
     "custom/div",
     "cpu",
     "temperature",
@@ -62,12 +61,11 @@
     },
   },
 
-  "custom/gpu-info": {
-    "exec": "~/.config/scripts/wb-gpu-info.sh",
+  "custom/nvidia": {
+    "exec": "~/.config/scripts/nvidia.sh",
     "interval": 5,
     "format": "{text}",
-    "tooltip": true,
-    "tooltip-format": "GPU Utilization"
+    "tooltip": false,
   },
 
   "cpu": {
@@ -86,15 +84,6 @@
     "format-critical": "{temperatureC}°C",
     "tooltip": true,
     "tooltip-format": "CPU Temperature"
-  },
-
-  "custom/gpu-temp": {
-    "exec": "~/.config/scripts/wb-gpu-temp.sh",
-    "interval": 5,
-    "format": "{text}",
-    "format-critical": "{text}",
-    "tooltip": true,
-    "tooltip-format": "GPU Temperature"
   },
 
   "memory": {
