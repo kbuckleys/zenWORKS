@@ -7,6 +7,3 @@ hash = "f10a14e823382d90fab5b3ee54cb38fe"
 use = "yazi-rs/plugins:chmod"
 rev = "de53d90"
 hash = "1adc12c2b2b025411ab61eb8f0879574"
-
-[flavor]
-deps = []
