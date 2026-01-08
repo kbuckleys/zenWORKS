@@ -144,12 +144,13 @@ rules = [
 	# Media
 	{ mime = "{audio,video}/*", fg = "#c8a4e0" },
 	# Archive
-	{ mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#E0AEA4" },
+	{ mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#fab387" },
 	# Document
 	{ mime = "application/{pdf,doc,rtf}", fg = "#9bbfbf" },
 	# Virtual file system
 	{ mime = "vfs/{absent,stale}", fg = "gray" },
 	# Special file
+  { mime = "inode/empty", fg = "#a0a09b" },
 
   # Orphan (broken) symlinks first
   { url = "*", is = "orphan", bg = "#000000", fg = "#E0AEA4" },
@@ -158,11 +159,11 @@ rules = [
   # Valid symlinks last (won't override orphans)
   { url = "*", is = "link", bg = "#000000", fg = "#e0d8a4" },
   { url = "*", is = "link", selected = true, reversed = true },
-	{ url = "*", is = "exec"  , fg = "#b6e0a4" },
+	{ url = "*", is = "exec", fg = "#b6e0a4" },
 
 	# Dummy file
-	{ url = "*", is = "dummy", bg = "#E0AEA4" },
-	{ url = "*/", is = "dummy", bg = "#E0AEA4" },
+	{ url = "*", is = "dummy", bg = "#fab387", fg = "#000000" },
+	{ url = "*/", is = "dummy", bg = "#fab387", fg = "#000000" },
 	# Fallback
 	{ url = "*/", fg = "#9bbfbf" }
 ]
