@@ -154,7 +154,7 @@ rules = [
   # Orphan (broken) symlinks first
   { url = "*", is = "orphan", bg = "#000000", fg = "#E0AEA4" },
   { url = "*", is = "orphan", selected = true, reversed = true },
-  
+
   # Valid symlinks last (won't override orphans)
   { url = "*", is = "link", bg = "#000000", fg = "#e0d8a4" },
   { url = "*", is = "link", selected = true, reversed = true },
