@@ -4,14 +4,10 @@
 # https://github.com/kbuckleys/
 
 [mgr]
-sort_sensitive = false
-sort_reverse = false
 show_symlink = true
 show_hidden = true
 linemode = "size"
 
 [opener]
-open = [{ run = 'xdg-open "$@"', desc = "Open with XDG", for = "unix" }]
-edit = [
-  { run = 'footclient $EDITOR -- "$@"', desc = "Open in Neovim", block = false, for = "unix" },
-]
+open = [{ run = 'xdg-open "$@" & disown' }]
+edit = [{ run = 'footclient nvim "$@" & disown', desc = "Open in Neovim" }]
