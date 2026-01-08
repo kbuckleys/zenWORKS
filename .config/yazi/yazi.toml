@@ -9,3 +9,9 @@ sort_reverse = false
 show_symlink = true
 show_hidden = true
 linemode = "size"
+
+[opener]
+open = [{ run = 'xdg-open "$@"', desc = "Open with XDG", for = "unix" }]
+edit = [
+  { run = 'footclient $EDITOR -- "$@"', desc = "Open in Neovim", block = false, for = "unix" },
+]
