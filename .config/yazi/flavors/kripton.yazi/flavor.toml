@@ -5,28 +5,18 @@
 
 [mgr]
 cwd = { fg = "#9bbfbf", bold = true }
-
-# Hovered
-hovered = { fg = "#000000", bg = "#9BBFBF" }
-preview_hovered = { underline = false }
-
-# Find
 find_keyword = { fg = "#e0d8a4", bg = "#000000" }
-
-# Marker
 marker_copied = { fg = "#000000", bg = "#C5E1A5" }
 marker_cut = { fg = "#000000", bg = "#E0A4A4" }
 marker_marked = { fg = "#000000", bg = "#BCA4E0" }
 marker_selected = { fg = "#000000", bg = "#E0DEA4" }
-
-# Count
 count_copied = { fg = "#c5e1a5", bold = true, reversed = true }
 count_cut = { fg = "#E0A4A4", bold = true, reversed = true }
 count_selected = { fg = "#BCA4E0", bold = true, reversed = true }
-
-# Border
-border_symbol = ""
 border_style = { fg = "#000000" }
+
+[indicator]
+preview = { underline = false }
 
 [tabs]
 active = { fg = "#000000", bg = "#9BBFBF", bold = true }
@@ -35,15 +25,12 @@ sep_inner = { open = "", close = "" }
 sep_outer = { open = "", close = "" }
 
 [mode]
-# Normal mode
 normal_main = { fg = "#000000", bg = "#9BBFBF", bold = true }
 normal_alt = { fg = "#9BBFBF", bg = "#000000" }
 
-# Select mode
 select_main = { fg = "#000000", bg = "#BCA4E0", bold = true }
 select_alt = { fg = "#BCA4E0", bg = "#000000" }
 
-# Unset mode
 unset_main = { fg = "#000000", bg = "#E0DEA4", bold = true }
 unset_alt = { fg = "#E0DEA4", bg = "#000000" }
 
