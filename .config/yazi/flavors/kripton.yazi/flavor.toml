@@ -8,35 +8,24 @@
 
 # If you want to dynamically override their content based on dark/light mode, you can specify two different flavors
 # for dark and light modes under `[flavor]`, and do so in those flavors instead.
+
 "$schema" = "https://yazi-rs.github.io/schemas/theme.json"
 
 [app]
-overall = {}
+overall = { bg = "#000000" }
 
 [mgr]
 cwd = { fg = "#9bbfbf" }
-
-# Find
 find_keyword = { fg = "#e0d8a4", bold = true, italic = true }
 find_position = { fg = "#c8a4e0", bg = "reset", bold = true, italic = true }
-
-# Marker
 marker_selected = { bg = "#e0d8a4" }
 marker_copied = { bg = "#b6e0a4" }
 marker_marked = { bg = "#c8a4e0" }
 marker_cut = { bg = "#E0AEA4" }
-
-# Count
 count_copied = { fg = "#000000", bg = "#b6e0a4" }
 count_cut = { fg = "#000000", bg = "#E0AEA4" }
 count_selected = { fg = "#000000", bg = "#e0d8a4" }
-
-# Border
 border_style = { fg = "#000000" }
-
-# Highlighting
-syntect_theme = ""
-symlink_target = { italic = true }
 
 [tabs]
 active = { bg = "#9bbfbf", fg = "#000000", bold = true }
@@ -60,7 +49,7 @@ unset_alt = { fg = "#e0d8a4", bg = "#000000" }
 
 [indicator]
 preview = { underline = false }
-padding = { open = " ", close = " " }
+padding = { open = "█", close = "█" }
 
 [status]
 overall = {}
