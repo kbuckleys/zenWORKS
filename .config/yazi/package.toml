@@ -12,6 +12,3 @@ hash = "1adc12c2b2b025411ab61eb8f0879574"
 use = "KKV9/compress"
 rev = "e2ae983"
 hash = "36b570e2164f6ad2317cfb839e42ef4"
-
-[flavor]
-deps = []

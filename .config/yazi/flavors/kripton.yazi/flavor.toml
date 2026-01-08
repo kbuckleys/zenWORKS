@@ -12,7 +12,7 @@
 "$schema" = "https://yazi-rs.github.io/schemas/theme.json"
 
 [app]
-overall = { bg = "#000000" }
+overall = {}
 
 [mgr]
 cwd = { fg = "#9bbfbf" }
@@ -64,7 +64,6 @@ perm_write = { fg = "#E0AEA4" }
 perm_exec = { fg = "#9bbfbf" }
 
 # Progress
-progress_label = { bold = true }
 progress_normal = { fg = "#fab387", bg = "#20242a" }
 progress_error = { fg = "#E0AEA4", bg = "#20242a" }
 
@@ -148,17 +147,15 @@ rules = [
 	# Document
 	{ mime = "application/{pdf,doc,rtf}", fg = "#9bbfbf" },
 	# Virtual file system
-	{ mime = "vfs/{absent,stale}", fg = "gray" },
+	{ mime = "vfs/{absent,stale}", fg = "#a0a09b" },
 	# Special file
   { mime = "inode/empty", fg = "#a0a09b" },
 
   # Orphan (broken) symlinks first
-  { url = "*", is = "orphan", bg = "#000000", fg = "#E0AEA4" },
-  { url = "*", is = "orphan", selected = true, reversed = true },
+  { url = "*", is = "orphan", fg = "#E0AEA4" },
 
   # Valid symlinks last (won't override orphans)
-  { url = "*", is = "link", bg = "#000000", fg = "#e0d8a4" },
-  { url = "*", is = "link", selected = true, reversed = true },
+  { url = "*", is = "link", fg = "#e0d8a4" },
 	{ url = "*", is = "exec", fg = "#b6e0a4" },
 
 	# Dummy file
