@@ -129,7 +129,7 @@ rules = [
 	# Image
 	{ mime = "image/*", fg = "#b6e0a4" },
 	# Media
-	{ mime = "{audio,video}/*", fg = "#c8a4e0" },
+	{ mime = "{audio,video}/*", fg = "#e0d8a4" },
 	# Archive
 	{ mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#fab387" },
 	# Document
@@ -143,7 +143,7 @@ rules = [
   { url = "*", is = "orphan", fg = "#E0AEA4" },
 
   # Valid symlinks last (won't override orphans)
-  { url = "*", is = "link", fg = "#e0d8a4" },
+  { url = "*", is = "link", fg = "#c8a4e0" },
 	{ url = "*", is = "exec", fg = "#b6e0a4" },
 
 	# Dummy file
