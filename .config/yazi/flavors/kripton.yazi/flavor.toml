@@ -10,8 +10,8 @@ overall = {}
 
 [mgr]
 cwd = { fg = "#9bbfbf" }
-find_keyword = { fg = "#e0d8a4", bold = true, italic = true }
-find_position = { fg = "#c8a4e0", bg = "reset", bold = true, italic = true }
+find_keyword = { bg = "#e0d8a4", fg = "#20242a", bold = true, underline = true }
+find_position = { fg = "#b6e0a4", bg = "#20242a", bold = true }
 marker_selected = { bg = "#e0d8a4" }
 marker_copied = { bg = "#b6e0a4" }
 marker_marked = { bg = "#c8a4e0" }
@@ -22,25 +22,25 @@ count_selected = { fg = "#000000", bg = "#e0d8a4" }
 border_style = { fg = "#000000" }
 
 [tabs]
-active = { bg = "#9bbfbf", fg = "#000000", bold = true }
-inactive = { fg = "#9bbfbf", bg = "#000000" }
+active = { bg = "#9bbfbf", fg = "#000000" }
+inactive = { bg = "#000000", fg = "#9bbfbf" }
 sep_inner = { open = "", close = "" }
 sep_outer = { open = "", close = "" }
 
 [mode]
 normal_main = { bg = "#9bbfbf", fg = "#000000", bold = true }
-normal_alt = { fg = "#9bbfbf", bg = "#000000" }
+normal_alt = { fg = "#9bbfbf", bg = "#20242a" }
 select_main = { bg = "#c8a4e0", fg = "#000000", bold = true }
-select_alt = { fg = "#c8a4e0", bg = "#000000" }
-unset_main = { bg = "#e0d8a4", bold = true }
-unset_alt = { fg = "#e0d8a4", bg = "#000000" }
+select_alt = { fg = "#c8a4e0", bg = "#20242a" }
+unset_main = { bg = "#e0d8a4", fg = "#000000", bold = true }
+unset_alt = { fg = "#e0d8a4", bg = "#20242a" }
 
 [indicator]
 preview = { underline = false }
 padding = { open = "█", close = "█" }
 
 [status]
-overall = {}
+overall = { fg = "#9bbfbf" }
 sep_left = { open = "", close = "" }
 sep_right = { open = "", close = "" }
 
