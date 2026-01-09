@@ -33,6 +33,7 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 - eza
 - duf
 - btop
+- ncdu
 - nwg-look
 - man-db
 - hyprpicker
