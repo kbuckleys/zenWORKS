@@ -10,8 +10,8 @@ overall = {}
 
 [mgr]
 cwd = { fg = "#9bbfbf" }
-find_keyword = { bg = "#e0d8a4", fg = "#20242a", bold = true, underline = true }
-find_position = { fg = "#b6e0a4", bg = "#20242a", bold = true }
+find_keyword = { bold = true, underline = true }
+find_position = { bg = "#000000", bold = true }
 marker_selected = { bg = "#e0d8a4" }
 marker_copied = { bg = "#b6e0a4" }
 marker_marked = { bg = "#c8a4e0" }
