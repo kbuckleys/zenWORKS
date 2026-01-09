@@ -41,7 +41,7 @@ done
 
 echo ""
 printf "\033[1;36mInput space-separated numbers or ranges (e.g. 1 2 3 OR 1-3 OR 1 3-4)\033[0m\n"
-printf "\033[1;36mPress RETURN to sync all listed packages. Ctrl+C to abort.\033[0m\n"
+printf "\033[1;36mAlternatively, press RETURN to sync all listed packages.\033[0m\n"
 printf ":: \033[0m"
 
 updated=false
