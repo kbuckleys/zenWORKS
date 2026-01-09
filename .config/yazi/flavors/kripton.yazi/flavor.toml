@@ -30,20 +30,14 @@ border_style = { fg = "#000000" }
 [tabs]
 active = { bg = "#9bbfbf", fg = "#000000", bold = true }
 inactive = { fg = "#9bbfbf", bg = "#000000" }
-
-# Separator
 sep_inner = { open = "", close = "" }
 sep_outer = { open = "", close = "" }
 
 [mode]
 normal_main = { bg = "#9bbfbf", fg = "#000000", bold = true }
 normal_alt = { fg = "#9bbfbf", bg = "#000000" }
-
-# Select mode
 select_main = { bg = "#c8a4e0", fg = "#000000", bold = true }
 select_alt = { fg = "#c8a4e0", bg = "#000000" }
-
-# Unset mode
 unset_main = { bg = "#e0d8a4", bold = true }
 unset_alt = { fg = "#e0d8a4", bg = "#000000" }
 
@@ -78,7 +72,7 @@ separator_style = { fg = "#5a6069" }
 
 [confirm]
 border = { fg = "#E0AEA4" }
-title = { fg = "#E0AEA4" }
+title = { fg = "#E0AEA4", bold = true }
 body = {}
 list = {}
 btn_yes = {}
@@ -87,7 +81,7 @@ btn_labels = [ "[Y]ES", "[N]O" ]
 
 [spot]
 border = { fg = "#9bbfbf" }
-title = { fg = "#9bbfbf" }
+title = { fg = "#9bbfbf", bold = true }
 tbl_col = { fg = "#9bbfbf" }
 tbl_cell = { fg = "#dfdfdd", bg = "#20242a" }
 
@@ -95,8 +89,6 @@ tbl_cell = { fg = "#dfdfdd", bg = "#20242a" }
 title_info = { fg = "#b6e0a4" }
 title_warn = { fg = "#e0d8a4" }
 title_error = { fg = "#E0AEA4" }
-
-# Icons
 icon_info = ""
 icon_warn = ""
 icon_error = ""
@@ -108,23 +100,21 @@ inactive = {}
 
 [input]
 border = { fg = "#9bbfbf" }
-title = {}
-value = {}
+title = { bold = true }
+value = { fg = "#9bbfbf" }
 selected = { reversed = true }
 
 [cmp]
 border = { fg = "#9bbfbf" }
-active = { reversed = true }
-inactive = {}
-
-# Icons
+active = { fg = "#000000", bg = "#9bbfbf" }
+inactive = { fg = "#9bbfbf" }
 icon_file = ""
 icon_folder = ""
 icon_command = ""
 
 [tasks]
 border = { fg = "#9bbfbf" }
-title = {}
+title = { bold = true }
 hovered = { fg = "#dfdfdd", bg = "#20242a" }
 
 [help]
