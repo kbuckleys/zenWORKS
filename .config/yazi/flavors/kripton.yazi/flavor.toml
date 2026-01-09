@@ -88,10 +88,8 @@ btn_labels = [ "[Y]ES", "[N]O" ]
 [spot]
 border = { fg = "#9bbfbf" }
 title = { fg = "#9bbfbf" }
-
-# Table
 tbl_col = { fg = "#9bbfbf" }
-tbl_cell = { fg = "#e0d8a4", reversed = true }
+tbl_cell = { fg = "#dfdfdd", bg = "#20242a" }
 
 [notify]
 title_info = { fg = "#b6e0a4" }
@@ -127,11 +125,11 @@ icon_command = ""
 [tasks]
 border = { fg = "#9bbfbf" }
 title = {}
-hovered = { fg = "gray", bold = true }
+hovered = { fg = "#dfdfdd", bg = "#20242a" }
 
 [help]
-on = { fg = "#b6e0a4" }
-run = { fg = "#e0d8a4" }
+on = {}
+run = {}
 desc = {}
 hovered = { reversed = true }
 footer = { fg = "#dfdfdd", bg = "#20242a" }
