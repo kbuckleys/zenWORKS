@@ -70,8 +70,4 @@ In my search for a GTK theme, I stumbled upon an old one called Kripton, which I
 # Notes
 The depnedencies listed are for my own reference and to insure the functions of my setup work as intended.
 
-I thought I'd also drop in my own Firefox setup, which I'm fairly certain you haven't seen anything like before. I primarily say this because I specifically built it to sing on my Hyprland setup, even though I've moved on to Brave. I just couldn't find it in me to let go of the hardwork I sunk into this setup, so I left it should anyone, at any point would be interested.
-
-You may as well go the extra mile and complete the look, and you only need one addon for it:
-
-- [Adaptive Tab Bar Color](https://addons.mozilla.org/en-US/firefox/addon/adaptive-tab-bar-colour/)
+I thought I'd also drop in my own Firefox setup, which I'm fairly certain you haven't seen anything like before. I primarily say this because I specifically built it to sing on my Hyprland setup. And speaking of which, the setup will never be complete without [Adaptive Tab Bar Color](https://addons.mozilla.org/en-US/firefox/addon/adaptive-tab-bar-colour/)
