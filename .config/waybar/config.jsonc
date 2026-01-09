@@ -80,7 +80,7 @@
     "input-filename": "temp2_input",
     "interval": 5,
     "critical-threshold": 70,
-    "format": "{temperatureC}°C",
+    "format": " {temperatureC}°C",
     "format-critical": "{temperatureC}°C",
     "tooltip": true,
     "tooltip-format": "CPU Temperature"
@@ -144,13 +144,9 @@
   },
 
   "custom/pacman": {
-    "format": "{icon}  {text}",
+    "format": "{text}",
     "return-type": "json",
     "on-click": "footclient -T \"System Update\" -e ~/.config/scripts/update.sh",
-    "format-icons": {
-        "pending-updates": "",
-        "updated": ""
-    },
     "exec-if": "which waybar-updates",
     "exec": "waybar-updates"
   },

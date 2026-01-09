@@ -25,12 +25,8 @@
   box-shadow: none;
 }
 
-#network.disconnected, #temperature.critical, #pulseaudio.muted {
-  color: #E0AEA4;
-}
-
 #custom-div {
-  padding: 0px 4px 0px 4px;
+  padding: 0px 8px 0px 8px;
   color: #dfdfdd;
 }
 
@@ -39,7 +35,7 @@
 }
 
 #clock {
-  padding: 0px 8px 0px 8px;
+  padding: 0px 8px 0px 4px;
   color: #9bbfbf;
 }
 
@@ -49,8 +45,12 @@
 }
 
 #cpu, #temperature, #custom-nvidia, #network, #memory {
-  padding: 0px 8px 0px 8px;
+  padding: 0px 4px 0px 4px;
   color: #dfdfdd;
+}
+
+#network.disconnected, #temperature.critical, #pulseaudio.muted {
+  color: #E0AEA4;
 }
 
 #custom-pacman {
@@ -63,11 +63,11 @@
 }
 
 #tray-expander {
-  padding: 0px 0px 0px 4px;
+  padding: 0px 0px 0px 8px;
   color: #9bbfbf;
 }
 #tray {
-  padding: 0px 12px 0px 4px;
+  padding: 0px 8px 0px 0px;
 }
 
 tooltip {
