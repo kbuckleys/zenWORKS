@@ -12,7 +12,7 @@ updates=$(paru -Qu 2>/dev/null)
 count=$(echo "$updates" | grep -v '^$' | wc -l)
 
 if [ "$count" -eq 0 ]; then
-  exit 0 # FIXED: No output = module disappears
+  exit 0
 fi
 
 repo_count=$(paru -Qu --repo 2>/dev/null | grep -v '^$' | wc -l)
