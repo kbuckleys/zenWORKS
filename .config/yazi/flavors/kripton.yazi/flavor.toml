@@ -58,7 +58,7 @@ progress_error = { fg = "#E0AEA4", bg = "#20242a" }
 [which]
 cols = 3
 mask = { bg = "#20242a" }
-cand = { fg = "#e0d8a4" }
+cand = { fg = "#fab387" }
 rest = { fg = "#20242a" }
 desc = { fg = "#dfdfdd" }
 separator = "  "
