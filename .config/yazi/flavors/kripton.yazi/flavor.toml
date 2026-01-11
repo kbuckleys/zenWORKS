@@ -93,21 +93,18 @@ active = { fg = "#c8a4e0", bold = true }
 inactive = {}
 
 [input]
-border = { fg = "#9bbfbf" }
+border = { fg = "#fab387" }
 title = { bold = true }
-value = { fg = "#9bbfbf" }
+value = { fg = "#fab387" }
 selected = { reversed = true }
 
 [cmp]
-border = { fg = "#9bbfbf" }
-active = { fg = "#000000", bg = "#9bbfbf" }
-inactive = { fg = "#9bbfbf" }
-icon_file = ""
-icon_folder = ""
-icon_command = ""
+border = { fg = "#fab387" }
+active = { fg = "#000000", bg = "#fab387" }
+inactive = { fg = "#fab387" }
 
 [tasks]
-border = { fg = "#9bbfbf" }
+border = { fg = "#fab387" }
 title = { bold = true }
 hovered = { fg = "#dfdfdd", bg = "#20242a" }
 
