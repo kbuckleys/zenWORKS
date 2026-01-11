@@ -6,6 +6,7 @@
 cat ~/.config/logo
 echo ""
 paru -Scc --noconfirm && paru --clean && rm -rf ~/.cache/paru/ && paru -Sy
+pkill -RTMIN+8 waybar
 
 echo "Fetching updates..."
 mapfile -t updates < <(paru -Qu --color=never | sort -u)
@@ -94,6 +95,8 @@ fi
 
 echo "Cleaning paru cache..."
 paru --clean
+
+pkill -RTMIN+8 waybar
 
 echo ""
 if [ "$updated" = true ]; then
