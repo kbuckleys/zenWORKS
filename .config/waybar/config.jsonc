@@ -13,7 +13,7 @@
   "height": 28,
 
   "modules-left": [
-    "custom/pacman",
+    "custom/paru",
     "group/tray-expander",
     "hyprland/workspaces"
   ],
@@ -142,7 +142,7 @@
     "spacing": 12
   },
 
-  "custom/pacman": {
+  "custom/paru": {
     "format": "{text}",
     "return-type": "json",
     "on-click": "footclient -T \"System Update\" -e ~/.config/scripts/update.sh",
