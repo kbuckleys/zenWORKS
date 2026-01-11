@@ -53,12 +53,8 @@
   color: #E0AEA4;
 }
 
-#custom-pacman {
+#custom-update {
   padding: 0px 0px 0px 8px;
-  color: #9bbfbf;
-}
-#custom-pacman.pending-updates {
-  padding: 0px 12px 0px 8px;
   color: #e0d8a4;
 }
 
