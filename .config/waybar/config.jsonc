@@ -14,8 +14,7 @@
 
   "modules-left": [
     "custom/paru",
-    "group/tray-expander",
-    "hyprland/workspaces"
+    "group/tray-expander"
   ],
   "modules-center": [],
   "modules-right": [
@@ -29,7 +28,8 @@
     "memory",
     "pulseaudio",
     "clock",
-    "custom/privacydots"
+    "custom/privacydots",
+    "hyprland/workspaces"
   ],
 
   "custom/div": {
@@ -43,7 +43,7 @@
     "show-special": true,
     "all-outputs": true,
     "format-icons": {
-      "special": "[ ]",
+      "special": "󱗽",
     },
   },
 
@@ -146,6 +146,7 @@
     "format": "{} ",
     "return-type": "json",
     "exec": "~/.config/scripts/wb-update.sh",
+    "on-click": "footclient -T \"System Update\" -e ~/.config/scripts/update.sh",
     "interval": 1800,
     "signal": 8,
     "class-names": {
