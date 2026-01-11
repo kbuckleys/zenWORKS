@@ -17,15 +17,11 @@
 }
 
 #workspaces button.special {
+  font-weight: bold;
   padding: 0px 8px 0px 8px;
   margin: 0px 0px 0px 4px;
   background-color: #9bbfbf;
   color: #000000;
-  font-weight: bold;
-}
-#workspaces button:hover {
-  background: none;
-  box-shadow: none;
 }
 
 #custom-div {
@@ -57,11 +53,11 @@
 }
 
 #custom-paru {
+  font-weight: bold;
   padding: 0px 0px 0px 8px;
   margin: 0px 8px 0px 0px;
   background-color: #fab387;
   color: #000000;
-  font-weight: bold;
 }
 
 #tray-expander {
