@@ -9,7 +9,7 @@ GPU_TEMP=$(echo "$METRICS" | cut -d',' -f2)
 GPU_VRAM=$(echo "$METRICS" | cut -d',' -f3 | awk '{printf "%.1f", $1/1024}')
 
 if [ "$GPU_TEMP" -ge 70 ]; then
-  echo "GPU $GPU_UTIL%  VRAM ${GPU_VRAM} \033[38;2;224;174;164m${GPU_TEMP}°C\033[0m"
+  echo "GPU $GPU_UTIL%  VRAM ${GPU_VRAM} \033[38;2;224;174;164m${GPU_TEMP}°\033[0m"
 else
-  echo "GPU $GPU_UTIL%  VRAM ${GPU_VRAM} ${GPU_TEMP}°C"
+  echo "GPU $GPU_UTIL%  VRAM ${GPU_VRAM} ${GPU_TEMP}°"
 fi
