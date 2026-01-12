@@ -9,7 +9,6 @@
   min-width: 0;
   border: none;
   font-family: "0xProto Nerd Font";
-  font-weight: bold;
   font-size: 14px;
 }
 
@@ -18,7 +17,8 @@
 }
 
 #workspaces button.special {
-  padding: 0px 8px 0px 8px;
+  padding: 0px 8px 0px 4px;
+  font-weight: bold;
   color: #fab387;
 }
 
@@ -33,18 +33,19 @@
 
 #clock {
   padding: 0px 8px 0px 4px;
+  font-weight: bold;
   color: #9bbfbf;
 }
 
 #pulseaudio {
   padding: 0px 8px 0px 12px;
+  font-weight: bold;
   color: #9bbfbf;
 }
 
 #cpu, #temperature, #custom-nvidia, #network, #memory {
   padding: 0px 4px 0px 4px;
   color: #dfdfdd;
-  font-weight: normal;
 }
 
 #network.disconnected, #temperature.critical, #pulseaudio.muted {
@@ -52,7 +53,8 @@
 }
 
 #custom-paru {
-  padding: 0px 2px 0px 8px;
+  padding: 0px 0px 0px 8px;
+  font-weight: bold;
   color: #fab387;
 }
 

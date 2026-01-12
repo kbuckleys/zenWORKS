@@ -26,4 +26,4 @@ fi
 
 tooltip="$packages\n\n󰣇 $repo_count   $aur_count"
 
-echo "{\"text\": \"$count\", \"tooltip\": \"${tooltip//$'\n'/\\n}\", \"class\": \"has-updates\"}"
+echo "{\"text\": \" $count\", \"tooltip\": \"${tooltip//$'\n'/\\n}\", \"class\": \"has-updates\"}"
