@@ -43,7 +43,7 @@
     "show-special": true,
     "all-outputs": true,
     "format-icons": {
-      "special": "󱗽",
+      "special": "[ ]",
     },
   },
 
