@@ -24,6 +24,6 @@ if [ "$count" -gt 10 ]; then
   packages="$packages\n..."
 fi
 
-tooltip="󰣇 $repo_count   $aur_count\n$packages"
+tooltip="$packages\n\n󰣇 $repo_count   $aur_count"
 
 echo "{\"text\": \"$count\", \"tooltip\": \"${tooltip//$'\n'/\\n}\", \"class\": \"has-updates\"}"
