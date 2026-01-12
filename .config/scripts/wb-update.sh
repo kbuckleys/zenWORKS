@@ -17,6 +17,13 @@ fi
 
 repo_count=$(paru -Qu --repo 2>/dev/null | grep -v '^$' | wc -l)
 aur_count=$(paru -Qu --aur 2>/dev/null | grep -v '^$' | wc -l)
-tooltip="󰣇 $repo_count   $aur_count\n$updates"
+
+packages=$(echo "$updates" | grep -v '^$' | awk '{print $1}' | head -10)
+
+if [ "$count" -gt 10 ]; then
+  packages="$packages\n..."
+fi
+
+tooltip="󰣇 $repo_count   $aur_count\n$packages"
 
 echo "{\"text\": \"$count\", \"tooltip\": \"${tooltip//$'\n'/\\n}\", \"class\": \"has-updates\"}"
