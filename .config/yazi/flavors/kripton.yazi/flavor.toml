@@ -77,7 +77,7 @@ btn_labels = [ "[Y]ES", "[N]O" ]
 border = { fg = "#9bbfbf" }
 title = { fg = "#9bbfbf", bold = true }
 tbl_col = { fg = "#9bbfbf" }
-tbl_cell = { fg = "#dfdfdd", bg = "#20242a" }
+tbl_cell = { fg = "#9bbfbf", bg = "#20242a" }
 
 [notify]
 title_info = { fg = "#b6e0a4" }
