@@ -53,7 +53,11 @@
 }
 
 #custom-pacman {
-  padding: 0px 0px 0px 8px;
+  padding: 0px 4px 0px 8px;
+  font-weight: bold;
+  color: #9bbfbf;
+}
+#custom-pacman updated {
   font-weight: bold;
   color: #fab387;
 }

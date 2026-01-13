@@ -143,15 +143,14 @@
   },
 
   "custom/pacman": {
-    "format": "{icon}{0}",
+    "format": "{icon} {0}",
     "return-type": "json",
     "format-icons": {
-      "pending-updates": " ",
-      "updated": ""
+      "pending-updates": "",
+      "updated": ""
     },
     "on-click": "footclient -T \"System Update\" -e ~/.config/scripts/update.sh",
     "exec-if": "which waybar-updates",
-    "exec": "waybar-updates",
-    "interval": 600
+    "exec": "waybar-updates"
   },
 }
