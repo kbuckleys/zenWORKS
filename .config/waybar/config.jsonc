@@ -149,9 +149,5 @@
     "on-click": "footclient -T \"System Update\" -e ~/.config/scripts/update.sh",
     "interval": 600,
     "signal": 8,
-    "class-names": {
-        "has-updates": "updates-available",
-        "updated": "updates-none"
-    },
-  },
+  }
 }
