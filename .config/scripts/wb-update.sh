@@ -10,6 +10,8 @@ if [ -f /tmp/paru-updated ] && find /tmp/paru-updated -mmin -1 | grep -q .; then
   exit 0
 fi
 
+touch /tmp/paru-updated
+
 updates=$(paru -Qu 2>/dev/null)
 count=$(echo "$updates" | grep -v '^$' | wc -l)
 
