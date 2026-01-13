@@ -3,8 +3,6 @@
 # └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 # https://github.com/kbuckleys/
 
-pkill -RTMIN+8 waybar
-
 if [ -f /tmp/paru-updated ] && find /tmp/paru-updated -mmin -1 | grep -q .; then
   rm -f /tmp/paru-updated
   exit 0

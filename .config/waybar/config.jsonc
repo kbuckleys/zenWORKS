@@ -147,7 +147,7 @@
     "return-type": "json",
     "exec": "~/.config/scripts/wb-update.sh",
     "on-click": "footclient -T \"System Update\" -e ~/.config/scripts/update.sh",
-    "interval": 1800,
+    "interval": 600,
     "signal": 8,
     "class-names": {
         "has-updates": "updates-available",
