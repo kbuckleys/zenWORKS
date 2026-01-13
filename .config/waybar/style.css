@@ -52,14 +52,10 @@
   color: #E0AEA4;
 }
 
-#custom-pacman {
-  padding: 0px 4px 0px 8px;
+#custom-paru {
+  padding: 0px 0px 0px 8px;
   font-weight: bold;
   color: #fab387;
-}
-#custom-pacman.updated {
-  font-weight: bold;
-  color: #9bbfbf;
 }
 
 #tray-expander {

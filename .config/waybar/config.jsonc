@@ -28,7 +28,7 @@
     "memory",
     "pulseaudio",
     "clock",
-    "custom/pacman",
+    "custom/paru",
     "custom/privacydots"
   ],
 
@@ -142,15 +142,16 @@
     "spacing": 12
   },
 
-  "custom/pacman": {
-    "format": "{icon} {0}",
+  "custom/paru": {
+    "format": "{} ",
     "return-type": "json",
-    "format-icons": {
-      "pending-updates": "",
-      "updated": ""
-    },
+    "exec": "~/.config/scripts/wb-update.sh",
     "on-click": "footclient -T \"System Update\" -e ~/.config/scripts/update.sh",
-    "exec-if": "which waybar-updates",
-    "exec": "waybar-updates"
+    "interval": 600,
+    "signal": 8,
+    "class-names": {
+        "has-updates": "updates-available",
+        "updated": "updates-none"
+    },
   },
 }
