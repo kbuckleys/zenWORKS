@@ -147,8 +147,9 @@
     "return-type": "json",
     "format-icons": {
       "pending-updates": " ",
-      "updated": ""
+      "updated": ""
     },
+    "on-click": "footclient -T \"System Update\" -e ~/.config/scripts/update.sh",
     "exec-if": "which waybar-updates",
     "exec": "waybar-updates",
     "interval": 600
