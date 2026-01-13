@@ -8,7 +8,6 @@
 cat ~/.config/logo
 echo ""
 paru -Scc --noconfirm && paru --clean && rm -rf ~/.cache/paru/ && paru -Sy
-pkill -RTMIN+8 waybar
 
 while true; do
   mapfile -t available_pkgs < <(paru -Slq)
