@@ -3,6 +3,8 @@
 # └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 # https://github.com/kbuckleys/
 
+#!/bin/bash
+
 dir=~/Pictures/Screenshots
 mkdir -p "$dir"
 monitor=$(hyprctl monitors -j | jq -r '.[] | select(.focused) | .name')

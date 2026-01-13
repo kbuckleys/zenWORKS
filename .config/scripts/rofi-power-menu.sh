@@ -4,6 +4,8 @@
 # Original script by https://github.com/jluttine
 # Modified by https://github.com/kbuckleys/
 
+#!/bin/bash
+
 set -e
 set -u
 

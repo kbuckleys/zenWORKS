@@ -3,6 +3,8 @@
 # └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 # https://github.com/kbuckleys/
 
+#!/bin/bash
+
 cat ~/.config/logo
 echo ""
 paru -Scc --noconfirm && paru --clean && rm -rf ~/.cache/paru/ && paru -Sy

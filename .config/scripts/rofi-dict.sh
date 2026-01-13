@@ -3,6 +3,8 @@
 # └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 # https://github.com/kbuckleys/
 
+#!/bin/bash
+
 ROFI_THEME_INPUT="$HOME/.config/rofi/dictionary.rasi"
 ROFI_THEME_RESULTS="$HOME/.config/rofi/dictionary-output.rasi"
 last_word=""

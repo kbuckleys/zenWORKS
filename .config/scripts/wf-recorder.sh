@@ -3,6 +3,8 @@
 # └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 # https://github.com/kbuckleys/
 
+#!/bin/bash
+
 output_dir="$HOME/Videos/Captures"
 mkdir -p "$output_dir"
 rofi_theme="$HOME/.config/rofi/wfr-monitors.rasi"
