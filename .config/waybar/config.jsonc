@@ -146,8 +146,7 @@
     "return-type": "json",
     "exec": "~/.config/scripts/wb-update.sh",
     "on-click": "footclient -T \"System Update\" -e ~/.config/scripts/update.sh",
-    "interval": "once",
-    "restart-interval": 600,
+    "interval": 10,
     "signal": 8
   }
 }
