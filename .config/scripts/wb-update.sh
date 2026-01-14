@@ -7,15 +7,6 @@
 
 STATE_FILE="/tmp/paru-state.json"
 
-if [ -f "$STATE_FILE" ]; then
-  LAST_UPDATE=$(stat -c %Y "$STATE_FILE" 2>/dev/null || echo 0)
-  NOW=$(date +%s)
-  if [ $((NOW - LAST_UPDATE)) -lt 10 ]; then
-    cat "$STATE_FILE"
-    exit 0
-  fi
-fi
-
 updates=$(paru -Qu 2>/dev/null)
 count=$(echo "$updates" | grep -v '^$' | wc -l)
 
