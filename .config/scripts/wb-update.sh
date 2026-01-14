@@ -5,17 +5,11 @@
 
 #!/bin/bash
 
-if [ -f /tmp/paru-updated ] && find /tmp/paru-updated -mmin -1 | grep -q .; then
-  rm -f /tmp/paru-updated
-  exit 0
-fi
-
-touch /tmp/paru-updated
-
 updates=$(paru -Qu 2>/dev/null)
 count=$(echo "$updates" | grep -v '^$' | wc -l)
 
 if [ "$count" -eq 0 ]; then
+  echo "{\"text\": \"\", \"tooltip\": \"Up to date\", \"class\": \"\"}"
   exit 0
 fi
 
