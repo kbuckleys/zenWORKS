@@ -151,6 +151,6 @@
       "updated": ""
       },
     "exec-if": "which waybar-updates",
-    "exec": "waybar-updates -n"
+    "exec": "waybar-updates -n -i 10"
   }
 }
