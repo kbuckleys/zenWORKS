@@ -190,7 +190,10 @@ else
   scr_status="Screen sharing: OFF"
 fi
 
-tooltip="$mic_status  |  $cam_status  |  $loc_status  |  $scr_status"
+tooltip="${mic_status}
+${cam_status}
+${loc_status}
+${scr_status}"
 
 classes="privacydot"
 [[ $mic -eq 1 ]] && classes="$classes mic-on" || classes="$classes mic-off"
