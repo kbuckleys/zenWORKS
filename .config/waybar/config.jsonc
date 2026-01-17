@@ -13,8 +13,9 @@
   "height": 28,
 
   "modules-left": [
-    "hyprland/workspaces",
-    "group/tray-expander"
+    "custom/paru",
+    "group/tray-expander",
+    "hyprland/workspaces"
   ],
   "modules-center": [],
   "modules-right": [
@@ -28,7 +29,6 @@
     "memory",
     "pulseaudio",
     "clock",
-    "custom/paru",
     "custom/privacydots"
   ],
 
