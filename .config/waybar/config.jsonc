@@ -69,9 +69,9 @@
   },
 
   "cpu": {
-    "format": "CPU {usage}% ",
-    "format-mid": "CPU {usage}% ",
-    "format-high": "CPU {usage}% ",
+    "format": "CPU {usage} ",
+    "format-mid": "CPU {usage} ",
+    "format-high": "CPU {usage} ",
     "on-click": "footclient -T btop -e btop",
     "tooltip": true,
     "interval": 1,
