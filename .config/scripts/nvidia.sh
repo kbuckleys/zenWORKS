@@ -34,6 +34,6 @@ case "${UTIL_STATE}${TEMP_STATE}" in
   echo "<span foreground='#e0d8a4'>GPU ${RAW_UTIL}</span>  VRAM ${GPU_VRAM}  <span foreground='#e0d8a4'>${GPU_TEMP}°</span>"
   ;;
 *)
-  echo "GPU ${RAW_UTIL} VRAM ${GPU_VRAM} ${GPU_TEMP}°"
+  echo "GPU ${RAW_UTIL}  VRAM ${GPU_VRAM}  ${GPU_TEMP}°"
   ;;
 esac
