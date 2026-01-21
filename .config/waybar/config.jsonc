@@ -69,17 +69,23 @@
   },
 
   "cpu": {
-    "format": "CPU {usage}%",
+    "format": "CPU {usage}% ",
+    "format-mid": "CPU {usage}% ",
+    "format-high": "CPU {usage}% ",
     "on-click": "footclient -T btop -e btop",
     "tooltip": true,
-    "interval": 1
+    "interval": 1,
+    "states": {
+        "mid": 50,
+        "high": 80
+    }
   },
 
   "temperature": {
     "hwmon-path-abs": "/sys/devices/platform/coretemp.0/hwmon",
     "input-filename": "temp2_input",
-    "format": " {temperatureC}°",
-    "format-critical": "{temperatureC}°",
+    "format": "{temperatureC}°",
+    "warning-threshold": 50,
     "critical-threshold": 70,
     "tooltip": false,
     "interval": 5
