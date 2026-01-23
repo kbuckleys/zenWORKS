@@ -10,6 +10,9 @@
   border: none;
   font-family: "0xProto Nerd Font";
   font-size: 14px;
+}
+
+#waybar {
   background: none;
 }
 
@@ -44,12 +47,15 @@
   padding: 0px 4px 4px 4px;
   color: #dfdfdd;
 }
+
 #cpu.mid, #temperature.warning {
   color: #e0d8a4;
+  background: none;
 }
 
 #cpu.high, #temperature.critical, #network.disconnected, #pulseaudio.muted {
   color: #E0AEA4;
+  background: none;
 }
 
 #custom-paru {
