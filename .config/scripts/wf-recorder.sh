@@ -16,29 +16,20 @@ if pgrep -x "wf-recorder" >/dev/null; then
   exit 0
 fi
 
-# Get monitor count and select monitor (original logic)
-monitor_count=$(hyprctl monitors -j 2>/dev/null | jq 'length' 2>/dev/null || echo 1)
+# Auto-detect active monitor in Hyprland
+monitor=$(hyprctl activeworkspace -j 2>/dev/null | jq -r '.monitor' 2>/dev/null)
 
-if [ "$monitor_count" -eq 1 ]; then
-  monitor=$(hyprctl monitors -j 2>/dev/null | jq -r '.[0].name' 2>/dev/null)
-  [ -z "$monitor" ] && monitor=$(swaymsg -t get_outputs 2>/dev/null | jq -r '.[0].name' 2>/dev/null)
-  [ -z "$monitor" ] && {
-    notify-send "No monitor detected"
-    exit 1
-  }
-  notify-send "Recording" "$monitor (single monitor)"
-else
-  monitors=$(hyprctl monitors -j 2>/dev/null | jq -r '.[].name' 2>/dev/null)
-  [ -z "$monitors" ] && {
-    notify-send "No monitors detected"
-    exit 1
-  }
-  monitor=$(echo "$monitors" | rofi -dmenu -theme "$rofi_theme" -p "Select monitor:")
-  [ -z "$monitor" ] && {
-    notify-send "Cancelled" "No monitor selected"
-    exit 1
-  }
-fi
+# Fallback: try swaymsg if hyprctl fails
+[ -z "$monitor" ] && monitor=$(swaymsg -t get_workspaces -j 2>/dev/null | jq -r '.[] | select(.focused) | .output' 2>/dev/null | head -1)
+
+# Final fallback: first available monitor
+[ -z "$monitor" ] && monitor=$(hyprctl monitors -j 2>/dev/null | jq -r '.[0].name' 2>/dev/null)
+[ -z "$monitor" ] && monitor=$(swaymsg -t get_outputs 2>/dev/null | jq -r '.[0].name' 2>/dev/null)
+
+[ -z "$monitor" ] && {
+  notify-send "No monitor detected"
+  exit 1
+}
 
 filename="$output_dir/capture_$(date +'%Y-%m-%d_%H-%M-%S').mp4"
 audio_monitor=$(pactl list short sources | grep monitor | head -1 | awk '{print $2}')
