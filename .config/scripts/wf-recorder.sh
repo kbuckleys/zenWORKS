@@ -7,7 +7,6 @@
 
 output_dir="$HOME/Videos/Captures"
 mkdir -p "$output_dir"
-rofi_theme="$HOME/.config/rofi/wfr-monitors.rasi"
 
 # Check if wf-recorder is already running
 if pgrep -x "wf-recorder" >/dev/null; then
