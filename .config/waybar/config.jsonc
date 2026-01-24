@@ -62,7 +62,7 @@
   },
 
   "custom/nvidia": {
-    "exec": "~/.config/scripts/nvidia.sh",
+    "exec": "~/scripts/nvidia.sh",
     "interval": 5,
     "format": "{text}",
     "tooltip": false,
@@ -109,7 +109,7 @@
   },
 
   "custom/privacydots": {
-      "exec": "~/.config/scripts/privacy-dots.sh",
+      "exec": "~/scripts/privacy-dots.sh",
       "return-type": "json",
       "interval": 3,
       "format": "{text}",
@@ -151,7 +151,7 @@
   "custom/paru": {
     "format": "{icon} {0}",
     "return-type": "json",
-    "on-click": "footclient -T \"System Update\" -e ~/.config/scripts/update.sh",
+    "on-click": "footclient -T \"System Update\" -e ~/scripts/update.sh",
     "format-icons": {
       "pending-updates": "",
       "updated": ""
