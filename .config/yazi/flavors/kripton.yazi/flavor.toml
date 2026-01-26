@@ -152,25 +152,25 @@ rules = [
 
 [icon]
 dirs = [
-	{ name = ".git", text = "", fg = "#fab387" },
-	{ name = ".npm", text = "", fg = "#fab387" },
-  { name = ".steam", text = "", fg = "#fab387" },
-  { name = ".cache", text = "", fg = "#fab387" },
-  { name = ".local", text = "", fg = "#fab387" },
-  { name = ".cargo", text = "󱣘", fg = "#fab387" },
-  { name = ".github", text = "", fg = "#fab387" },
-  { name = ".config", text = "", fg = "#fab387" },
-  { name = ".mozilla", text = "", fg = "#fab387" },
-	{ name = "Desktop", text = "", fg = "#9bbfbf" },
-	{ name = "Development", text = "", fg = "#9bbfbf" },
-	{ name = "Documents", text = "", fg = "#9bbfbf" },
-	{ name = "Downloads", text = "󰃘", fg = "#9bbfbf" },
-	{ name = "Library", text = "", fg = "#9bbfbf" },
-	{ name = "Movies", text = "", fg = "#9bbfbf" },
-	{ name = "Music", text = "", fg = "#9bbfbf" },
-	{ name = "Pictures", text = "", fg = "#9bbfbf" },
-	{ name = "Public", text = "", fg = "#9bbfbf" },
-	{ name = "Videos", text = "", fg = "#9bbfbf" },
+	{ name = ".git", text = "" },
+	{ name = ".npm", text = "" },
+  { name = ".steam", text = "" },
+  { name = ".cache", text = "" },
+  { name = ".local", text = "" },
+  { name = ".cargo", text = "󱣘" },
+  { name = ".github", text = "" },
+  { name = ".config", text = "" },
+  { name = ".mozilla", text = "" },
+	{ name = "Desktop", text = "" },
+	{ name = "Development", text = "" },
+	{ name = "Documents", text = "" },
+	{ name = "Downloads", text = "󰃘" },
+	{ name = "Library", text = "" },
+	{ name = "Movies", text = "" },
+	{ name = "Music", text = "" },
+	{ name = "Pictures", text = "" },
+	{ name = "Public", text = "" },
+	{ name = "Videos", text = "" },
 ]
 conds = [
 	# Special files
@@ -186,5 +186,5 @@ conds = [
 	# Fallback
 	{ if = "dir", text = "", fg = "#9bbfbf" },
 	{ if = "exec", text = "", fg = "#fab387" },
-	{ if = "!dir", text = "", fg = "#dfdfdd" },
+	{ if = "!dir", text = "", fg = "#dfdfdd" }
 ]
