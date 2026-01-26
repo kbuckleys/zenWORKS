@@ -119,14 +119,19 @@ footer = { fg = "#dfdfdd", bg = "#20242a" }
 rules = [
 	# Image
 	{ mime = "image/*", fg = "#b6e0a4" },
+
 	# Media
 	{ mime = "{audio,video}/*", fg = "#e0d8a4" },
+
 	# Archive
 	{ mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#fab387" },
+
 	# Document
 	{ mime = "application/{pdf,doc,rtf}", fg = "#9bbfbf" },
+
 	# Virtual file system
 	{ mime = "vfs/{absent,stale}", fg = "#a0a09b" },
+
 	# Special file
   { mime = "inode/empty", fg = "#a0a09b" },
 
@@ -135,50 +140,51 @@ rules = [
 
   # Valid symlinks last (won't override orphans)
   { url = "*", is = "link", fg = "#c8a4e0" },
-	{ url = "*", is = "exec", fg = "#b6e0a4" },
+	{ url = "*", is = "exec", fg = "#fab387" },
 
 	# Dummy file
 	{ url = "*", is = "dummy", bg = "#fab387", fg = "#000000" },
 	{ url = "*/", is = "dummy", bg = "#fab387", fg = "#000000" },
+
 	# Fallback
-	{ url = "*/", fg = "#9bbfbf" }
+	{ url = "*/", fg = "#9bbfbf" },
 ]
 
 [icon]
 dirs = [
-	{ name = ".config", text = " ", fg = "#fab387" },
-	{ name = ".steam", text = " ", fg = "#fab387" },
-	{ name = ".cache", text = " ", fg = "#fab387" },
-	{ name = ".local", text = " ", fg = "#fab387" },
-	{ name = ".cargo", text = "󱣘 ", fg = "#fab387" },
-	{ name = ".mozilla", text = " ", fg = "#fab387" },
-	{ name = ".git", text = " ", fg = "#fab387" },
-	{ name = ".github", text = " ", fg = "#fab387" },
-	{ name = ".npm", text = " ", fg = "#fab387" },
-	{ name = "Desktop", text = " ", fg = "#9bbfbf" },
-	{ name = "Development", text = " ", fg = "#9bbfbf" },
-	{ name = "Documents", text = " ", fg = "#9bbfbf" },
-	{ name = "Downloads", text = "󰃘 ", fg = "#9bbfbf" },
-	{ name = "Library", text = " ", fg = "#9bbfbf" },
-	{ name = "Movies", text = " ", fg = "#9bbfbf" },
-	{ name = "Music", text = " ", fg = "#9bbfbf" },
-	{ name = "Pictures", text = " ", fg = "#9bbfbf" },
-	{ name = "Public", text = " ", fg = "#9bbfbf" },
-	{ name = "Videos", text = " ", fg = "#9bbfbf" },
+	{ name = ".git", text = "", fg = "#fab387" },
+	{ name = ".npm", text = "", fg = "#fab387" },
+  { name = ".steam", text = "", fg = "#fab387" },
+  { name = ".cache", text = "", fg = "#fab387" },
+  { name = ".local", text = "", fg = "#fab387" },
+  { name = ".cargo", text = "󱣘", fg = "#fab387" },
+  { name = ".github", text = "", fg = "#fab387" },
+  { name = ".config", text = "", fg = "#fab387" },
+  { name = ".mozilla", text = "", fg = "#fab387" },
+	{ name = "Desktop", text = "", fg = "#9bbfbf" },
+	{ name = "Development", text = "", fg = "#9bbfbf" },
+	{ name = "Documents", text = "", fg = "#9bbfbf" },
+	{ name = "Downloads", text = "󰃘", fg = "#9bbfbf" },
+	{ name = "Library", text = "", fg = "#9bbfbf" },
+	{ name = "Movies", text = "", fg = "#9bbfbf" },
+	{ name = "Music", text = "", fg = "#9bbfbf" },
+	{ name = "Pictures", text = "", fg = "#9bbfbf" },
+	{ name = "Public", text = "", fg = "#9bbfbf" },
+	{ name = "Videos", text = "", fg = "#9bbfbf" },
 ]
 conds = [
 	# Special files
-	{ if = "orphan", text = "" , fg = "#a0a09b" },
-	{ if = "link", text = " ", fg = "#c8a4e0" },
-	{ if = "block", text = " ", fg = "#eebebe" },
-	{ if = "char", text = " ", fg = "#eebebe" },
-	{ if = "fifo", text = " ", fg = "#eebebe" },
-	{ if = "sock", text = " ", fg = "#eebebe" },
-	{ if = "sticky", text = " ", fg = "#eebebe" },
-	{ if = "dummy", text = " ", fg = "#e78284" },
+	{ if = "orphan", text = "", fg = "#a0a09b" },
+	{ if = "link", text = "", fg = "#c8a4e0" },
+	{ if = "block", text = "", fg = "#eebebe" },
+	{ if = "char", text = "", fg = "#eebebe" },
+	{ if = "fifo", text = "", fg = "#eebebe" },
+	{ if = "sock", text = "", fg = "#eebebe" },
+	{ if = "sticky", text = "", fg = "#eebebe" },
+	{ if = "dummy", text = "", fg = "#e78284" },
 
 	# Fallback
-	{ if = "dir", text = " ", fg = "#9bbfbf" },
-	{ if = "exec", text = " ", fg = "#fab387" },
-	{ if = "!dir", text = " ", fg = "#dfdfdd" },
+	{ if = "dir", text = "", fg = "#9bbfbf" },
+	{ if = "exec", text = "", fg = "#fab387" },
+	{ if = "!dir", text = "", fg = "#dfdfdd" },
 ]
