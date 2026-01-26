@@ -15,9 +15,9 @@ find_position = { bg = "#000000", bold = true }
 marker_selected = { bg = "#e0d8a4" }
 marker_copied = { bg = "#b6e0a4" }
 marker_marked = { bg = "#c8a4e0" }
-marker_cut = { bg = "#E0AEA4" }
+marker_cut = { bg = "#e78284" }
 count_copied = { fg = "#000000", bg = "#b6e0a4" }
-count_cut = { fg = "#000000", bg = "#E0AEA4" }
+count_cut = { fg = "#000000", bg = "#e78284" }
 count_selected = { fg = "#000000", bg = "#e0d8a4" }
 border_style = { fg = "#000000" }
 
@@ -48,12 +48,12 @@ sep_right = { open = "", close = "" }
 perm_sep = { fg = "#20242a" }
 perm_type = { fg = "#b6e0a4" }
 perm_read = { fg = "#e0d8a4" }
-perm_write = { fg = "#E0AEA4" }
+perm_write = { fg = "#e78284" }
 perm_exec = { fg = "#9bbfbf" }
 
 # Progress
 progress_normal = { fg = "#fab387", bg = "#20242a" }
-progress_error = { fg = "#E0AEA4", bg = "#20242a" }
+progress_error = { fg = "#e78284", bg = "#20242a" }
 
 [which]
 cols = 3
@@ -65,12 +65,12 @@ separator = "  "
 separator_style = { fg = "#5a6069" }
 
 [confirm]
-border = { fg = "#E0AEA4" }
-title = { fg = "#E0AEA4", bold = true }
+border = { fg = "#e78284" }
+title = { fg = "#eebebe", bold = true }
 body = {}
 list = {}
-btn_yes = {}
-btn_no = {}
+btn_yes = { fg = "#eebebe" }
+btn_no = { fg = "#eebebe" }
 btn_labels = [ "[Y]ES", "[N]O" ]
 
 [spot]
@@ -82,7 +82,7 @@ tbl_cell = { fg = "#9bbfbf", bg = "#20242a" }
 [notify]
 title_info = { fg = "#b6e0a4" }
 title_warn = { fg = "#e0d8a4" }
-title_error = { fg = "#E0AEA4" }
+title_error = { fg = "#eebebe" }
 icon_info = ""
 icon_warn = ""
 icon_error = ""
@@ -131,7 +131,7 @@ rules = [
   { mime = "inode/empty", fg = "#a0a09b" },
 
   # Orphan (broken) symlinks first
-  { url = "*", is = "orphan", fg = "#E0AEA4" },
+  { url = "*", is = "orphan", fg = "#e78284" },
 
   # Valid symlinks last (won't override orphans)
   { url = "*", is = "link", fg = "#c8a4e0" },
@@ -142,4 +142,43 @@ rules = [
 	{ url = "*/", is = "dummy", bg = "#fab387", fg = "#000000" },
 	# Fallback
 	{ url = "*/", fg = "#9bbfbf" }
+]
+
+[icon]
+dirs = [
+	{ name = ".config", text = " ", fg = "#fab387" },
+	{ name = ".steam", text = " ", fg = "#fab387" },
+	{ name = ".cache", text = " ", fg = "#fab387" },
+	{ name = ".local", text = " ", fg = "#fab387" },
+	{ name = ".cargo", text = "󱣘 ", fg = "#fab387" },
+	{ name = ".mozilla", text = " ", fg = "#fab387" },
+	{ name = ".git", text = " ", fg = "#fab387" },
+	{ name = ".github", text = " ", fg = "#fab387" },
+	{ name = ".npm", text = " ", fg = "#fab387" },
+	{ name = "Desktop", text = " ", fg = "#9bbfbf" },
+	{ name = "Development", text = " ", fg = "#9bbfbf" },
+	{ name = "Documents", text = " ", fg = "#9bbfbf" },
+	{ name = "Downloads", text = "󰃘 ", fg = "#9bbfbf" },
+	{ name = "Library", text = " ", fg = "#9bbfbf" },
+	{ name = "Movies", text = " ", fg = "#9bbfbf" },
+	{ name = "Music", text = " ", fg = "#9bbfbf" },
+	{ name = "Pictures", text = " ", fg = "#9bbfbf" },
+	{ name = "Public", text = " ", fg = "#9bbfbf" },
+	{ name = "Videos", text = " ", fg = "#9bbfbf" },
+]
+conds = [
+	# Special files
+	{ if = "orphan", text = "" , fg = "#a0a09b" },
+	{ if = "link", text = " ", fg = "#c8a4e0" },
+	{ if = "block", text = " ", fg = "#eebebe" },
+	{ if = "char", text = " ", fg = "#eebebe" },
+	{ if = "fifo", text = " ", fg = "#eebebe" },
+	{ if = "sock", text = " ", fg = "#eebebe" },
+	{ if = "sticky", text = " ", fg = "#eebebe" },
+	{ if = "dummy", text = " ", fg = "#e78284" },
+
+	# Fallback
+	{ if = "dir", text = " ", fg = "#9bbfbf" },
+	{ if = "exec", text = " ", fg = "#fab387" },
+	{ if = "!dir", text = " ", fg = "#dfdfdd" },
 ]

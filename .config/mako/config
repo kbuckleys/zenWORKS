@@ -19,11 +19,11 @@ height=70
 padding=4
 
 [urgency=low]
-background-color=#dfdfdd
+background-color=#b6e0a4
 
 [urgency=normal]
-background-color=#e0d8a4
+background-color=#fab387
 
 [urgency=high]
-background-color=#e0aea4
+background-color=#e78284
 default-timeout=0
