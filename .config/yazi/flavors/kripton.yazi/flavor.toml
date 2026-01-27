@@ -169,6 +169,7 @@ files = [
   { name = "readme", text = " " },
   { name = "readme.md", text = " " },
   { name = "makefile", text = " " },
+  { name = "hyprland.conf", text = " " },
 ]
 dirs = [
 	{ name = "mnt", text = " " },
