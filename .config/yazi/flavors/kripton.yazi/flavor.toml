@@ -242,12 +242,20 @@ exts = [
   { name = "xar", text = " " },
   { name = "cab", text = " " },
 
-  # Media types
+  # Storage
   { name = "bin", text = " " },
   { name = "dmg", text = " " },
   { name = "iso", text = " " },
   { name = "toast", text = " " },
   { name = "vcd", text = " " },
+
+  # Closed Captions
+  { name = "srt", text = " " },
+  { name = "vtt", text = " " },
+  { name = "ass", text = " " },
+  { name = "ssa", text = " " },
+  { name = "sub", text = " " },
+  { name = "idx", text = " " },
 
   # Video formats
   { name = "mp4", text = " " },
@@ -295,14 +303,6 @@ exts = [
   { name = "roq", text = " " },
   { name = "nsv", text = " " },
 
-  # Closed Captions
-  { name = "srt", text = " " },
-  { name = "vtt", text = " " },
-  { name = "ass", text = " " },
-  { name = "ssa", text = " " },
-  { name = "sub", text = " " },
-  { name = "idx", text = " " },
-
   # Audio formats
   { name = "3gp", text = "󰎅 " },
   { name = "aa", text = "󰎅 " },
@@ -349,12 +349,36 @@ exts = [
   { name = "8svx", text = "󰎅 " },
   { name = "cda", text = "󰎅 " },
 
-  # Slide formats
-  { name = "key", text = "󰐩 " },
-  { name = "odp", text = "󰐩 " },
-  { name = "pps", text = "󰐩 " },
-  { name = "ppt", text = "󰐩 " },
-  { name = "pptx", text = "󰐩 " },
+  # Image formats
+  { name = "ai", text = " " },
+  { name = "ps", text = " " },
+  { name = "psd", text = " " },
+  { name = "tif", text = " " },
+  { name = "tiff", text = " " },
+  { name = "bmp", text = " " },
+  { name = "ico", text = " " },
+  { name = "webp", text = " " },
+  { name = "png", text = " " },
+  { name = "apng", text = " " },
+  { name = "jpg", text = " " },
+  { name = "jpeg", text = " " },
+  { name = "jp2", text = " " },
+  { name = "j2k", text = " " },
+  { name = "jpf", text = " " },
+  { name = "jpm", text = " " },
+  { name = "jpq2", text = " " },
+  { name = "j2c", text = " " },
+  { name = "jpc", text = " " },
+  { name = "jpx", text = " " },
+  { name = "jfif", text = " " },
+  { name = "pjpeg", text = " " },
+  { name = "pjp", text = " " },
+  { name = "mj2", text = " " },
+  { name = "gif", text = " " },
+  { name = "svg", text = " " },
+  { name = "avif", text = " " },
+  { name = "ico", text = " " },
+  { name = "cur", text = " " },
 
   # Programming & Configs
   { name = "apk", text = "󰓷 " },
@@ -381,30 +405,6 @@ exts = [
   { name = "xml", text = "󰗀 " },
 	{ name = "vim", text = " " },
 	{ name = "swp", text = " " },
-
-	{ name = "theme", text = "󰔎 " },
-	{ name = "manifest", text = " " },
-	{ name = "dpkg", text = "󱧘 " },
-  { name = "ods", text = " " },
-  { name = "xls", text = " " },
-  { name = "xlsm", text = " " },
-  { name = "xlsx", text = " " },
-
-  # Image formats
-  { name = "ai", text = " " },
-  { name = "ps", text = " " },
-  { name = "psd", text = " " },
-  { name = "tif", text = " " },
-  { name = "tiff", text = " " },
-  { name = "bmp", text = " " },
-  { name = "ico", text = " " },
-  { name = "webp", text = " " },
-  { name = "png", text = " " },
-  { name = "jpg", text = " " },
-  { name = "jpeg", text = " " },
-  { name = "gif", text = " " },
-  { name = "svg", text = " " },
-
   { name = "asp", text = " " },
   { name = "aspx", text = " " },
   { name = "cfm", text = " " },
@@ -422,10 +422,6 @@ exts = [
   { name = "rss", text = " " },
   { name = "list", text = " " },
 
-  { name = "csv", text = " " },
-  { name = "log", text = " " },
-  { name = "sav", text = " " },
-
   # Email
   { name = "email", text = "󰇮 " },
   { name = "eml", text = "󰇮 " },
@@ -440,5 +436,24 @@ exts = [
   { name = "fnt", text = " " },
   { name = "fon", text = " " },
   { name = "otf", text = " " },
-  { name = "ttf", text = " " }
+  { name = "ttf", text = " " },
+
+  # Slide formats
+  { name = "key", text = "󰐩 " },
+  { name = "odp", text = "󰐩 " },
+  { name = "pps", text = "󰐩 " },
+  { name = "ppt", text = "󰐩 " },
+  { name = "pptx", text = "󰐩 " },
+
+  # Misc
+	{ name = "theme", text = "󰔎 " },
+	{ name = "manifest", text = " " },
+	{ name = "dpkg", text = "󱧘 " },
+  { name = "ods", text = " " },
+  { name = "xls", text = " " },
+  { name = "xlsm", text = " " },
+  { name = "xlsx", text = " " },
+  { name = "csv", text = " " },
+  { name = "log", text = " " },
+  { name = "sav", text = " " }
 ]
