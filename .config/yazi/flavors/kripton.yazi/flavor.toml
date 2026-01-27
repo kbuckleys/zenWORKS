@@ -283,6 +283,7 @@ exts = [
   { name = "jpg", text = "" },
   { name = "jpeg", text = "" },
   { name = "gif", text = "" },
+  { name = "svg", text = "" },
 
   { name = "asp", text = "" },
   { name = "aspx", text = "" },
