@@ -151,6 +151,25 @@ rules = [
 ]
 
 [icon]
+conds = [
+	{ if = "orphan", text = " " },
+	{ if = "link", text = " " },
+	{ if = "block", text = " " },
+	{ if = "char", text = " " },
+	{ if = "fifo", text = " " },
+	{ if = "sock", text = " " },
+	{ if = "sticky", text = " " },
+	{ if = "dummy", text = " " },
+	{ if = "dir", text = " " },
+	{ if = "exec", text = " " },
+	{ if = "!dir", text = " " },
+]
+files = [
+  { name = "license", text = "󰿃 " },
+  { name = "readme", text = " " },
+  { name = "readme.md", text = " " },
+  { name = "makefile", text = " " },
+]
 dirs = [
 	{ name = "mnt", text = " " },
 	{ name = "boot", text = " " },
@@ -168,7 +187,7 @@ dirs = [
 	{ name = "electron", text = "󱀤 " },
 	{ name = "discord", text = " " },
 	{ name = "pulse", text = " " },
-	{ name = ".git", text = " " },
+	{ name = ".git", text = "󰊢 " },
 	{ name = ".npm", text = " " },
   { name = ".steam", text = " " },
   { name = ".cache", text = " " },
@@ -189,19 +208,6 @@ dirs = [
 	{ name = "Pictures", text = " " },
 	{ name = "Public", text = " " },
 	{ name = "Videos", text = " " }
-]
-conds = [
-	{ if = "orphan", text = " " },
-	{ if = "link", text = " " },
-	{ if = "block", text = " " },
-	{ if = "char", text = " " },
-	{ if = "fifo", text = " " },
-	{ if = "sock", text = " " },
-	{ if = "sticky", text = " " },
-	{ if = "dummy", text = " " },
-	{ if = "dir", text = " " },
-	{ if = "exec", text = " " },
-	{ if = "!dir", text = " " }
 ]
 exts = [
   { name = "sh", text = "󰑷 " },
@@ -324,6 +330,16 @@ exts = [
   { name = "java", text = " " },
   { name = "swift", text = " " },
   { name = "vb", text = " " },
+  { name = "toml", text = " " },
+  { name = "yaml", text = " " },
+  { name = "lua", text = " " },
+  { name = "json", text = " " },
+  { name = "jsonc", text = " " },
+  { name = "cfg", text = " " },
+  { name = "conf", text = " " },
+  { name = "ini", text = " " },
+  { name = "fish", text = " " },
+  { name = "xml", text = "󰗀 " },
 
   { name = "ods", text = " " },
   { name = "xls", text = " " },
@@ -359,6 +375,7 @@ exts = [
   { name = "php", text = " " },
   { name = "py", text = "󰌠 " },
   { name = "rss", text = " " },
+  { name = "list", text = " " },
 
   { name = "csv", text = " " },
   { name = "log", text = " " },
