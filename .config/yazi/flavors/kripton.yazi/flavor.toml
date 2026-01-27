@@ -162,7 +162,7 @@ conds = [
 	{ if = "dummy", text = " " },
 	{ if = "dir", text = " " },
 	{ if = "exec", text = " " },
-	{ if = "!dir", text = " " },
+	{ if = "!dir", text = " " }
 ]
 files = [
   { name = "license", text = "󰿃 " },
@@ -198,16 +198,17 @@ dirs = [
   { name = ".mozilla", text = " " },
   { name = "mozilla", text = " " },
   { name = "scripts", text = "󰑷 " },
-	{ name = "Desktop", text = " " },
-	{ name = "Development", text = " " },
-	{ name = "Documents", text = " " },
-	{ name = "Downloads", text = "󰃘 " },
-	{ name = "Library", text = " " },
-	{ name = "Movies", text = " " },
-	{ name = "Music", text = " " },
-	{ name = "Pictures", text = " " },
-	{ name = "Public", text = " " },
-	{ name = "Videos", text = " " }
+	{ name = "desktop", text = " " },
+	{ name = "development", text = " " },
+	{ name = "documents", text = " " },
+	{ name = "downloads", text = "󰃘 " },
+	{ name = "library", text = " " },
+	{ name = "movies", text = " " },
+	{ name = "music", text = " " },
+	{ name = "pictures", text = " " },
+	{ name = "public", text = " " },
+	{ name = "videos", text = " " },
+	{ name = "memes", text = " " }
 ]
 exts = [
   { name = "sh", text = "󰑷 " },
@@ -217,6 +218,7 @@ exts = [
   { name = "wpd", text = " " },
   { name = "pdf", text = " " },
 
+  # Archive formats
   { name = "z", text = " " },
   { name = "zip", text = " " },
   { name = "deb", text = " " },
@@ -239,12 +241,14 @@ exts = [
   { name = "xar", text = " " },
   { name = "cab", text = " " },
 
+  # Media types
   { name = "bin", text = " " },
   { name = "dmg", text = " " },
   { name = "iso", text = " " },
   { name = "toast", text = " " },
   { name = "vcd", text = " " },
 
+  # Video formats
   { name = "mp4", text = " " },
   { name = "mkv", text = " " },
   { name = "webm", text = " " },
@@ -262,6 +266,7 @@ exts = [
   { name = "vob", text = " " },
   { name = "wmv", text = " " },
 
+  # Closed Captions
   { name = "srt", text = " " },
   { name = "vtt", text = " " },
   { name = "ass", text = " " },
@@ -269,6 +274,7 @@ exts = [
   { name = "sub", text = " " },
   { name = "idx", text = " " },
 
+  # Audio formats
   { name = "3gp", text = "󰎅 " },
   { name = "aa", text = "󰎅 " },
   { name = "aac", text = "󰎅 " },
@@ -314,12 +320,14 @@ exts = [
   { name = "8svx", text = "󰎅 " },
   { name = "cda", text = "󰎅 " },
 
+  # Slide formats
   { name = "key", text = "󰐩 " },
   { name = "odp", text = "󰐩 " },
   { name = "pps", text = "󰐩 " },
   { name = "ppt", text = "󰐩 " },
   { name = "pptx", text = "󰐩 " },
 
+  # Programming & Configs
   { name = "apk", text = "󰓷 " },
   { name = "c", text = " " },
   { name = "class", text = " " },
@@ -344,13 +352,16 @@ exts = [
   { name = "xml", text = "󰗀 " },
 	{ name = "vim", text = " " },
 	{ name = "swp", text = " " },
-	{ name = "theme", text = "󰔎 " },
 
+	{ name = "theme", text = "󰔎 " },
+	{ name = "manifest", text = " " },
+	{ name = "dpkg", text = "󱧘 " },
   { name = "ods", text = " " },
   { name = "xls", text = " " },
   { name = "xlsm", text = " " },
   { name = "xlsx", text = " " },
 
+  # Image formats
   { name = "ai", text = " " },
   { name = "ps", text = " " },
   { name = "psd", text = " " },
@@ -386,6 +397,7 @@ exts = [
   { name = "log", text = " " },
   { name = "sav", text = " " },
 
+  # Email
   { name = "email", text = "󰇮 " },
   { name = "eml", text = "󰇮 " },
   { name = "emlx", text = "󰇮 " },
@@ -395,8 +407,9 @@ exts = [
   { name = "pst", text = "󰇮 " },
   { name = "vcf", text = "󰇮 " },
 
+  # Fonts
   { name = "fnt", text = " " },
   { name = "fon", text = " " },
   { name = "otf", text = " " },
-  { name = "ttf", text = " " },
+  { name = "ttf", text = " " }
 ]
