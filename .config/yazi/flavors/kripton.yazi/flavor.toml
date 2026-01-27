@@ -152,7 +152,11 @@ rules = [
 
 [icon]
 dirs = [
-	{ name = "home", text = " " },
+	{ name = "mnt", text = " " },
+	{ name = "boot", text = " " },
+  { name = "home", text = " " },
+  { name = "captures", text = "󰹑 " },
+  { name = "screenshots", text = "󰹑 " },
 	{ name = "hypr", text = " " },
 	{ name = "spotify", text = " " },
 	{ name = "vim", text = " " },
