@@ -25,7 +25,7 @@ fi
 # 60s result cache
 if [ -f "$STATE_FILE" ]; then
   LAST_UPDATE=$(stat -c %Y "$STATE_FILE" 2>/dev/null || echo 0)
-  if [ $((NOW - LAST_UPDATE)) -lt 60 ]; then
+  if [ $((NOW - LAST_UPDATE)) -lt 10 ]; then
     cat "$STATE_FILE"
     exit 0
   fi
