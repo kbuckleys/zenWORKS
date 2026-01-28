@@ -1,33 +1,73 @@
 [[mgr.prepend_keymap]]
-on  = "M"
+on = [ "g", "D" ]
+run = "cd ~/Documents"
+desc = "Go to Documents"
+
+[[mgr.prepend_keymap]]
+on = [ "g", "d" ]
+run = "cd ~/Downloads"
+desc = "Go to Downloads"
+
+[[mgr.prepend_keymap]]
+on = [ "g", "c" ]
+run = "cd ~/.config"
+desc = "Go to .config"
+
+[[mgr.prepend_keymap]]
+on = [ "g", "p" ]
+run = "cd ~/Pictures"
+desc = "Go to Pictures"
+
+[[mgr.prepend_keymap]]
+on = [ "g", "v" ]
+run = "cd ~/Videos"
+desc = "Go to Videos"
+
+[[mgr.prepend_keymap]]
+on = [ "g", "s" ]
+run = "cd ~/.steam/steam/steamapps/common/"
+desc = "Go to Steam Library"
+
+[[mgr.prepend_keymap]]
+on = [ "g", "r" ]
+run = "cd /"
+desc = "Go to Root"
+
+[[mgr.prepend_keymap]]
+on = [ "g", "m" ]
+run = "cd /run/media"
+desc = "Go to mounted media"
+
+[[mgr.prepend_keymap]]
+on = "M"
 run = "plugin mount"
 
 [[mgr.prepend_keymap]]
-on   = [ "c", "m" ]
-run  = "plugin chmod"
+on = [ "c", "m" ]
+run = "plugin chmod"
 desc = "Chmod on selected files"
 
 [[mgr.prepend_keymap]]
-on   = [ "c", "a", "a" ]
-run  = "plugin compress"
+on = [ "c", "a", "a" ]
+run = "plugin compress"
 desc = "Archive"
 
 [[mgr.prepend_keymap]]
-on   = [ "c", "a", "p" ]
-run  = "plugin compress -p"
+on = [ "c", "a", "p" ]
+run = "plugin compress -p"
 desc = "Archive (Password)"
 
 [[mgr.prepend_keymap]]
-on   = [ "c", "a", "h" ]
-run  = "plugin compress -ph"
+on = [ "c", "a", "h" ]
+run = "plugin compress -ph"
 desc = "Archive (Password Header)"
 
 [[mgr.prepend_keymap]]
-on   = [ "c", "a", "l" ]
-run  = "plugin compress -l"
+on = [ "c", "a", "l" ]
+run = "plugin compress -l"
 desc = "Archive (Compression Level)"
 
 [[mgr.prepend_keymap]]
-on   = [ "c", "a", "u" ]
-run  = "plugin compress -phl"
+on = [ "c", "a", "u" ]
+run = "plugin compress -phl"
 desc = "Archive (Password + Header + Level)"
