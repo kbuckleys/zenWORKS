@@ -165,10 +165,13 @@ conds = [
 	{ if = "!dir", text = " " }
 ]
 files = [
+  { name = "config", text = " " },
   { name = "license", text = "󰿃 " },
   { name = "readme", text = " " },
   { name = "readme.md", text = " " },
   { name = "makefile", text = " " },
+	{ name = ".gitignore", text = " " },
+	{ name = ".gitattributes", text = " " },
   { name = "hyprland.conf", text = " " },
 ]
 dirs = [
@@ -177,6 +180,9 @@ dirs = [
   { name = "home", text = " " },
   { name = "captures", text = "󰹑 " },
   { name = "screenshots", text = "󰹑 " },
+  { name = "arch", text = "󰣇 " },
+  { name = "paru", text = "󰣇 " },
+  { name = "yay", text = "󰣇 " },
 	{ name = "hypr", text = " " },
 	{ name = "spotify", text = " " },
 	{ name = "vim", text = " " },
@@ -213,6 +219,8 @@ dirs = [
 ]
 exts = [
   { name = "sh", text = "󰑷 " },
+  { name = "md", text = " " },
+  { name = "txt", text = " " },
   { name = "doc", text = " " },
   { name = "docx", text = " " },
   { name = "odt", text = " " },
@@ -450,6 +458,8 @@ exts = [
 	{ name = "manifest", text = " " },
 	{ name = "dpkg", text = "󱧘 " },
   { name = "ods", text = " " },
+  { name = "db", text = " " },
+  { name = "sqlite", text = " " },
   { name = "xls", text = " " },
   { name = "xlsm", text = " " },
   { name = "xlsx", text = " " },
