@@ -59,10 +59,6 @@
 }
 
 #custom-paru {
-  padding: 0px 4px 4px 8px;
-  color: #9bbfbf;
-}
-#custom-paru.pending-updates {
   padding: 0px 8px 4px 8px;
   font-weight: bold;
   color: #fab387;
