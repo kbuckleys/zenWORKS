@@ -161,7 +161,7 @@ conds = [
 	{ if = "dummy", text = " " },
 	{ if = "dir", text = " " },
 	{ if = "exec", text = " " },
-	{ if = "!dir", text = " " }
+	{ if = "!dir", text = " " },
 ]
 files = [
   { name = "config", text = " " },
@@ -176,6 +176,11 @@ files = [
 dirs = [
 	{ name = "mnt", text = " " },
 	{ name = "boot", text = " " },
+	{ name = "run", text = " " },
+	{ name = "root", text = " " },
+	{ name = "gtk-3.0", text = " " },
+	{ name = "gtk-4.0", text = " " },
+	{ name = "gtk-5.0", text = " " },
   { name = "home", text = " " },
   { name = "captures", text = "󰹑 " },
   { name = "screenshots", text = "󰹑 " },
@@ -202,9 +207,10 @@ dirs = [
   { name = ".github", text = " " },
   { name = ".config", text = " " },
   { name = ".mozilla", text = " " },
+  { name = "cliphist", text = " " },
   { name = "mozilla", text = " " },
   { name = "scripts", text = "󰑷 " },
-	{ name = "desktop", text = " " },
+	{ name = "desktop", text = " " },
 	{ name = "development", text = " " },
 	{ name = "documents", text = " " },
 	{ name = "downloads", text = "󰃘 " },
@@ -429,6 +435,7 @@ exts = [
   { name = "py", text = "󰌠 " },
   { name = "rss", text = " " },
   { name = "list", text = " " },
+  { name = "desktop", text = " " },
 
   # Email
   { name = "email", text = "󰇮 " },
