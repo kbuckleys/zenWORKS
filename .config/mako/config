@@ -4,7 +4,7 @@
 # https://github.com/kbuckleys/
 
 layer=overlay
-font=0xProto Nerd Font 10
+font=0xProto Nerd Font 11
 text-alignment=center
 border-color=#20242a
 anchor=bottom-center
