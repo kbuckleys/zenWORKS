@@ -62,13 +62,12 @@ cand = { fg = "#fab387" }
 rest = { fg = "#20242a" }
 desc = { fg = "#dfdfdd" }
 separator = "  "
-separator_style = { fg = "#5a6069" }
+separator_style = { fg = "#6a707f" }
 
 [confirm]
 border = { fg = "#e78284" }
-title = { fg = "#eebebe", bold = true }
-body = {}
-list = {}
+title = { fg = "#e78284", bold = true }
+list = { fg = "#eebebe" }
 btn_yes = { fg = "#eebebe" }
 btn_no = { fg = "#eebebe" }
 btn_labels = [ "[Y]ES", "[N]O" ]
@@ -82,10 +81,10 @@ tbl_cell = { fg = "#9bbfbf", bg = "#20242a" }
 [notify]
 title_info = { fg = "#b6e0a4" }
 title_warn = { fg = "#e0d8a4" }
-title_error = { fg = "#eebebe" }
-icon_info = ""
-icon_warn = ""
-icon_error = ""
+title_error = { fg = "#e78284" }
+icon_info = " "
+icon_warn = " "
+icon_error = " "
 
 [pick]
 border = { fg = "#9bbfbf" }
@@ -112,8 +111,8 @@ hovered = { fg = "#dfdfdd", bg = "#20242a" }
 on = {}
 run = {}
 desc = {}
-hovered = { reversed = true }
-footer = { fg = "#dfdfdd", bg = "#20242a" }
+hovered = { fg = "#dfdfdd", bg = "#20242a" }
+footer = { fg = "#fab387", bg = "#20242a" }
 
 [filetype]
 rules = [
@@ -251,11 +250,12 @@ exts = [
   { name = "cab", text = " " },
 
   # Storage
-  { name = "bin", text = " " },
-  { name = "dmg", text = " " },
-  { name = "iso", text = " " },
-  { name = "toast", text = " " },
-  { name = "vcd", text = " " },
+  { name = "bin", text = "󰺕 " },
+  { name = "dmg", text = "󰺕 " },
+  { name = "iso", text = "󰺕 " },
+  { name = "toast", text = "󰺕 " },
+  { name = "img", text = "󰺕 " },
+  { name = "vcd", text = "󰺕 " },
 
   # Closed Captions
   { name = "srt", text = " " },
