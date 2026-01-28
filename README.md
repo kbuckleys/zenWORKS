@@ -53,7 +53,6 @@ Here's a list of the absolute essentials for a functional setup. The rest of the
 - rofimoji
 - rofi-calc
 - waybar
-- waybar-updates ``If you see an Arch-based distro``
 - yazi
 
 # Theme Elements
