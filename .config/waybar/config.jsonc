@@ -62,7 +62,7 @@
   },
 
   "custom/nvidia": {
-    "exec": "~/scripts/wb-nvidia.sh",
+    "exec": "~/scripts/waybar/wb-nvidia.sh",
     "interval": 5,
     "format": "{text}",
     "tooltip": false,
@@ -109,7 +109,7 @@
   },
 
   "custom/privacydots": {
-      "exec": "~/scripts/wb-privacy-dots.sh",
+      "exec": "~/scripts/waybar/wb-privacy-dots.sh",
       "return-type": "json",
       "interval": 3,
       "format": "{text}",
@@ -151,7 +151,7 @@
   "custom/paru": {
     "return-type": "json",
     "on-click": "footclient -T \"System Update\" -e ~/scripts/update.sh",
-    "exec": "~/scripts/wb-paru.sh",
+    "exec": "~/scripts/waybar/wb-paru.sh",
     "interval": 10
   }
 }
