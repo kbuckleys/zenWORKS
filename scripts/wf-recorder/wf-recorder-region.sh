@@ -21,7 +21,7 @@ geometry=$(echo "$windows" | slurp)
 # Get geometry for selected area using slurp
 geometry=$(slurp 2>/dev/null)
 if [ -z "$geometry" ]; then
-  notify-send "No region selected" "wf-recorder"
+  notify-send "Aborted: No region selected" "wf-recorder"
   exit 1
 fi
 

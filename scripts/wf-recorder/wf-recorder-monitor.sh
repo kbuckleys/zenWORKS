@@ -26,7 +26,7 @@ monitor=$(hyprctl activeworkspace -j 2>/dev/null | jq -r '.monitor' 2>/dev/null)
 [ -z "$monitor" ] && monitor=$(swaymsg -t get_outputs 2>/dev/null | jq -r '.[0].name' 2>/dev/null)
 
 [ -z "$monitor" ] && {
-  notify-send "No monitor detected"
+  notify-send "Aborted - No monitor detected"
   exit 1
 }
 

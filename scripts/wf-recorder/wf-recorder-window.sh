@@ -20,7 +20,7 @@ notify-send "Select a window to capture" "wf-recorder"
 geometry=$(echo "$windows" | slurp)
 
 [ -z "$geometry" ] && {
-  notify-send "Cancelled" "wf-recorder"
+  notify-send "Aborted: No window selected" "wf-recorder"
   exit 1
 }
 
