@@ -8,6 +8,7 @@
 output_dir="$HOME/Videos/Captures"
 mkdir -p "$output_dir"
 
+# Check if wf-recorder is already running
 if pgrep -x "wf-recorder" >/dev/null; then
   notify-send "Recording Stopped" "wf-recorder"
   pkill -SIGINT -f wf-recorder
