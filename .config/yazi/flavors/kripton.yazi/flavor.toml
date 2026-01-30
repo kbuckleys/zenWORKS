@@ -171,9 +171,15 @@ files = [
   { name = "makefile", text = " " },
 	{ name = ".gitignore", text = " " },
 	{ name = ".gitattributes", text = " " },
+  { name = "hypr.conf", text = " " },
   { name = "hyprland.conf", text = " " },
   { name = "hypridle.conf", text = " " },
   { name = "hyprlock.conf", text = " " },
+  { name = "hyprpaper.conf", text = " " },
+  { name = "hyprsunset.conf", text = " " },
+  { name = "hyprtoolkit.conf", text = " " },
+  { name = "hyprlauncher.conf", text = " " },
+  { name = "hyprqt6engine.conf", text = " " },
 ]
 dirs = [
 	{ name = "mnt", text = " " },
