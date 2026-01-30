@@ -172,6 +172,7 @@ files = [
 	{ name = ".gitignore", text = " " },
 	{ name = ".gitattributes", text = " " },
   { name = "hyprland.conf", text = " " },
+  { name = "hypridle.conf", text = " " },
 ]
 dirs = [
 	{ name = "mnt", text = " " },
