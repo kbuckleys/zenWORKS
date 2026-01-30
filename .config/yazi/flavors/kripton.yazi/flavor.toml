@@ -173,6 +173,7 @@ files = [
 	{ name = ".gitattributes", text = " " },
   { name = "hyprland.conf", text = " " },
   { name = "hypridle.conf", text = " " },
+  { name = "hyprlock.conf", text = " " },
 ]
 dirs = [
 	{ name = "mnt", text = " " },
