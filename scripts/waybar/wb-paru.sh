@@ -9,24 +9,23 @@ STATE_FILE="/tmp/paru-state.json"
 SYNC_FILE="/tmp/paru-last-sync"
 NOTIFY_FILE="/tmp/paru-last-notified"
 
+# Hourly repo sync
 NOW=$(date +%s)
-
-# Hourly sync
 if [ -f "$SYNC_FILE" ]; then
   LAST_SYNC=$(cat "$SYNC_FILE" 2>/dev/null || echo 0)
   if [ $((NOW - LAST_SYNC)) -ge 3600 ]; then
-    paru -Sy --noconfirm 2>/dev/null || true # Covers pacman + AUR
+    pacman -Sy 2>/dev/null || true
     echo "$NOW" >"$SYNC_FILE"
   fi
 else
-  paru -Sy --noconfirm 2>/dev/null || true
+  pacman -Sy 2>/dev/null || true
   echo "$NOW" >"$SYNC_FILE"
 fi
 
-# 30s result cache
+# 60s result cache
 if [ -f "$STATE_FILE" ]; then
   LAST_UPDATE=$(stat -c %Y "$STATE_FILE" 2>/dev/null || echo 0)
-  if [ $((NOW - LAST_UPDATE)) -lt 30 ]; then
+  if [ $((NOW - LAST_UPDATE)) -lt 10 ]; then
     cat "$STATE_FILE"
     exit 0
   fi
