@@ -9,16 +9,16 @@ STATE_FILE="/tmp/paru-state.json"
 SYNC_FILE="/tmp/paru-last-sync"
 NOTIFY_FILE="/tmp/paru-last-notified"
 
-# Hourly repo sync
+# Hourly refresh
 NOW=$(date +%s)
 if [ -f "$SYNC_FILE" ]; then
   LAST_SYNC=$(cat "$SYNC_FILE" 2>/dev/null || echo 0)
   if [ $((NOW - LAST_SYNC)) -ge 3600 ]; then
-    pacman -Sy 2>/dev/null || true
+    paru -Syuq 2>/dev/null || true
     echo "$NOW" >"$SYNC_FILE"
   fi
 else
-  pacman -Sy 2>/dev/null || true
+  paru -Syuq 2>/dev/null || true
   echo "$NOW" >"$SYNC_FILE"
 fi
 
