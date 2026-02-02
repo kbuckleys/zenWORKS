@@ -149,9 +149,14 @@
   },
 
   "custom/paru": {
+    "format": "{icon} {0}",
     "return-type": "json",
     "on-click": "footclient -T \"System Update\" -e ~/scripts/update.sh",
-    "exec": "~/scripts/waybar/wb-paru.sh",
-    "interval": 10
+    "format-icons": {
+      "pending-updates": "",
+      "updated": ""
+      },
+    "exec-if": "which waybar-updates",
+    "exec": "waybar-updates -n -i 10"
   }
 }
