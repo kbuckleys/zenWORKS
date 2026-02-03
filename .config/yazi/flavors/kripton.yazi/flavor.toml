@@ -226,6 +226,7 @@ dirs = [
 	{ name = "movies", text = " " },
 	{ name = "music", text = " " },
 	{ name = "pictures", text = " " },
+	{ name = "torrents", text = " " },
 	{ name = "public", text = " " },
 	{ name = "videos", text = " " },
 	{ name = "memes", text = " " }
@@ -471,6 +472,7 @@ exts = [
   # Misc
 	{ name = "theme", text = "󰔎 " },
 	{ name = "manifest", text = " " },
+	{ name = "torrent", text = " " },
 	{ name = "dpkg", text = "󱧘 " },
   { name = "ods", text = " " },
   { name = "db", text = " " },
