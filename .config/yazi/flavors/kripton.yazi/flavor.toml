@@ -230,6 +230,7 @@ dirs = [
 	{ name = "bittorrents", text = " " },
 	{ name = "public", text = " " },
 	{ name = "videos", text = " " },
+	{ name = "fonts", text = " " },
 	{ name = "memes", text = " " }
 ]
 exts = [
