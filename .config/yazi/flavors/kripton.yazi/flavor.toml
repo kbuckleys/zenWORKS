@@ -227,6 +227,7 @@ dirs = [
 	{ name = "music", text = " " },
 	{ name = "pictures", text = " " },
 	{ name = "torrents", text = " " },
+	{ name = "bittorrents", text = " " },
 	{ name = "public", text = " " },
 	{ name = "videos", text = " " },
 	{ name = "memes", text = " " }
