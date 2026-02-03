@@ -223,6 +223,7 @@ dirs = [
 	{ name = "documents", text = " " },
 	{ name = "downloads", text = "󰃘 " },
 	{ name = "library", text = " " },
+	{ name = "games", text = " " },
 	{ name = "movies", text = " " },
 	{ name = "music", text = " " },
 	{ name = "pictures", text = " " },
