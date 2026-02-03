@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Superseedr
+Comment=TUI Bittorrent Client
+Exec=superseedr
+Icon=utilities-terminal
+Terminal=true
+Type=Application
+Categories=System;Utility;
