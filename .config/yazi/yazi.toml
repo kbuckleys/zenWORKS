@@ -9,5 +9,18 @@ show_hidden = true
 linemode = "size"
 
 [opener]
-open = [{ run = 'xdg-open "$@" & disown' }]
-edit = [{ run = 'footclient nvim "$@" & disown', desc = "Open in Neovim" }]
+open = [
+  { run = 'xdg-open "$@" & disown' },
+]
+wine_exe = [
+  { run = 'wine "$1" & disown', desc = "Wine" }
+]
+
+[open]
+rules = [
+  { url = "*.exe", use = ["wine_exe"] },
+]
+
+edit = [
+  { run = 'footclient nvim "$@" & disown', desc = "Open in Neovim" }
+]

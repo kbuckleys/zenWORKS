@@ -232,7 +232,9 @@ dirs = [
 	{ name = "public", text = " " },
 	{ name = "videos", text = " " },
 	{ name = "fonts", text = " " },
-	{ name = "memes", text = " " }
+	{ name = "memes", text = " " },
+	{ name = ".wine", text = " " },
+	{ name = "wine", text = " " }
 ]
 exts = [
   { name = "sh", text = "󰑷 " },
@@ -243,6 +245,7 @@ exts = [
   { name = "odt", text = " " },
   { name = "wpd", text = " " },
   { name = "pdf", text = " " },
+  { name = "exe", text = " " },
 
   # Archive formats
   { name = "z", text = " " },
