@@ -214,9 +214,11 @@ dirs = [
   { name = ".cargo", text = "󱣘 " },
   { name = ".github", text = " " },
   { name = ".config", text = " " },
-  { name = ".mozilla", text = " " },
   { name = "cliphist", text = " " },
   { name = "mozilla", text = " " },
+  { name = ".mozilla", text = " " },
+  { name = "zen", text = "󰺕 " },
+  { name = ".zen", text = "󰺕 " },
   { name = "scripts", text = "󰑷 " },
 	{ name = "desktop", text = " " },
 	{ name = "development", text = " " },
@@ -272,12 +274,12 @@ exts = [
   { name = "cab", text = "󰪶 " },
 
   # Storage
-  { name = "bin", text = "󰺕 " },
-  { name = "dmg", text = "󰺕 " },
-  { name = "iso", text = "󰺕 " },
-  { name = "toast", text = "󰺕 " },
-  { name = "img", text = "󰺕 " },
-  { name = "vcd", text = "󰺕 " },
+  { name = "bin", text = " " },
+  { name = "dmg", text = " " },
+  { name = "iso", text = " " },
+  { name = "toast", text = " " },
+  { name = "img", text = " " },
+  { name = "vcd", text = " " },
 
   # Closed Captions
   { name = "srt", text = " " },
