@@ -2,7 +2,8 @@
 Name=Superseedr
 Comment=TUI Bittorrent Client
 Exec=superseedr
-Icon=utilities-terminal
 Terminal=true
 Type=Application
-Categories=System;Utility;
+Categories=Network;FileTransfer;
+MimeType=application/x-bittorrent;application/x-torrent;x-scheme-handler/magnet;
+Keywords=torrent;bit;btc;bittorrent;magnet;
