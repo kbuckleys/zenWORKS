@@ -18,6 +18,7 @@ inputbar, element-icon {
 
 listview {
     layout: horizontal;
+    background-color: #e78284;
 }
 
 element {
@@ -25,8 +26,11 @@ element {
 }
 element-text {
     highlight: none;
+    text-color: #000000;
+}
+element selected.normal {
+    background-color: #000000;
 }
 element-text selected {
-    background-color: transparent;
-    text-color: #e0aea4;
+    text-color: #e78284;
 }

@@ -30,3 +30,6 @@ textbox-prompt-colon {
     text-color: #e0d8a4;
     str: "Define >";
 }
+entry {
+    text-color: #e0d8a4;
+}

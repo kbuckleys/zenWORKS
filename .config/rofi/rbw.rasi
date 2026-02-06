@@ -14,11 +14,7 @@ configuration {
 window {
     location: south;
     anchor: south;
-    width: 500px;
-}
-
-mainbox {
-    children: [inputbar, listview];
+    width: 1050px;
 }
 
 inputbar {
@@ -27,17 +23,17 @@ inputbar {
     spacing: 4px;
 }
 textbox-prompt-colon {
-    text-color: #9BB1BF;
-    str: "CALC >";
+    text-color: #fab387;
+    str: "VAULT >";
 }
 entry {
-    text-color: #9BB1BF;
+    text-color: #fab387;
 }
 
 listview {
     fixed-height: false;
     scrollbar: false;
-    columns: 1;
+    columns: 2;
     lines: 8;
 }
 
@@ -45,7 +41,7 @@ element {
     padding: 2px 8px 2px 8px;
 }
 element-text {
-    highlight: none;
+    highlight: bold #fab387;
 }
 element-text selected {
     background-color: transparent;
