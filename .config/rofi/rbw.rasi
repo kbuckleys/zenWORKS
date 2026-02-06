@@ -6,11 +6,6 @@
 
 @theme "kripton"
 
-configuration {
-    kb-remove-char-back: "BackSpace";
-    kb-remove-to-sol: "";
-}
-
 window {
     location: south;
     anchor: south;
@@ -18,16 +13,7 @@ window {
 }
 
 inputbar {
-    children: [textbox-prompt-colon, entry];
-    padding: 4px 8px;
-    spacing: 4px;
-}
-textbox-prompt-colon {
-    text-color: #fab387;
-    str: "VAULT >";
-}
-entry {
-    text-color: #fab387;
+    enabled: false;
 }
 
 listview {
