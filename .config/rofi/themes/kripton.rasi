@@ -13,10 +13,10 @@
     selected-active-background: @normal-background;
     alternate-active-background: @normal-background;
     active-foreground: @selected-normal-foreground;
-    urgent-background: rgba(224, 174, 164, 1);
+    urgent-background: #e78284;
     alternate-normal-foreground: @foreground;
     border-color: rgba(155, 191, 191, 0.2);
-    alternate-urgent-background: #E0AEA4;
+    alternate-urgent-background: #e78284;
     background-color: @normal-background;
     selected-normal-foreground: #DFDFDD;
     selected-active-foreground: #0B0E0E;
@@ -28,11 +28,11 @@
     background: rgba(0, 0, 0, 1);
     separatorcolor: @foreground;
     font: "0xProto Nerd Font 12";
-    urgent-foreground: #E0AEA4;
+    urgent-foreground: #e78284;
     foreground: #DFDFDD;
     lightbg: #DFDFDD;
     blue: #9BBFBF;
-    red: #E0AEA4;
+    red: #e78284;
     spacing: 2;
 }
 

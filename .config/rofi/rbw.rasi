@@ -16,6 +16,13 @@ inputbar {
     enabled: false;
 }
 
+message {
+    padding: 4px 8px 4px 8px;
+}
+#textbox {
+    text-color: #6a707f;
+}
+
 listview {
     fixed-height: false;
     scrollbar: false;
