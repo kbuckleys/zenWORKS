@@ -63,5 +63,3 @@ Here's a list of the absolute essentials for a functional setup. The rest of the
 
 # Notes
 The depnedencies listed are for my own reference and to insure the functions of my setup work as intended.
-
-I thought I'd also drop in my own Firefox setup, which I'm fairly certain you haven't seen anything like before. I primarily say this because I specifically built it to sing on my Hyprland setup. And speaking of which, the setup will never be complete without [Adaptive Tab Bar Color](https://addons.mozilla.org/en-US/firefox/addon/adaptive-tab-bar-colour/)
