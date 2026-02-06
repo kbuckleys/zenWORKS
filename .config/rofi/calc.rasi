@@ -28,7 +28,7 @@ inputbar {
 }
 textbox-prompt-colon {
     text-color: #9BB1BF;
-    str: "CALC >";
+    str: " ";
 }
 entry {
     text-color: #9BB1BF;

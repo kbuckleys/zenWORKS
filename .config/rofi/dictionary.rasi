@@ -28,7 +28,7 @@ inputbar {
 }
 textbox-prompt-colon {
     text-color: #e0d8a4;
-    str: "Define >";
+    str: " ";
 }
 entry {
     text-color: #e0d8a4;
