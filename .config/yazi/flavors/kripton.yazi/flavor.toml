@@ -197,6 +197,8 @@ dirs = [
   { name = "yay", text = "󰣇 " },
 	{ name = "hypr", text = " " },
 	{ name = "spotify", text = " " },
+	{ name = "spicetify", text = " " },
+	{ name = "spotify-player", text = " " },
 	{ name = "vim", text = " " },
 	{ name = "nvim", text = " " },
 	{ name = "neovim", text = " " },
@@ -235,6 +237,8 @@ dirs = [
 	{ name = "videos", text = " " },
 	{ name = "fonts", text = " " },
 	{ name = "memes", text = " " },
+	{ name = ".go", text = "󰟓 " },
+	{ name = "go", text = "󰟓 " },
 	{ name = ".wine", text = " " },
 	{ name = "wine", text = " " }
 ]
@@ -442,6 +446,7 @@ exts = [
   { name = "cfm", text = " " },
   { name = "cgi", text = " " },
   { name = "pl", text = " " },
+  { name = "go", text = "󰟓 " },
   { name = "css", text = " " },
   { name = "htm", text = " " },
   { name = "html", text = " " },
