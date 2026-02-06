@@ -1,2 +1,0 @@
-selector = "rofi"
-selector-args = "-theme ~/.config/rofi/rbw.rasi"
