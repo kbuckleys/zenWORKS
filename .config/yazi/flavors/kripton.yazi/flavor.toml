@@ -233,14 +233,24 @@ dirs = [
 	{ name = "pictures", text = " " },
 	{ name = "torrents", text = " " },
 	{ name = "bittorrents", text = " " },
+	{ name = "django", text = " " },
+	{ name = "ruby", text = " " },
+	{ name = "spring boot", text = " " },
+	{ name = "laravel", text = " " },
+	{ name = "flask", text = " " },
+	{ name = "rust", text = " " },
+	{ name = "fast", text = "  " },
+	{ name = "phoenix", text = " " },
+	{ name = "nest", text = " " },
+  { name = "go", text = "󰟓 " },
+  { name = ".go", text = "󰟓 " },
+  { name = "elixir", text = " " },
 	{ name = "public", text = " " },
 	{ name = "videos", text = " " },
 	{ name = "fonts", text = " " },
 	{ name = "memes", text = " " },
-	{ name = ".go", text = "󰟓 " },
-	{ name = "go", text = "󰟓 " },
-	{ name = ".wine", text = " " },
-	{ name = "wine", text = " " }
+	{ name = "wine", text = " " },
+	{ name = ".wine", text = " " }
 ]
 exts = [
   { name = "sh", text = "󰑷 " },
@@ -459,6 +469,15 @@ exts = [
   { name = "rss", text = " " },
   { name = "list", text = " " },
   { name = "desktop", text = " " },
+  { name = "rs", text = "󱘗 " },
+  { name = "rlib", text = "󱘗 " },
+  { name = "rmeta", text = "󱘗 " },
+  { name = "ex", text = " " },
+  { name = "exs", text = " " },
+  { name = "eex", text = " " },
+  { name = "heex", text = " " },
+  { name = "rb", text = " " },
+  { name = "rake", text = " " },
 
   # Email
   { name = "email", text = "󰇮 " },
@@ -496,5 +515,6 @@ exts = [
   { name = "xlsx", text = " " },
   { name = "csv", text = " " },
   { name = "log", text = " " },
-  { name = "sav", text = " " }
+  { name = "sav", text = " " },
+  { name = "rc", text = " " }
 ]
