@@ -9,16 +9,14 @@
 set -e
 set -u
 
-all=(shutdown reboot suspend hibernate logout lockscreen)
+all=(lockscreen logout suspend reboot shutdown)
 
 show=("${all[@]}")
 
 declare -A texts
 texts[lockscreen]="Lock"
-texts[switchuser]="Switch User"
 texts[logout]="logout"
 texts[suspend]="Suspend"
-texts[hibernate]="Hibernate"
 texts[reboot]="Reboot"
 texts[shutdown]="Shutdown"
 
@@ -26,7 +24,6 @@ declare -A actions
 actions[lockscreen]="loginctl lock-session ${XDG_SESSION_ID-}"
 actions[logout]="loginctl terminate-session ${XDG_SESSION_ID-}"
 actions[suspend]="systemctl suspend"
-actions[hibernate]="systemctl hibernate"
 actions[reboot]="systemctl reboot"
 actions[shutdown]="systemctl poweroff"
 
@@ -46,103 +43,6 @@ function check_valid {
     fi
   done
 }
-
-parsed=$(getopt --options=h --longoptions=help,dry-run,confirm:,choices:,choose:,symbols,no-symbols,text,no-text,symbols-font: --name "$0" -- "$@")
-if [ $? -ne 0 ]; then
-  echo 'Terminating...' >&2
-  exit 1
-fi
-eval set -- "$parsed"
-unset parsed
-while true; do
-  case "$1" in
-  "-h" | "--help")
-    echo "rofi-power-menu - a power menu mode for Rofi"
-    echo
-    echo "Usage: rofi-power-menu [--choices CHOICES] [--confirm CHOICES]"
-    echo "                       [--choose CHOICE] [--dry-run] [--symbols|--no-symbols]"
-    echo
-    echo "Use with Rofi in script mode. For instance, to ask for shutdown or reboot:"
-    echo
-    echo "  rofi -show menu -modi \"menu:rofi-power-menu --choices=shutdown/reboot\""
-    echo
-    echo "Available options:"
-    echo "  --dry-run            Don't perform the selected action but print it to stderr."
-    echo "  --choices CHOICES    Show only the selected choices in the given order. Use /"
-    echo "                       as the separator. Available choices are lockscreen,"
-    echo "                       logout,suspend, hibernate, reboot and shutdown. By"
-    echo "                       default, all available choices are shown."
-    echo "  --confirm CHOICES    Require confirmation for the gives choices only. Use / as"
-    echo "                       the separator. Available choices are lockscreen, logout,"
-    echo "                       suspend, hibernate, reboot and shutdown. By default, only"
-    echo "                       irreversible actions logout, reboot and shutdown require"
-    echo "                       confirmation."
-    echo "  --choose CHOICE      Preselect the given choice and only ask for a"
-    echo "                       confirmation (if confirmation is set to be requested). It"
-    echo "                       is strongly recommended to combine this option with"
-    echo "                       --confirm=CHOICE if the choice wouldn't require"
-    echo "                       confirmation by default. Available choices are"
-    echo "                       lockscreen, logout, suspend, hibernate, reboot and"
-    echo "                       shutdown."
-    echo "  --[no-]symbols       Show Unicode symbols or not. Requires a font with support"
-    echo "                       for the symbols. Use, for instance, fonts from the"
-    echo "                       Nerdfonts collection. By default, they are shown"
-    echo "  --[no-]text          Show text description or not."
-    echo "  --symbols-font FONT  Use the given font for symbols. By default, the symbols"
-    echo "                       use the same font as the text. That font is configured"
-    echo "                       with rofi."
-    echo "  -h,--help            Show this help text."
-    exit 0
-    ;;
-  "--dry-run")
-    dryrun=true
-    shift 1
-    ;;
-  "--confirm")
-    IFS='/' read -ra confirmations <<<"$2"
-    check_valid "$1" "${confirmations[@]}"
-    shift 2
-    ;;
-  "--choices")
-    IFS='/' read -ra show <<<"$2"
-    check_valid "$1" "${show[@]}"
-    shift 2
-    ;;
-  "--choose")
-    check_valid "$1" "$2"
-    selectionID="$2"
-    shift 2
-    ;;
-  "--symbols")
-    showsymbols=true
-    shift 1
-    ;;
-  "--no-symbols")
-    showsymbols=false
-    shift 1
-    ;;
-  "--text")
-    showtext=true
-    shift 1
-    ;;
-  "--no-text")
-    showtext=false
-    shift 1
-    ;;
-  "--symbols-font")
-    symbols_font="$2"
-    shift 2
-    ;;
-  "--")
-    shift
-    break
-    ;;
-  *)
-    echo "Internal error" >&2
-    exit 1
-    ;;
-  esac
-done
 
 if [ "$showsymbols" = "false" -a "$showtext" = "false" ]; then
   echo "Invalid options: cannot have --no-symbols and --no-text enabled at the same time." >&2
@@ -195,7 +95,6 @@ else
           echo -e "\0prompt\x1fAre you sure?"
           echo -e "${confirmationMessages[$entry]}"
           echo -e "${confirmationMessages[cancel]}"
-          exit 0
         fi
       done
       selection=$(print_selection "${confirmationMessages[$entry]}")
