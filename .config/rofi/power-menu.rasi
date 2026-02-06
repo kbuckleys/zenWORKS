@@ -7,6 +7,7 @@
 @theme "kripton"
 
 window {
+    border-color: #e78284;
     location: south;
     anchor: south;
     width: 421px;
@@ -17,16 +18,16 @@ inputbar, element-icon {
 }
 
 listview {
-    layout: horizontal;
     background-color: #e78284;
+    layout: horizontal;
 }
 
 element {
     padding: 4px 10px 4px 10px;
 }
 element-text {
-    highlight: none;
     text-color: #000000;
+    highlight: none;
 }
 element selected.normal {
     background-color: #000000;
