@@ -29,6 +29,12 @@ window {
     width: 100%;
 }
 
+#textbox {
+    padding: 4px 12px 4px 12px;
+    background-color: #e78284;
+    color: #000000;
+}
+
 inputbar {
     enabled: false;
 }

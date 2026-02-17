@@ -16,11 +16,9 @@ inputbar {
     enabled: false;
 }
 
-message {
-    padding: 4px 8px 4px 8px;
-}
 #textbox {
-    text-color: #6a707f;
+    padding: 4px 8px 4px 8px;
+    color: #fab387;
 }
 
 listview {
