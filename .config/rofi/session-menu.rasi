@@ -26,12 +26,12 @@ element {
     padding: 4px 10px 4px 10px;
 }
 element-text {
-    text-color: #000000;
+    color: #000000;
     highlight: none;
 }
 element selected.normal {
     background-color: #000000;
 }
 element-text selected {
-    text-color: #e78284;
+    color: #e78284;
 }

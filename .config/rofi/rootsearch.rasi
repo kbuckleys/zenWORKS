@@ -28,10 +28,10 @@ inputbar {
 }
 textbox-prompt-colon {
     str: " ";
-    text-color: #c8a4e0;
+    color: #c8a4e0;
 }
 entry {
-    text-color: #c8a4e0;
+    color: #c8a4e0;
 }
 
 listview {

@@ -27,9 +27,9 @@ inputbar {
     spacing: 4px;
 }
 textbox-prompt-colon {
-    text-color: #e0d8a4;
+    color: #e0d8a4;
     str: " ";
 }
 entry {
-    text-color: #e0d8a4;
+    color: #e0d8a4;
 }

@@ -27,11 +27,11 @@ inputbar {
     spacing: 4px;
 }
 textbox-prompt-colon {
-    text-color: #9BB1BF;
+    color: #9BB1BF;
     str: " ";
 }
 entry {
-    text-color: #9BB1BF;
+    color: #9BB1BF;
 }
 
 listview {
