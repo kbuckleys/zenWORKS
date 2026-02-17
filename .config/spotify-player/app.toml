@@ -39,8 +39,8 @@ seek_duration_secs = 5
 sort_artist_albums_by_type = false
 
 [notify_format]
-summary = "{track} • {artists}"
-body = "{album}"
+summary = "{track}"
+body = "{artist}"
 
 [layout]
 playback_window_position = "Top"
