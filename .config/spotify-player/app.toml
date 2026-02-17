@@ -40,7 +40,7 @@ sort_artist_albums_by_type = false
 
 [notify_format]
 summary = "{track}"
-body = "{artist}"
+body = "{artists}"
 
 [layout]
 playback_window_position = "Top"
@@ -57,4 +57,4 @@ volume = 90
 bitrate = 320
 audio_cache = true
 normalization = true
-autoplay = true
+autoplay = false
