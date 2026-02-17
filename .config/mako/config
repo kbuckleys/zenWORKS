@@ -5,6 +5,7 @@
 
 layer=overlay
 font=0xProto Nerd Font 11
+background-color=#dfdfdd
 text-alignment=center
 border-color=#20242a
 anchor=bottom-center
