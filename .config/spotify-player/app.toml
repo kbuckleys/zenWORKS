@@ -57,4 +57,4 @@ volume = 100
 bitrate = 320
 audio_cache = true
 normalization = true
-autoplay = false
+autoplay = true
