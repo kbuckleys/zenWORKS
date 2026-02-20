@@ -15,13 +15,13 @@ playback_metadata_fields = [
 notify_timeout_in_secs = 0
 notify_transient = false
 tracks_playback_limit = 50
-app_refresh_duration_in_ms = 32
+app_refresh_duration_in_ms = 10
 playback_refresh_duration_in_ms = 0
-page_size_in_rows = 20
-play_icon = "▶"
-pause_icon = "▌▌"
+page_size_in_rows = 10
+play_icon = ""
+pause_icon = ""
 liked_icon = "♥"
-explicit_icon = "(E)"
+explicit_icon = "󰯹"
 border_type = "Plain"
 progress_bar_type = "Rectangle"
 progress_bar_position = "Bottom"
@@ -44,7 +44,7 @@ body = "{artists}"
 
 [layout]
 playback_window_position = "Top"
-playback_window_height = 6
+playback_window_height = 2
 
 [layout.library]
 playlist_percent = 40
