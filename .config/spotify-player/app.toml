@@ -1,4 +1,4 @@
-theme = "base16_transparent"
+theme = ""
 client_id = "d420a117a32841c2b3474932e49fb54b"
 client_port = 8080
 login_redirect_uri = "http://127.0.0.1:8989/login"
@@ -15,7 +15,7 @@ playback_metadata_fields = [
 notify_timeout_in_secs = 0
 notify_transient = false
 tracks_playback_limit = 50
-app_refresh_duration_in_ms = 10
+app_refresh_duration_in_ms = 32
 playback_refresh_duration_in_ms = 0
 page_size_in_rows = 10
 play_icon = ""
@@ -26,9 +26,9 @@ border_type = "Plain"
 progress_bar_type = "Rectangle"
 progress_bar_position = "Bottom"
 genre_num = 2
-cover_img_length = 9
-cover_img_width = 5
-cover_img_scale = 1.0
+cover_img_length = 0
+cover_img_width = 4
+cover_img_scale = 0.0
 enable_media_control = true
 enable_streaming = "Always"
 enable_notify = true
@@ -44,7 +44,7 @@ body = "{artists}"
 
 [layout]
 playback_window_position = "Top"
-playback_window_height = 2
+playback_window_height = 0
 
 [layout.library]
 playlist_percent = 40
