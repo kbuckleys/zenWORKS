@@ -152,10 +152,7 @@
     "format": "{icon} {0}",
     "return-type": "json",
     "on-click": "footclient -T \"System Update\" -e ~/scripts/update.sh",
-    "format-icons": {
-      "pending-updates": "",
-      "updated": ""
-      },
+    "hide-empty-text": true,
     "exec-if": "which waybar-updates",
     "exec": "waybar-updates -n -i 10"
   }
