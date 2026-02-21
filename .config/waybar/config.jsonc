@@ -103,9 +103,6 @@
     "on-click": "footclient -T Wiremix -e wiremix",
     "on-click-right": "pamixer -t",
     "format-muted": " ",
-    "format-icons": {
-      "default": [" ", " ", " "]
-    }
   },
 
   "custom/privacydots": {

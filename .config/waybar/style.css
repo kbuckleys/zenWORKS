@@ -19,7 +19,7 @@
 #workspaces button.special {
   padding: 0px 8px 4px 8px;
   font-weight: bold;
-  color: #fab387;
+  color: #c8a4e0;
 }
 
 #custom-div {
@@ -38,9 +38,9 @@
 }
 
 #pulseaudio {
-  padding: 0px 8px 4px 16px;
+  padding: 0px 12px 4px 16px;
   font-weight: bold;
-  color: #b6e0a4;
+  color: #e0d8a4;
 }
 
 #cpu, #temperature, #custom-nvidia, #network, #memory {
@@ -54,7 +54,7 @@
 }
 
 #cpu.high, #temperature.critical, #network.disconnected, #pulseaudio.muted {
-  color: #E0AEA4;
+  color: #e78284;
   background: none;
 }
 
