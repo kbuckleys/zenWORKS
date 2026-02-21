@@ -13,7 +13,7 @@ GPU_TEMP=$(echo "$RAW_TEMP" | sed 's/[^0-9]//g')
 GPU_VRAM=$(echo "$METRICS" | cut -d',' -f3 | awk '{printf "%.1f", $1/1024}')
 
 if [[ "$GPU_UTIL" =~ ^[0-9]+$ ]] && [ "$GPU_UTIL" -ge 80 ]; then
-  GPU_COLOR="<span foreground='#E0AEA4'>GPU ${RAW_UTIL}</span>"
+  GPU_COLOR="<span foreground='#e78284'>GPU ${RAW_UTIL}</span>"
 elif [[ "$GPU_UTIL" =~ ^[0-9]+$ ]] && [ "$GPU_UTIL" -ge 50 ]; then
   GPU_COLOR="<span foreground='#e0d8a4'>GPU ${RAW_UTIL}</span>"
 else
@@ -21,7 +21,7 @@ else
 fi
 
 if [[ "$GPU_TEMP" =~ ^[0-9]+$ ]] && [ "$GPU_TEMP" -ge 70 ]; then
-  TEMP_COLOR="<span foreground='#E0AEA4'>${RAW_TEMP}</span>"
+  TEMP_COLOR="<span foreground='#e78284'>${RAW_TEMP}</span>"
 elif [[ "$GPU_TEMP" =~ ^[0-9]+$ ]] && [ "$GPU_TEMP" -ge 50 ]; then
   TEMP_COLOR="<span foreground='#e0d8a4'>${RAW_TEMP}</span>"
 else
