@@ -28,7 +28,6 @@ refresh_updates() {
   done
 
   if [ ${#all_updates[@]} -eq 0 ]; then
-    echo "No updates available."
     paru --clean
     return
   fi
