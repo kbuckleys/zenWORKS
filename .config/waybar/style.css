@@ -16,10 +16,18 @@
   background: none;
 }
 
-#workspaces button.special {
-  padding: 0px 8px 4px 8px;
+#workspaces {
+  padding: 0px 8px 4px 0px;
+}
+#workspaces button {
   font-weight: bold;
-  color: #c8a4e0;
+  color: #506060;
+}
+#workspaces button.active {
+  color: #9bbfbf;
+}
+#workspaces button.special {
+  color: #fab387;
 }
 
 #custom-div {
@@ -41,6 +49,7 @@
   padding: 0px 12px 4px 16px;
   font-weight: bold;
   color: #e0d8a4;
+;
 }
 
 #cpu, #temperature, #custom-nvidia, #network, #memory {

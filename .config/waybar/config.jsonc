@@ -14,7 +14,8 @@
 
   "modules-left": [
     "custom/paru",
-    "group/tray-expander"
+    "group/tray-expander",
+    "hyprland/workspaces"
   ],
   "modules-center": [],
   "modules-right": [
@@ -28,7 +29,6 @@
     "memory",
     "pulseaudio",
     "clock",
-    "hyprland/workspaces",
     "custom/privacydots"
   ],
 
@@ -39,11 +39,18 @@
   
   "hyprland/workspaces": {
     "format": "{icon}",
-    "ignore-workspaces": ["^[1-8][0-8]*$"],
     "show-special": true,
     "all-outputs": true,
     "format-icons": {
-      "special": "[ ]",
+      "special": " ",
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8"
     },
   },
 
@@ -65,7 +72,7 @@
     "exec": "~/scripts/waybar/wb-nvidia.sh",
     "interval": 5,
     "format": "{text}",
-    "tooltip": false,
+    "tooltip": false
   },
 
   "cpu": {
@@ -102,7 +109,7 @@
     "format": "{volume}",
     "on-click": "footclient -T Wiremix -e wiremix",
     "on-click-right": "pamixer -t",
-    "format-muted": " ",
+    "format-muted": " "
   },
 
   "custom/privacydots": {
