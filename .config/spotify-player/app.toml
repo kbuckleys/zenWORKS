@@ -1,16 +1,20 @@
-theme = ""
+# ┌─┐┌─┐┌┐┌┬ ┬┌─┐┬─┐┬┌─┌─┐
+# ┌─┘├┤ │││││││ │├┬┘├┴┐└─┐
+# └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
+# https://github.com/kbuckleys/
+
+theme = "kripton"
 client_id = "d420a117a32841c2b3474932e49fb54b"
 client_port = 8080
 login_redirect_uri = "http://127.0.0.1:8989/login"
 playback_format = """
-{status} {track} • {artists} {liked}
-{album} • {genres}
+{status}  {track}  󰇙  {artists}  {liked}
+{album}  󰇙  {genres}
 {metadata}"""
 playback_metadata_fields = [
     "repeat",
     "shuffle",
     "volume",
-    "device",
 ]
 notify_timeout_in_secs = 0
 notify_transient = false
@@ -20,7 +24,7 @@ playback_refresh_duration_in_ms = 0
 page_size_in_rows = 10
 play_icon = ""
 pause_icon = ""
-liked_icon = "♥"
+liked_icon = ""
 explicit_icon = "󰯹"
 border_type = "Plain"
 progress_bar_type = "Rectangle"
