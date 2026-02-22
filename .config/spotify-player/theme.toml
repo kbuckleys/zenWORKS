@@ -18,10 +18,10 @@ white = "#dfdfdd"
 
 [themes.component_style]
 border = { fg = "#20242a" }
-block_title = { fg = "Cyan" }
+block_title = { fg = "#6a707f" }
 playback_status = { fg = "Yellow" }
 playback_track = { fg = "Yellow" }
-playback_artists = { fg = "Cyan" }
+playback_artists = { fg = "Yellow" }
 playback_album = { fg = "#fab387" }
 playback_progress_bar = { fg = "Green", bg = "#20242a" }
 playback_metadata = { fg = "#6a707f" }
