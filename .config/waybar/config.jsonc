@@ -99,7 +99,7 @@
   },
 
   "pulseaudio": {
-    "format": "{icon}{volume}",
+    "format": "{volume}",
     "on-click": "footclient -T Wiremix -e wiremix",
     "on-click-right": "pamixer -t",
     "format-muted": " ",
