@@ -7,22 +7,22 @@
 name = "kripton"
 
 [themes.palette]
-black = "#000000"
-red = "#e78284"
-green = "#b6e0a4"
-yellow = "#e0d8a4"
-blue = "#9bb1Bf"
 magenta = "#c8a4e0"
-cyan = "#9bbfbf"
+yellow = "#e0d8a4"
+green = "#b6e0a4"
 white = "#dfdfdd"
+black = "#000000"
+cyan = "#9bbfbf"
+blue = "#9bb1Bf"
+red = "#e78284"
 
 [themes.component_style]
-border = { fg = "#20242a" }
-block_title = { fg = "#6a707f" }
-playback_status = { fg = "Yellow" }
-playback_track = { fg = "Yellow" }
-playback_artists = { fg = "Yellow" }
-playback_album = { fg = "#fab387" }
 playback_progress_bar = { fg = "Green", bg = "#20242a" }
 playback_metadata = { fg = "#6a707f" }
+playback_artists = { fg = "Yellow" }
+playback_status = { fg = "Yellow" }
+playback_album = { fg = "#fab387" }
 playlist_desc = { fg = "#6a707f" }
+playback_track = { fg = "Yellow" }
+block_title = { fg = "#6a707f" }
+border = { fg = "#20242a" }
