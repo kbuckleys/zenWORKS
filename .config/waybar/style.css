@@ -23,6 +23,9 @@
   font-weight: bold;
   color: #506060;
 }
+#workspaces button:hover {
+  background: none;
+}
 #workspaces button.active {
   color: #9bbfbf;
 }
