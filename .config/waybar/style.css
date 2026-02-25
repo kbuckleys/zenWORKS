@@ -49,13 +49,22 @@
 }
 
 #pulseaudio {
-  padding: 0px 12px 4px 16px;
+  padding: 0px 12px 4px 8px;
   font-weight: bold;
   color: #e0d8a4;
-;
 }
 
-#cpu, #temperature, #custom-nvidia, #network, #memory {
+#mpris {
+  padding: 0px 0px 4px 8px;
+  font-weight: bold;
+  color: #e0d8a4;
+}
+
+#memory {
+  padding: 0px 12px 4px 4px;
+  color: #dfdfdd;
+}
+#cpu, #temperature, #custom-nvidia, #network {
   padding: 0px 4px 4px 4px;
   color: #dfdfdd;
 }
