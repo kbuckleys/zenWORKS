@@ -32,6 +32,9 @@
 #workspaces button.special {
   color: #fab387;
 }
+#workspaces button.special.active {
+  color: #9bbfbf;
+}
 
 #custom-div {
   padding: 0px 8px 4px 8px;

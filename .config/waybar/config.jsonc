@@ -42,6 +42,7 @@
     "format": "{icon}",
     "show-special": true,
     "all-outputs": true,
+    "ignore-workspaces": ["9"],
     "format-icons": {
       "special": " ",
       "1": "1",
