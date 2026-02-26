@@ -71,7 +71,7 @@
   },
 
   "custom/nvidia": {
-    "exec": "~/scripts/waybar/wb-nvidia.sh",
+    "exec": "~/.config/waybar/scripts/nvidia.sh",
     "interval": 5,
     "format": "{text}",
     "tooltip": false
@@ -115,7 +115,7 @@
   },
 
   "custom/privacydots": {
-      "exec": "~/scripts/waybar/wb-privacy-dots.sh",
+      "exec": "~/.config/waybar/scripts/privacy-dots.sh",
       "return-type": "json",
       "interval": 3,
       "format": "{text}",
