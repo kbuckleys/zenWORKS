@@ -8,8 +8,8 @@
 
 toggle=0
 
-hyprctl keyword animation "workspacesOut, 1, 4, default, slidevertfade top"
-hyprctl keyword animation "workspacesIn, 1, 2, default, slidevertfade bottom"
+hyprctl keyword animation "workspacesOut, 1, 2, default, slide top"
+hyprctl keyword animation "workspacesIn, 1, 2, default, slide bottom"
 
 if [[ $(hyprctl activeworkspace -j | jq '.id') -eq 9 ]]; then toggle=1; fi
 hyprctl dispatch workspace 9
