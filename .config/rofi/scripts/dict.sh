@@ -16,7 +16,7 @@ while true; do
 
   response=$(curl -s "https://api.dictionaryapi.dev/api/v2/entries/en/$word")
 
-  definition=$(echo "$response" | jq -r --arg color "#e0aea4" '
+  definition=$(echo "$response" | jq -r --arg color "#e78284" '
   if type=="array" and (length > 0) then
     if (.[0].meanings and .[0].meanings[0].definitions and .[0].meanings[0].definitions[0].definition) then
       .[0].meanings[0].definitions[0].definition
