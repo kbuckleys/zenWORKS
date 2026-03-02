@@ -9,7 +9,7 @@ cat ~/.config/logo
 echo ""
 
 refresh_updates() {
-  paru -Scc --noconfirm && paru --clean && rm -rf ~/.cache/paru/
+  paru -Scc --noconfirm && paru --clean && rm -rf ~/.cache/paru/ && paru -Sy
 
   echo "Fetching updates..."
   mapfile -t updates < <(paru -Qu --color=never | sort -u)
