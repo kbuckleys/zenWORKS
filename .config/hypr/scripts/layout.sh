@@ -4,7 +4,7 @@
 # https://github.com/kbuckleys/
 
 #!/usr/bin/env bash
-STATE_FILE="$HOME/.hyprland_ws_layouts"
+STATE_FILE=".cache/hyprland_ws_layouts"
 
 # Get active workspace
 ws=$(hyprctl activeworkspace -j | jq -r '.id')
