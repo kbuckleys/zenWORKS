@@ -14,9 +14,9 @@ current_layout=$(grep "^$ws:" "$STATE_FILE" 2>/dev/null | cut -d: -f2 || echo "d
 
 # Cycle: dwindle → scrolling → master → dwindle
 case "$current_layout" in
-"dwindle") new_layout="scrolling" ;;
-"scrolling") new_layout="master" ;;
-"master") new_layout="dwindle" ;;
+"master") new_layout="scrolling" ;;
+"scrolling") new_layout="dwindle" ;;
+"dwindle") new_layout="master" ;;
 *) new_layout="dwindle" ;;
 esac
 
