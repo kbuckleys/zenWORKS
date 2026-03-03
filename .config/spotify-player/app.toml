@@ -9,7 +9,7 @@ client_port = 8080
 login_redirect_uri = "http://127.0.0.1:8989/login"
 client_id = "d420a117a32841c2b3474932e49fb54b"
 playback_format = """
-{status}  {track}  󰇙  {artists}  {liked}
+{status}  {track}  󰇙  {artists} {liked}
 {album}  {genres}
 {metadata}"""
 playback_metadata_fields = [
@@ -38,7 +38,7 @@ enable_notify = true
 cover_img_length = 0
 cover_img_width = 4
 explicit_icon = "󰯹"
-liked_icon = ""
+liked_icon = " "
 pause_icon = ""
 play_icon = ""
 genre_num = 2
