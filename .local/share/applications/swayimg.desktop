@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=swayimg
-Comment=Image Viewer
-Exec=swayimg %f
-Terminal=false
-Type=Application
-Categories=Graphics;Viewer;RasterGraphics;Photography;
-MimeType=image/*;inode/directory;
