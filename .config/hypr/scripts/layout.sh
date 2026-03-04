@@ -12,7 +12,7 @@ ws=$(hyprctl activeworkspace -j | jq -r '.id')
 # Read current layout for this workspace (default dwindle)
 current_layout=$(grep "^$ws:" "$STATE_FILE" 2>/dev/null | cut -d: -f2 || echo "dwindle")
 
-# Cycle: dwindle → scrolling → master → dwindle
+# Layout Cycle
 case "$current_layout" in
 "master") new_layout="scrolling" ;;
 "scrolling") new_layout="dwindle" ;;
