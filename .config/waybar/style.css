@@ -17,7 +17,7 @@
 }
 
 #workspaces {
-  padding: 0px 8px 4px 0px;
+  padding: 0px 8px 0px 0px;
 }
 #workspaces button {
   font-weight: bold;
@@ -37,38 +37,40 @@
 }
 
 #custom-div {
-  padding: 0px 8px 4px 8px;
+  padding: 0px 8px 0px 8px;
   color: #dfdfdd;
 }
 
 #custom-privacydots {
-  padding: 0px 4px 4px 8px;
+  padding: 0px 4px 0px 8px;
 }
 
 #clock {
-  padding: 0px 8px 4px 4px;
+  padding: 0px 8px 0px 8px;
+  background: #20242a;
   font-weight: bold;
-  color: #b6e0a4;
+  color: #9bbfbf;
 }
 
 #pulseaudio {
-  padding: 0px 12px 4px 8px;
+  padding: 0px 8px 0px 12px;
+  background: #20242a;
   font-weight: bold;
-  color: #e0d8a4;
+  color: #9bbfbf;
 }
 
 #mpris {
-  padding: 0px 0px 4px 8px;
-  font-weight: bold;
-  color: #e0d8a4;
+  padding: 0px 0px 0px 12px;
+  background: #20242a;
+  color: #9bbfbf;
 }
 
 #memory {
-  padding: 0px 12px 4px 4px;
+  padding: 0px 12px 0px 4px;
   color: #dfdfdd;
 }
 #cpu, #temperature, #custom-nvidia, #network {
-  padding: 0px 4px 4px 4px;
+  padding: 0px 4px 0px 4px;
   color: #dfdfdd;
 }
 
@@ -83,13 +85,13 @@
 }
 
 #custom-paru {
-  padding: 0px 8px 4px 0px;
+  padding: 0px 8px 0px 0px;
   font-weight: bold;
   color: #fab387;
 }
 
 #tray-expander {
-  padding: 0px 0px 4px 8px;
+  padding: 0px 0px 0px 8px;
   color: #9bbfbf;
 }
 #tray {
