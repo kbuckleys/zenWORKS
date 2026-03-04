@@ -52,17 +52,20 @@
   color: #9bbfbf;
 }
 
+#mpris {
+  padding: 0px 0px 0px 12px;
+  background: #20242a;
+  color: #9bbfbf;
+}
 #pulseaudio {
   padding: 0px 8px 0px 12px;
   background: #20242a;
   font-weight: bold;
   color: #9bbfbf;
 }
-
-#mpris {
-  padding: 0px 0px 0px 12px;
-  background: #20242a;
-  color: #9bbfbf;
+#pulseaudio.muted {
+  color: #e78284;
+  background: #251111;
 }
 
 #memory {
@@ -79,7 +82,7 @@
   background: none;
 }
 
-#cpu.high, #temperature.critical, #network.disconnected, #pulseaudio.muted {
+#cpu.high, #temperature.critical, #network.disconnected {
   color: #e78284;
   background: none;
 }
