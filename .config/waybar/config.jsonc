@@ -27,7 +27,6 @@
     "temperature",
     "custom/div",
     "memory",
-    "mpris",
     "pulseaudio",
     "clock",
     "custom/privacydots"
@@ -161,14 +160,5 @@
     "hide-empty-text": true,
     "exec-if": "which waybar-updates",
     "exec": "waybar-updates -n -i 10"
-  },
-
-  "mpris": {
-    "format": "{status_icon}",
-    "tooltip-format": "{title}\n{artist}\n{album}",
-    "status-icons": {
-        "playing": "",
-        "paused": ""
-    }
   }
 }
