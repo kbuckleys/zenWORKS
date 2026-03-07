@@ -171,6 +171,8 @@ files = [
   { name = "makefile", text = " " },
 	{ name = ".gitignore", text = " " },
 	{ name = ".gitattributes", text = " " },
+	{ name = ".bash_history", text = "󱆃 " },
+	{ name = ".bashrc", text = "󱆃 " },
   { name = "hypr.conf", text = " " },
   { name = "hyprland.conf", text = " " },
   { name = "hypridle.conf", text = " " },
