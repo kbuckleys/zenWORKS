@@ -5,7 +5,7 @@
 * https://github.com/kbuckleys/ */
 
 * {
-    selected-normal-background: #20242a;
+    selected-normal-background: rgba(223, 223, 221, 0.1);
     alternate-normal-background: @normal-background;
     selected-urgent-background: @urgent-background;
     alternate-urgent-foreground: @urgent-foreground;
