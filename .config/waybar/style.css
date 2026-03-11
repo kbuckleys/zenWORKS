@@ -26,7 +26,7 @@
 #workspaces button:hover {
   background: none;
 }
-#workspaces button.active, #workspaces button.special.active {
+#workspaces button.active {
   color: #9bbfbf;
 }
 #workspaces button.special {
@@ -70,9 +70,9 @@
 }
 
 #custom-paru {
-  padding: 0px 8px 0px 0px;
+  padding: 0px 12px 0px 0px;
   font-weight: bold;
-  color: #fab387;
+  color: #b6e0a4;
 }
 
 #tray-expander {
