@@ -26,14 +26,11 @@
 #workspaces button:hover {
   background: none;
 }
-#workspaces button.active {
+#workspaces button.active, #workspaces button.special.active {
   color: #9bbfbf;
 }
 #workspaces button.special {
   color: #fab387;
-}
-#workspaces button.special.active {
-  color: #9bbfbf;
 }
 
 #custom-div {
