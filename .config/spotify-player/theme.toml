@@ -13,7 +13,7 @@ green = "#b6e0a4"
 white = "#dfdfdd"
 black = "#000000"
 cyan = "#9bbfbf"
-blue = "#9bb1Bf"
+blue = "#6a707f"
 red = "#e78284"
 
 [themes.component_style]
