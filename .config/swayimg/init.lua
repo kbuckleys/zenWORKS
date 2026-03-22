@@ -6,7 +6,7 @@
 -- General config
 swayimg.set_mode("viewer") -- mode at startup
 swayimg.enable_antialiasing(true) -- anti-aliasing
-swayimg.enable_decoration(true) -- window title/buttons/borders
+swayimg.enable_decoration(false) -- window title/buttons/borders
 swayimg.enable_overlay(false) -- window overlay mode
 swayimg.set_dnd_button("MouseRight") -- drag-and-drop mouse button
 
@@ -18,9 +18,9 @@ swayimg.imagelist.enable_adjacent(true) -- add adjacent files from same dir
 
 -- Text overlay configuration
 swayimg.text.set_font("0xProto Nerd Font") -- font name
-swayimg.text.set_size(16) -- font size in pixels
+swayimg.text.set_size(15) -- font size in pixels
 --swayimg.text.set_spacing(0) -- line spacing
-swayimg.text.set_padding(10) -- padding from window edge
+swayimg.text.set_padding(0) -- padding from window edge
 swayimg.text.set_foreground(0xffdfdfdd) -- foreground text color
 swayimg.text.set_background(0x00000000) -- text background color
 swayimg.text.set_shadow(0x000000) -- text shadow color
@@ -112,10 +112,6 @@ end)
 swayimg.gallery.on_key("Left", function()
 	swayimg.gallery.switch_image("left")
 end)
-
---
--- Other configuration examples
---
 
 -- force set scale mode on window resize (useful for tiling compositors)
 swayimg.on_window_resize(function()
