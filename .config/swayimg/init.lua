@@ -19,6 +19,7 @@ swayimg.imagelist.enable_adjacent(true) -- add adjacent files from same dir
 -- Text overlay configuration
 swayimg.text.set_font("0xProto Nerd Font") -- font name
 swayimg.text.set_size(16) -- font size in pixels
+--swayimg.text.set_spacing(0) -- line spacing
 swayimg.text.set_padding(10) -- padding from window edge
 swayimg.text.set_foreground(0xffdfdfdd) -- foreground text color
 swayimg.text.set_background(0x00000000) -- text background color
@@ -35,6 +36,7 @@ swayimg.viewer.set_image_chessboard(20, 0xff333333, 0xff4c4c4c) -- chessboard
 swayimg.viewer.enable_centering(true) -- enable automatic centering
 swayimg.viewer.enable_loop(true) -- enable image list loop mode
 swayimg.viewer.limit_preload(1) -- number of images to preload
+--swayimg.viewer.limit_history(1) -- number of the history cache
 swayimg.viewer.set_mark_color(0xff808080) -- mark icon color
 swayimg.viewer.set_text("topleft", { -- top left text block scheme
 	"File: {name}",
@@ -77,7 +79,7 @@ end)
 swayimg.slideshow.set_timeout(5) -- timeout to switch image
 swayimg.slideshow.set_default_scale("fit") -- default image scale
 swayimg.slideshow.set_window_background("auto") -- window background mode
-swayimg.slideshow.limit_history(0) -- number of the history cache
+--swayimg.slideshow.limit_history(0) -- number of the history cache
 swayimg.slideshow.set_text("topleft", { "{name}" }) -- top left text block scheme
 
 -- Gallery mode
