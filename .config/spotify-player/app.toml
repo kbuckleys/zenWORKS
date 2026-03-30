@@ -19,6 +19,7 @@ playback_metadata_fields = [
 ]
 playback_refresh_duration_in_ms = 0
 sort_artist_albums_by_type = false
+enable_audio_visualization = false
 default_device = "spotify-player"
 progress_bar_position = "Bottom"
 app_refresh_duration_in_ms = 32
