@@ -17,12 +17,19 @@ blue = "#6a707f"
 red = "#e78284"
 
 [themes.component_style]
-playback_progress_bar = { fg = "Green", bg = "#20242a" }
-playback_metadata = { fg = "#6a707f" }
-playback_artists = { fg = "Yellow" }
-playback_status = { fg = "Yellow" }
+playback_progress_bar_unfilled = { fg = "#20242a" , bg = "#000000" }
+playback_progress_bar = { fg = "Green", bg = "#000000" }
+
+lyrics_playing = { fg = "Green", modifiers = ["Bold"] }
+lyrics_played = { fg = "Blue"}
+
+page_desc = { fg = "Yellow", modifiers = ["Bold"] }
+playback_metadata = { fg = "Blue" }
+playback_artists = { fg = "Green" }
+playback_status = { fg = "Green" }
 playback_album = { fg = "#fab387" }
-playlist_desc = { fg = "#6a707f" }
-playback_track = { fg = "Yellow" }
-block_title = { fg = "#6a707f" }
+playlist_desc = { fg = "Blue" }
+playback_track = { fg = "Green" }
+block_title = { fg = "Blue" }
+table_header = { fg = "Blue" }
 border = { fg = "#20242a" }
