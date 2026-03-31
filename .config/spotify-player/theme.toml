@@ -17,8 +17,8 @@ blue = "#6a707f"
 red = "#e78284"
 
 [themes.component_style]
-playback_progress_bar_unfilled = { fg = "#20242a" , bg = "#000000" }
-playback_progress_bar = { fg = "Green", bg = "#000000" }
+playback_progress_bar_unfilled = { fg = "#20242a" , bg = "Black" }
+playback_progress_bar = { fg = "Green", bg = "Black" }
 
 lyrics_playing = { fg = "Green", modifiers = ["Bold"] }
 lyrics_played = { fg = "Blue"}
