@@ -21,7 +21,7 @@ default_device = "spotify-player"
 progress_bar_position = "Bottom"
 app_refresh_duration_in_ms = 32
 enable_cover_image_cache = true
-progress_bar_type = "Line"
+progress_bar_type = "Rectangle"
 notify_streaming_only = false
 enable_media_control = true
 enable_streaming = "Always"
@@ -47,7 +47,7 @@ body = "{artists}"
 
 [layout]
 playback_window_position = "Top"
-playback_window_height = 3
+playback_window_height = 4
 
 [layout.library]
 playlist_percent = 40
