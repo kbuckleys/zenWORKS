@@ -12,7 +12,8 @@ Here's a list of the absolute essentials for a functional setup. The rest of the
 - btop
 - foot
 - mako
-- fish
+- zsh
+- zoxide
 - LazyVim
 - playerctl
 - ripgrep
