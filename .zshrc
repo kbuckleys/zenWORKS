@@ -61,8 +61,8 @@ bindkey '^[w' kill-region
 # History
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
-HISTDUP=erase
 HISTSIZE=5000
+HISTDUP=erase
 setopt hist_ignore_all_dups
 setopt hist_ignore_space
 setopt hist_save_no_dups
@@ -72,11 +72,12 @@ setopt appendhistory
 setopt sharehistory
 
 # Completion styling
-zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color=always $realpath'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color=always $realpath'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' menu no
+setopt glob_dots
 
 # Aliases
 alias hypr='start-hyprland'
