@@ -76,3 +76,8 @@ desc = "Archive (Compression Level)"
 on = [ "c", "a", "u" ]
 run = "plugin compress -phl"
 desc = "Archive (Password + Header + Level)"
+
+[[mgr.prepend_keymap]]
+on = [ "g", "t" ]
+run = "cd ~/.local/share/Trash"
+desc = "Go to Trash"
