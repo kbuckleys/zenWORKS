@@ -13,7 +13,7 @@ if [[ -f "/opt/homebrew/bin/brew" ]] then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-# Set the directory we want to store zinit and plugins
+# Set the directory where zinit and plugins will be stored
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
 # Sync Zinit, if it isn't
