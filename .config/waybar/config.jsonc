@@ -121,7 +121,8 @@
 
   "network": {
     "format": "󱞡 {bandwidthDownBytes} ~ {bandwidthUpBytes} 󱞿",
-    "format-disconnected": "NO NETWORK SIGNAL",
+    "format-linked": "󰛵 ",  // Customize icon/text as needed
+    "format-disconnected": "󰅛 ",
     "tooltip": false,
     "interval": 1,
     "nospacing": 1
