@@ -23,7 +23,7 @@
 #workspaces button.active {
   color: #9bbfbf;
 }
-#workspaces button.special, #network-linked {
+#workspaces button.special {
   color: #fab387;
 }
 

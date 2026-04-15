@@ -121,13 +121,11 @@
 
   "network": {
     "format": "󱞡 {bandwidthDownBytes} ~ {bandwidthUpBytes} 󱞿",
-    "format-linked": "󰛵 ",
-    "format-disconnected": "󰅛 ",
-    "tooltip": true,
+    "format-disconnected": "󰱟 ",
+    "tooltip-format-disconnected": "{ifname}NO NETWORK SIGNAL",
     "tooltip-format": "{ifname}: {ipaddr}",
-    "tooltip-format-linked": "{ifname}: Linked (no IP)",
-    "tooltip-format-disconnected": "{ifname}: Disconnected",
     "on-click": "footclient -T bandwhich -e sudo bandwhich",
+    "tooltip": true,
     "interval": 1
   },
 
