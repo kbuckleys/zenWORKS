@@ -82,6 +82,7 @@ setopt glob_dots
 # Aliases
 alias hypr='start-hyprland'
 alias ls='eza -G --icons'
+alias lsx='lsix'
 
 # Shell integrations
 eval "$(zoxide init --cmd cd zsh)"
