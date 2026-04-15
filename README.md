@@ -13,10 +13,12 @@ Here's a list of the absolute essentials for a functional setup. The rest of the
 - foot
 - mako
 - zsh
+- lsix
 - zoxide
 - LazyVim
 - playerctl
 - ripgrep
+- bandwhich
 - imagemagick
 - hyprpolkitagent
 - xdg-desktop-portal-hyprland
