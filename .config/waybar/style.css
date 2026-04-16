@@ -5,12 +5,15 @@
 * https://github.com/kbuckleys/ */
 
 * {
-  font-family: "0xProto Nerd Font";
-  background: none;
-  font-size: 14px;
   min-height: 0;
   min-width: 0;
   border: none;
+  font-family: "0xProto Nerd Font";
+  font-size: 14px;
+}
+
+#waybar {
+  background: none;
 }
 
 #workspaces {
@@ -19,6 +22,9 @@
 #workspaces button {
   font-weight: bold;
   color: #506060;
+}
+#workspaces button:hover {
+  background: none;
 }
 #workspaces button.active {
   color: #9bbfbf;
@@ -55,10 +61,12 @@
 
 #cpu.mid, #temperature.warning {
   color: #e0d8a4;
+  background: none;
 }
 
 #cpu.high, #temperature.critical, #network.disconnected, #pulseaudio.muted {
   color: #e78284;
+  background: none;
 }
 
 #custom-paru {
