@@ -18,18 +18,18 @@ red = "#e78284"
 
 [themes.component_style]
 playback_progress_bar_unfilled = { fg = "#20242a" , bg = "Black" }
-playback_progress_bar = { fg = "Green", bg = "#20242a" }
+playback_progress_bar = { fg = "Green", bg = "Black" }
 
 lyrics_playing = { fg = "Green", modifiers = ["Bold"] }
 lyrics_played = { fg = "Blue"}
 
-page_desc = { fg = "Yellow", modifiers = ["Bold"] }
+page_desc = { fg = "Cyan", modifiers = ["Bold"] }
+playback_album = { fg = "#fab387" }
 playback_metadata = { fg = "Blue" }
 playback_artists = { fg = "Green" }
 playback_status = { fg = "Green" }
-playback_album = { fg = "#fab387" }
-playlist_desc = { fg = "Blue" }
 playback_track = { fg = "Green" }
-block_title = { fg = "Blue" }
+playlist_desc = { fg = "Blue" }
 table_header = { fg = "Blue" }
+block_title = { fg = "Blue" }
 border = { fg = "#20242a" }
