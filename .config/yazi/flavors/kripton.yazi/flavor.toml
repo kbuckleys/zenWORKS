@@ -3,8 +3,6 @@
 # └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 # https://github.com/kbuckleys/
 
-"$schema" = "https://yazi-rs.github.io/schemas/theme.json"
-
 [app]
 overall = {}
 
