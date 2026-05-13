@@ -10,17 +10,16 @@ require("rules")
 
 -- MONITORS
 hl.monitor({
-	output = "DP-1",
-	mode = "2560x1440@180",
-	position = "auto",
-	transform = 0,
+	output = "HDMI-A-1",
+	mode = "1920x1080@100",
+	position = "0x0",
+	transform = 3,
 })
 
 hl.monitor({
-	output = "HDMI-A-1",
-	mode = "1920x1080@100",
-	position = "auto",
-	transform = 3,
+	output = "DP-1",
+	mode = "2560x1440@180",
+	position = "1080x0",
 })
 
 -- ENV
@@ -41,8 +40,8 @@ hl.config({
 		disable_splash_rendering = true,
 		close_special_on_empty = true,
 		disable_hyprland_logo = true,
-		middle_click_paste = false,
 		background_color = 0x000000,
+		middle_click_paste = false,
 	},
 	ecosystem = {
 		no_donation_nag = true,
@@ -51,13 +50,11 @@ hl.config({
 
 -- AUTOSTART
 hl.on("hyprland.start", function()
-	hl.exec_cmd("systemctl --user import-environment DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
 	hl.exec_cmd("wl-paste --type image --watch cliphist store")
 	hl.exec_cmd("wl-paste --type text --watch cliphist store")
 	hl.exec_cmd("dbus-update-activation-environment --all")
 	hl.exec_cmd("systemctl --user start hyprpolkitagent")
 	hl.exec_cmd("wl-clip-persist --clipboard regular")
-	hl.exec_cmd("xrandr --output DP-1 --primary")
 	hl.exec_cmd("foot --server")
 	hl.exec_cmd("hypridle")
 	hl.exec_cmd("waybar")
