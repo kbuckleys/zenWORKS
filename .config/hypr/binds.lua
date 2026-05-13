@@ -54,14 +54,14 @@ hl.bind("SUPER + D", hl.dsp.exec_cmd("~/.config/rofi/scripts/dict.sh"))
 hl.bind("SUPER + SPACE", hl.dsp.exec_cmd("rofi -show drun"))
 
 -- WORKSPACES
-hl.bind("SUPER + GRAVE", hl.dsp.workspace.toggle_special("scratch"))
+hl.bind("SUPER + GRAVE", hl.dsp.workspace.toggle_special("special"))
 hl.bind("SUPER + 1", hl.dsp.focus({ workspace = 1 }))
 hl.bind("SUPER + 2", hl.dsp.focus({ workspace = 2 }))
 hl.bind("SUPER + 3", hl.dsp.focus({ workspace = 3 }))
 hl.bind("SUPER + 4", hl.dsp.focus({ workspace = 4 }))
 hl.bind("SUPER + 5", hl.dsp.focus({ workspace = 5 }))
 
-hl.bind("SUPER + SHIFT + GRAVE", hl.dsp.window.move({ workspace = "special" }))
+hl.bind("SUPER + SHIFT + GRAVE", hl.dsp.window.move({ workspace = "special:special" }))
 hl.bind("SUPER + SHIFT + 1", hl.dsp.window.move({ workspace = 1 }))
 hl.bind("SUPER + SHIFT + 2", hl.dsp.window.move({ workspace = 2 }))
 hl.bind("SUPER + SHIFT + 3", hl.dsp.window.move({ workspace = 3 }))
