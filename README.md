@@ -9,6 +9,7 @@ Here's a list of the absolute essentials for a functional setup. The rest of the
 # Dependencies
 - paru
 - hyprland
+- hyprshutdown
 - btop
 - foot
 - mako
