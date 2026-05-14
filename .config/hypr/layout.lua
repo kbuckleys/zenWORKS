@@ -4,9 +4,18 @@
 -- https://github.com/kbuckleys/
 
 local layouts = { "dwindle", "scrolling", "master" }
-local current_index = 0
+local state = {}
 
 hl.bind("SUPER + L", function()
-	current_index = (current_index % #layouts) + 1
-	hl.config({ general = { layout = layouts[current_index] } })
+	local ws = hl.get_active_workspace().id
+	local current = state[ws] or "dwindle"
+	local next = layouts[1]
+	for i, v in ipairs(layouts) do
+		if v == current then
+			next = layouts[i % #layouts + 1]
+			break
+		end
+	end
+	state[ws] = next
+	hl.workspace_rule({ workspace = tostring(ws), layout = next })
 end)

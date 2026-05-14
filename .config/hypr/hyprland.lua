@@ -12,14 +12,14 @@ require("rules")
 hl.monitor({
 	output = "HDMI-A-1",
 	mode = "1920x1080@100",
-	position = "0x0",
+	position = "auto",
 	transform = 3,
 })
 
 hl.monitor({
 	output = "DP-1",
 	mode = "2560x1440@180",
-	position = "1080x0",
+	position = "auto",
 })
 
 -- ENV
@@ -55,6 +55,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("dbus-update-activation-environment --all")
 	hl.exec_cmd("systemctl --user start hyprpolkitagent")
 	hl.exec_cmd("wl-clip-persist --clipboard regular")
+	hl.exec_cmd("xrandr --output DP-1 --primary")
 	hl.exec_cmd("foot --server")
 	hl.exec_cmd("hypridle")
 	hl.exec_cmd("waybar")
