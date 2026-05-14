@@ -10,29 +10,29 @@ mkdir -p "]] .. output_dir .. [["
 
 if pgrep -x "wf-recorder" >/dev/null; then
   pkill -SIGINT wf-recorder
-  notify-send "🔴 Recording Stopped"
+  notify-send " Recording Stopped"
   exit 0
 fi
 
 monitor=$(hyprctl monitors -j | jq -r '.[] | select(.focused) | .name')
-[ -z "$monitor" ] && { notify-send "❌ No monitor"; exit 1; }
+[ -z "$monitor" ] && { notify-send "󱠑 No monitor"; exit 1; }
 
 filename="]] .. output_dir .. [[/$(date +'%Y-%m-%d-%H%M%S')-$monitor.mp4"   
 audio=$(pactl list sources | grep -m1 'Name:.*monitor' | awk '{print $2}')
 
 case "]] .. mode .. [[" in
   "full")
-    notify-send "🟢 Full Screen" "$monitor"
+    notify-send "󰑋 Full Screen" "$monitor"
     wf-recorder -c libx264rgb --audio="$audio" -o "$monitor" -f "$filename" &
     ;;
   "region")
     geometry=$(slurp)
-    [ -n "$geometry" ] && notify-send "📐 Region Selected" && wf-recorder -c libx264rgb --audio="$audio" -g "$geometry" -f "$filename" &
+    [ -n "$geometry" ] && notify-send " Region Selected" && wf-recorder -c libx264rgb --audio="$audio" -g "$geometry" -f "$filename" &
     ;;
   "window")
     win_info=$(hyprctl activewindow -j | jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"')
-    [ "$win_info" = "null" ] && { notify-send "❌ No window"; exit 1; }
-    notify-send "🖼️ Window Recording"
+    [ "$win_info" = "null" ] && { notify-send " No window"; exit 1; }
+    notify-send " Window Recording"
     wf-recorder -c libx264rgb --audio="$audio" -g "$win_info" -f "$filename" &
     ;;
 esac
