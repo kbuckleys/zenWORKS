@@ -17,7 +17,7 @@ grim -o "$monitor" "$file" && notify-send -i "$file" "Screenshot saved" "Saved t
 	hl.exec_cmd("bash -c '" .. script:gsub("'", "'\"'\"'") .. "'")
 end
 
--- BIND
+-- BINDS
 hl.bind("SUPER + SHIFT + CONTROL + P", hl.dsp.exec_cmd("hyprshot -m region -o ~/Pictures/Screenshots/"))
 hl.bind("SUPER + SHIFT + P", hl.dsp.exec_cmd("hyprshot -m window -o ~/Pictures/Screenshots/"))
 hl.bind("SUPER + P", screenshot)

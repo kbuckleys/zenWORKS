@@ -31,6 +31,7 @@ function smart_move.smart_move(direction)
 	end
 end
 
+-- BINDS
 hl.bind("SUPER + SHIFT + LEFT", function()
 	smart_move.smart_move("l")
 end, { repeating = true })
