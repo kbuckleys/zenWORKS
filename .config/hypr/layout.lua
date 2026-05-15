@@ -8,14 +8,14 @@ local state = {}
 
 hl.bind("SUPER + L", function()
 	local ws = hl.get_active_workspace().id
-	local current = state[ws] or "dwindle"
-	local next = layouts[1]
+	local current = state[ws] or "dwindle" -- Assume first time
+	local next_layout = layouts[1]
 	for i, v in ipairs(layouts) do
 		if v == current then
-			next = layouts[i % #layouts + 1]
+			next_layout = layouts[i % #layouts + 1]
 			break
 		end
 	end
-	state[ws] = next
-	hl.workspace_rule({ workspace = tostring(ws), layout = next })
+	state[ws] = next_layout
+	hl.workspace_rule({ workspace = tostring(ws), layout = next_layout })
 end)
