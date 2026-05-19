@@ -69,15 +69,14 @@ hl.bind("SUPER + SHIFT + 4", hl.dsp.window.move({ workspace = 4 }))
 hl.bind("SUPER + SHIFT + 5", hl.dsp.window.move({ workspace = 5 }))
 
 -- WINDOW MANIPULATION
-hl.bind("SUPER + X", hl.dsp.layout("togglesplit"))
-hl.bind("SUPER + SHIFT + Q", hl.dsp.window.kill())
-hl.bind("SUPER + SHIFT + W", hl.dsp.window.center())
-hl.bind("SUPER + SHIFT + F", hl.dsp.window.fullscreen())
+hl.bind("SUPER + Z", hl.dsp.window.fullscreen({ mode = "maximized" }))
 hl.bind("SUPER + F", hl.dsp.window.float({ action = "toggle" }))
-hl.bind("SUPER + F", hl.dsp.window.center())
-hl.bind("SUPER + Z", hl.dsp.window.fullscreen(1))
-hl.bind("SUPER + Q", hl.dsp.window.close())
+hl.bind("SUPER + SHIFT + F", hl.dsp.window.fullscreen())
+hl.bind("SUPER + SHIFT + W", hl.dsp.window.center())
+hl.bind("SUPER + X", hl.dsp.layout("togglesplit"))
 hl.bind("SUPER + W", hl.dsp.window.pseudo())
+hl.bind("SUPER + F", hl.dsp.window.center())
+hl.bind("SUPER + Q", hl.dsp.window.close())
 
 -- Mouse
 hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true })
