@@ -78,8 +78,8 @@ hl.config({
 hl.config({
 	general = {
 		col = {
-			inactive_border = "rgba(155,191,191,0.3)",
-			active_border = "rgba(155,191,191,0.6)",
+			inactive_border = "rgba(155, 191, 191, 0.3)",
+			active_border = "rgba(155, 191, 191, 0.6)",
 		},
 		gaps_out = 4,
 		gaps_in = -1,
@@ -116,21 +116,21 @@ hl.config({
 hl.config({
 	group = {
 		col = {
-			border_locked_inactive = "rgba(155,191,191,0.3)",
-			border_locked_active = "rgba(231,130,132,1)",
-			border_inactive = "rgba(155,191,191,0.3)",
-			border_active = "rgba(200,164,224,1)",
+			border_locked_inactive = "rgba(155, 191, 191, 0.3)",
+			border_locked_active = "rgba(231, 130, 132, 1)",
+			border_inactive = "rgba(155, 191, 191, 0.3)",
+			border_active = "rgba(200, 164, 224, 1)",
 		},
 		groupbar = {
-			text_color_inactive = "rgba(223,223,221,1)",
+			text_color_inactive = "rgba(223, 223, 221, 1)",
 			col = {
-				locked_active = "rgba(231,130,132,1)",
-				locked_inactive = "rgba(32,36,42,1)",
-				active = "rgba(200,164,224,1)",
-				inactive = "rgba(32,36,42,1)",
+				locked_active = "rgba(231, 130, 132, 1)",
+				locked_inactive = "rgba(32, 36, 42, 1)",
+				active = "rgba(200, 164, 224, 1)",
+				inactive = "rgba(32, 36, 42, 1)",
 			},
 			font_family = "0xProto Nerd Font",
-			text_color = "rgba(0,0,0,1)",
+			text_color = "rgba(0, 0, 0, 1)",
 			font_weight_active = "bold",
 			indicator_height = 0,
 			gradients = true,
