@@ -16,7 +16,6 @@ Here's a list of the absolute essentials for a functional setup. The rest of the
 - zsh
 - lsix
 - zoxide
-- LazyVim
 - playerctl
 - ripgrep
 - bandwhich
