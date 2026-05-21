@@ -5,6 +5,7 @@
 
 vim.pack.add({
   'https://github.com/lukas-reineke/indent-blankline.nvim.git',
+  'https://github.com/nvim-treesitter/nvim-treesitter.git',
   'https://github.com/nvim-tree/nvim-web-devicons.git',
   'https://github.com/nvim-lualine/lualine.nvim.git',
   "https://github.com/rafamadriz/friendly-snippets",
@@ -18,7 +19,15 @@ vim.pack.add({
   "https://github.com/tpope/vim-fugitive",
 })
 
-require("ibl").setup()
+require("ibl").setup({
+  indent = { char = "│" },
+  scope = {
+    enabled = true,
+    show_start = true,
+    show_end = true,
+  },
+})   
+
 require("bufferline").setup({
   options = {
     always_show_bufferline = false,
