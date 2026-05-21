@@ -5,17 +5,24 @@
 
 vim.pack.add({
   'https://github.com/lukas-reineke/indent-blankline.nvim.git',
-  'https://github.com/nvim-lualine/lualine.nvim.git',
-  'https://github.com/ibhagwan/fzf-lua.git',
-  'https://github.com/mikavilpas/yazi.nvim.git',
-  'https://github.com/nvim-lua/plenary.nvim.git',
-  'https://github.com/akinsho/bufferline.nvim.git',
   'https://github.com/nvim-tree/nvim-web-devicons.git',
-  "https://github.com/nvim-mini/mini.nvim",
+  'https://github.com/nvim-lualine/lualine.nvim.git',
   "https://github.com/rafamadriz/friendly-snippets",
+  'https://github.com/akinsho/bufferline.nvim.git',
+  'https://github.com/nvim-lua/plenary.nvim.git',
+  'https://github.com/mikavilpas/yazi.nvim.git',
   "https://github.com/neovim/nvim-lspconfig",
   "https://github.com/mason-org/mason.nvim",
+  'https://github.com/ibhagwan/fzf-lua.git',
+  "https://github.com/nvim-mini/mini.nvim",
   "https://github.com/tpope/vim-fugitive",
+})
+
+require("ibl").setup()
+require("bufferline").setup({
+  options = {
+    always_show_bufferline = false,
+  }
 })
 
 -- mini files ----

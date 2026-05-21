@@ -13,8 +13,8 @@ vim.keymap.set("n", "<C-c>", ":nohl<CR>", { desc = "Clear search highlighting", 
 
 vim.keymap.set("n", "<leader>cc", "<cmd>bd<cr>", { desc = "Close current buffer" })   
 
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "moves lines down in visual selection" })
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "moves lines up in visual selection" })
+vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", { desc = "Move line down" })
+vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", { desc = "Move line up" })   
 
 vim.keymap.set("v", "<", "<gv", { desc = "Unindent and keep selection" })
 vim.keymap.set("v", ">", ">gv", { desc = "Indent and keep selection" })

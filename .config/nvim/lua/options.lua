@@ -3,6 +3,7 @@
 -- └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 -- https://github.com/kbuckleys/
 
+vim.opt.termguicolors = true
 vim.g.netrw_banner = 0
 vim.g.mapleader = " "
 vim.opt.fillchars = { eob = " " }
