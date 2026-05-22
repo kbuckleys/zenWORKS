@@ -65,6 +65,11 @@ require("bufferline").setup({
   }
 })
 
+-- Update
+vim.api.nvim_create_user_command("PackUpdate", function()
+  vim.pack.update()
+end, { desc = "Update all plugins" })
+
 -- mini files
 local MiniFiles = require("mini.files")
 MiniFiles.setup({
