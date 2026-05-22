@@ -9,7 +9,6 @@ vim.pack.add({
   'https://github.com/nvim-treesitter/nvim-treesitter.git',
   'https://github.com/nvim-tree/nvim-web-devicons.git',
   'https://github.com/nvim-lualine/lualine.nvim.git',
-  'https://github.com/luiscassih/AniMotion.nvim.git',
   "https://github.com/rafamadriz/friendly-snippets",
   'https://github.com/akinsho/bufferline.nvim.git',
   'https://github.com/kylechui/nvim-surround.git',
@@ -43,12 +42,6 @@ require("noice").setup({
 
 require('nvim-highlight-colors').setup({
   render = 'background',
-})   
-
-require("AniMotion").setup({
-  mode = "helix",
-  clear_keys = {},
-  color = { fg = "#000000", bg = "#fab387" }
 })   
 
 require("ibl").setup({
