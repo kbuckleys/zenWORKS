@@ -18,13 +18,28 @@ vim.pack.add({
   'https://github.com/mikavilpas/yazi.nvim.git',
   "https://github.com/neovim/nvim-lspconfig",
   "https://github.com/mason-org/mason.nvim",
+  "https://github.com/MunifTanjim/nui.nvim",
   'https://github.com/ibhagwan/fzf-lua.git',
   "https://github.com/nvim-mini/mini.nvim",
   "https://github.com/tpope/vim-fugitive",
+  "https://github.com/folke/noice.nvim",
 })
 
 require("nvim-autopairs").setup()
 require("nvim-surround").setup()
+
+require("noice").setup({
+  cmdline = {
+    enabled = false,
+  },
+  messages = {
+    enabled = true,
+    view_search = "virtualtext",
+  },
+  popupmenu = {
+    enabled = false,
+  },
+})   
 
 require('nvim-highlight-colors').setup({
   render = 'background',

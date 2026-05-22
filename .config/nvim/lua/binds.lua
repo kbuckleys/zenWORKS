@@ -9,7 +9,7 @@ vim.keymap.set("n", "L", "<cmd>BufferLineCycleNext<cr>", { desc = "Next tab" })
 vim.keymap.set("n", "H", "<cmd>BufferLineCyclePrev<cr>", { desc = "Previous tab" })
 
 vim.keymap.set("i", "<C-c>", "<Esc>")
-vim.keymap.set("n", "<C-c>", ":nohl<CR>", { desc = "Clear search highlighting", silent = true })
+vim.keymap.set("n", "<Esc>", ":nohl<CR>", { desc = "Clear search highlighting", silent = true })
 
 vim.keymap.set("n", "<leader>bb", "<cmd>bd<cr>", { desc = "Close current buffer" })   
 
