@@ -32,7 +32,7 @@ require('nvim-highlight-colors').setup({
 
 require("AniMotion").setup({
   mode = "helix",
-  color = { bg = "#fab387" }
+  color = { fg = "#000000", bg = "#fab387" }
 })   
 
 require("ibl").setup({
