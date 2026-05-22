@@ -14,7 +14,9 @@ vim.keymap.set("n", "<Esc>", ":nohl<CR>", { desc = "Clear search highlighting", 
 vim.keymap.set("n", "<leader>bb", "<cmd>bd<cr>", { desc = "Close current buffer" })   
 
 vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", { desc = "Move line down" })
-vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", { desc = "Move line up" })   
+vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", { desc = "Move line up" })
+vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move selected lines down" })
+vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move selected lines up" })   
 
 vim.keymap.set("v", "<", "<gv", { desc = "Unindent and keep selection" })
 vim.keymap.set("v", ">", ">gv", { desc = "Indent and keep selection" })

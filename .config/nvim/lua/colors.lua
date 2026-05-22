@@ -3,18 +3,10 @@
 -- └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 -- https://github.com/kbuckleys/
 
-vim.api.nvim_set_hl(0, "Normal", { bg = "black" })
-vim.api.nvim_set_hl(0, "SignColumn", { bg = "black" })
-vim.api.nvim_set_hl(0, "StatusLine", { bg = "#20242a" })
-vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "black" })
+vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
+vim.api.nvim_set_hl(0, "SignColumn", { bg = "NONE" })   
 
-local mode_colors = {
-  normal = "#20242a",
-  insert = "#b6e0a4",
-  visual = "#fab387",
-}
-
-local custom_theme = {
+local kripton = {
   normal = { 
     c = { bg = "#20242a" },
     a = { bg = "#20242a", gui = "bold" }
@@ -43,9 +35,9 @@ local custom_theme = {
 
 require("lualine").setup({
   options = {
-    theme = custom_theme,
+    theme = kripton,
     icons_enabled = false,
     section_separators = " 󰇙 ",
     component_separators = " 󰇙 ",
   },
-})   
+})
