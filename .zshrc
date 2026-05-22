@@ -61,8 +61,8 @@ bindkey '^[w' kill-region
 # History
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
-HISTSIZE=5000
-HISTDUP=erase
+HISTSIZE=100000
+SAVEHIST=100000
 setopt hist_ignore_all_dups
 setopt hist_ignore_space
 setopt hist_save_no_dups
