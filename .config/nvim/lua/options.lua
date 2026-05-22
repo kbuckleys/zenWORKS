@@ -45,6 +45,7 @@ vim.opt.colorcolumn = "0"
 vim.opt.signcolumn = "yes"
 
 vim.opt.cmdheight = 0
+vim.opt.timeoutlen = 300
 
 -- Command bar pushes the Statusline upwards instead of overlapping it
 require('vim._core.ui2').enable({
