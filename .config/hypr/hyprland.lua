@@ -3,6 +3,7 @@
 -- └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 -- https://github.com/kbuckleys/
 
+-- PREREQUISITES
 require("lua.wf-recorder")
 require("lua.smart-move")
 require("lua.hyprshot")
@@ -12,16 +13,16 @@ require("lua.rules")
 
 -- MONITORS
 hl.monitor({
+    output = "DP-1",
+    mode = "2560x1440@180",
+    position = "auto",
+})
+
+hl.monitor({
 	output = "HDMI-A-1",
 	mode = "1920x1080@100",
 	position = "auto",
 	transform = 3,
-})
-
-hl.monitor({
-	output = "DP-1",
-	mode = "2560x1440@180",
-	position = "auto",
 })
 
 -- ENV
@@ -34,21 +35,6 @@ hl.env("HYPRCURSOR_THEME", "GoogleDot-Black")
 hl.env("XCURSOR_THEME", "GoogleDot-Black")
 hl.env("HYPRCURSOR_SIZE", "6")
 hl.env("XCURSOR_SIZE", "6")
-
--- MISC
-hl.config({
-	misc = {
-		font_family = "0xProto Nerd Font",
-		disable_splash_rendering = true,
-		close_special_on_empty = true,
-		disable_hyprland_logo = true,
-		background_color = 0x000000,
-		middle_click_paste = false,
-	},
-	ecosystem = {
-		no_donation_nag = true,
-	},
-})
 
 -- AUTOSTART
 hl.on("hyprland.start", function()
@@ -64,18 +50,27 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("mako")
 end)
 
--- INPUT
 hl.config({
+	misc = {
+		font_family = "0xProto Nerd Font",
+		disable_splash_rendering = true,
+		close_special_on_empty = true,
+		disable_hyprland_logo = true,
+		background_color = 0x000000,
+		middle_click_paste = false,
+	},
+
+	ecosystem = {
+		no_donation_nag = true,
+	},
+
 	input = {
 		accel_profile = "flat",
 		sensitivity = -0.6,
 		repeat_delay = 200,
 		repeat_rate = 35,
 	},
-})
 
--- GENERAL
-hl.config({
 	general = {
 		col = {
 			inactive_border = "rgba(155, 191, 191, 0.3)",
@@ -87,20 +82,14 @@ hl.config({
 			enabled = true,
 		},
 	},
-})
 
--- LAYOUT
-hl.config({
 	dwindle = {
 		preserve_split = true,
 	},
 	master = {
 		orientation = "center",
 	},
-})
 
--- DECORATION
-hl.config({
 	decoration = {
 		dim_special = 0.8,
 		blur = {
@@ -110,10 +99,7 @@ hl.config({
 			enabled = false,
 		},
 	},
-})
 
--- GROUP
-hl.config({
 	group = {
 		col = {
 			border_locked_inactive = "rgba(155, 191, 191, 0.3)",
@@ -141,11 +127,13 @@ hl.config({
 			height = 28,
 		},
 	},
-})
 
--- ANIMATIONS
-hl.config({
 	animations = {
 		enabled = false,
+	},
+
+	binds = {
+		hide_special_on_workspace_change = true,
+		scroll_event_delay = 0,
 	},
 })
