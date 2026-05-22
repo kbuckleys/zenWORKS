@@ -60,16 +60,14 @@ bindkey '^[w' kill-region
 
 # History
 HISTFILE=~/.zsh_history
-SAVEHIST=$HISTSIZE
 HISTSIZE=100000
 SAVEHIST=100000
+setopt appendhistory
+setopt sharehistory
 setopt hist_ignore_all_dups
 setopt hist_ignore_space
 setopt hist_save_no_dups
 setopt hist_find_no_dups
-setopt hist_ignore_dups
-setopt appendhistory
-setopt sharehistory
 
 # Completion styling
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color=always $realpath'
