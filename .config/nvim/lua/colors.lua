@@ -44,6 +44,7 @@ local custom_theme = {
 require("lualine").setup({
   options = {
     theme = custom_theme,
+    icons_enabled = false,
     section_separators = " 󰇙 ",
     component_separators = " 󰇙 ",
   },
