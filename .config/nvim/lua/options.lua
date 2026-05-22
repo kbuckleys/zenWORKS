@@ -46,6 +46,22 @@ vim.opt.signcolumn = "yes"
 
 vim.opt.cmdheight = 0
 
+-- Command bar pushes the Statusline upwards instead of overlapping it
+require('vim._core.ui2').enable({
+  enable = true,
+  msg = {
+    targets = {
+      [''] = 'msg',
+      bufwrite = 'msg',
+      echo = 'msg',
+      echomsg = 'msg',
+    },
+    msg = {
+      timeout = 5000,
+    },
+  },
+})   
+
 -- Highlight yanked text
 vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function()
