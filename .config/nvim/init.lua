@@ -3,10 +3,12 @@
 -- └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 -- https://github.com/kbuckleys/
 
-require("options")
-require("binds")
 require("pack")
+require("options")
+require("colors")
+require("binds")
 
+-- Retain cursor position post-buffer closure
 vim.api.nvim_create_autocmd("BufReadPost", {
   callback = function()
     local mark = vim.api.nvim_buf_get_mark(0, '"')
@@ -16,9 +18,3 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     end
   end,
 })
-
--- Set editor background to black
-vim.api.nvim_set_hl(0, "Normal", { bg = "black" })
-vim.api.nvim_set_hl(0, "SignColumn", { bg = "black" })
-vim.api.nvim_set_hl(0, "StatusLine", { bg = "#20242a" })
-vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "black" })
