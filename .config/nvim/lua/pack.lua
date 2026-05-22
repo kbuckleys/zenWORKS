@@ -47,6 +47,7 @@ require('nvim-highlight-colors').setup({
 
 require("AniMotion").setup({
   mode = "helix",
+  clear_keys = {},
   color = { fg = "#000000", bg = "#fab387" }
 })   
 
