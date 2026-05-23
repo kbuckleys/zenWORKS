@@ -51,15 +51,17 @@ require("lualine").setup({
 
 require("bufferline").setup({
   options = {
+    separator_style = { "", "" },
     show_buffer_close_icons = false,
     always_show_bufferline = false,
     show_buffer_icons = false,
-    tab_size = 25,
+    separator_style = "none",
+    tab_size = 25
   },
 })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
-    vim.highlight.on_yank({ higroup = "YankHighlight", timeout = 300 })
+    vim.highlight.on_yank({ higroup = "YankHighlight", timeout = 200 })
   end,
 })
