@@ -124,7 +124,7 @@ hl.config({
 			gaps_out = 0,
 			rounding = 0,
 			gaps_in = 0,
-			height = 28,
+			height = 24,
 		},
 	},
 

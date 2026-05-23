@@ -4,7 +4,14 @@
 -- https://github.com/kbuckleys/
 
 vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
-vim.api.nvim_set_hl(0, "SignColumn", { bg = "NONE" })   
+vim.api.nvim_set_hl(0, "BufferLineFill", { bg = "#20242a" })
+vim.api.nvim_set_hl(0, "BufferLineBackground", { bg = "#20242a" })
+vim.api.nvim_set_hl(0, "BufferLineBufferSelected", { fg = "#dfdfdd", bg = "#000000", nocombine = true })
+vim.api.nvim_set_hl(0, "BufferLineIndicatorSelected", { bg = "#000000", fg = "#000000", nocombine = true })
+vim.api.nvim_set_hl(0, "CursorLine", { bg = "#20242a", nocombine = true })
+vim.api.nvim_set_hl(0, "WhichKeyNormal", { bg = "#20242a" })
+vim.api.nvim_set_hl(0, "Visual", { fg = "#000000", bg = "#fab387", nocombine = true })
+vim.api.nvim_set_hl(0, "YankHighlight", { bg = "#dfdfdd", fg = "#000000", nocombine = true })
 
 local kripton = {
   normal = { 
@@ -28,8 +35,8 @@ local kripton = {
     a = { fg = "#000000", bg = "#9bbfbf", gui = "bold" }
   },
   inactive = {
-    c = { bg = "black" }, a = { bg = "black" },
-    a = { bg = "black" }, a = { bg = "black", gui = "bold" }
+    c = { bg = "#000000" }, a = { bg = "#000000" },
+    a = { bg = "#000000" }, a = { bg = "#000000", gui = "bold" }
   },
 }
 
@@ -40,4 +47,19 @@ require("lualine").setup({
     section_separators = " 󰇙 ",
     component_separators = " 󰇙 ",
   },
+})
+
+require("bufferline").setup({
+  options = {
+    show_buffer_close_icons = false,
+    always_show_bufferline = false,
+    show_buffer_icons = false,
+    tab_size = 25,
+  },
+})
+
+vim.api.nvim_create_autocmd("TextYankPost", {
+  callback = function()
+    vim.highlight.on_yank({ higroup = "YankHighlight", timeout = 300 })
+  end,
 })
