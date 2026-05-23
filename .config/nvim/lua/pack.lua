@@ -19,6 +19,8 @@ vim.pack.add({
   "https://github.com/mason-org/mason.nvim",
   "https://github.com/MunifTanjim/nui.nvim",
   'https://github.com/ibhagwan/fzf-lua.git',
+  "https://github.com/folke/which-key.nvim",
+  "https://github.com/chentoast/marks.nvim",
   "https://github.com/nvim-mini/mini.nvim",
   "https://github.com/tpope/vim-fugitive",
   "https://github.com/folke/noice.nvim",
@@ -26,6 +28,7 @@ vim.pack.add({
 
 require("nvim-autopairs").setup()
 require("nvim-surround").setup()
+require('marks').setup()
 
 require("noice").setup({
   cmdline = {
