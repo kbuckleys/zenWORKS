@@ -10,7 +10,7 @@ vim.opt.fillchars = { eob = " " }
 
 vim.opt.nu = true
 vim.opt.number = true
-vim.opt.relativenumber = false
+vim.opt.relativenumber = true
 vim.opt.cursorline = true
 
 vim.opt.tabstop = 4
@@ -21,7 +21,7 @@ vim.opt.expandtab = true
 vim.opt.wrap = true
 vim.opt.smartindent = true
 vim.opt.inccommand = "split"
-vim.opt.statuscolumn = "%=%l %s"   
+vim.opt.statuscolumn = "%=%l %s"
 
 vim.opt.splitbelow = true
 vim.opt.splitright = true
