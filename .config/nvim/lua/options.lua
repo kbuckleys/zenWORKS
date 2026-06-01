@@ -46,6 +46,12 @@ vim.opt.signcolumn = "yes"
 
 vim.opt.cmdheight = 0
 
+-- Better Yazi borders
+vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#20242a" })
+require("yazi").setup({
+  yazi_floating_window_border = "single",
+})
+
 -- Command bar pushes the Statusline upwards instead of overlapping it
 require('vim._core.ui2').enable({
   enable = true,
