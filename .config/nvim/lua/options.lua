@@ -85,22 +85,3 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     end
   end,
 })
-
--- 1. Set completeopt to include 'popup'
-vim.opt.completeopt = { "menuone", "noselect", "popup" }
-
--- 2. Enable the new native completion engine on LSP attach
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("lsp_completion", { clear = true }),
-  callback = function(args)
-    local client_id = args.data.client_id
-    local client = vim.lsp.get_client_by_id(client_id)
-    
-    if client and client:supports_method("textDocument/completion") then
-      -- This is the critical line for 0.12+
-      vim.lsp.completion.enable(true, client_id, args.buf, {
-        autotrigger = true, 
-      })
-    end
-  end,
-})
