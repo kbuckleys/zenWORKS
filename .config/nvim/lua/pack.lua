@@ -22,7 +22,19 @@ vim.pack.add({
   "https://github.com/nvim-mini/mini.nvim",
   "https://github.com/tpope/vim-fugitive",
   "https://github.com/folke/noice.nvim",
+  "https://github.com/windwp/nvim-autopairs",
 })
+
+-- Load and configure nvim-autopairs
+vim.cmd("packadd nvim-autopairs")
+local status_ok, npairs = pcall(require, "nvim-autopairs")
+if status_ok then
+  npairs.setup({
+    check_ts = true, -- Enable Treesitter integration
+    disable_filetype = { "TelescopePrompt", "spectre_panel" },
+    fast_wrap = {},
+  })
+end
 
 -- Update
 vim.api.nvim_create_user_command("PackUpdate", function()
