@@ -83,8 +83,8 @@ hl.bind("SUPER + ALT + UP", hl.dsp.window.swap({ direction = "u" }), { descripti
 -- Cycle & Z-Order
 hl.bind("SUPER + SHIFT + TAB", hl.dsp.window.cycle_next("prev"))
 hl.bind("SUPER + SHIFT + TAB", hl.dsp.window.bring_to_top())
-hl.bind("SUPER + TAB", hl.dsp.window.bring_to_top())
 hl.bind("SUPER + TAB", hl.dsp.window.cycle_next())
+hl.bind("SUPER + TAB", hl.dsp.window.bring_to_top())
 
 -- Mouse Wheel Cycle
 hl.bind("SUPER + mouse_down", hl.dsp.window.cycle_next("prev"), { description = "Cycle to prev window" })
@@ -129,11 +129,11 @@ local function setZoomFactor(value)
 	hl.config({ cursor = { zoom_factor = value } })
 end
 
-hl.bind("SUPER + CONTROL + equal", function()
+hl.bind("SUPER + CONTROL + EQUAL", function()
 	setZoomFactor(getZoomFactor() * 1.1)
 end, { repeating = true })
 
-hl.bind("SUPER + CONTROL + minus", function()
+hl.bind("SUPER + CONTROL + MINUS", function()
 	setZoomFactor(math.max(1.0, getZoomFactor() * 0.9))
 end, { repeating = true })
 
