@@ -81,10 +81,15 @@ hl.bind("SUPER + ALT + DOWN", hl.dsp.window.swap({ direction = "d" }), { descrip
 hl.bind("SUPER + ALT + UP", hl.dsp.window.swap({ direction = "u" }), { description = "Swap window up" })
 
 -- Cycle & Z-Order
-hl.bind("SUPER + SHIFT + TAB", hl.dsp.window.cycle_next("prev"))
-hl.bind("SUPER + SHIFT + TAB", hl.dsp.window.bring_to_top())
-hl.bind("SUPER + TAB", hl.dsp.window.cycle_next())
-hl.bind("SUPER + TAB", hl.dsp.window.bring_to_top())
+hl.bind("SUPER + TAB", function()
+    hl.dispatch(hl.dsp.window.cycle_next())
+    hl.dispatch(hl.dsp.window.bring_to_top())
+end)
+
+hl.bind("SUPER + SHIFT + TAB", function()
+    hl.dispatch(hl.dsp.window.cycle_next({ next = false }))
+    hl.dispatch(hl.dsp.window.bring_to_top())
+end)   
 
 -- Mouse Wheel Cycle
 hl.bind("SUPER + mouse_down", hl.dsp.window.cycle_next("prev"), { description = "Cycle to prev window" })
