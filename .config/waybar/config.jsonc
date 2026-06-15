@@ -48,7 +48,7 @@
       "3": "3",
       "4": "4",
       "5": "5"
-    },
+    }
   },
 
   "clock": {
@@ -61,8 +61,8 @@
             "today": "<span foreground='#000000' background='#dfdfdd'>{}</span>",
             "days": "<span foreground='#dfdfdd'>{}</span>",
             "weekdays": "<span foreground='#56606d'>{}</span>"
-        },
-    },
+        }
+    }
   },
 
   "custom/nvidia": {
