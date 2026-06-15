@@ -78,6 +78,10 @@ hl.config({
 	dwindle = {
 		preserve_split = true,
 	},
+    scrolling = {
+        column_width = 0.95,
+        focus_fit_method = 0,
+    },
 	master = {
 		orientation = "center",
 	},

@@ -61,33 +61,12 @@ hl.window_rule({
 
 -- HELIUM
 hl.window_rule({
-	match = { class = "xdg-desktop-portal-gtk", title = "Open Files" },
-	float = true,
-})
-
-hl.window_rule({
-	match = { class = "xdg-desktop-portal-gtk", title = "All Files" },
-	float = true,
-})
-
-hl.window_rule({
-	match = { class = "xdg-desktop-portal-gtk", title = "Save File" },
-	float = true,
-})
-
-hl.window_rule({
-	match = { class = "xdg-desktop-portal-gtk", title = "Open File" },
-	float = true,
-})
-
-hl.window_rule({
-	match = { class = "xdg-desktop-portal-gtk", title = "&Print…" },
-	float = true,
-})
-
-hl.window_rule({
-	match = { class = "xdg-desktop-portal-gtk", title = "Print" },
-	float = true,
+	match = { class = "helium", title = "Open Files" }, float = true,
+	match = { class = "helium", title = "All Files" }, float = true,
+	match = { class = "helium", title = "Save File" }, float = true,
+	match = { class = "helium", title = "Open File" }, float = true,
+	match = { class = "helium", title = "&Print…" }, float = true,
+	match = { class = "helium", title = "Print" }, float = true,
 })
 
 -- BORDERS
