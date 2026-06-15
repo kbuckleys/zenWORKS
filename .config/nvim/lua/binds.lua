@@ -5,8 +5,8 @@
 
 vim.keymap.set('n', '<leader><leader>', '<cmd>Yazi<cr>', { desc = 'Open yazi file manager' })
 
-vim.keymap.set("n", "L", "<cmd>BufferLineCycleNext<cr>", { desc = "Next tab" })
-vim.keymap.set("n", "H", "<cmd>BufferLineCyclePrev<cr>", { desc = "Previous tab" })
+vim.keymap.set("n", "<C-Tab>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
+vim.keymap.set("n", "<C-S-Tab>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Previous buffer" })   
 
 vim.keymap.set("i", "<C-c>", "<Esc>")
 vim.keymap.set("n", "<Esc>", ":nohl<CR>", { desc = "Clear search highlighting", silent = true })
