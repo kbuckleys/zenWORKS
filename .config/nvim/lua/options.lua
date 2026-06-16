@@ -49,7 +49,7 @@ vim.opt.cmdheight = 0
 -- Better Yazi borders
 vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#20242a" })
 require("yazi").setup({
-  yazi_floating_window_border = "single",
+  yazi_floating_window_border = "single"
 })
 
 -- Command bar pushes the Statusline upwards instead of overlapping it
@@ -60,19 +60,19 @@ require('vim._core.ui2').enable({
       [''] = 'msg',
       bufwrite = 'msg',
       echo = 'msg',
-      echomsg = 'msg',
+      echomsg = 'msg'
     },
     msg = {
-      timeout = 5000,
-    },
-  },
+      timeout = 5000
+    }
+  }
 })   
 
 -- Highlight yanked text
 vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function()
         vim.hl.on_yank()
-    end,
+    end
 })
 
 -- Retain cursor position post-buffer closure
@@ -83,5 +83,5 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     if mark[1] > 0 and mark[1] <= lcount then
       pcall(vim.api.nvim_win_set_cursor, 0, mark)
     end
-  end,
+  end
 })

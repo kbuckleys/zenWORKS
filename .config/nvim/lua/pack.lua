@@ -32,7 +32,7 @@ if status_ok then
   npairs.setup({
     check_ts = true, -- Enable Treesitter integration
     disable_filetype = { "TelescopePrompt", "spectre_panel" },
-    fast_wrap = {},
+    fast_wrap = {}
   })
 end
 
@@ -46,15 +46,15 @@ require("mini.surround").setup()
 
 require("noice").setup({
   cmdline = {
-    enabled = false,
+    enabled = false
   },
   messages = {
     enabled = true,
-    view_search = "virtualtext",
+    view_search = "virtualtext"
   },
   popupmenu = {
-    enabled = false,
-  },
+    enabled = false
+  }
 })   
 
 require('nvim-highlight-colors').setup({
@@ -66,8 +66,8 @@ require("ibl").setup({
   scope = {
     enabled = true,
     show_start = true,
-    show_end = true,
-  },
+    show_end = true
+  }
 })   
 
 require("mini.notify").setup({
@@ -75,8 +75,8 @@ require("mini.notify").setup({
     content = {
         format = function(notif)
             return notif.msg
-        end,
-    },
+        end
+    }
 })
 
 require("mini.cmdline").setup({
@@ -85,6 +85,6 @@ require("mini.cmdline").setup({
 
 require("mini.completion").setup({
     lsp_completion = {
-        auto_setup = true,
+        auto_setup = true
     }
 })

@@ -37,7 +37,7 @@ local kripton = {
   inactive = {
     c = { bg = "#000000" }, a = { bg = "#000000" },
     a = { bg = "#000000" }, a = { bg = "#000000", gui = "bold" }
-  },
+  }
 }
 
 require("lualine").setup({
@@ -45,8 +45,8 @@ require("lualine").setup({
     theme = kripton,
     icons_enabled = false,
     section_separators = " 󰇙 ",
-    component_separators = " 󰇙 ",
-  },
+    component_separators = " 󰇙 "
+  }
 })
 
 require("bufferline").setup({
@@ -57,7 +57,7 @@ require("bufferline").setup({
     show_buffer_icons = false,
     separator_style = "none",
     tab_size = 25
-  },
+  }
 })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
