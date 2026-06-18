@@ -1,4 +1,14 @@
 [[mgr.prepend_keymap]]
+on = [ "<C-Tab>" ]
+run = "tab_switch 1 --relative"
+desc = "Next tab"
+
+[[mgr.prepend_keymap]]
+on = [ "<C-BackTab>" ]
+run = "tab_switch -1 --relative"
+desc = "Previous tab"
+
+[[mgr.prepend_keymap]]
 on = [ "g", "<Space>" ]
 run = "cd --interactive"
 desc = "Go to..."
