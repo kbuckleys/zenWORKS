@@ -3,35 +3,6 @@
 -- └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 -- https://github.com/kbuckleys/
 
--- You can configure your bookmarks using simplified syntax
-local bookmarks = {
-  { tag = "Desktop", path = "~/Desktop", key = "d" },
-  { tag = "Documents", path = "~/Documents", key = "D" },
-  { tag = "Downloads", path = "~/Downloads", key = "o" },
-}
-
--- You can also configure bookmarks with key arrays
-local bookmarks = {
-  { tag = "Desktop", path = "~/Desktop", key = { "d", "D" } },
-  { tag = "Documents", path = "~/Documents", key = { "d", "d" } },
-  { tag = "Downloads", path = "~/Downloads", key = "o" },
-}
-
--- Windows-specific bookmarks
-if ya.target_family() == "windows" then
-  local home_path = os.getenv("USERPROFILE")
-  table.insert(bookmarks, {
-    tag = "Scoop Local",
-    path = os.getenv("SCOOP") or (home_path .. "\\scoop"),
-    key = "p"
-  })
-  table.insert(bookmarks, {
-    tag = "Scoop Global",
-    path = os.getenv("SCOOP_GLOBAL") or "C:\\ProgramData\\scoop",
-    key = "P"
-  })
-end
-
 require("whoosh"):setup {
   -- Configuration bookmarks (cannot be deleted through plugin)
   bookmarks = bookmarks,
@@ -74,7 +45,7 @@ require("whoosh"):setup {
   fzf_path_max_folder_name_length = 20,                 -- Max length in fzf
 
   -- History directory settings
-  history_size = 10,                                    -- Number of directories in history (default 10)
+  history_size = 100,                                   -- Number of directories in history (default 10)
   history_fzf_path_truncate_enabled = false,            -- Enable/disable path truncation by depth for history
   history_fzf_path_max_depth = 5,                       -- Maximum path depth before truncation for history (default 5)
   history_fzf_path_truncate_long_names_enabled = false, -- Enable/disable long folder name truncation for history
