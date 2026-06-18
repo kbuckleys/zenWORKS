@@ -12,3 +12,16 @@ hash = "1adc12c2b2b025411ab61eb8f0879574"
 use = "KKV9/compress"
 rev = "e2ae983"
 hash = "36b570e2164f6ad2317cfb839e42ef4"
+
+[[plugin.deps]]
+use = "dedukun/bookmarks"
+rev = "9ef1254"
+hash = "92fbb5483657fa7976cdf4e0104e18e0"
+
+[[plugin.deps]]
+use = "WhoSowSee/whoosh"
+rev = "ec2e6f7"
+hash = "59e984146fa6b20c441817444d5fdd61"
+
+[flavor]
+deps = []

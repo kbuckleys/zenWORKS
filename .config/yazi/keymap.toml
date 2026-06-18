@@ -34,7 +34,7 @@ run = "cd ~/.steam/steam/steamapps/common/"
 desc = "Go to Steam Library"
 
 [[mgr.prepend_keymap]]
-on = [ "g", "r" ]
+on = [ "g", "/" ]
 run = "cd /"
 desc = "Go to Root"
 
@@ -81,3 +81,54 @@ desc = "Archive (Password + Header + Level)"
 on = [ "g", "t" ]
 run = "cd ~/.local/share/Trash"
 desc = "Go to Trash"
+
+# whoosh.yazi
+[[mgr.prepend_keymap]]
+on = [ "b", "a" ]
+run = "plugin whoosh save"
+desc = "Bookmark (hovered)"
+
+[[mgr.prepend_keymap]]
+on = [ "b", "A" ]
+run = "plugin whoosh save_cwd"
+desc = "Bookmark (current directory)"
+
+[[mgr.prepend_keymap]]
+on = [ "b", "t" ]
+run = "plugin whoosh save_temp"
+desc = "Temporary bookmark (hovered)"
+
+[[mgr.prepend_keymap]]
+on = [ "b", "T" ]
+run = "plugin whoosh save_cwd_temp"
+desc = "Temporary bookmark (current directory)"
+
+[[mgr.prepend_keymap]]
+on = [ "b", "f" ]
+run = "plugin whoosh jump_by_fzf"
+desc = "Jump bookmark by fzf"
+
+[[mgr.prepend_keymap]]
+on = [ "b", "d" ]
+run = "plugin whoosh delete_by_key"
+desc = "Delete bookmark by key"
+
+[[mgr.prepend_keymap]]
+on = [ "b", "D" ]
+run = "plugin whoosh delete_by_fzf"
+desc = "Delete bookmarks by fzf"
+
+[[mgr.prepend_keymap]]
+on = [ "b", "P" ]
+run = "plugin whoosh delete_all"
+desc = "Purge all user bookmarks"
+
+[[mgr.prepend_keymap]]
+on = [ "b", "r" ]
+run = "plugin whoosh rename_by_key"
+desc = "Rename bookmark by key"
+
+[[mgr.prepend_keymap]]
+on = [ "b", "R" ]
+run = "plugin whoosh rename_by_fzf"
+desc = "Rename bookmark by fzf"
