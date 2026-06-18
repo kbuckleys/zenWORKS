@@ -29,11 +29,6 @@ run = "cd ~/Videos"
 desc = "Go to Videos"
 
 [[mgr.prepend_keymap]]
-on = [ "g", "s" ]
-run = "cd ~/.steam/steam/steamapps/common/"
-desc = "Go to Steam Library"
-
-[[mgr.prepend_keymap]]
 on = [ "g", "/" ]
 run = "cd /"
 desc = "Go to Root"
