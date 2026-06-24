@@ -85,3 +85,7 @@ alias lsx='lsix'
 # Shell integrations
 eval "$(zoxide init --cmd cd zsh)"
 eval "$(fzf --zsh)"
+
+# Word jump
+bindkey '^[[1;5D' backward-word
+bindkey '^[[1;5C' forward-word
