@@ -5,8 +5,6 @@
 
 #!/bin/bash
 
-cat ~/.config/logo
-echo ""
 paru -Scc --noconfirm && paru --clean && rm -rf ~/.cache/paru/ && paru -Sy
 
 while true; do
@@ -48,7 +46,6 @@ selected=$(
     --bind 'ctrl-a:toggle-all,ctrl-d:clear-multi' \
     --header="TAB: Select  󰇙  C-a: Invert Selection  󰇙  C-d: Clear Selection  󰇙  RETURN: Confirm" \
     --prompt="  > " \
-    --delimiter ' ' \
     --preview='bash -c '\''line="$1"; prefix="${line%% *}"; pkg="${line#* }"; preview_func "$prefix" "$pkg"'\'' -- {}' \
     --preview-window="bottom:50%"
 )   

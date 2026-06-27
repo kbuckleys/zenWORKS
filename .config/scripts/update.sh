@@ -5,13 +5,8 @@
 
 #!/bin/bash
 
-cat ~/.config/logo
-echo ""
-
 refresh_updates() {
   paru -Scc --noconfirm && paru --clean && rm -rf ~/.cache/paru/ && paru -Sy
-
-  echo "Fetching updates..."
   mapfile -t updates < <(paru -Qu --color=never | sort -u)
 
   all_updates=()
@@ -48,11 +43,11 @@ refresh_updates() {
 
 selected_lines=$(printf '%s\n' "${selection_list[@]}" | \
   fzf --multi \
+      --no-input \
       --border=top \
       --header-border=line \
       --bind 'ctrl-a:toggle-all,ctrl-d:clear-multi' \
       --header="TAB: Select  󰇙  C-a: Invert Selection  󰇙  C-d: Clear Selection  󰇙  RETURN: Confirm" \
-      --prompt="  > " \
       --delimiter ' ' \
       --preview="paru -Si {1}" \
       --preview-window="bottom:50%")
@@ -87,20 +82,16 @@ while true; do
   refresh_updates
   updated=false
 
-  echo ""
-  printf "\\033[1;32mPress RETURN to refresh or ESC to exit...\\033[0m\\n"
-  echo -n " "
-
   read -n1 -r choice
 
   case "$choice" in
   $'\e')
     echo ""
-    exit 0
+    return 
     ;;
   $'\n' | $'\r' | "")
     continue
     ;;
   *) ;;
   esac
-done   
+done
