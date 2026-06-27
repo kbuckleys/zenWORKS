@@ -35,7 +35,6 @@ while true; do
 
     options=("Update Packages" "Add/Remove Packages" "Exit")
     
-    # Use fzf for selection
     choice=$(printf '%s\n' "${options[@]}" | fzf \
         --disabled \
         --no-input \
