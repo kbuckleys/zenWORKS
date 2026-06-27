@@ -41,10 +41,16 @@ while true; do
   }
   export -f preview_func
 
+  # --- UPDATED FZF COMMAND ---
   selected=$(
     printf '%s\n' "${combined[@]}" | fzf --multi \
+      --border=top \
+      --bind 'ctrl-a:toggle-all,ctrl-d:clear-multi' \
+      --header="TAB: Select  󰇙  C-a: Invert Selection  󰇙  C-d: Clear Selection  󰇙  RETURN: Confirm" \
+      --prompt="  > " \
+      --delimiter ' ' \
       --preview='bash -c '\''line="$1"; prefix="${line%% *}"; pkg="${line#* }"; preview_func "$prefix" "$pkg"'\'' -- {}' \
-      --preview-window=down:70%
+      --preview-window="bottom:50%"
   )
 
   [[ -z $selected ]] && break
@@ -53,6 +59,7 @@ while true; do
   to_uninstall=()
 
   while IFS= read -r line; do
+    # Extract action (first char) and package (rest of line after space)
     action=${line:0:1}
     pkg=${line:2}
     if [[ $action == I ]]; then
@@ -77,4 +84,4 @@ while true; do
     echo $'\033[1;32mPress RETURN to continue\033[0m'
     read -r
   fi
-done
+done   
