@@ -55,10 +55,19 @@ require("bufferline").setup({
     show_buffer_close_icons = false,
     always_show_bufferline = false,
     show_buffer_icons = false,
-    separator_style = "none",
-    tab_size = 25
+    tab_size = 25,
+    modified_icon = "✎"
+  },
+  highlights = {
+    modified = {
+      fg = "#FFFFFF",
+      bg = "#20242a"
+    },
+    modified_selected = {
+      bg = "#000000"
+    }
   }
-})
+})   
 
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()

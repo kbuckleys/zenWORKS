@@ -28,69 +28,44 @@ refresh_updates() {
   done
 
   if [ ${#all_updates[@]} -eq 0 ]; then
+    echo "No updates available."
     paru --clean
     return
   fi
 
-  echo ""
-  printf "\\033[1;38;5;216mAvailable updates (%d):\\033[0m\\n" ${#all_updates[@]}
-  echo ""
+  # Build selection list with version info
+  selection_list=()
   for i in "${!all_updates[@]}"; do
-    printf "%-4d %-25s \\033[1;33m%-15s\\033[0m \\033[1;32m%-15s\\033[0m\\n" \
-      $((i + 1)) "${all_updates[$i]}" "${old_versions[$i]}" "${new_versions[$i]}"
+    selection_list+=("${all_updates[$i]}  ${old_versions[$i]} -> ${new_versions[$i]}")
   done
 
-  echo ""
-  printf "\\033[1;36mInput space-separated numbers or ranges (e.g. 1 2 3 OR 1-3 OR 1 3-4)\\033[0m\\n"
-  printf "\\033[1;36mAlternatively, press RETURN to sync all listed packages.\\033[0m\\n"
-  printf ":: \\033[0m"
+  selected_lines=$(printf '%s\n' "${selection_list[@]}" | \
+    fzf --multi \
+        --reverse \
+        --border=sharp \
+        --bind 'ctrl-a:select-all,ctrl-d:deselect-all,ctrl-t:toggle-all' \
+        --header="TAB: Flah  󰇙  C-a: All  󰇙  C-d: None  󰇙  RETURN: Confirm" \
+        --prompt=" " \
+        --preview="paru -Si {1}" \
+        --preview-window="bottom:50%")
 
-  updated=false
-  read -r input || input=""
-
   echo ""
-  if [ -z "$input" ]; then
-    echo "Installing all updates..."
-    paru -Syu --noconfirm
-    updated=true
-  else
+  if [ -n "$selected_lines" ]; then
     selected=()
-
-    IFS=' ' read -ra tokens <<<"$input"
-
-    for token in "${tokens[@]}"; do
-      if [[ "$token" =~ ^([0-9]+)-([0-9]+)$ ]]; then
-        start=${BASH_REMATCH[1]}
-        end=${BASH_REMATCH[2]}
-        if [ "$start" -ge 1 ] && [ "$end" -le ${#all_updates[@]} ] && [ "$start" -le "$end" ]; then
-          for ((i = start; i <= end; i++)); do
-            idx=$((i - 1))
-            selected+=("${all_updates[$idx]}")
-            echo "Selected (range): ${all_updates[$idx]}"
-          done
-        else
-          echo "Invalid range: $token (out of 1-${#all_updates[@]} range)"
-        fi
-      elif [[ "$token" =~ ^[0-9]+$ ]]; then
-        num=$token
-        if [ "$num" -ge 1 ] && [ "$num" -le ${#all_updates[@]} ]; then
-          selected+=("${all_updates[$((num - 1))]}")
-          echo "Selected: ${all_updates[$((num - 1))]}"
-        else
-          echo "Invalid number: $num"
-        fi
-      else
-        echo "Invalid token: $token"
-      fi
-    done
+    while IFS= read -r line; do
+      pkg=$(echo "$line" | awk '{print $1}')
+      selected+=("$pkg")
+    done <<< "$selected_lines"
 
     if [ ${#selected[@]} -gt 0 ]; then
       echo "Installing selected packages: ${selected[*]}"
       paru -S --noconfirm "${selected[@]}"
       updated=true
     else
-      echo "No valid packages selected."
+      echo "No packages selected."
     fi
+  else
+    echo "No selection made."
   fi
 
   echo "Cleaning paru cache..."
@@ -120,4 +95,4 @@ while true; do
     ;;
   *) ;;
   esac
-done
+done   
