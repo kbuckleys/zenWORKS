@@ -43,8 +43,7 @@ refresh_updates() {
     selection_list+=("$(printf '%-45s %20s          %20s' "$pkg_display" "$old_ver_display" "$new_ver_display")")
   done
 
-selected_lines=$(printf '%s\n' "${selection_list[@]}" | \
-  fzf --multi \
+selected_lines=$(printf '%s\n' "${selection_list[@]}" | fzf --multi \
       --no-input \
       --border=top \
       --header-border=line \
