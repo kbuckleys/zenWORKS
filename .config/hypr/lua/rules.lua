@@ -30,7 +30,7 @@ hl.window_rule({
 })
 
 hl.window_rule({
-	match = { title = "Package Manager" },
+	match = { title = "PARUZ" },
 	float = true,
 	center = true,
 	size = { 1000, 1100 },
