@@ -41,16 +41,17 @@ while true; do
   }
   export -f preview_func
 
-  selected=$(
-    printf '%s\n' "${combined[@]}" | fzf --multi \
-      --border=top \
-      --bind 'ctrl-a:toggle-all,ctrl-d:clear-multi' \
-      --header="TAB: Select  󰇙  C-a: Invert Selection  󰇙  C-d: Clear Selection  󰇙  RETURN: Confirm" \
-      --prompt="  > " \
-      --delimiter ' ' \
-      --preview='bash -c '\''line="$1"; prefix="${line%% *}"; pkg="${line#* }"; preview_func "$prefix" "$pkg"'\'' -- {}' \
-      --preview-window="bottom:50%"
-  )
+selected=$(
+  printf '%s\n' "${combined[@]}" | fzf --multi \
+    --border=top \
+    --header-border=line \
+    --bind 'ctrl-a:toggle-all,ctrl-d:clear-multi' \
+    --header="TAB: Select  󰇙  C-a: Invert Selection  󰇙  C-d: Clear Selection  󰇙  RETURN: Confirm" \
+    --prompt="  > " \
+    --delimiter ' ' \
+    --preview='bash -c '\''line="$1"; prefix="${line%% *}"; pkg="${line#* }"; preview_func "$prefix" "$pkg"'\'' -- {}' \
+    --preview-window="bottom:50%"
+)   
 
   [[ -z $selected ]] && break
 
