@@ -41,7 +41,6 @@ while true; do
   }
   export -f preview_func
 
-  # --- UPDATED FZF COMMAND ---
   selected=$(
     printf '%s\n' "${combined[@]}" | fzf --multi \
       --border=top \
@@ -59,7 +58,6 @@ while true; do
   to_uninstall=()
 
   while IFS= read -r line; do
-    # Extract action (first char) and package (rest of line after space)
     action=${line:0:1}
     pkg=${line:2}
     if [[ $action == I ]]; then

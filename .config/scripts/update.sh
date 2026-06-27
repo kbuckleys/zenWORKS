@@ -33,23 +33,16 @@ refresh_updates() {
     return
   fi
 
-  # Build selection list with 3 columns: PKG (Left) | OLD (Right) | NEW (Right)
   selection_list=()
   for line in "${updates[@]}"; do
     pkg=$(echo "$line" | awk '{print $1}')
     old_ver=$(echo "$line" | awk '{print $2}')
     new_ver=$(echo "$line" | awk -F ' -> ' '{print $2}')
 
-    # Truncate long strings for safety
     pkg_display=$(printf '%.45s' "$pkg")
     old_ver_display=$(printf '%.20s' "$old_ver")
     new_ver_display=$(printf '%.20s' "$new_ver")
 
-    # Format: 
-    # %-45s  = Left-align Package Name (45 chars)
-    # %20s   = Right-align Old Version (20 chars)
-    # %20s   = Right-align New Version (20 chars)
-    # Gap: 10 spaces between the two version columns
     selection_list+=("$(printf '%-45s %20s          %20s' "$pkg_display" "$old_ver_display" "$new_ver_display")")
   done
 
@@ -67,7 +60,6 @@ selected_lines=$(printf '%s\n' "${selection_list[@]}" | \
   if [ -n "$selected_lines" ]; then
     selected=()
     while IFS= read -r line; do
-      # Extract ONLY the first word (package name) from the formatted line
       pkg=$(echo "$line" | awk '{print $1}')
       selected+=("$pkg")
     done <<< "$selected_lines"
