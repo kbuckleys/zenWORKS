@@ -41,7 +41,6 @@ vim.api.nvim_set_hl(0, "CursorLine", { bg = "#20242a", nocombine = true })
 vim.api.nvim_set_hl(0, "WhichKeyNormal", { bg = "#20242a" })
 vim.api.nvim_set_hl(0, "Visual", { fg = "#000000", bg = "#fab387", nocombine = true })
 vim.api.nvim_set_hl(0, "YankHighlight", { bg = "#dfdfdd", fg = "#000000", nocombine = true })
-vim.api.nvim_set_hl(0, "Normal", { fg = "#9bbfbf" })
 
 -- Basics
 hl(0, "@comment", { fg = "#9bbfbf" })
@@ -107,7 +106,7 @@ hl(0, "@text.note", { fg = "#9bbfbf", italic = true })
 hl(0, "@text.warning", { fg = "#fab387", bold = true })
 hl(0, "@text.danger", { fg = "#e78284", bold = true })
 hl(0, "@text.diff.add", { fg = "#b6e0a4" })
-hl(0, "@text.diff.delete", { fg = "#e78284" })   
+hl(0, "@text.diff.delete", { fg = "#e78284" })
 
 require("lualine").setup({
   options = {
