@@ -41,12 +41,6 @@ esac
 end
 
 -- BINDS
-hl.bind("SUPER + R", function()
-	record("full")
-end)
-hl.bind("SUPER + SHIFT + R", function()
-	record("window")
-end)
-hl.bind("SUPER + CONTROL + R", function()
-	record("region")
-end)
+hl.bind("SUPER + R", function() record("full") end)
+hl.bind("SUPER + SHIFT + R", function() record("window") end)
+hl.bind("SUPER + CONTROL + R", function() record("region") end)

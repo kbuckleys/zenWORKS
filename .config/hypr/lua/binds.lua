@@ -46,7 +46,6 @@ hl.bind("SUPER + SHIFT + 5", hl.dsp.window.move({ workspace = 5 }))
 -- WINDOW MANIPULATION
 hl.bind("SUPER + Z", hl.dsp.window.fullscreen({ mode = "maximized" }))
 hl.bind("SUPER + F", hl.dsp.window.float({ action = "toggle" }))
-hl.bind("SUPER + L", hl.dsp.window.swap({ next = true }))
 hl.bind("SUPER + SHIFT + F", hl.dsp.window.fullscreen())
 hl.bind("SUPER + SHIFT + W", hl.dsp.window.center())
 hl.bind("SUPER + X", hl.dsp.layout("togglesplit"))

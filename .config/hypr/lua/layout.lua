@@ -6,6 +6,8 @@
 local layouts = { "dwindle", "scrolling", "master" }
 local state = {}
 
+hl.bind("SUPER + L", hl.dsp.window.swap({ next = true }))
+
 hl.bind("SUPER + SHIFT + L", function()
 	local ws = hl.get_active_workspace().id
 	local current = state[ws] or "dwindle" -- Assume first time

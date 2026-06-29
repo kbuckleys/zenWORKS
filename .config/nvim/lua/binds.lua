@@ -14,7 +14,7 @@ vim.keymap.set("n", "<C-c>", "<cmd>bd<cr>", { desc = "Close current buffer" })
 vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", { desc = "Move line down" })
 vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", { desc = "Move line up" })
 vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move selected lines down" })
-vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move selected lines up" })   
+vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move selected lines up" })
 
 vim.keymap.set("v", "<", "<gv", { desc = "Unindent and keep selection" })
 vim.keymap.set("v", ">", ">gv", { desc = "Indent and keep selection" })
@@ -29,8 +29,24 @@ vim.keymap.set("n", "<leader>X", "<cmd>!chmod +x %<CR>", { silent = true, desc =
 
 vim.keymap.set("n", "<leader>re", "<cmd>restart<cr>", { desc = "Restart config :restart)" })
 
--- native undotree
+-- Native undotree
 vim.keymap.set("n", "<leader>u", function()
     vim.cmd.packadd("nvim.undotree")
     require("undotree").open()
 end, { desc = "Toggle Builtin Undotree" })
+
+-- Delete mark menu
+vim.keymap.set('n', '<Leader>dm', function()
+  local mark = vim.fn.input('Delete mark: ')
+  if mark ~= '' then
+    vim.cmd('delmark ' .. mark)
+  end
+end, { desc = 'Delete a specific mark' })
+
+vim.keymap.set('n', '<Leader>da', function()
+  local confirm = vim.fn.input('Delete ALL marks in this file? (y/n): ')
+  if confirm == 'y' or confirm == 'Y' then
+    vim.cmd('delmarks!')
+    vim.notify('All local marks deleted', vim.log.levels.INFO)
+  end
+end, { desc = 'Delete all marks in current file' })
