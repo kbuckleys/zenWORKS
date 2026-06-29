@@ -4,18 +4,8 @@
 -- https://github.com/kbuckleys/
 
 -- MONITORS
-hl.monitor({
-    output = "DP-1",
-    mode = "2560x1440@180",
-    position = "auto",
-})
-
-hl.monitor({
-	output = "HDMI-A-1",
-	mode = "1920x1080@100",
-	position = "auto",
-	transform = 3,
-})
+hl.monitor({ output = "HDMI-A-1", mode = "1920x1080@100", position = "auto", transform = 3, })
+hl.monitor({ output = "DP-1", mode = "2560x1440@180", position = "auto", })
 
 -- ENV
 -- Nvidia cache limit set to 20 GB

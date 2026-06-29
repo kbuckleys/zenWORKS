@@ -6,7 +6,7 @@
 local layouts = { "dwindle", "scrolling", "master" }
 local state = {}
 
-hl.bind("SUPER + L", function()
+hl.bind("SUPER + SHIFT + L", function()
 	local ws = hl.get_active_workspace().id
 	local current = state[ws] or "dwindle" -- Assume first time
 	local next_layout = layouts[1]
