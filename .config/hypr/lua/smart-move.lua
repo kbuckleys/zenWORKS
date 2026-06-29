@@ -32,9 +32,20 @@ function smart_move.smart_move(direction)
 end
 
 -- BINDS
-hl.bind("SUPER + SHIFT + LEFT", function() smart_move.smart_move("l") end, { repeating = true })
-hl.bind("SUPER + SHIFT + RIGHT", function() smart_move.smart_move("r") end, { repeating = true })
-hl.bind("SUPER + SHIFT + UP", function() smart_move.smart_move("u") end, { repeating = true })
-hl.bind("SUPER + SHIFT + DOWN", function() smart_move.smart_move("d") end, { repeating = true })
+hl.bind("SUPER + SHIFT + LEFT", function()
+	smart_move.smart_move("l")
+end, { repeating = true })
+
+hl.bind("SUPER + SHIFT + RIGHT", function()
+	smart_move.smart_move("r")
+end, { repeating = true })
+
+hl.bind("SUPER + SHIFT + UP", function()
+	smart_move.smart_move("u")
+end, { repeating = true })
+
+hl.bind("SUPER + SHIFT + DOWN", function()
+	smart_move.smart_move("d")
+end, { repeating = true })
 
 return smart_move
