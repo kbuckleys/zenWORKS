@@ -136,7 +136,8 @@
       "children-class": "tray"
     },
     "modules": [
-      "custom/expand-icon", "tray"
+      "custom/expand-icon",
+      "tray"
     ]
   },
 
