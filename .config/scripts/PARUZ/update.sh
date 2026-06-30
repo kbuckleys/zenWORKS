@@ -48,7 +48,7 @@ selected_lines=$(printf '%s\n' "${selection_list[@]}" | fzf --multi \
       --border=top \
       --header-border=line \
       --bind 'ctrl-a:toggle-all,ctrl-d:clear-multi' \
-      --header="TAB: Select  󰇙  C-a: Invert Selection  󰇙  C-d: Clear Selection  󰇙  RETURN: Confirm" \
+      --header="TAB: Select  󰇙  C-a: Invert  󰇙  C-d: Clear  󰇙  RETURN: Confirm" \
       --delimiter ' ' \
       --preview="paru -Si {1}" \
       --preview-window="bottom:50%")
