@@ -62,14 +62,9 @@ selected_lines=$(printf '%s\n' "${selection_list[@]}" | fzf --multi \
     done <<< "$selected_lines"
 
     if [ ${#selected[@]} -gt 0 ]; then
-      echo "Installing selected packages: ${selected[*]}"
       paru -S --noconfirm "${selected[@]}"
       updated=true
-    else
-      echo "No packages selected."
     fi
-  else
-    echo "No selection made."
   fi
 
   echo "Cleaning paru cache..."
