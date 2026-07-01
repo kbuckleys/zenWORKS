@@ -13,7 +13,8 @@ hl.bind("SUPER + M", hl.dsp.exec_cmd(term .. " -T 'PARUZ' -e ~/.config/scripts/P
 hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd(term .. " -T sysmon -e btop"))
 hl.bind("SUPER + SHIFT + ESCAPE", hl.dsp.exec_cmd("hyprshutdown"))
 hl.bind("SUPER + CONTROL + P", hl.dsp.exec_cmd("hyprpicker -a"))
-hl.bind("SUPER + y", hl.dsp.exec_cmd("killall -SIGUSR1 waybar"))
+hl.bind("SUPER + Y", hl.dsp.exec_cmd("killall -SIGUSR1 waybar"))
+hl.bind("SUPER + SHIFT + Y", hl.dsp.exec_cmd("killall waybar && waybar"))
 hl.bind("SUPER + RETURN", hl.dsp.exec_cmd(term))
 hl.bind("SUPER + E", hl.dsp.exec_cmd(fman))
 hl.bind("SUPER + B", hl.dsp.exec_cmd(web))
@@ -45,13 +46,15 @@ hl.bind("SUPER + SHIFT + 5", hl.dsp.window.move({ workspace = 5 }))
 
 -- WINDOW MANIPULATION
 hl.bind("SUPER + Z", hl.dsp.window.fullscreen({ mode = "maximized" }))
-hl.bind("SUPER + F", hl.dsp.window.float({ action = "toggle" }))
 hl.bind("SUPER + SHIFT + F", hl.dsp.window.fullscreen())
 hl.bind("SUPER + SHIFT + W", hl.dsp.window.center())
 hl.bind("SUPER + X", hl.dsp.layout("togglesplit"))
 hl.bind("SUPER + W", hl.dsp.window.pseudo())
-hl.bind("SUPER + F", hl.dsp.window.center())
 hl.bind("SUPER + Q", hl.dsp.window.close())
+hl.bind("SUPER + F", function()
+    hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
+    hl.dispatch(hl.dsp.window.center())
+end)
 
 -- Mouse
 hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true })
@@ -124,34 +127,35 @@ hl.bind("SUPER + SHIFT + 0", hl.dsp.exec_cmd("playerctl previous"))
 hl.bind("SUPER + SHIFT + EQUAL", hl.dsp.exec_cmd("playerctl next"))
 
 -- SCREEN ZOOM
-local function getZoomFactor()
-	return hl.get_config("cursor:zoom_factor")
+local MAX_ZOOM = 10
+local MIN_ZOOM = 1
+local ZOOM_TOGGLE_FACTOR = 0.5
+
+local function zoom(offset)
+    local current = hl.get_config("cursor.zoom_factor")
+    if offset ~= nil then
+        current = current + offset
+    elseif current ~= MIN_ZOOM then
+        current = MIN_ZOOM
+    else
+        current = ZOOM_TOGGLE_FACTOR
+    end
+    current = math.max(MIN_ZOOM, math.min(MAX_ZOOM, current))
+    hl.config({ cursor = { zoom_factor = current } })
 end
 
-local function setZoomFactor(value)
-	hl.config({ cursor = { zoom_factor = value } })
-end
-
-hl.bind("SUPER + CONTROL + EQUAL", function()
-	setZoomFactor(getZoomFactor() * 1.1)
+hl.bind("SUPER + CTRL + 0", zoom)
+hl.bind("SUPER + CTRL + EQUAL", function()
+    zoom(0.2)
+end, { repeating = true })
+hl.bind("SUPER + CTRL + MINUS", function()
+    zoom(-0.2)
 end, { repeating = true })
 
-hl.bind("SUPER + CONTROL + MINUS", function()
-	setZoomFactor(math.max(1.0, getZoomFactor() * 0.9))
-end, { repeating = true })
-
-hl.bind("SUPER + CONTROL + 0", function()
-	setZoomFactor(1.0)
+hl.bind("SUPER + CTRL + mouse:274", zoom)
+hl.bind("SUPER + CTRL + mouse_down", function()
+    zoom(0.2)
 end)
-
-hl.bind("SUPER + CONTROL + mouse_down", function()
-	setZoomFactor(getZoomFactor() * 1.1)
-end)
-
-hl.bind("SUPER + CONTROL + mouse_up", function()
-	setZoomFactor(math.max(1.0, getZoomFactor() * 0.9))
-end)
-
-hl.bind("SUPER + CONTROL + mouse:274", function()
-	setZoomFactor(1.0)
+hl.bind("SUPER + CTRL + mouse_up", function()
+    zoom(-0.2)
 end)
