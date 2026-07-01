@@ -29,7 +29,8 @@
     "memory",
     "pulseaudio",
     "clock",
-    "custom/privacydots"
+    "custom/privacydots",
+    "custom/recorder"
   ],
 
   "custom/div": {
@@ -110,13 +111,21 @@
   },
 
   "custom/privacydots": {
-      "exec": "~/.config/waybar/scripts/privacy-dots.sh",
-      "return-type": "json",
-      "interval": 3,
-      "format": "{text}",
-      "tooltip": true,
-      "escape": false,
-      "markup": "pango"
+    "exec": "~/.config/waybar/scripts/privacy-dots.sh",
+    "return-type": "json",
+    "interval": 3,
+    "format": "{text}",
+    "tooltip": true,
+    "escape": false,
+    "markup": "pango"
+  },
+
+  "custom/recorder": {
+    "format": "{}",
+    "exec": "~/.config/waybar/scripts/recorder-status.sh",
+    "return-type": "json",
+    "interval": 1,
+    "signal": 12
   },
 
   "network": {

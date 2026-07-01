@@ -42,6 +42,11 @@
   padding: 0px 4px 4px 8px;
 }
 
+#custom-recorder {
+  padding: 0px 12px 4px 8px;
+  color: #e78284;
+}
+
 #clock {
   padding: 0px 8px 4px 8px;
   font-weight: bold;
