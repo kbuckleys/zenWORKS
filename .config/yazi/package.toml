@@ -1,12 +1,12 @@
 [[plugin.deps]]
 use = "yazi-rs/plugins:mount"
-rev = "598cdb6"
+rev = "65559fd"
 hash = "e3260d0b1feded8c8e3ae3afa1169e30"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
-rev = "598cdb6"
-hash = "f0c8c378184d5f8abd1b095a443d336d"
+rev = "65559fd"
+hash = "5b1c276b75cae91cbbdbe7863f39a540"
 
 [[plugin.deps]]
 use = "WhoSowSee/whoosh"
