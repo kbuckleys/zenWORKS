@@ -62,6 +62,7 @@ hl.config({
 		gaps_in = -1,
 		snap = {
 			enabled = true,
+            border_overlap = true,
 		},
 	},
 
@@ -82,13 +83,13 @@ hl.config({
             enabled = false
 		},
 		shadow = {
-			enabled = false,
+			enabled = false
 		},
 	},
 
 	group = {
 		col = {
-			border_locked_inactive = "rgba(155, 191, 191, 0.3)",
+            border_locked_inactive = "rgba(155, 191, 191, 0.3)",
 			border_locked_active = "rgba(231, 130, 132, 1)",
 			border_inactive = "rgba(155, 191, 191, 0.3)",
 			border_active = "rgba(200, 164, 224, 1)",
