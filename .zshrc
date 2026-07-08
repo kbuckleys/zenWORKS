@@ -92,8 +92,8 @@ eval "$(zoxide init --cmd cd zsh)"
 eval "$(fzf --zsh)"
 
 function zvm_after_init() {
-  bindkey -M viins '^R' fzf-history-widget
-  bindkey -M vicmd '^R' fzf-history-widget
+  bindkey -M viins '^H' fzf-history-widget
+  bindkey -M vicmd '^R' redo
   bindkey -M viins '^T' fzf-file-widget
   bindkey -M viins '\ec' fzf-cd-widget
 
@@ -101,6 +101,5 @@ function zvm_after_init() {
   export ZVM_VI_HIGHLIGHT_FOREGROUND=#000000
   export ZVM_VI_HIGHLIGHT_EXTRASTYLE=bold
   
-  # Force refresh the highlight settings
   zvm_highlight update
 }
