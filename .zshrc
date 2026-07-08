@@ -8,8 +8,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-if [[ -f "/opt/homebrew/bin/brew" ]] then
-  # If you're using macOS, you'll want this enabled
+if [[ -f "/opt/homebrew/bin/brew" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
@@ -29,10 +28,12 @@ source "${ZINIT_HOME}/zinit.zsh"
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 
 # Add in zsh plugins
+# NOTE: zsh-vi-mode is added here to enable Vim motions
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-completions
 zinit light Aloxaf/fzf-tab
+zinit light jeffreytse/zsh-vi-mode
 
 # Add in snippets
 zinit snippet OMZP::command-not-found
@@ -44,16 +45,20 @@ zinit snippet OMZP::sudo
 zinit snippet OMZP::git
 zinit snippet OMZP::aws
 
-# Load completions
+# 1. Load completions system (MUST be before cdreplay)
 autoload -Uz compinit && compinit
 
+# 2. Replay intercepted compdef calls (MUST be after compinit)
 zinit cdreplay -q
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# 3. Powerlevel10k config (Must be after plugins)
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Keybindings
-bindkey -e
+# REMOVED: bindkey -e (This was forcing Emacs mode and breaking Vim)
+# The zsh-vi-mode plugin automatically enables Vi mode.
+
+# Restore history search (Vi mode sometimes unbinds these)
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 bindkey '^[w' kill-region
@@ -86,6 +91,16 @@ alias lsx='lsix'
 eval "$(zoxide init --cmd cd zsh)"
 eval "$(fzf --zsh)"
 
-# Word jump
-bindkey '^[[1;5D' backward-word
-bindkey '^[[1;5C' forward-word
+function zvm_after_init() {
+  bindkey -M viins '^R' fzf-history-widget
+  bindkey -M vicmd '^R' fzf-history-widget
+  bindkey -M viins '^T' fzf-file-widget
+  bindkey -M viins '\ec' fzf-cd-widget
+
+  export ZVM_VI_HIGHLIGHT_BACKGROUND=#fab387
+  export ZVM_VI_HIGHLIGHT_FOREGROUND=#000000
+  export ZVM_VI_HIGHLIGHT_EXTRASTYLE=bold
+  
+  # Force refresh the highlight settings
+  zvm_highlight update
+}
