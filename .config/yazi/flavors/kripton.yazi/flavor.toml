@@ -26,12 +26,12 @@ sep_inner = { open = "", close = "" }
 sep_outer = { open = "", close = "" }
 
 [mode]
-normal_main = { bg = "#9bbfbf", fg = "#000000", bold = true }
-normal_alt = { fg = "#9bbfbf", bg = "#20242a" }
-select_main = { bg = "#c8a4e0", fg = "#000000", bold = true }
-select_alt = { fg = "#c8a4e0", bg = "#20242a" }
-unset_main = { bg = "#e0d8a4", fg = "#000000", bold = true }
-unset_alt = { fg = "#e0d8a4", bg = "#20242a" }
+normal_main = { fg = "#9bbfbf", bold = true }
+normal_alt = { fg = "#9bbfbf" }
+select_main = { fg = "#c8a4e0", bold = true }
+select_alt = { fg = "#c8a4e0" }
+unset_main = { fg = "#e0d8a4", bold = true }
+unset_alt = { fg = "#e0d8a4" }
 
 [indicator]
 preview = { underline = false }
@@ -43,7 +43,7 @@ sep_left = { open = "", close = "" }
 sep_right = { open = "", close = "" }
 
 # Permissions
-perm_sep = { fg = "#20242a" }
+perm_sep = { fg = "#6a707f" }
 perm_type = { fg = "#b6e0a4" }
 perm_read = { fg = "#e0d8a4" }
 perm_write = { fg = "#e78284" }
@@ -59,7 +59,7 @@ mask = { bg = "#20242a" }
 cand = { fg = "#fab387" }
 rest = { fg = "#20242a" }
 desc = { fg = "#dfdfdd" }
-separator = "  "
+separator = "   "
 separator_style = { fg = "#6a707f" }
 
 [confirm]

@@ -13,16 +13,16 @@ local kripton = {
     a = { fg = "#000000", bg = "#b6e0a4", gui = "bold" }
   },
   visual = { 
-    c = { fg = "#000000", bg = "#fab387" },
-    a = { fg = "#000000", bg = "#fab387", gui = "bold" }
+    c = { fg = "#000000", bg = "#c8a4e0" },
+    a = { fg = "#000000", bg = "#c8a4e0", gui = "bold" }
   },
   replace = {
     c = { fg = "#000000", bg = "#e78284" },
     a = { fg = "#000000", bg = "#e78284", gui = "bold" }
   },
   command = {
-    c = { fg = "#000000", bg = "#9bbfbf" },
-    a = { fg = "#000000", bg = "#9bbfbf", gui = "bold" }
+    c = { fg = "#000000", bg = "#fab387" },
+    a = { fg = "#000000", bg = "#fab387", gui = "bold" }
   },
   inactive = {
     c = { bg = "#000000" }, a = { bg = "#000000" },
@@ -37,7 +37,7 @@ vim.api.nvim_set_hl(0, "BufferLineBufferSelected", { fg = "#dfdfdd", bg = "#0000
 vim.api.nvim_set_hl(0, "BufferLineIndicatorSelected", { bg = "#000000", fg = "#000000", nocombine = true })
 vim.api.nvim_set_hl(0, "CursorLine", { bg = "#20242a", nocombine = true })
 vim.api.nvim_set_hl(0, "WhichKeyNormal", { bg = "#20242a" })
-vim.api.nvim_set_hl(0, "Visual", { fg = "#000000", bg = "#fab387", nocombine = true })
+vim.api.nvim_set_hl(0, "Visual", { fg = "#000000", bg = "#c8a4e0", nocombine = true })
 vim.api.nvim_set_hl(0, "YankHighlight", { bg = "#dfdfdd", fg = "#000000", nocombine = true })
 
 require("lualine").setup({
