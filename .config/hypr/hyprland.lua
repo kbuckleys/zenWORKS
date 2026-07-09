@@ -5,6 +5,7 @@
 
 require("lua.wf-recorder")
 require("lua.smart-move")
+require("lua.autostart")
 require("lua.hyprshot")
 require("lua.layout")
 require("lua.binds")
