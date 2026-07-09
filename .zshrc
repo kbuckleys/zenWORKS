@@ -97,7 +97,7 @@ function zvm_after_init() {
   bindkey -M viins '^T' fzf-file-widget
   bindkey -M viins '\ec' fzf-cd-widget
 
-  export ZVM_VI_HIGHLIGHT_BACKGROUND=#fab387
+  export ZVM_VI_HIGHLIGHT_BACKGROUND=#c8a4e0
   export ZVM_VI_HIGHLIGHT_FOREGROUND=#000000
   export ZVM_VI_HIGHLIGHT_EXTRASTYLE=bold
   
