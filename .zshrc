@@ -54,10 +54,6 @@ zinit cdreplay -q
 # 3. Powerlevel10k config (Must be after plugins)
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Keybindings
-# REMOVED: bindkey -e (This was forcing Emacs mode and breaking Vim)
-# The zsh-vi-mode plugin automatically enables Vi mode.
-
 # Restore history search (Vi mode sometimes unbinds these)
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
