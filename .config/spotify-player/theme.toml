@@ -6,30 +6,21 @@
 [[themes]]
 name = "kripton"
 
-[themes.palette]
-magenta = "#c8a4e0"
-yellow = "#e0d8a4"
-green = "#b6e0a4"
-white = "#dfdfdd"
-black = "#000000"
-cyan = "#9bbfbf"
-blue = "#6a707f"
-red = "#e78284"
-
 [themes.component_style]
-playback_progress_bar_unfilled = { fg = "#20242a" , bg = "Black" }
-playback_progress_bar = { fg = "Green", bg = "Black" }
+playback_progress_bar = { fg = "#b6e0a4", bg = "#20242a" }
 
-lyrics_playing = { fg = "Green", modifiers = ["Bold"] }
-lyrics_played = { fg = "Blue"}
+current_playing = { fg = "#000000", bg = "#b6e0a4", modifiers = ["Bold"] }
+selection = { fg = "#000000", bg = "#dfdfdd", modifiers = ["Bold"] }
 
-page_desc = { fg = "Cyan", modifiers = ["Bold"] }
-playback_album = { fg = "#fab387" }
-playback_metadata = { fg = "Blue" }
-playback_artists = { fg = "Green" }
-playback_status = { fg = "Green" }
-playback_track = { fg = "Green" }
-playlist_desc = { fg = "Blue" }
-table_header = { fg = "Blue" }
-block_title = { fg = "Blue" }
+lyrics_playing = { fg = "#b6e0a4", modifiers = ["Bold"] }
+lyrics_played = { fg = "#6a707f"}
+
+page_desc = { fg = "#9bbfbf", modifiers = ["Bold"] }
+playback_artists = { fg = "#b6e0a4", modifiers = ["Bold"] }
+playback_status = { fg = "#b6e0a4", modifiers = ["Bold"] }
+playback_track = { fg = "#b6e0a4", modifiers = ["Bold"] }
+playback_metadata = { fg = "#6a707f" }
+playlist_desc = { fg = "#6a707f" }
+table_header = { fg = "#6a707f" }
+block_title = { fg = "#6a707f" }
 border = { fg = "#20242a" }
