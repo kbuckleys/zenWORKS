@@ -15,12 +15,12 @@ hl.window_rule({ match = { initial_title = "Friends List" }, float = true})
 hl.window_rule({ match = { class = "mpv" }, float = true, center = true})
 
 -- HELIUM
-hl.window_rule({ match = { class = "helium", title = "Open Files" }, float = true, size = { 850, 850 }})
-hl.window_rule({ match = { class = "helium", title = "All Files" }, float = true, size = { 850, 850 }})
-hl.window_rule({ match = { class = "helium", title = "Save File" }, float = true, size = { 850, 850 }})
-hl.window_rule({ match = { class = "helium", title = "Open File" }, float = true, size = { 850, 850 }})
-hl.window_rule({ match = { class = "helium", title = "&Print…" }, float = true, size = { 850, 850 }})
-hl.window_rule({ match = { class = "helium", title = "Print" }, float = true, size = { 850, 850 }})
+hl.window_rule({ match = { class = "xdg-desktop-portal-gtk", title = "Open Files" }, float = true, size = { 950, 850 }})
+hl.window_rule({ match = { class = "xdg-desktop-portal-gtk", title = "All Files" }, float = true, size = { 950, 850 }})
+hl.window_rule({ match = { class = "xdg-desktop-portal-gtk", title = "Save File" }, float = true, size = { 950, 850 }})
+hl.window_rule({ match = { class = "xdg-desktop-portal-gtk", title = "Open File" }, float = true, size = { 950, 850 }})
+hl.window_rule({ match = { class = "xdg-desktop-portal-gtk", title = "&Print…" }, float = true, size = { 950, 850 }})
+hl.window_rule({ match = { class = "xdg-desktop-portal-gtk", title = "Print" }, float = true, size = { 950, 850 }})
 
 -- BORDERS
 hl.window_rule({ match = { fullscreen = true }, border_color = "rgba(250, 179, 135, 0.6)"})
