@@ -137,3 +137,8 @@ desc = "Rename bookmark by key"
 on = [ "b", "R" ]
 run = "plugin whoosh rename_by_fzf"
 desc = "Rename bookmark by fzf"
+
+[[mgr.prepend_keymap]]
+on = [ "<C-s>" ]
+run = 'shell "$SHELL" --block'
+desc = "Open shell here"
