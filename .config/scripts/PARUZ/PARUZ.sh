@@ -26,7 +26,7 @@ if ! sudo -v 2>/dev/null; then
 fi
 while true; do sudo -n true; sleep 60; kill -0 "$$" 2>/dev/null || exit; done 2>/dev/null &
 SUDO_PID=$!
-trap "kill $SUDO_PID" EXIT
+trap 'kill $SUDO_PID' EXIT
 
 hard_clear
 

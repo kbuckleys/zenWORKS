@@ -92,4 +92,4 @@ selected=$(
   fi
   
   unset installed_pkgs
-done   
+done
