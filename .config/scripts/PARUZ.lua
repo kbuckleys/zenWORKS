@@ -116,9 +116,24 @@ end
 -- Update Packages  (update.sh)
 
 local function term_width()
-  local out = capture("tput cols 2>/dev/null")
-  local w = tonumber(out:match("%d+"))
+  -- tput's own stdout is a pipe here (we're capturing it), not the
+  -- terminal, so it can't determine the real size via ioctl and may
+  -- silently fall back to a stale default. Query /dev/tty directly
+  -- instead, which always refers to the actual controlling terminal.
+  local out = capture("stty size < /dev/tty 2>/dev/null")
+  local _, cols = out:match("(%d+)%s+(%d+)")
+  local w = tonumber(cols)
   return w or 80
+end
+
+-- Centers text within a given width, using UTF-8 codepoint count (not
+-- byte count) so multi-byte glyphs like the keybind icons don't throw
+-- off the math.
+local function center_text(text, width)
+  local len = (utf8 and utf8.len(text)) or #text
+  local pad = math.floor((width - len) / 2)
+  if pad < 0 then pad = 0 end
+  return string.rep(" ", pad) .. text
 end
 
 local function refresh_updates()
@@ -143,6 +158,7 @@ local function refresh_updates()
   local W      = term_width()
   local pkg_w  = W - (VER_W * 2 + GAP + MARGIN)
   if pkg_w < 10 then pkg_w = 10 end
+  if pkg_w > 99 then pkg_w = 99 end -- Lua's string.format %s width hard-caps at 99
 
   local row_fmt = "%-" .. pkg_w .. "s%" .. VER_W .. "s" .. string.rep(" ", GAP) .. "%" .. VER_W .. "s"
 
@@ -161,6 +177,9 @@ local function refresh_updates()
       string.format(row_fmt, pkg_display, old_ver_display, new_ver_display)
   end
 
+  local header_text = "TAB: Select  󰇙  C-a: Invert  󰇙  C-d: Clear  󰇙  RETURN: Confirm"
+  local header_centered = center_text(header_text, W)
+
   local args = table.concat({
     "--multi",
     "--no-input",
@@ -168,7 +187,7 @@ local function refresh_updates()
     "--border=top",
     "--header-border=line",
     "--bind 'ctrl-a:toggle-all,ctrl-d:clear-multi'",
-    '--header="TAB: Select  󰇙  C-a: Invert  󰇙  C-d: Clear  󰇙  RETURN: Confirm"',
+    '--header="' .. header_centered .. '"',
     "--delimiter ' '",
     '--preview="paru -Si {1}"',
     '--preview-window="bottom:50%"',
@@ -232,7 +251,7 @@ local function manage_packages()
 
     -- Right-align a colorized repo tag to the terminal edge, same
     -- treatment as the version columns in the update view.
-    local REPO_W    = 10 -- fits "[MULTILIB]" (10 chars), the longest repo tag
+    local REPO_W    = 8 -- fits "MULTILIB" (8 chars), the longest repo tag
     local GAP       = 1
     local ICON_PAD  = " " -- padding between icon and package name
     local ICON_W    = 1 + #ICON_PAD -- icon glyph + its padding
@@ -240,10 +259,11 @@ local function manage_packages()
     local W      = term_width()
     local pkg_w  = W - MARGIN - REPO_W - GAP - ICON_W
     if pkg_w < 10 then pkg_w = 10 end
+    if pkg_w > 99 then pkg_w = 99 end -- Lua's string.format %s width hard-caps at 99
 
     local function repo_tag(pkg)
       local repo  = repo_map[pkg] or "LOCAL"
-      local plain = string.format("%" .. REPO_W .. "s", "[" .. repo .. "]")
+      local plain = string.format("%" .. REPO_W .. "s", repo)
       local color = REPO_COLORS[repo] or "\027[37m"
       return color .. plain .. COLOR_RESET
     end
@@ -254,13 +274,16 @@ local function manage_packages()
     end
 
     local combined = {}
+    local installed_only = {}
     for _, pkg in ipairs(available_pkgs) do
       if pkg ~= "" and not installed_set[pkg] then
         combined[#combined + 1] = row(ICON_INSTALL, pkg)
       end
     end
     for _, pkg in ipairs(installed_pkgs_l) do
-      combined[#combined + 1] = row(ICON_REMOVE, pkg)
+      local r = row(ICON_REMOVE, pkg)
+      combined[#combined + 1] = r
+      installed_only[#installed_only + 1] = r
     end
 
     -- Strip any ANSI codes before parsing so this works whether fzf hands
@@ -268,25 +291,45 @@ local function manage_packages()
     local strip_ansi = 'sed -E "s/\\x1b\\[[0-9;]*m//g"'
     local inner = 'line="$1"; clean=$(printf %s "$line" | ' .. strip_ansi .. '); '
       .. 'prefix="${clean%% *}"; rest="${clean#* }"; '
-      .. 'pkg=$(printf %s "$rest" | sed -E "s/\\[[^]]*\\]$//" | xargs); '
+      .. 'pkg=$(printf %s "$rest" | sed -E "s/[A-Z]+[[:space:]]*$//" | xargs); '
       .. 'if [[ "$prefix" == "' .. ICON_INSTALL .. '" ]]; then paru -Si "$pkg"; else paru -Qi "$pkg"; fi'
     local q = "'\\''" -- represents the shell escape sequence '\''
     local preview_arg = "--preview='bash -c " .. q .. inner .. q .. " -- {}'"
 
+    local header_text = "TAB: Select  󰇙  C-a: Invert  󰇙  C-d: Clear  󰇙  C-s: Source  󰇙  RETURN: Confirm"
+    local header_centered = center_text(header_text, W)
+
+    local full_tmp      = write_tmp(table.concat(combined, "\n"))
+    local installed_tmp = write_tmp(table.concat(installed_only, "\n"))
+    local state_tmp      = write_tmp("full")
+    local q2 = "'\\''" -- represents the shell escape sequence '\''
+
+    -- Ctrl-I toggle: read which list is currently shown from state_tmp,
+    -- flip it, and print the newly-selected list for fzf to reload from.
+    local toggle_script = 'state=$(cat "' .. state_tmp .. '"); '
+      .. 'if [ "$state" = "full" ]; then echo installed > "' .. state_tmp .. '"; cat "' .. installed_tmp .. '"; '
+      .. 'else echo full > "' .. state_tmp .. '"; cat "' .. full_tmp .. '"; fi'
+    local toggle_cmd = "bash -c " .. q2 .. toggle_script .. q2
+
     local args = table.concat({
       "--multi",
       "--ansi",
+      "--nth 2",
+      "--tiebreak=chunk,index",
       "--no-scrollbar",
       "--border=top",
       "--header-border=line",
-      "--bind 'ctrl-a:toggle-all,ctrl-d:clear-multi'",
-      '--header="TAB: Select  󰇙  C-a: Invert  󰇙  C-d: Clear  󰇙  RETURN: Confirm"',
+      "--bind 'ctrl-a:toggle-all,ctrl-d:clear-multi,ctrl-s:reload(" .. toggle_cmd .. ")'",
+      '--header="' .. header_centered .. '"',
       '--prompt="  > "',
       preview_arg,
       '--preview-window="bottom:50%"',
     }, " ")
 
-    local selected_raw = fzf(combined, args)
+    local selected_raw = capture("fzf " .. args .. " < " .. full_tmp)
+    os.remove(full_tmp)
+    os.remove(installed_tmp)
+    os.remove(state_tmp)
     if selected_raw == "" then break end
 
     local to_install, to_uninstall = {}, {}
@@ -295,7 +338,7 @@ local function manage_packages()
       local icon, rest = line:match("^(%S+)%s+(.*)$")
       local pkg = rest
       if pkg then
-        pkg = pkg:gsub("%s*%[[^%]]*%]%s*$", ""):gsub("%s+$", "")
+        pkg = pkg:gsub("%s*%u+%s*$", ""):gsub("%s+$", "")
       end
       if icon == ICON_INSTALL then
         to_install[#to_install + 1] = pkg
@@ -376,5 +419,7 @@ local ok, err = pcall(main)
 sudo_stop()
 if not ok then
   io.stderr:write("PARUZ error: " .. tostring(err) .. "\n")
+  print("\027[1;31mPARUZ crashed - press RETURN to close.\027[0m")
+  io.read("*l")
   os.exit(1)
 end
