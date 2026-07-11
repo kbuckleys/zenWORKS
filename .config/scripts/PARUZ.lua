@@ -1,0 +1,381 @@
+#!/usr/bin/env lua
+--[[
+  ┌─┐┌─┐┌┐┌┬ ┬┌─┐┬─┐┬┌─┌─┐
+  ┌─┘├┤ │││││││ │├┬┘├┴┐└─┐
+  └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
+  https://github.com/kbuckleys/
+--]]
+
+local HOME = os.getenv("HOME")
+local LOGO_PATH = HOME .. "/.config/logo"
+
+local ICON_INSTALL = "󱞡"
+local ICON_REMOVE  = ""
+
+local REPO_COLORS = {
+  CORE     = "\027[36m", -- cyan
+  EXTRA    = "\027[32m", -- green
+  MULTILIB = "\027[33m", -- yellow
+  AUR      = "\027[35m", -- magenta
+  LOCAL    = "\027[90m", -- gray
+}
+local COLOR_RESET = "\027[0m"
+
+-- low level helpers
+
+local function sh(cmd)
+  -- fire-and-forget / status only
+  return os.execute(cmd)
+end
+
+local function capture(cmd)
+  local f = io.popen(cmd, "r")
+  if not f then return "" end
+  local out = f:read("*a") or ""
+  f:close()
+  return out
+end
+
+local function lines_of(str)
+  local t = {}
+  for line in str:gmatch("([^\n]*)\n?") do
+    if line ~= "" then t[#t + 1] = line end
+  end
+  return t
+end
+
+local function write_tmp(text)
+  local path = os.tmpname()
+  local f = io.open(path, "w")
+  f:write(text)
+  f:close()
+  return path
+end
+
+-- Run fzf over a list of lines with arbitrary extra args, return the
+-- selection (raw string, possibly multi-line for --multi selections).
+local function fzf(items, args)
+  local input = type(items) == "table" and table.concat(items, "\n") or items
+  local tmp = write_tmp(input)
+  local out = capture("fzf " .. args .. " < " .. tmp)
+  os.remove(tmp)
+  return out
+end
+
+local function show_logo()
+  local f = io.open(LOGO_PATH, "r")
+  if f then
+    io.write(f:read("*a"), "\n")
+    f:close()
+  end
+end
+
+local function hard_clear()
+  io.write("\027c")
+  sh("stty sane 2>/dev/null")
+end
+
+-- Reads a single raw keypress (no echo) via bash, mirroring `read -n1 -r`.
+local function read_key()
+  return capture([[bash -c 'IFS= read -rsn1 c; printf "%s" "$c"']])
+end
+
+-- sudo keep-alive (mirrors the background `while true; do sudo -n true...`)
+
+local sudo_handle = nil
+
+local function sudo_start()
+  -- mirrors: if ! sudo -v 2>/dev/null; then if ! sudo -v; then ... fi; fi
+  if not sh("sudo -v 2>/dev/null") then
+    if not sh("sudo -v") then
+      print("Auth failed.")
+      os.exit(1)
+    end
+  end
+  -- Launch a background keep-alive loop and grab its PID (first line it prints).
+  sudo_handle = io.popen([[
+    bash -c '
+      echo $$
+      while true; do
+        sudo -n true 2>/dev/null
+        sleep 60
+        kill -0 $PPID 2>/dev/null || exit
+      done
+    '
+  ]], "r")
+end
+
+local function sudo_stop()
+  if sudo_handle then
+    local pid = sudo_handle:read("*l")
+    if pid then sh("kill " .. pid .. " 2>/dev/null") end
+    sudo_handle:close()
+    sudo_handle = nil
+  end
+end
+
+-- Update Packages  (update.sh)
+
+local function term_width()
+  local out = capture("tput cols 2>/dev/null")
+  local w = tonumber(out:match("%d+"))
+  return w or 80
+end
+
+local function refresh_updates()
+  sh("paru -Scc --noconfirm && paru --clean && rm -rf ~/.cache/paru/ && paru -Sy")
+
+  local raw = capture("paru -Qu --color=never | sort -u")
+  local updates = lines_of(raw)
+
+  hard_clear()
+
+  if #updates == 0 then
+    print("No updates available.")
+    sh("paru --clean")
+    return
+  end
+
+  -- Recompute layout against the current terminal width so the version
+  -- columns stay flush against the right edge instead of a fixed offset.
+  local VER_W  = 20
+  local GAP    = 3
+  local MARGIN = 4 -- fzf's pointer + multi-select marker gutter (fixed now that --no-scrollbar is set)
+  local W      = term_width()
+  local pkg_w  = W - (VER_W * 2 + GAP + MARGIN)
+  if pkg_w < 10 then pkg_w = 10 end
+
+  local row_fmt = "%-" .. pkg_w .. "s%" .. VER_W .. "s" .. string.rep(" ", GAP) .. "%" .. VER_W .. "s"
+
+  local selection_list = {}
+  for _, line in ipairs(updates) do
+    local pkg, old_ver, new_ver = line:match("^(%S+)%s+(%S+)%s+%-%>%s+(%S+)")
+    pkg     = pkg or line
+    old_ver = old_ver or ""
+    new_ver = new_ver or ""
+
+    local pkg_display     = pkg:sub(1, pkg_w)
+    local old_ver_display = old_ver:sub(1, VER_W)
+    local new_ver_display = new_ver:sub(1, VER_W)
+
+    selection_list[#selection_list + 1] =
+      string.format(row_fmt, pkg_display, old_ver_display, new_ver_display)
+  end
+
+  local args = table.concat({
+    "--multi",
+    "--no-input",
+    "--no-scrollbar",
+    "--border=top",
+    "--header-border=line",
+    "--bind 'ctrl-a:toggle-all,ctrl-d:clear-multi'",
+    '--header="TAB: Select  󰇙  C-a: Invert  󰇙  C-d: Clear  󰇙  RETURN: Confirm"',
+    "--delimiter ' '",
+    '--preview="paru -Si {1}"',
+    '--preview-window="bottom:50%"',
+  }, " ")
+
+  local selected_raw = fzf(selection_list, args)
+
+  print("")
+  if selected_raw ~= "" then
+    local selected = {}
+    for _, line in ipairs(lines_of(selected_raw)) do
+      local pkg = line:match("^(%S+)")
+      if pkg then selected[#selected + 1] = pkg end
+    end
+    if #selected > 0 then
+      sh("paru -S --noconfirm " .. table.concat(selected, " "))
+    end
+  end
+
+  print("Cleaning paru cache...")
+  sh("paru --clean")
+end
+
+local function update_packages()
+  while true do
+    hard_clear()
+    show_logo()
+    print("")
+    refresh_updates()
+
+    local key = read_key()
+    if key == "\27" then
+      return -- ESC -> back to main menu
+    end
+    -- Enter/anything else: loop back and refresh again, matching update.sh
+  end
+end
+
+-- Add/Remove Packages  (pm.sh)
+
+local function manage_packages()
+  sh("paru -Scc --noconfirm && paru --clean && rm -rf ~/.cache/paru/ && paru -Sy")
+  hard_clear()
+
+  while true do
+    -- One call gives us name + repo together (core/extra/multilib/aur),
+    -- instead of a separate lookup per package.
+    local repo_map = {}
+    local available_pkgs = {}
+    for _, line in ipairs(lines_of(capture("paru -Sl 2>/dev/null"))) do
+      local repo, pkg = line:match("^(%S+)%s+(%S+)")
+      if repo and pkg then
+        available_pkgs[#available_pkgs + 1] = pkg
+        repo_map[pkg] = repo:upper()
+      end
+    end
+    local installed_pkgs_l = lines_of(capture("paru -Qq"))
+
+    local installed_set = {}
+    for _, pkg in ipairs(installed_pkgs_l) do installed_set[pkg] = true end
+
+    -- Right-align a colorized repo tag to the terminal edge, same
+    -- treatment as the version columns in the update view.
+    local REPO_W    = 10 -- fits "[MULTILIB]" (10 chars), the longest repo tag
+    local GAP       = 1
+    local ICON_PAD  = " " -- padding between icon and package name
+    local ICON_W    = 1 + #ICON_PAD -- icon glyph + its padding
+    local MARGIN    = 4  -- fzf's pointer + multi-select marker gutter
+    local W      = term_width()
+    local pkg_w  = W - MARGIN - REPO_W - GAP - ICON_W
+    if pkg_w < 10 then pkg_w = 10 end
+
+    local function repo_tag(pkg)
+      local repo  = repo_map[pkg] or "LOCAL"
+      local plain = string.format("%" .. REPO_W .. "s", "[" .. repo .. "]")
+      local color = REPO_COLORS[repo] or "\027[37m"
+      return color .. plain .. COLOR_RESET
+    end
+
+    local function row(icon, pkg)
+      local pkg_display = string.format("%-" .. pkg_w .. "s", pkg:sub(1, pkg_w))
+      return icon .. ICON_PAD .. pkg_display .. string.rep(" ", GAP) .. repo_tag(pkg)
+    end
+
+    local combined = {}
+    for _, pkg in ipairs(available_pkgs) do
+      if pkg ~= "" and not installed_set[pkg] then
+        combined[#combined + 1] = row(ICON_INSTALL, pkg)
+      end
+    end
+    for _, pkg in ipairs(installed_pkgs_l) do
+      combined[#combined + 1] = row(ICON_REMOVE, pkg)
+    end
+
+    -- Strip any ANSI codes before parsing so this works whether fzf hands
+    -- {} the colorized or the stripped form of the line.
+    local strip_ansi = 'sed -E "s/\\x1b\\[[0-9;]*m//g"'
+    local inner = 'line="$1"; clean=$(printf %s "$line" | ' .. strip_ansi .. '); '
+      .. 'prefix="${clean%% *}"; rest="${clean#* }"; '
+      .. 'pkg=$(printf %s "$rest" | sed -E "s/\\[[^]]*\\]$//" | xargs); '
+      .. 'if [[ "$prefix" == "' .. ICON_INSTALL .. '" ]]; then paru -Si "$pkg"; else paru -Qi "$pkg"; fi'
+    local q = "'\\''" -- represents the shell escape sequence '\''
+    local preview_arg = "--preview='bash -c " .. q .. inner .. q .. " -- {}'"
+
+    local args = table.concat({
+      "--multi",
+      "--ansi",
+      "--no-scrollbar",
+      "--border=top",
+      "--header-border=line",
+      "--bind 'ctrl-a:toggle-all,ctrl-d:clear-multi'",
+      '--header="TAB: Select  󰇙  C-a: Invert  󰇙  C-d: Clear  󰇙  RETURN: Confirm"',
+      '--prompt="  > "',
+      preview_arg,
+      '--preview-window="bottom:50%"',
+    }, " ")
+
+    local selected_raw = fzf(combined, args)
+    if selected_raw == "" then break end
+
+    local to_install, to_uninstall = {}, {}
+    for _, raw_line in ipairs(lines_of(selected_raw)) do
+      local line = raw_line:gsub("\027%[[%d;]*m", "")
+      local icon, rest = line:match("^(%S+)%s+(.*)$")
+      local pkg = rest
+      if pkg then
+        pkg = pkg:gsub("%s*%[[^%]]*%]%s*$", ""):gsub("%s+$", "")
+      end
+      if icon == ICON_INSTALL then
+        to_install[#to_install + 1] = pkg
+      elseif icon == ICON_REMOVE then
+        to_uninstall[#to_uninstall + 1] = pkg
+      end
+    end
+
+    if #to_install > 0 then
+      sh("paru -S " .. table.concat(to_install, " "))
+    end
+    if #to_uninstall > 0 then
+      sh("paru -Rs --noconfirm " .. table.concat(to_uninstall, " "))
+    end
+
+    if #to_install > 0 or #to_uninstall > 0 then
+      print("Cleaning paru cache...")
+      sh("paru --clean")
+      print("")
+      print("\027[1;32mPress RETURN to continue\027[0m")
+      io.read("*l")
+      hard_clear()
+    end
+  end
+end
+
+-- Main menu  (PARUZ.sh)
+
+local function main_menu()
+  local options = { "Update Packages", "Add/Remove Packages", "Exit" }
+  local args = table.concat({
+    "--disabled",
+    "--no-input",
+    "--no-scrollbar",
+    "--layout=reverse-list",
+    "--height=40%",
+  }, " ")
+
+  while true do
+    hard_clear()
+    show_logo()
+
+    local choice = fzf(options, args):gsub("\n$", "")
+
+    if choice == "Update Packages" then
+      update_packages()
+      hard_clear()
+    elseif choice == "Add/Remove Packages" then
+      manage_packages()
+      hard_clear()
+    else -- "Exit" or empty (ESC / no selection)
+      print("Exiting.")
+      return
+    end
+  end
+end
+
+-- Entry point
+
+local function main()
+  show_logo()
+  sudo_start()
+  hard_clear()
+
+  local mode = arg and arg[1]
+  if mode == "update" then
+    update_packages()
+  elseif mode == "manage" or mode == "add-remove" then
+    manage_packages()
+  else
+    main_menu()
+  end
+
+  sudo_stop()
+end
+
+local ok, err = pcall(main)
+sudo_stop()
+if not ok then
+  io.stderr:write("PARUZ error: " .. tostring(err) .. "\n")
+  os.exit(1)
+end
