@@ -4,7 +4,6 @@
 # https://github.com/kbuckleys/
 
 #!/bin/bash
-
 set -e
 set -u
 
@@ -24,10 +23,10 @@ texts[shutdown]="Shutdown"
 # Actions
 declare -A actions
 actions[lockscreen]="hyprlock"
-actions[logout]="loginctl terminate-session ${XDG_SESSION_ID-}"
+actions[logout]="hyprshutdown -p 'loginctl terminate-session ${XDG_SESSION_ID-}'"
 actions[suspend]="systemctl suspend"
-actions[reboot]="systemctl reboot"
-actions[shutdown]="systemctl poweroff"
+actions[reboot]="hyprshutdown -p 'systemctl reboot'"
+actions[shutdown]="hyprshutdown -p 'systemctl poweroff'"
 
 # Options
 dryrun=false
@@ -54,14 +53,21 @@ print_selection() {
   }
 }
 
+run_action() {
+  local entry="$1"
+  if [ "$dryrun" = true ]; then
+    echo "Selected: $entry" >&2
+  else
+    eval "${actions[$entry]}" >/dev/null 2>&1
+  fi
+}
+
 # Pre-calculate Messages
 declare -A messages
 declare -A confirmationMessages
-
 for entry in "${all[@]}"; do
   messages[$entry]=$(write_message "" "${texts[$entry]^}")
 done
-
 for entry in "${all[@]}"; do
   confirmationMessages[$entry]=$(write_message "" "Confirm ${texts[$entry]}")
 done
@@ -89,14 +95,14 @@ if [ -z "${selection+x}" ]; then
   done
 else
   # MODE 2: Process Selection
-  
+
   matched=false
-  
+
   # 1. Check against Main Menu Options
   for entry in "${show[@]}"; do
     if [ "$selection" = "$(print_selection "${messages[$entry]}")" ]; then
       matched=true
-      
+
       # SPECIAL CASE: Lockscreen (No confirmation, immediate background exec)
       if [ "$entry" = "lockscreen" ]; then
         if [ "$dryrun" = true ]; then
@@ -125,11 +131,7 @@ else
         exit 0
       else
         # Execute immediate actions (Suspend)
-        if [ "$dryrun" = true ]; then
-          echo "Selected: $entry" >&2
-        else
-          ${actions[$entry]}
-        fi
+        run_action "$entry"
         exit 0
       fi
     fi
@@ -139,15 +141,10 @@ else
   if [ "$matched" = false ]; then
     for entry in "${confirmations[@]}"; do
       if [ "$selection" = "$(print_selection "${confirmationMessages[$entry]}")" ]; then
-        if [ "$dryrun" = true ]; then
-          echo "Selected: $entry" >&2
-        else
-          ${actions[$entry]}
-        fi
+        run_action "$entry"
         exit 0
       fi
     done
-
     if [ "$selection" = "$(print_selection "${confirmationMessages[cancel]}")" ]; then
       exit 0
     fi
@@ -156,4 +153,4 @@ else
   # Fallback
   echo "Invalid selection: $selection" >&2
   exit 1
-fi   
+fi
