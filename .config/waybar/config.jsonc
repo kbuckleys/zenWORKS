@@ -158,7 +158,7 @@
     "custom/paru": {
         "format": "{icon} {0}",
         "return-type": "json",
-        "on-click": "footclient -T \"System Update\" -e ~/.config/scripts/PARUZ/update.sh",
+        "on-click": "footclient -T \"PARUZ\" -e lua ~/.config/scripts/PARUZ.lua update",
         "hide-empty-text": true,
         "exec-if": "which waybar-updates",
         "exec": "waybar-updates -n -i 10"

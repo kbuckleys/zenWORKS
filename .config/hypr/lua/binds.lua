@@ -9,7 +9,7 @@ local term = "footclient"
 local fman = term .. " -e yazi"
 
 -- MISC
-hl.bind("SUPER + M", hl.dsp.exec_cmd(term .. " -T 'PARUZ' -e ~/.config/scripts/PARUZ/PARUZ.sh"))
+hl.bind("SUPER + M", hl.dsp.exec_cmd(term .. " -T 'PARUZ' -e ~/.config/scripts//PARUZ.lua"))
 hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd(term .. " -T sysmon -e btop"))
 hl.bind("SUPER + SHIFT + ESCAPE", hl.dsp.exec_cmd("hyprshutdown"))
 hl.bind("SUPER + CONTROL + P", hl.dsp.exec_cmd("hyprpicker -a"))

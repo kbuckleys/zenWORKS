@@ -3,7 +3,6 @@
 -- └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 -- https://github.com/kbuckleys/
 
-hl.window_rule({ match = { title = "System Update" }, float = true, center = true, size = { 1000, 1100 }})
 hl.window_rule({ match = { class = "xdg-desktop-portal-gtk" }, float = true, size = { 1000, 1000 }})
 hl.window_rule({ match = { title = "SongRec" }, float = true, center = true, size = { 800, 1100 }})
 hl.window_rule({ match = { title = "sysmon" }, float = true, center = true, size = { 1000, 1100 }})
