@@ -1,10 +1,9 @@
 #!/usr/bin/env lua
---[[
-  ┌─┐┌─┐┌┐┌┬ ┬┌─┐┬─┐┬┌─┌─┐
-  ┌─┘├┤ │││││││ │├┬┘├┴┐└─┐
-  └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
-  https://github.com/kbuckleys/
---]]
+
+-- ┌─┐┌─┐┌┐┌┬ ┬┌─┐┬─┐┬┌─┌─┐
+-- ┌─┘├┤ │││││││ │├┬┘├┴┐└─┐
+-- └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
+-- https://github.com/kbuckleys/
 
 local HOME = os.getenv("HOME")
 local LOGO_PATH = HOME .. "/.config/logo"
