@@ -4,8 +4,8 @@
 -- https://github.com/kbuckleys/
 
 -- DEFAULTS
-local web = "helium-browser"
 local term = "footclient"
+local web = "helium-browser"
 local fman = term .. " -e yazi"
 
 -- MISC
