@@ -78,8 +78,8 @@
 }
 
 #tray-expander {
-    padding: 0px 0px 0px 8px;
     color: #9bbfbf;
+    padding: 0;
 }
 #tray {
     padding: 0px 12px 0px 0px;

@@ -12,7 +12,7 @@ result=$(busctl --user call org.kde.StatusNotifierWatcher \
 count=$(echo "$result" | awk '{print $3}')
 
 if [ -n "$count" ] && [ "$count" -gt 0 ]; then
-  echo '{"text":"  ", "class":"visible"}'
+  echo '{"text":"   ", "class":"visible"}'
 else
   echo '{"text":"", "class":"hidden"}'
 fi
