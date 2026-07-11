@@ -17,25 +17,27 @@
 }
 
 #workspaces {
-    padding: 0px 8px 0px 0px;
+    padding: 0px 0px 0px 0px;
 }
 #workspaces button {
+    padding: 0px 8px 0px 8px;
     font-weight: bold;
     color: #506060;
 }
 #workspaces button:hover {
     background: none;
+    box-shadow: none;
 }
 #workspaces button.active {
     color: #9bbfbf;
 }
 #workspaces button.special {
+    background: none;
     color: #fab387;
 }
 
 #custom-div {
     padding: 0px 8px 0px 8px;
-    color: #dfdfdd;
 }
 
 #custom-status {
