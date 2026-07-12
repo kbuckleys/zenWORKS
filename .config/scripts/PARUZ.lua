@@ -128,9 +128,12 @@ end
 
 -- Centers text within a given width, using UTF-8 codepoint count (not
 -- byte count) so multi-byte glyphs like the keybind icons don't throw
--- off the math.
+-- off the math. The 󰇙 separator glyph renders double-width in some
+-- terminal fonts, which would otherwise make the text drift right.
 local function center_text(text, width)
   local len = (utf8 and utf8.len(text)) or #text
+  local _, wide_count = text:gsub("󰇙", "")
+  len = len + wide_count
   local pad = math.floor((width - len) / 2)
   if pad < 0 then pad = 0 end
   return string.rep(" ", pad) .. text
