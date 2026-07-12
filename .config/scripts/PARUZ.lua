@@ -139,7 +139,7 @@ local function center_text(text, width)
   return string.rep(" ", pad) .. text
 end
 
-local function refresh_updates()
+local function refresh_updates(switch_tmp)
   sh("paru -Scc --noconfirm && paru --clean && rm -rf ~/.cache/paru/ && paru -Sy")
 
   local raw = capture("paru -Qu --color=never | sort -u")
@@ -180,7 +180,7 @@ local function refresh_updates()
       string.format(row_fmt, pkg_display, old_ver_display, new_ver_display)
   end
 
-  local header_text = "TAB: Select  󰇙  C-a: Invert  󰇙  C-d: Clear  󰇙  RETURN: Confirm"
+  local header_text = "TAB: Select  󰇙  C-a: Invert  󰇙  C-d: Clear  󰇙  C-u: Manage  󰇙  RETURN: Confirm"
   local header_centered = center_text(header_text, W)
 
   local args = table.concat({
@@ -189,7 +189,7 @@ local function refresh_updates()
     "--no-scrollbar",
     "--border=top",
     "--header-border=line",
-    "--bind 'ctrl-a:toggle-all,ctrl-d:clear-multi'",
+    "--bind 'ctrl-a:toggle-all,ctrl-d:clear-multi,ctrl-u:execute-silent(echo manage > \"" .. switch_tmp .. "\")+abort'",
     '--header="' .. header_centered .. '"',
     "--delimiter ' '",
     '--preview="paru -Si {1}"',
@@ -217,39 +217,64 @@ local function refresh_updates()
   return installed_any
 end
 
-local function update_packages()
+-- Forward-declared so update_packages and manage_packages can call
+-- each other directly (the Ctrl-U toggle between the two views).
+local update_packages
+local manage_packages
+
+update_packages = function()
+  local switch_tmp = write_tmp("")
   while true do
     hard_clear()
     show_logo()
     print("")
-    local installed_something = refresh_updates()
+    local installed_something = refresh_updates(switch_tmp)
 
-    if not installed_something then
+    local sf = io.open(switch_tmp, "r")
+    local switch = (sf and sf:read("*a") or ""):gsub("%s+$", "")
+    if sf then sf:close() end
+
+    local want_leave = false
+
+    if switch == "manage" then
+      -- Ctrl-U was pressed inside the fzf list - reset the switch file
+      -- and jump straight to the package manager.
+      local rf = io.open(switch_tmp, "w")
+      if rf then rf:write(""); rf:close() end
+      want_leave = true
+    elseif not installed_something then
       -- No updates, or the user ESC'd/cancelled out of the fzf list -
       -- go straight to the exit confirmation instead of waiting for a
       -- separate keypress to detect that first.
       print("")
-      print("\027[1;32mPress ESC to return to menu\027[0m")
+      print("\027[1;32mPress ESC to return to the Package Manager\027[0m")
       local confirm = read_key()
       if confirm == "\27" then
-        return -- confirmed -> back to main menu
+        want_leave = true
       end
       -- any other key cancels the exit; loop back and refresh again
     else
       local key = read_key()
       if key == "\27" then
-        return -- ESC -> back to main menu
+        want_leave = true
       end
       -- Enter/anything else: loop back and refresh again, matching update.sh
+    end
+
+    if want_leave then
+      os.remove(switch_tmp)
+      manage_packages()
+      return -- safety net; manage_packages() only returns via its own toggle
     end
   end
 end
 
 -- Add/Remove Packages  (pm.sh)
 
-local function manage_packages()
+manage_packages = function()
   sh("paru -Scc --noconfirm && paru --clean && rm -rf ~/.cache/paru/ && paru -Sy")
   hard_clear()
+  local switch_tmp2 = write_tmp("")
 
   while true do
     -- One call gives us name + repo together (core/extra/multilib/aur),
@@ -315,7 +340,7 @@ local function manage_packages()
     local q = "'\\''" -- represents the shell escape sequence '\''
     local preview_arg = "--preview='bash -c " .. q .. inner .. q .. " -- {}'"
 
-    local header_text = "TAB: Select  󰇙  C-a: Invert  󰇙  C-d: Clear  󰇙  C-s: Source  󰇙  RETURN: Confirm"
+    local header_text = "TAB: Select  󰇙  C-a: Invert  󰇙  C-d: Clear  󰇙  C-s: Source  󰇙  C-u: Update  󰇙  RETURN: Confirm"
     local header_centered = center_text(header_text, W)
 
     local full_tmp      = write_tmp(table.concat(combined, "\n"))
@@ -338,7 +363,7 @@ local function manage_packages()
       "--no-scrollbar",
       "--border=top",
       "--header-border=line",
-      "--bind 'ctrl-a:toggle-all,ctrl-d:clear-multi,ctrl-s:reload(" .. toggle_cmd .. ")'",
+      "--bind 'ctrl-a:toggle-all,ctrl-d:clear-multi,ctrl-s:reload(" .. toggle_cmd .. "),ctrl-u:execute-silent(echo update > \"" .. switch_tmp2 .. "\")+abort'",
       '--header="' .. header_centered .. '"',
       '--prompt="  > "',
       preview_arg,
@@ -349,68 +374,54 @@ local function manage_packages()
     os.remove(full_tmp)
     os.remove(installed_tmp)
     os.remove(state_tmp)
-    if selected_raw == "" then break end
+    local sf2 = io.open(switch_tmp2, "r")
+    local switch2 = (sf2 and sf2:read("*a") or ""):gsub("%s+$", "")
+    if sf2 then sf2:close() end
 
-    local to_install, to_uninstall = {}, {}
-    for _, raw_line in ipairs(lines_of(selected_raw)) do
-      local line = raw_line:gsub("\027%[[%d;]*m", "")
-      local icon, rest = line:match("^(%S+)%s+(.*)$")
-      local pkg = rest
-      if pkg then
-        pkg = pkg:gsub("%s*%u+%s*$", ""):gsub("%s+$", "")
-      end
-      if icon == ICON_INSTALL then
-        to_install[#to_install + 1] = pkg
-      elseif icon == ICON_REMOVE then
-        to_uninstall[#to_uninstall + 1] = pkg
-      end
-    end
-
-    if #to_install > 0 then
-      sh("paru -S " .. table.concat(to_install, " "))
-    end
-    if #to_uninstall > 0 then
-      sh("paru -Rs --noconfirm " .. table.concat(to_uninstall, " "))
-    end
-
-    if #to_install > 0 or #to_uninstall > 0 then
-      print("Cleaning paru cache...")
-      sh("paru --clean")
-      print("")
-      print("\027[1;32mPress RETURN to continue\027[0m")
-      io.read("*l")
-      hard_clear()
-    end
-  end
-end
-
--- Main menu  (PARUZ.sh)
-
-local function main_menu()
-  local options = { "Update Packages", "Add/Remove Packages", "Exit" }
-  local args = table.concat({
-    "--disabled",
-    "--no-input",
-    "--no-scrollbar",
-    "--layout=reverse-list",
-    "--height=40%",
-  }, " ")
-
-  while true do
-    hard_clear()
-    show_logo()
-
-    local choice = fzf(options, args):gsub("\n$", "")
-
-    if choice == "Update Packages" then
+    if switch2 == "update" then
+      -- Ctrl-U was pressed inside the fzf list - reset the switch file
+      -- and jump straight to the update view.
+      local rf2 = io.open(switch_tmp2, "w")
+      if rf2 then rf2:write(""); rf2:close() end
       update_packages()
-      hard_clear()
-    elseif choice == "Add/Remove Packages" then
-      manage_packages()
-      hard_clear()
-    else -- "Exit" or empty (ESC / no selection)
-      print("Exiting.")
-      return
+      -- falls through: loop back and show the manage view again
+    elseif selected_raw == "" then
+      -- Package Manager is the root view now that the menu is gone -
+      -- leaving it with nothing selected means quitting the app.
+      os.remove(switch_tmp2)
+      sudo_stop()
+      os.exit(0)
+    else
+      local to_install, to_uninstall = {}, {}
+      for _, raw_line in ipairs(lines_of(selected_raw)) do
+        local line = raw_line:gsub("\027%[[%d;]*m", "")
+        local icon, rest = line:match("^(%S+)%s+(.*)$")
+        local pkg = rest
+        if pkg then
+          pkg = pkg:gsub("%s*%u+%s*$", ""):gsub("%s+$", "")
+        end
+        if icon == ICON_INSTALL then
+          to_install[#to_install + 1] = pkg
+        elseif icon == ICON_REMOVE then
+          to_uninstall[#to_uninstall + 1] = pkg
+        end
+      end
+
+      if #to_install > 0 then
+        sh("paru -S " .. table.concat(to_install, " "))
+      end
+      if #to_uninstall > 0 then
+        sh("paru -Rs --noconfirm " .. table.concat(to_uninstall, " "))
+      end
+
+      if #to_install > 0 or #to_uninstall > 0 then
+        print("Cleaning paru cache...")
+        sh("paru --clean")
+        print("")
+        print("\027[1;32mPress RETURN to continue\027[0m")
+        io.read("*l")
+        hard_clear()
+      end
     end
   end
 end
@@ -424,13 +435,12 @@ local function main()
 
   local mode = arg and arg[1]
   if mode == "update" then
+    -- waybar on-click shortcut - jumps straight into the update view
     update_packages()
-    main_menu()
-  elseif mode == "manage" or mode == "add-remove" then
-    manage_packages()
-    main_menu()
   else
-    main_menu()
+    -- No menu anymore - Package Manager is the default landing view,
+    -- reachable directly (no args, or mode == "manage"/"add-remove").
+    manage_packages()
   end
 
   sudo_stop()
