@@ -150,7 +150,7 @@ local function refresh_updates()
   if #updates == 0 then
     print("No updates available.")
     sh("paru --clean")
-    return
+    return false
   end
 
   -- Recompute layout against the current terminal width so the version
@@ -199,6 +199,7 @@ local function refresh_updates()
   local selected_raw = fzf(selection_list, args)
 
   print("")
+  local installed_any = false
   if selected_raw ~= "" then
     local selected = {}
     for _, line in ipairs(lines_of(selected_raw)) do
@@ -207,11 +208,13 @@ local function refresh_updates()
     end
     if #selected > 0 then
       sh("paru -S --noconfirm " .. table.concat(selected, " "))
+      installed_any = true
     end
   end
 
   print("Cleaning paru cache...")
   sh("paru --clean")
+  return installed_any
 end
 
 local function update_packages()
@@ -219,13 +222,26 @@ local function update_packages()
     hard_clear()
     show_logo()
     print("")
-    refresh_updates()
+    local installed_something = refresh_updates()
 
-    local key = read_key()
-    if key == "\27" then
-      return -- ESC -> back to main menu
+    if not installed_something then
+      -- No updates, or the user ESC'd/cancelled out of the fzf list -
+      -- go straight to the exit confirmation instead of waiting for a
+      -- separate keypress to detect that first.
+      print("")
+      print("\027[1;32mPress ESC again to return to menu\027[0m")
+      local confirm = read_key()
+      if confirm == "\27" then
+        return -- confirmed -> back to main menu
+      end
+      -- any other key cancels the exit; loop back and refresh again
+    else
+      local key = read_key()
+      if key == "\27" then
+        return -- ESC -> back to main menu
+      end
+      -- Enter/anything else: loop back and refresh again, matching update.sh
     end
-    -- Enter/anything else: loop back and refresh again, matching update.sh
   end
 end
 
@@ -409,8 +425,10 @@ local function main()
   local mode = arg and arg[1]
   if mode == "update" then
     update_packages()
+    main_menu()
   elseif mode == "manage" or mode == "add-remove" then
     manage_packages()
+    main_menu()
   else
     main_menu()
   end
