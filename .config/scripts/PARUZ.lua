@@ -229,7 +229,7 @@ local function update_packages()
       -- go straight to the exit confirmation instead of waiting for a
       -- separate keypress to detect that first.
       print("")
-      print("\027[1;32mPress ESC again to return to menu\027[0m")
+      print("\027[1;32mPress ESC to return to menu\027[0m")
       local confirm = read_key()
       if confirm == "\27" then
         return -- confirmed -> back to main menu
