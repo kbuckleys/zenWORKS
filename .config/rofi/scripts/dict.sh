@@ -62,7 +62,6 @@ while true; do
   synonyms=$(echo "$syn_response" | jq -r '[.[]?.word] | join(", ")' 2>/dev/null)
 
   lines=()
-  def_count=0
 
   while IFS=$'\t' read -r type a b; do
     case "$type" in
@@ -72,25 +71,19 @@ while true; do
         lines+=("$headline")
         ;;
       pos)
+        [[ ${#lines[@]} -gt 0 && -n "${lines[-1]}" ]] && lines+=("")
         lines+=("<span foreground=\"$COLOR_POS\"><i>$a</i></span>")
-        def_count=0
         ;;
       def)
-        def_count=$((def_count + 1))
-        first=1
         while IFS= read -r wline; do
-          if [[ $first -eq 1 ]]; then
-            lines+=("  $def_count. $wline")
-            first=0
-          else
-            lines+=("     $wline")
-          fi
+          lines+=("  $wline")
         done < <(fmt -w "$max_line_length" <<< "$a")
         ;;
       ex)
         while IFS= read -r wline; do
-          lines+=("     <span foreground=\"$COLOR_EX\"><i>“$wline”</i></span>")
+          lines+=("  <span foreground=\"$COLOR_EX\"><i>$wline</i></span>")
         done < <(fmt -w "$max_line_length" <<< "$a")
+        lines+=("")
         ;;
       error)
         lines+=("<span foreground=\"$COLOR_ERROR\">$a</span>")
