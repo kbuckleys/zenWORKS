@@ -3,6 +3,28 @@
 -- └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 -- https://github.com/kbuckleys/
 
+vim.opt.termguicolors = true
+vim.opt.background = "dark"
+
+local term_colors = {
+  black                = "#000000",
+  red                  = "#e78284",
+  green                = "#b6e0a4",
+  yellow               = "#e0d8a4",
+  blue                 = "#9fcbfc",
+  magenta              = "#c8a4e0",
+  cyan                 = "#9bbfbf",
+  white                = "#dfdfdd",
+  bright_black         = "#6a707f",
+  bright_red           = "#fab387",
+  bright_green         = "#b6e0a4",
+  bright_yellow        = "#e0d8a4",
+  bright_blue          = "#9fcbfc",
+  bright_magenta       = "#c8a4e0",
+  bright_cyan          = "#9bbfbf",
+  bright_white         = "#dfdfdd",
+}
+
 local kripton = {
   normal = { 
     c = { bg = "#20242a" },
@@ -25,8 +47,8 @@ local kripton = {
     a = { fg = "#000000", bg = "#fab387", gui = "bold" }
   },
   inactive = {
-    c = { bg = "#000000" }, a = { bg = "#000000" },
-    a = { bg = "#000000" }, a = { bg = "#000000", gui = "bold" }
+    c = { bg = "#000000" }, 
+    a = { bg = "#000000", gui = "bold" }
   }
 }
 
@@ -59,12 +81,54 @@ require("bufferline").setup({
     modified_icon = "✎"
   },
   highlights = {
-    modified = {
-      fg = "#FFFFFF",
-      bg = "#20242a"
-    },
-    modified_selected = {
-      bg = "#000000"
-    }
+    modified = { fg = "#FFFFFF", bg = "#20242a" },
+    modified_selected = { bg = "#000000" }
   }
 })
+
+local function apply_terminal_syntax()
+  local syntax_map = {
+    Comment         = term_colors.bright_black,
+    String          = term_colors.magenta,
+    Constant        = term_colors.white,
+    Number          = term_colors.white,
+    Statement       = term_colors.Magenta,
+    Keyword         = term_colors.Magenta,
+    Function        = term_colors.green,
+    Identifier      = term_colors.green,
+    Type            = term_colors.yellow,
+    PreProc         = term_colors.magenta,
+    Special         = term_colors.bright_red,
+    Error           = term_colors.red,
+    Todo            = term_colors.bright_red,
+  }
+
+  for group, color in pairs(syntax_map) do
+    vim.api.nvim_set_hl(0, group, { fg = color, bg = "NONE" })
+  end
+
+  local ts_map = {
+    ["@comment"]          = term_colors.bright_black,
+    ["@string"]           = term_colors.yellow,
+    ["@constant"]         = term_colors.bright_red,
+    ["@number"]           = term_colors.yellow,
+    ["@keyword"]          = term_colors.magenta,
+    ["@function"]         = term_colors.cyan,
+    ["@function.call"]    = term_colors.cyan,
+    ["@variable"]         = term_colors.white,
+    ["@type"]             = term_colors.white,
+    ["@preproc"]          = term_colors.magenta,
+    ["@special"]          = term_colors.red,
+    ["@error"]            = term_colors.red,
+  }
+
+  for group, color in pairs(ts_map) do
+    vim.api.nvim_set_hl(0, group, { fg = color, bg = "NONE" })
+  end
+end
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+  pattern = "*",
+  callback = apply_terminal_syntax
+})
+apply_terminal_syntax()   
