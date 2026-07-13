@@ -38,16 +38,18 @@
     },
 
     "hyprland/workspaces": {
-        "format": "{icon}",
         "show-special": true,
         "all-outputs": true,
+        "format": "{icon}",
+        "sort-by": "id",
         "format-icons": {
-          "special": " ",
-          "1": "1",
-          "2": "2",
-          "3": "3",
-          "4": "4",
-          "5": "5"
+            "default": " ",
+            "special": " ",
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5"
         }
     },
 
