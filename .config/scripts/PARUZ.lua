@@ -222,7 +222,7 @@ local function refresh_updates(switch_tmp)
 end
 
 -- Forward-declared so update_packages and manage_packages can call
--- each other directly (the Ctrl-U toggle between the two views).
+-- each other directly (the C-u toggle between the two views).
 local update_packages
 local manage_packages
 
@@ -239,7 +239,7 @@ update_packages = function()
     if sf then sf:close() end
 
     if switch == "manage" then
-      -- Ctrl-U was pressed inside the fzf list - jump straight to the
+      -- C-u was pressed inside the fzf list - jump straight to the
       -- package manager.
       os.remove(switch_tmp)
       manage_packages()
@@ -340,7 +340,7 @@ manage_packages = function()
     local state_tmp      = write_tmp("full")
     local q2 = "'\\''" -- represents the shell escape sequence '\''
 
-    -- Ctrl-I toggle: read which list is currently shown from state_tmp,
+    -- C-s toggle: read which list is currently shown from state_tmp,
     -- flip it, and print the newly-selected list for fzf to reload from.
     local toggle_script = 'state=$(cat "' .. state_tmp .. '"); '
       .. 'if [ "$state" = "full" ]; then echo installed > "' .. state_tmp .. '"; cat "' .. installed_tmp .. '"; '
@@ -371,7 +371,7 @@ manage_packages = function()
     if sf2 then sf2:close() end
 
     if switch2 == "update" then
-      -- Ctrl-U was pressed inside the fzf list - reset the switch file
+      -- C-u was pressed inside the fzf list - reset the switch file
       -- and jump straight to the update view.
       local rf2 = io.open(switch_tmp2, "w")
       if rf2 then rf2:write(""); rf2:close() end
