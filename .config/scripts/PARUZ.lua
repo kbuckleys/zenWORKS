@@ -16,9 +16,10 @@ local REPO_COLORS = {
   EXTRA    = "\027[32m", -- green
   MULTILIB = "\027[33m", -- yellow
   AUR      = "\027[35m", -- magenta
-  LOCAL    = "\027[90m", -- gray
+  LOCAL    = "\027[97m", -- white
 }
 local COLOR_RESET = "\027[0m"
+local FZF_COLOR   = "--color=fg+:white,bg+:#20242a,pointer:yellow,marker:#fab387,hl+:green,hl:green"
 
 -- low level helpers
 
@@ -61,6 +62,30 @@ local function fzf(items, args)
   return out
 end
 
+local function term_width()
+  -- tput's own stdout is a pipe here (we're capturing it), not the
+  -- terminal, so it can't determine the real size via ioctl and may
+  -- silently fall back to a stale default. Query /dev/tty directly
+  -- instead, which always refers to the actual controlling terminal.
+  local out = capture("stty size < /dev/tty 2>/dev/null")
+  local _, cols = out:match("(%d+)%s+(%d+)")
+  local w = tonumber(cols)
+  return w or 80
+end
+
+-- Centers text within a given width, using UTF-8 codepoint count (not
+-- byte count) so multi-byte glyphs like the keybind icons don't throw
+-- off the math. The 󰇙 separator glyph renders double-width in some
+-- terminal fonts, which would otherwise make the text drift right.
+local function center_text(text, width)
+  local len = (utf8 and utf8.len(text)) or #text
+  local _, wide_count = text:gsub("󰇙", "")
+  len = len + wide_count
+  local pad = math.floor((width - len) / 2)
+  if pad < 0 then pad = 0 end
+  return string.rep(" ", pad) .. text
+end
+
 local function show_logo()
   local f = io.open(LOGO_PATH, "r")
   if f then
@@ -76,7 +101,10 @@ end
 
 -- Reads a single raw keypress (no echo) via bash, mirroring `read -n1 -r`.
 local function read_key()
-  return capture([[bash -c 'IFS= read -rsn1 c; printf "%s" "$c"']])
+  -- -d '' disables the default newline-as-delimiter behavior of `read`,
+  -- which otherwise discards a newline byte instead of storing it -
+  -- meaning Enter/Return would come back as an empty string, not "\n".
+  return capture([[bash -c 'IFS= read -rsn1 -d "" c; printf "%s" "$c"']])
 end
 
 -- sudo keep-alive (mirrors the background `while true; do sudo -n true...`)
@@ -114,30 +142,6 @@ local function sudo_stop()
 end
 
 -- Update Packages  (update.sh)
-
-local function term_width()
-  -- tput's own stdout is a pipe here (we're capturing it), not the
-  -- terminal, so it can't determine the real size via ioctl and may
-  -- silently fall back to a stale default. Query /dev/tty directly
-  -- instead, which always refers to the actual controlling terminal.
-  local out = capture("stty size < /dev/tty 2>/dev/null")
-  local _, cols = out:match("(%d+)%s+(%d+)")
-  local w = tonumber(cols)
-  return w or 80
-end
-
--- Centers text within a given width, using UTF-8 codepoint count (not
--- byte count) so multi-byte glyphs like the keybind icons don't throw
--- off the math. The 󰇙 separator glyph renders double-width in some
--- terminal fonts, which would otherwise make the text drift right.
-local function center_text(text, width)
-  local len = (utf8 and utf8.len(text)) or #text
-  local _, wide_count = text:gsub("󰇙", "")
-  len = len + wide_count
-  local pad = math.floor((width - len) / 2)
-  if pad < 0 then pad = 0 end
-  return string.rep(" ", pad) .. text
-end
 
 local function refresh_updates(switch_tmp)
   sh("paru -Scc --noconfirm && paru --clean && rm -rf ~/.cache/paru/ && paru -Sy")
@@ -180,16 +184,16 @@ local function refresh_updates(switch_tmp)
       string.format(row_fmt, pkg_display, old_ver_display, new_ver_display)
   end
 
-  local header_text = "TAB: Select  󰇙  C-a: Invert  󰇙  C-d: Clear  󰇙  C-u: Manage  󰇙  RETURN: Confirm"
+  local header_text = "TAB Select 󰇙 C-a Invert 󰇙 C-d Clear 󰇙 C-u Manage 󰇙 RETURN Confirm"
   local header_centered = center_text(header_text, W)
 
   local args = table.concat({
-    "--multi",
+    "--multi", "--no-input", "--no-scrollbar", FZF_COLOR,
     "--no-input",
     "--no-scrollbar",
     "--border=top",
     "--header-border=line",
-    "--bind 'ctrl-a:toggle-all,ctrl-d:clear-multi,ctrl-u:execute-silent(echo manage > \"" .. switch_tmp .. "\")+abort'",
+    "--bind 'esc:ignore,ctrl-a:toggle-all,ctrl-d:clear-multi,ctrl-u:execute-silent(echo manage > \"" .. switch_tmp .. "\")+abort'",
     '--header="' .. header_centered .. '"',
     "--delimiter ' '",
     '--preview="paru -Si {1}"',
@@ -228,44 +232,32 @@ update_packages = function()
     hard_clear()
     show_logo()
     print("")
-    local installed_something = refresh_updates(switch_tmp)
+    refresh_updates(switch_tmp)
 
     local sf = io.open(switch_tmp, "r")
     local switch = (sf and sf:read("*a") or ""):gsub("%s+$", "")
     if sf then sf:close() end
 
-    local want_leave = false
-
     if switch == "manage" then
-      -- Ctrl-U was pressed inside the fzf list - reset the switch file
-      -- and jump straight to the package manager.
-      local rf = io.open(switch_tmp, "w")
-      if rf then rf:write(""); rf:close() end
-      want_leave = true
-    elseif not installed_something then
-      -- No updates, or the user ESC'd/cancelled out of the fzf list -
-      -- go straight to the exit confirmation instead of waiting for a
-      -- separate keypress to detect that first.
-      print("")
-      print("\027[1;32mPress ESC to return to the Package Manager\027[0m")
-      local confirm = read_key()
-      if confirm == "\27" then
-        want_leave = true
-      end
-      -- any other key cancels the exit; loop back and refresh again
-    else
-      local key = read_key()
-      if key == "\27" then
-        want_leave = true
-      end
-      -- Enter/anything else: loop back and refresh again, matching update.sh
-    end
-
-    if want_leave then
+      -- Ctrl-U was pressed inside the fzf list - jump straight to the
+      -- package manager.
       os.remove(switch_tmp)
       manage_packages()
       return -- safety net; manage_packages() only returns via its own toggle
     end
+
+    print("")
+    print("\027[1;32m<RETURN> Back to Package Manager\027[0m")
+    local key
+    repeat
+      key = read_key()
+    until key ~= "\27" -- ESC has no effect here; keep waiting for a real key
+    if key == "\r" or key == "\n" then
+      os.remove(switch_tmp)
+      manage_packages()
+      return
+    end
+    -- any other key: loop back and refresh again
   end
 end
 
@@ -340,7 +332,7 @@ manage_packages = function()
     local q = "'\\''" -- represents the shell escape sequence '\''
     local preview_arg = "--preview='bash -c " .. q .. inner .. q .. " -- {}'"
 
-    local header_text = "TAB: Select  󰇙  C-a: Invert  󰇙  C-d: Clear  󰇙  C-s: Source  󰇙  C-u: Update  󰇙  RETURN: Confirm"
+    local header_text = "TAB Select 󰇙 C-a Invert 󰇙 C-d Clear 󰇙 C-s Source 󰇙 C-u Update 󰇙 RETURN Confirm"
     local header_centered = center_text(header_text, W)
 
     local full_tmp      = write_tmp(table.concat(combined, "\n"))
@@ -356,14 +348,14 @@ manage_packages = function()
     local toggle_cmd = "bash -c " .. q2 .. toggle_script .. q2
 
     local args = table.concat({
-      "--multi",
+      "--multi", "--ansi", "--nth 2", "--tiebreak=chunk,index", "--no-scrollbar", FZF_COLOR,
       "--ansi",
       "--nth 2",
       "--tiebreak=chunk,index",
       "--no-scrollbar",
       "--border=top",
       "--header-border=line",
-      "--bind 'ctrl-a:toggle-all,ctrl-d:clear-multi,ctrl-s:reload(" .. toggle_cmd .. "),ctrl-u:execute-silent(echo update > \"" .. switch_tmp2 .. "\")+abort'",
+      "--bind 'esc:ignore,ctrl-a:toggle-all,ctrl-d:clear-multi,ctrl-s:reload(" .. toggle_cmd .. "),ctrl-u:execute-silent(echo update > \"" .. switch_tmp2 .. "\")+abort'",
       '--header="' .. header_centered .. '"',
       '--prompt="  > "',
       preview_arg,
@@ -386,11 +378,8 @@ manage_packages = function()
       update_packages()
       -- falls through: loop back and show the manage view again
     elseif selected_raw == "" then
-      -- Package Manager is the root view now that the menu is gone -
-      -- leaving it with nothing selected means quitting the app.
-      os.remove(switch_tmp2)
-      sudo_stop()
-      os.exit(0)
+      -- ESC/cancelled with nothing selected - just loop back and show
+      -- the list again; ESC no longer quits the app.
     else
       local to_install, to_uninstall = {}, {}
       for _, raw_line in ipairs(lines_of(selected_raw)) do
