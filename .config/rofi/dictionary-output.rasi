@@ -13,7 +13,7 @@
 window {
     location: south;
     anchor: south;
-    width: 1000px;
+    width: 900px;
 }
 
 mainbox {
@@ -28,5 +28,5 @@ listview {
 
 element-text {
     horizontal-align: 0.5;
-    text-color: #e0d8a4;
+    text-color: #dfdfdd;
 }

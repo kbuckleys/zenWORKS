@@ -2,6 +2,7 @@
 # ┌─┘├┤ │││││││ │├┬┘├┴┐└─┐
 # └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 # https://github.com/kbuckleys/
+# Modification of https://github.com/jluttine/rofi-power-menu
 
 #!/bin/bash
 set -e
