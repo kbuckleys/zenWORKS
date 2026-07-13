@@ -1,0 +1,32 @@
+/**
+* ┌─┐┌─┐┌┐┌┬ ┬┌─┐┬─┐┬┌─┌─┐
+* ┌─┘├┤ │││││││ │├┬┘├┴┐└─┐
+* └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
+* https://github.com/kbuckleys/ */
+
+@theme "ZENON"
+
+* {
+    selected-normal-background: var(selected);
+}
+
+window {
+    location: south;
+    anchor: south;
+    width: 1000px;
+}
+
+mainbox {
+    children: [listview];
+}
+
+listview {
+    padding: 12px 0px 12px 0px;
+    fixed-height: false;
+    scrollbar: false;
+}
+
+element-text {
+    horizontal-align: 0.5;
+    text-color: #e0d8a4;
+}
