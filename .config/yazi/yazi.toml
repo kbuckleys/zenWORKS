@@ -1,0 +1,22 @@
+# ┌─┐┌─┐┌┐┌┬ ┬┌─┐┬─┐┬┌─┌─┐
+# ┌─┘├┤ │││││││ │├┬┘├┴┐└─┐
+# └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
+# https://github.com/kbuckleys/
+
+[mgr]
+show_symlink = true
+show_hidden = true
+linemode = "size"
+
+[opener]
+open = [{ run = 'xdg-open "$@" & disown' }]
+edit = [{ run = 'footclient nvim "$@" & disown', desc = "Open in Neovim" }]
+bulk_rename = [{ run = 'nvim "$@"', block = true, desc = "Bulk Rename" }]
+
+[[open.prepend_rules]]
+url = "bulk-rename.txt"
+use = "bulk_rename"
+
+[[open.prepend_rules]]
+mime = "text/*"
+use = "edit"   

@@ -1,0 +1,26 @@
+# ┌─┐┌─┐┌┐┌┬ ┬┌─┐┬─┐┬┌─┌─┐
+# ┌─┘├┤ │││││││ │├┬┘├┴┐└─┐
+# └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
+# https://github.com/kbuckleys/
+
+[[themes]]
+name = "ZENON"
+
+[themes.component_style]
+playback_progress_bar_unfilled = { fg = "#20242a" }
+playback_progress_bar = { fg = "#b6e0a4" }
+
+current_playing = { fg = "#b6e0a4", modifiers = ["Bold"] }
+selection = { bg = "#20242a", modifiers = ["Bold"] }
+
+lyrics_playing = { fg = "#b6e0a4", modifiers = ["Bold"] }
+lyrics_played = { fg = "#6a707f"}
+
+playback_artists = { fg = "#b6e0a4", modifiers = ["Bold"] }
+playback_status = { fg = "#b6e0a4", modifiers = ["Bold"] }
+playback_track = { fg = "#b6e0a4", modifiers = ["Bold"] }
+block_title = { fg = "#6a707f", modifiers = ["Bold"] }
+playback_metadata = { fg = "#6a707f" }
+playlist_desc = { fg = "#6a707f" }
+table_header = { fg = "#6a707f" }
+page_desc = { fg = "#9bbfbf" }
