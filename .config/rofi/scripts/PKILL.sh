@@ -10,12 +10,12 @@ THEME="$HOME/.config/rofi/PKILL.rasi"
 selection=$(
     ps -eo pid=,user=,args= --sort=pid |
     awk '{
-        pid=$1
-        user=$2
-        $1=$2=""
-        sub(/^  */, "")
-        printf "%6s  %-10s  %s\n", pid, user, $0
-    }' |
+    pid=$1
+    user=$2
+    $1=$2=""
+    sub(/^  */, "")
+printf "%-6s %-8s %s\n", pid, user, $0
+}' |
     rofi \
         -dmenu \
         -i \
@@ -37,7 +37,7 @@ confirm=$(
         -dmenu \
         -markup-rows \
         -p "Confirm" \
-        -mesg "<span background='#e78284' foreground='#000000'>$selection</span>" \
+        -mesg "$selection" \
         -selected-row 0 \
         -theme "$CONFIRM_THEME"
 )

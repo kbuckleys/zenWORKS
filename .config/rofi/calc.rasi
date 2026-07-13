@@ -18,7 +18,7 @@ window {
 }
 
 mainbox {
-    children: [inputbar, listview];
+    children: [inputbar, message, listview];
 }
 
 inputbar {
@@ -26,9 +26,15 @@ inputbar {
     padding: 4px 8px;
     spacing: 4px;
 }
+
+textbox {
+    text-color: #000000;
+    horizontal-align: 0.5;
+    font: "0xProto Nerd Font Bold 12";
+}
 textbox-prompt-colon {
-    color: #9fcbfc;
     str: " ";
+    color: #9fcbfc;
 }
 entry {
     color: #9fcbfc;
@@ -49,4 +55,10 @@ element-text {
 }
 element-text selected {
     background-color: transparent;
+}
+
+message {
+    padding: 2px 8px 2px 8px;
+    background-color: #9fcbfc;
+    color: #000000;
 }

@@ -21,6 +21,12 @@ listview {
     scrollbar: false;
 }
 
+textbox {
+    text-color: #000000;
+    horizontal-align: 0.5;
+    font: "0xProto Nerd Font Bold 12";
+}
+
 element {
     padding: 2px 8px 2px 8px;
 }
