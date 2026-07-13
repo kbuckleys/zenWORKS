@@ -79,7 +79,7 @@ zstyle ':completion:*' menu no
 setopt glob_dots
 
 export FZF_DEFAULT_OPTS='
-  --color=fg+:white,bg+:#20242a,pointer:yellow,marker:#fab387,hl:green,hl+:green
+  --color=fg+:#dfdfdd,bg+:#20242a,pointer:#e0d8a4,marker:#fab387,hl+:#b6e0a4,hl::#b6e0a4
   --border=top
 '
 
