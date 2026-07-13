@@ -9,13 +9,14 @@ set -e
 set -u
 
 # Configuration
-all=(lockscreen logout suspend reboot shutdown)
+all=(lockscreen kill logout suspend reboot shutdown)
 show=("${all[@]}")
 confirmations=(reboot shutdown logout)
 
 # Text Labels
 declare -A texts
 texts[lockscreen]="Lock"
+texts[kill]="Kill"
 texts[logout]="Logout"
 texts[suspend]="Suspend"
 texts[reboot]="Reboot"
@@ -24,6 +25,7 @@ texts[shutdown]="Shutdown"
 # Actions
 declare -A actions
 actions[lockscreen]="hyprlock"
+actions[kill]="$HOME/.config/rofi/scripts/PKILL.sh"
 actions[logout]="hyprshutdown -p 'loginctl terminate-session ${XDG_SESSION_ID-}'"
 actions[suspend]="systemctl suspend"
 actions[reboot]="hyprshutdown -p 'systemctl reboot'"
@@ -55,12 +57,17 @@ print_selection() {
 }
 
 run_action() {
-  local entry="$1"
-  if [ "$dryrun" = true ]; then
-    echo "Selected: $entry" >&2
-  else
-    eval "${actions[$entry]}" >/dev/null 2>&1
-  fi
+    local entry="$1"
+
+    if [ "$dryrun" = true ]; then
+        echo "Selected: $entry" >&2
+    else
+        if [ "$entry" = "kill" ]; then
+            setsid "${actions[$entry]}" >/dev/null 2>&1 &
+        else
+            eval "${actions[$entry]}" >/dev/null 2>&1
+        fi
+    fi
 }
 
 # Pre-calculate Messages
