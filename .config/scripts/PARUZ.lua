@@ -247,7 +247,7 @@ update_packages = function()
     end
 
     print("")
-    print("\027[1;32m<RETURN> Back to Package Manager\027[0m")
+    print("\027[1;32m<RETURN> to Package Manager\027[0m")
     local key
     repeat
       key = read_key()
