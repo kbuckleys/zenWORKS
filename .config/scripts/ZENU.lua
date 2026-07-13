@@ -3,6 +3,7 @@
 -- ┌─┐┌─┐┌┐┌┬ ┬┌─┐┬─┐┬┌─┌─┐
 -- ┌─┘├┤ │││││││ │├┬┘├┴┐└─┐
 -- └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
+-- ZENU Package Manager ~ Part of the ZENWORKS Suite
 -- https://github.com/kbuckleys/
 
 local HOME = os.getenv("HOME")
@@ -141,7 +142,47 @@ local function sudo_stop()
   end
 end
 
--- Update Packages  (update.sh)
+-- Ensure fzf and paru/paru-git are installed
+
+local function fzf_installed()
+  return sh("pacman -Qq fzf >/dev/null 2>&1")
+end
+
+local function ensure_fzf()
+  if fzf_installed() then return end
+  sh("sudo pacman -S --noconfirm fzf >/dev/null 2>&1")
+end
+
+local function paru_installed()
+  return sh("pacman -Qq paru >/dev/null 2>&1") or sh("pacman -Qq paru-git >/dev/null 2>&1")
+end
+
+local function ensure_paru()
+  if paru_installed() then return end
+
+  hard_clear()
+  show_logo()
+  print("  It seems you do not have paru installed. Please select your desired variant to proceed.")
+  print("")
+  local choices = { "paru (stable)", "paru-git (recommended)" }
+  local args = "--no-input --layout=reverse --height=4"
+  local selected = fzf(choices, args):gsub("%s+$", "")
+
+  local pkg = "paru"
+  if selected:match("^paru%-git") then
+    pkg = "paru-git"
+  end
+
+  print("")
+  print("Installing " .. pkg .. " ...")
+  local build_dir = "/tmp/" .. pkg .. "-bootstrap"
+  sh("rm -rf " .. build_dir)
+  sh("git clone https://aur.archlinux.org/" .. pkg .. ".git " .. build_dir)
+  sh("cd " .. build_dir .. " && makepkg -si --noconfirm")
+  sh("rm -rf " .. build_dir)
+end
+
+-- Update Packages
 
 local function refresh_updates(switch_tmp)
   sh("paru -Scc --noconfirm && paru --clean && rm -rf ~/.cache/paru/ && paru -Sy")
@@ -261,7 +302,7 @@ update_packages = function()
   end
 end
 
--- Add/Remove Packages  (pm.sh)
+-- Add/Remove Packages
 
 manage_packages = function()
   sh("paru -Scc --noconfirm && paru --clean && rm -rf ~/.cache/paru/ && paru -Sy")
@@ -420,6 +461,8 @@ end
 local function main()
   show_logo()
   sudo_start()
+  ensure_fzf()
+  ensure_paru()
   hard_clear()
 
   local mode = arg and arg[1]
