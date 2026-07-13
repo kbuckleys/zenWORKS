@@ -78,6 +78,11 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' menu no
 setopt glob_dots
 
+export FZF_DEFAULT_OPTS='
+  --color=fg+:white,bg+:#20242a,pointer:yellow,marker:#fab387,hl:green,hl+:green
+  --border=top
+'
+
 # Aliases
 alias hypr='start-hyprland'
 alias ls='eza -G --icons'
