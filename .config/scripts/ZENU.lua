@@ -458,9 +458,27 @@ manage_packages = function()
         print("Cleaning paru cache...")
         sh("paru --clean")
         print("")
-        print("\027[1;32mPress RETURN to continue\027[0m")
-        io.read("*l")
+        print("\027[38;2;250;179;135m  Return to:\027[0m")
+
+        local choice = fzf({
+          "Package Manager",
+          "Update Manager",
+        }, table.concat({
+          "--no-input",
+          "--no-scrollbar",
+          "--layout=reverse",
+          "--height=4",
+          "--border=top",
+          "--info=hidden",
+          FZF_COLOR,
+        }, " ")):gsub("%s+$", "")
+
         hard_clear()
+
+        if choice == "Update Manager" then
+          update_packages()
+          return
+        end
       end
     end
   end
