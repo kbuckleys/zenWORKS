@@ -37,4 +37,5 @@ element-text selected {
 
 message {
     background-color: #e78284;
+    padding: 4px;
 }

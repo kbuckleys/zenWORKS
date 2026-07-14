@@ -39,7 +39,7 @@ element {
     padding: 2px 8px 2px 8px;
 }
 element-text {
-    highlight: bold #9bbfbf;
+    highlight: bold #eebebe;
 }
 element-text selected {
     background-color: transparent;
