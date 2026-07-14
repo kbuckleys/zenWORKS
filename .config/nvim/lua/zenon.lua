@@ -53,51 +53,36 @@ local zenon = {
   }
 }
 
-vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
-vim.api.nvim_set_hl(0, "BufferLineFill", { bg = "#20242a" })
-vim.api.nvim_set_hl(0, "BufferLineBackground", { bg = "#20242a" })
-vim.api.nvim_set_hl(0, "BufferLineBufferSelected", { fg = "#dfdfdd", bg = "#000000", nocombine = true })
-vim.api.nvim_set_hl(0, "BufferLineIndicatorSelected", { bg = "#000000", fg = "#000000", nocombine = true })
+-- UI
+vim.api.nvim_set_hl(0, "YankHighlight", { fg = "#000000", bg = "#dfdfdd", nocombine = true })
+vim.api.nvim_set_hl(0, "Visual", { fg = "#000000", bg = "#c8a4e0", nocombine = true })
 vim.api.nvim_set_hl(0, "CursorLine", { bg = "#20242a", nocombine = true })
 vim.api.nvim_set_hl(0, "WhichKeyNormal", { bg = "#20242a" })
-vim.api.nvim_set_hl(0, "Visual", { fg = "#000000", bg = "#c8a4e0", nocombine = true })
-vim.api.nvim_set_hl(0, "YankHighlight", { bg = "#dfdfdd", fg = "#000000", nocombine = true })
+vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
 
-vim.api.nvim_set_hl(0, "IncSearch", { fg = "#000000", bg = "#fab387" })
-vim.api.nvim_set_hl(0, "Substitute", { fg = "#000000", bg = "#e78284" })
-vim.api.nvim_set_hl(0, "MatchParen", { fg = "#000000", bg = "#eebebe", bold = true })
+-- Bufferline
+vim.api.nvim_set_hl(0, "BufferLineIndicatorSelected", { fg = "#000000", bg = "#000000", nocombine = true })
+vim.api.nvim_set_hl(0, "BufferLineBufferSelected", { fg = "#dfdfdd", bg = "#000000", nocombine = true })
+vim.api.nvim_set_hl(0, "BufferLineBackground", { bg = "#20242a" })
+vim.api.nvim_set_hl(0, "BufferLineFill", { bg = "#20242a" })
 
 -- Searching
-vim.api.nvim_set_hl(0, "Search",      { fg = "#000000", bg = "#b6e0a4" })
-vim.api.nvim_set_hl(0, "CurSearch",   { fg = "#000000", bg = "#fab387", bold = true })
-vim.api.nvim_set_hl(0, "IncSearch",   { fg = "#000000", bg = "#e78284" })
+vim.api.nvim_set_hl(0, "CurSearch", { fg = "#000000", bg = "#e78284", bold = true, nocombine = true, })
+vim.api.nvim_set_hl(0, "Search", { fg = "#000000", bg = "#eebebe", nocombine = true, })
+vim.api.nvim_set_hl(0, "IncSearch", { fg = "#000000", bg = "#e78284" })
+
+-- Matching
+vim.api.nvim_set_hl(0, "Substitute", { fg = "#000000", bg = "#e78284" })
+
+-- Completion
+vim.api.nvim_set_hl(0, "PmenuSel", { fg = "#000000", bg = "#b6e0a4" })
+vim.api.nvim_set_hl(0, "Pmenu", { fg = "#dfdfdd", bg = "#20242a" })
 
 -- Diagnostics
 vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = "#e78284", bg = "NONE" })
-vim.api.nvim_set_hl(0, "DiagnosticVirtualTextWarn",  { fg = "#fab387", bg = "NONE" })
-vim.api.nvim_set_hl(0, "DiagnosticVirtualTextInfo",  { fg = "#9fcbfc", bg = "NONE" })
-vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint",  { fg = "#9bbfbf", bg = "NONE" })
-
--- Selection / matching
-vim.api.nvim_set_hl(0, "MatchParen",  { fg = "#000000", bg = "#9fcbfc", bold = true })
-vim.api.nvim_set_hl(0, "Substitute",  { fg = "#000000", bg = "#e78284" })
-
--- Completion menu
-vim.api.nvim_set_hl(0, "Pmenu",       { fg = "#dfdfdd", bg = "#20242a" })
-vim.api.nvim_set_hl(0, "PmenuSel",    { fg = "#000000", bg = "#b6e0a4" })
-
-vim.api.nvim_set_hl(0, "Search", {
-  fg = "#000000",
-  bg = "#eebebe",
-  nocombine = true,
-})
-
-vim.api.nvim_set_hl(0, "CurSearch", {
-  fg = "#000000",
-  bg = "#e78284",
-  bold = true,
-  nocombine = true,
-})
+vim.api.nvim_set_hl(0, "DiagnosticVirtualTextWarn", { fg = "#fab387", bg = "NONE" })
+vim.api.nvim_set_hl(0, "DiagnosticVirtualTextInfo", { fg = "#eebebe", bg = "NONE" })
+vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint", { fg = "#9bbfbf", bg = "NONE" })
 
 require("lualine").setup({
   options = {

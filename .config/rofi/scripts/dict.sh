@@ -14,7 +14,7 @@ max_lines=20         # cap so rofi doesn't grow unbound
 COLOR_HEAD="#9bbfbf"
 COLOR_PHON="#9bbfbf"
 COLOR_POS="#6a707f"
-COLOR_EX="#fab387"
+COLOR_EX="#eebebe"
 COLOR_SYN="#b6e0a4"
 COLOR_ERROR="#e78284"
 
