@@ -287,12 +287,9 @@ update_packages = function()
       return -- safety net; manage_packages() only returns via its own toggle
     end
 
-print("")
-print("\027[38;2;250;179;135m  Return to:\027[0m")
-
 local choice = fzf({
-  "Update Manager",
-  "Package Manager",
+  "Re-check for updates",
+  "Return to Package Manager",
     }, table.concat({
       "--no-input",
       "--no-scrollbar",
@@ -303,7 +300,7 @@ local choice = fzf({
       FZF_COLOR,
     }, " ")):gsub("%s+$", "")
 
-    if choice == "Package Manager" then
+    if choice == "Return to Package Manager" then
           os.remove(switch_tmp)
           manage_packages()
           return
@@ -457,12 +454,10 @@ manage_packages = function()
       if #to_install > 0 or #to_uninstall > 0 then
         print("Cleaning paru cache...")
         sh("paru --clean")
-        print("")
-        print("\027[38;2;250;179;135m  Return to:\027[0m")
 
         local choice = fzf({
-          "Package Manager",
-          "Update Manager",
+          "Return to Package Manager",
+          "Check for updates",
         }, table.concat({
           "--no-input",
           "--no-scrollbar",
@@ -475,7 +470,7 @@ manage_packages = function()
 
         hard_clear()
 
-        if choice == "Update Manager" then
+        if choice == "Check for updates" then
           update_packages()
           return
         end
