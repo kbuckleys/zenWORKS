@@ -127,10 +127,10 @@ local function apply_terminal_syntax()
     Function        = term_colors.green,
     Identifier      = term_colors.green,
 
-    Type            = term_colors.yellow,
-    StorageClass    = term_colors.yellow,
-    Structure       = term_colors.yellow,
-    Typedef         = term_colors.yellow,
+    Type            = term_colors.cyan,
+    StorageClass    = term_colors.cyan,
+    Structure       = term_colors.cyan,
+    Typedef         = term_colors.cyan,
 
     PreProc         = term_colors.magenta,
     Include         = term_colors.magenta,
@@ -151,9 +151,9 @@ local function apply_terminal_syntax()
   local ts_map = {
     ["@comment"]              = term_colors.bright_black,
 
-    ["@string"]               = term_colors.yellow,
-    ["@string.escape"]        = term_colors.yellow,
-    ["@character"]            = term_colors.yellow,
+    ["@string"]               = term_colors.cyan,
+    ["@string.escape"]        = term_colors.cyan,
+    ["@character"]            = term_colors.cyan,
 
     ["@constant"]             = term_colors.bright_red,
     ["@constant.builtin"]     = term_colors.bright_red,
