@@ -24,8 +24,31 @@ json_escape() {
         -e ':a;N;$!ba;s/\n/\\n/g'
 }
 
-official_updates="$(paru -Qu 2>/dev/null || true)"
-aur_updates="$(paru -Qua 2>/dev/null || true)"
+updates="$(paru -Qu 2>/dev/null || true)"
+declare -A aurmap
+while read -r pkg _; do
+    [[ -n "$pkg" ]] && aurmap["$pkg"]=1
+done < <(pacman -Qm 2>/dev/null)
+
+official_updates=""
+aur_updates=""
+
+while IFS= read -r line; do
+    [[ -z "$line" ]] && continue
+    pkg="${line%% *}"
+    if [[ ${aurmap[$pkg]+x} ]]; then
+        aur_updates+="$line"$'
+'
+    else
+        official_updates+="$line"$'
+'
+    fi
+done <<<"$updates"
+
+official_updates="${official_updates%$'
+'}"
+aur_updates="${aur_updates%$'
+'}"
 
 official_count=0
 aur_count=0
@@ -35,9 +58,7 @@ aur_count=0
 
 total=$((official_count + aur_count))
 
-merged=""
-[[ -n "$official_updates" ]] && merged+="$official_updates"$'\n'
-[[ -n "$aur_updates" ]] && merged+="$aur_updates"
+merged="$updates"
 
 if [[ $total -eq 0 ]]; then
     rm -f "$CACHE_FILE"

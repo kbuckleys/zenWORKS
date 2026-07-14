@@ -161,6 +161,6 @@
         "on-click": "footclient -T \"ZENU\" -e lua ~/.config/scripts/ZENU.lua update",
         "exec": "~/.config/waybar/scripts/updates.sh",
         "return-type": "json",
-        "interval": 300
+        "interval": 10
     }
 }
