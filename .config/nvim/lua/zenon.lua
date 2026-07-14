@@ -7,22 +7,23 @@ vim.opt.termguicolors = true
 vim.opt.background = "dark"
 
 local term_colors = {
-  black                = "#000000",
-  red                  = "#e78284",
-  green                = "#b6e0a4",
-  yellow               = "#e0d8a4",
-  blue                 = "#9fcbfc",
-  magenta              = "#c8a4e0",
-  cyan                 = "#9bbfbf",
-  white                = "#dfdfdd",
-  bright_black         = "#6a707f",
-  bright_red           = "#fab387",
-  bright_green         = "#b6e0a4",
-  bright_yellow        = "#e0d8a4",
-  bright_blue          = "#9fcbfc",
-  bright_magenta       = "#c8a4e0",
-  bright_cyan          = "#9bbfbf",
-  bright_white         = "#dfdfdd",
+  black           = "#000000",
+  lblack          = "#20242a",
+  red             = "#e78284",
+  green           = "#b6e0a4",
+  yellow          = "#fab387",
+  blue            = "#9fcbfc",
+  magenta         = "#c8a4e0",
+  cyan            = "#9bbfbf",
+  white           = "#dfdfdd",
+  bright_black    = "#6a707f",
+  bright_red      = "#eebebe",
+  bright_green    = "#b6e0a4",
+  bright_yellow   = "#e0d8a4",
+  bright_blue     = "#9fcbfc",
+  bright_magenta  = "#c8a4e0",
+  bright_cyan     = "#9bbfbf",
+  bright_white    = "#dfdfdd",
 }
 
 local zenon = {
@@ -62,6 +63,42 @@ vim.api.nvim_set_hl(0, "WhichKeyNormal", { bg = "#20242a" })
 vim.api.nvim_set_hl(0, "Visual", { fg = "#000000", bg = "#c8a4e0", nocombine = true })
 vim.api.nvim_set_hl(0, "YankHighlight", { bg = "#dfdfdd", fg = "#000000", nocombine = true })
 
+vim.api.nvim_set_hl(0, "IncSearch", { fg = "#000000", bg = "#fab387" })
+vim.api.nvim_set_hl(0, "Substitute", { fg = "#000000", bg = "#e78284" })
+vim.api.nvim_set_hl(0, "MatchParen", { fg = "#000000", bg = "#eebebe", bold = true })
+
+-- Searching
+vim.api.nvim_set_hl(0, "Search",      { fg = "#000000", bg = "#b6e0a4" })
+vim.api.nvim_set_hl(0, "CurSearch",   { fg = "#000000", bg = "#fab387", bold = true })
+vim.api.nvim_set_hl(0, "IncSearch",   { fg = "#000000", bg = "#e78284" })
+
+-- Diagnostics
+vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = "#e78284", bg = "NONE" })
+vim.api.nvim_set_hl(0, "DiagnosticVirtualTextWarn",  { fg = "#fab387", bg = "NONE" })
+vim.api.nvim_set_hl(0, "DiagnosticVirtualTextInfo",  { fg = "#9fcbfc", bg = "NONE" })
+vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint",  { fg = "#9bbfbf", bg = "NONE" })
+
+-- Selection / matching
+vim.api.nvim_set_hl(0, "MatchParen",  { fg = "#000000", bg = "#9fcbfc", bold = true })
+vim.api.nvim_set_hl(0, "Substitute",  { fg = "#000000", bg = "#e78284" })
+
+-- Completion menu
+vim.api.nvim_set_hl(0, "Pmenu",       { fg = "#dfdfdd", bg = "#20242a" })
+vim.api.nvim_set_hl(0, "PmenuSel",    { fg = "#000000", bg = "#b6e0a4" })
+
+vim.api.nvim_set_hl(0, "Search", {
+  fg = "#000000",
+  bg = "#eebebe",
+  nocombine = true,
+})
+
+vim.api.nvim_set_hl(0, "CurSearch", {
+  fg = "#000000",
+  bg = "#e78284",
+  bold = true,
+  nocombine = true,
+})
+
 require("lualine").setup({
   options = {
     theme = zenon,
@@ -89,16 +126,35 @@ require("bufferline").setup({
 local function apply_terminal_syntax()
   local syntax_map = {
     Comment         = term_colors.bright_black,
-    String          = term_colors.magenta,
-    Constant        = term_colors.white,
-    Number          = term_colors.white,
-    Statement       = term_colors.Magenta,
-    Keyword         = term_colors.Magenta,
+    String          = term_colors.yellow,
+    Constant        = term_colors.bright_red,
+    Number          = term_colors.yellow,
+    Boolean         = term_colors.bright_red,
+    Character       = term_colors.yellow,
+
+    Statement       = term_colors.magenta,
+    Keyword         = term_colors.magenta,
+    Conditional     = term_colors.magenta,
+    Repeat          = term_colors.magenta,
+    Label           = term_colors.magenta,
+    Operator        = term_colors.magenta,
+
     Function        = term_colors.green,
     Identifier      = term_colors.green,
+
     Type            = term_colors.yellow,
+    StorageClass    = term_colors.yellow,
+    Structure       = term_colors.yellow,
+    Typedef         = term_colors.yellow,
+
     PreProc         = term_colors.magenta,
+    Include         = term_colors.magenta,
+    Define          = term_colors.magenta,
+    Macro           = term_colors.magenta,
+
     Special         = term_colors.bright_red,
+    SpecialChar     = term_colors.bright_red,
+
     Error           = term_colors.red,
     Todo            = term_colors.bright_red,
   }
@@ -108,18 +164,44 @@ local function apply_terminal_syntax()
   end
 
   local ts_map = {
-    ["@comment"]          = term_colors.bright_black,
-    ["@string"]           = term_colors.yellow,
-    ["@constant"]         = term_colors.bright_red,
-    ["@number"]           = term_colors.yellow,
-    ["@keyword"]          = term_colors.magenta,
-    ["@function"]         = term_colors.cyan,
-    ["@function.call"]    = term_colors.cyan,
-    ["@variable"]         = term_colors.white,
-    ["@type"]             = term_colors.white,
-    ["@preproc"]          = term_colors.magenta,
-    ["@special"]          = term_colors.red,
-    ["@error"]            = term_colors.red,
+    ["@comment"]              = term_colors.bright_black,
+
+    ["@string"]               = term_colors.yellow,
+    ["@string.escape"]        = term_colors.yellow,
+    ["@character"]            = term_colors.yellow,
+
+    ["@constant"]             = term_colors.bright_red,
+    ["@constant.builtin"]     = term_colors.bright_red,
+    ["@number"]               = term_colors.yellow,
+    ["@boolean"]              = term_colors.bright_red,
+
+    ["@keyword"]              = term_colors.magenta,
+    ["@keyword.function"]     = term_colors.magenta,
+    ["@keyword.return"]       = term_colors.magenta,
+    ["@conditional"]          = term_colors.magenta,
+    ["@repeat"]               = term_colors.magenta,
+    ["@operator"]             = term_colors.magenta,
+    ["@preproc"]              = term_colors.magenta,
+
+    ["@function"]             = term_colors.green,
+    ["@function.call"]        = term_colors.green,
+    ["@function.method"]      = term_colors.green,
+    ["@function.method.call"] = term_colors.green,
+    ["@constructor"]          = term_colors.green,
+
+    ["@variable"]             = term_colors.white,
+    ["@parameter"]            = term_colors.white,
+    ["@field"]                = term_colors.white,
+    ["@property"]             = term_colors.white,
+    ["@punctuation"]          = term_colors.white,
+
+    ["@type"]                 = term_colors.yellow,
+    ["@type.builtin"]         = term_colors.yellow,
+    ["@module"]               = term_colors.yellow,
+    ["@namespace"]            = term_colors.yellow,
+
+    ["@special"]              = term_colors.bright_red,
+    ["@error"]                = term_colors.red,
   }
 
   for group, color in pairs(ts_map) do

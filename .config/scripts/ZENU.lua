@@ -20,7 +20,7 @@ local REPO_COLORS = {
   LOCAL    = "\027[97m", -- white
 }
 local COLOR_RESET = "\027[0m"
-local FZF_COLOR   = "--color=fg+:#dfdfdd,bg+:#20242a,pointer:#e0d8a4,marker:#fab387,hl+:#b6e0a4,hl::#b6e0a4"
+local FZF_COLOR   = "--color=fg+:#dfdfdd,bg+:#20242a,pointer:#e0d8a4,marker:#fab387,hl+:#b6e0a4,hl::#b6e0a4,info:#eebebe,spinner:#9bbfbf,border:#20242a"
 
 -- low level helpers
 
@@ -238,7 +238,7 @@ local function refresh_updates(switch_tmp)
     '--header="' .. header_centered .. '"',
     "--delimiter ' '",
     '--preview="paru -Si {1}"',
-    '--preview-window="bottom:50%"',
+    '--preview-window="bottom:50%,noinfo"',
   }, " ")
 
   local selected_raw = fzf(selection_list, args)
@@ -395,12 +395,13 @@ manage_packages = function()
       "--tiebreak=chunk,index",
       "--no-scrollbar",
       "--border=top",
+      "--info=hidden",
       "--header-border=line",
       "--bind 'esc:ignore,ctrl-a:toggle-all,ctrl-d:clear-multi,ctrl-s:reload(" .. toggle_cmd .. "),ctrl-u:execute-silent(echo update > \"" .. switch_tmp2 .. "\")+abort'",
       '--header="' .. header_centered .. '"',
       '--prompt="  > "',
       preview_arg,
-      '--preview-window="bottom:50%"',
+      '--preview-window="bottom:50%,noinfo"',
     }, " ")
 
     local selected_raw = capture("fzf " .. args .. " < " .. full_tmp)

@@ -3,7 +3,10 @@
 -- └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 -- https://github.com/kbuckleys/
 
-vim.keymap.set('n', '<leader><leader>', '<cmd>Yazi<cr>', { desc = 'Open yazi file manager' })
+local fzf_files = require("fzf")
+
+vim.keymap.set("n", "<leader>f", fzf_files.open, { desc = "Find (FZF)" })
+vim.keymap.set('n', '<leader><leader>', '<cmd>Yazi<cr>', { desc = 'Yazi' })
 
 vim.keymap.set("n", "<C-Tab>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
 vim.keymap.set("n", "<C-S-Tab>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Previous buffer" })   
