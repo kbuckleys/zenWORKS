@@ -158,11 +158,9 @@
     },
 
     "custom/paru": {
-        "format": "{icon} {0}",
-        "return-type": "json",
         "on-click": "footclient -T \"ZENU\" -e lua ~/.config/scripts/ZENU.lua update",
-        "hide-empty-text": true,
-        "exec-if": "which waybar-updates",
-        "exec": "waybar-updates -n -i 10"
+        "exec": "~/.config/waybar/scripts/updates.sh",
+        "return-type": "json",
+        "interval": 300
     }
 }
