@@ -504,8 +504,8 @@ end
 local ok, err = pcall(main)
 sudo_stop()
 if not ok then
-  io.stderr:write("PARUZ error: " .. tostring(err) .. "\n")
-  print("\027[1;31mPARUZ crashed - press RETURN to close.\027[0m")
+  io.stderr:write("ZENU error: " .. tostring(err) .. "\n")
+  print("\027[1;31mZENU crashed - press RETURN to close.\027[0m")
   io.read("*l")
   os.exit(1)
 end
