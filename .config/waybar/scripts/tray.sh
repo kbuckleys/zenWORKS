@@ -1,9 +1,8 @@
+#!/bin/bash
 # ┌─┐┌─┐┌┐┌┬ ┬┌─┐┬─┐┬┌─┌─┐
 # ┌─┘├┤ │││││││ │├┬┘├┴┐└─┐
 # └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 # https://github.com/kbuckleys/
-
-#!/bin/bash
 
 result=$(busctl --user call org.kde.StatusNotifierWatcher \
   /StatusNotifierWatcher org.freedesktop.DBus.Properties Get \

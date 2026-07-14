@@ -1,9 +1,8 @@
+#!/bin/bash
 # ┌─┐┌─┐┌┐┌┬ ┬┌─┐┬─┐┬┌─┌─┐
 # ┌─┘├┤ │││││││ │├┬┘├┴┐└─┐
 # └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 # https://github.com/kbuckleys/
-
-#!/bin/bash
 
 METRICS=$(nvidia-smi --query-gpu=utilization.gpu,temperature.gpu,memory.used --format=csv,noheader,nounits)
 RAW_UTIL=$(echo "$METRICS" | cut -d',' -f1)

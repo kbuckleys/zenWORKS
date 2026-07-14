@@ -1,10 +1,9 @@
+#!/bin/bash
 # ┌─┐┌─┐┌┐┌┬ ┬┌─┐┬─┐┬┌─┌─┐
 # ┌─┘├┤ │││││││ │├┬┘├┴┐└─┐
 # └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 # https://github.com/kbuckleys/
 # Original script by https://github.com/alvaniss/privacy-dots
-
-#!/bin/bash
 
 # dependencies: pipewire (pw-dump), v4l2loopback-dkms, jq, dbus-send (dbus), procps (pgrep)
 set -euo pipefail
