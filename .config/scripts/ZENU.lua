@@ -287,19 +287,28 @@ update_packages = function()
       return -- safety net; manage_packages() only returns via its own toggle
     end
 
-    print("")
-    print("\027[1;32m<RETURN> to Package Manager\027[0m")
-    local key
-    repeat
-      key = read_key()
-    until key ~= "\27" -- ESC has no effect here; keep waiting for a real key
-    if key == "\r" or key == "\n" then
-      os.remove(switch_tmp)
-      manage_packages()
-      return
+print("")
+print("\027[38;2;250;179;135m  Return to:\027[0m")
+
+local choice = fzf({
+  "Update Manager",
+  "Package Manager",
+    }, table.concat({
+      "--no-input",
+      "--no-scrollbar",
+      "--layout=reverse",
+      "--height=4",
+      "--border=top",
+      "--info=hidden",
+      FZF_COLOR,
+    }, " ")):gsub("%s+$", "")
+
+    if choice == "Package Manager" then
+          os.remove(switch_tmp)
+          manage_packages()
+          return
     end
-    -- any other key: loop back and refresh again
-  end
+end
 end
 
 -- Add/Remove Packages
