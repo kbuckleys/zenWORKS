@@ -20,7 +20,7 @@ local REPO_COLORS = {
   LOCAL    = "\027[97m", -- white
 }
 local COLOR_RESET = "\027[0m"
-local FZF_COLOR   = "--color=fg+:#dfdfdd,bg+:#20242a,pointer:#e0d8a4,marker:#fab387,hl+:#b6e0a4,hl::#b6e0a4,info:#eebebe,spinner:#9bbfbf,border:#20242a"
+local FZF_COLOR   = "--color=fg+:#dfdfdd,bg+:#20242a,pointer:#e0d8a4,marker:#fab387,hl+:#b6e0a4,hl::#b6e0a4,spinner:#9bbfbf,border:#20242a"
 
 -- low level helpers
 
