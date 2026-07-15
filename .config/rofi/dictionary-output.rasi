@@ -29,4 +29,5 @@ listview {
 element-text {
     horizontal-align: 0.5;
     text-color: #dfdfdd;
+    padding: 2px 0px;
 }
