@@ -9,7 +9,7 @@ local web = "helium-browser"
 local fman = term .. " -e yazi"
 
 -- MISC
-hl.bind("SUPER + M", hl.dsp.exec_cmd(term .. " -T 'ZENU' -e ~/.config/scripts//ZENU.lua"))
+hl.bind("SUPER + M", hl.dsp.exec_cmd(term .. " -T 'ZENU' -e ~/.config/scripts/ZENU.lua"))
 hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd(term .. " -T sysmon -e btop"))
 hl.bind("SUPER + SHIFT + ESCAPE", hl.dsp.exec_cmd("hyprshutdown"))
 hl.bind("SUPER + CONTROL + P", hl.dsp.exec_cmd("hyprpicker -a"))
@@ -62,9 +62,6 @@ end)
 hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
-hl.bind("SUPER + mouse_down", hl.dsp.focus({ workspace = "e-1" }))
-hl.bind("SUPER + mouse_up", hl.dsp.focus({ workspace = "e+1" }))
-
 -- Focus
 hl.bind("SUPER + RIGHT", hl.dsp.focus({ direction = "r" }))
 hl.bind("SUPER + LEFT", hl.dsp.focus({ direction = "l" }))
@@ -93,13 +90,6 @@ hl.bind("SUPER + SHIFT + TAB", function()
     hl.dispatch(hl.dsp.window.cycle_next({ next = false }))
     hl.dispatch(hl.dsp.window.bring_to_top())
 end)   
-
--- Mouse Wheel Cycle
-hl.bind("SUPER + mouse_down", hl.dsp.window.cycle_next("prev"), { description = "Cycle to prev window" })
-hl.bind("SUPER + mouse_up", hl.dsp.window.cycle_next(), { description = "Cycle to next window" })
-
-hl.bind("SUPER + SHIFT + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
-hl.bind("SUPER + SHIFT + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
 
 -- GROUPING
 hl.bind("SUPER + G", hl.dsp.group.lock_active({ action = "toggle" }))
