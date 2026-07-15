@@ -161,8 +161,8 @@
 
     "custom/paru": {
         "on-click": "footclient -T \"ZENU\" -e lua ~/.config/scripts/ZENU.lua update",
-        "exec": "~/.config/waybar/scripts/updates.lua",
-        "return-type": "json",
-        "interval": 10
+        "exec": "waybar-updates -n -i 10 -f ' {total}'",
+        "exec-if": "which waybar-updates",
+        "return-type": "json"
     }
 }
