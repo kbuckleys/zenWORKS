@@ -70,7 +70,7 @@
     "custom/nvidia": {
         "exec": "~/.config/waybar/scripts/nvidia.lua",
         "return-type": "json",
-        "interval": 3,
+        "interval": 1,
         "format": "{text}",
         "tooltip": true,
         "markup": "pango"
