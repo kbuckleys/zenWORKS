@@ -80,7 +80,7 @@
         "format": " CPU  {usage}% ",
         "format-mid": "CPU  {usage}% ",
         "format-high": "CPU  {usage}% ",
-        "on-click": "footclient -T btop -e btop",
+        "on-click": "footclient -T sysmon -e btop",
         "tooltip": true,
         "interval": 1,
         "states": {
