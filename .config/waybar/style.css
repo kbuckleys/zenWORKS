@@ -14,6 +14,7 @@
 
 #waybar {
     background: #15181c;
+    padding: 0;
 }
 
 #workspaces {
@@ -41,7 +42,8 @@
 }
 
 #custom-status {
-    padding: 0px 4px 0px 8px;
+    padding: 0px 8px 0px 8px;
+    min-width: 0;
 }
 
 #clock {
@@ -89,6 +91,7 @@ tooltip {
     background-color: #000000;
     border: 1px solid #20242a;
     border-radius: 0;
+    padding: 6px;
 }
 tooltip label{
     color: #DFDFDD;

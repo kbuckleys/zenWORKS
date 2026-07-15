@@ -8,7 +8,8 @@
 local ICON          = " "
 local OFFICIAL_ICON = "󰣇"
 local AUR_ICON      = ""
-local MAX_ENTRIES    = 10
+local MAX_ENTRIES   = 10
+local INTERVAL      = 300
 
 local CACHE_DIR  = (os.getenv("XDG_CACHE_HOME") or os.getenv("HOME") .. "/.cache") .. "/waybar"
 local CACHE_FILE = CACHE_DIR .. "/updates.list"
@@ -43,17 +44,18 @@ local function lines_of(s)
     return t
 end
 
-local function main()
-    os.execute("mkdir -p " .. CACHE_DIR)
-
-    local updates = run("paru -Qu 2>/dev/null || true")
-
-    local aur_pkgs = {}
-    local pacman_out = run("pacman -Qm 2>/dev/null")
-    for line in pacman_out:gmatch("[^\n]+") do
+local function get_aur_pkgs()
+    local pkgs = {}
+    local out = run("pacman -Qm 2>/dev/null")
+    for line in out:gmatch("[^\n]+") do
         local pkg = line:match("^(%S+)")
-        if pkg then aur_pkgs[pkg] = true end
+        if pkg then pkgs[pkg] = true end
     end
+    return pkgs
+end
+
+local function build_output(updates)
+    local aur_pkgs = get_aur_pkgs()
 
     local official_lines = {}
     local aur_lines = {}
@@ -74,8 +76,7 @@ local function main()
 
     if total == 0 then
         os.remove(CACHE_FILE)
-        print('{"text":"","tooltip":"System is up to date","class":"none"}')
-        return
+        return '{"text":"","tooltip":"System is up to date","class":"none"}'
     end
 
     local cache_hit = false
@@ -90,16 +91,20 @@ local function main()
         local wf = io.open(CACHE_FILE, "w")
         if wf then wf:write(updates); wf:close() end
 
-        if have("notify-send") then
+        if HAS_NOTIFY then
             local body = "Official: " .. official_count .. "\\nAUR: " .. aur_count
             local shown = 0
-            for _, line in ipairs(lines_of(updates)) do
-                if line ~= "" then
-                    local pkg = line:match("^(%S+)")
-                    body = body .. "\\n• " .. pkg
-                    shown = shown + 1
-                    if shown >= 10 then break end
-                end
+            for _, line in ipairs(official_lines) do
+                local pkg = line:match("^(%S+)")
+                body = body .. "\\n• " .. pkg
+                shown = shown + 1
+                if shown >= 10 then break end
+            end
+            for _, line in ipairs(aur_lines) do
+                if shown >= 10 then break end
+                local pkg = line:match("^(%S+)")
+                body = body .. "\\n• " .. pkg
+                shown = shown + 1
             end
             if total > 10 then body = body .. "\\n..." end
             os.execute('notify-send "󰚰 Package Updates Available" "' .. body .. '"')
@@ -131,8 +136,24 @@ local function main()
         if aur_count > MAX_ENTRIES then tooltip = tooltip .. "..." end
     end
 
-    print(string.format('{"text":"%s %d","tooltip":"%s","class":"updates"}',
-        ICON, total, json_escape(tooltip)))
+    tooltip = tooltip:match("^(.-)\n$") or tooltip
+
+    return string.format('{"text":"%s %d","tooltip":"%s","class":"updates"}',
+        ICON, total, json_escape(tooltip))
 end
 
-main()
+os.execute("mkdir -p " .. CACHE_DIR)
+
+local HAS_NOTIFY = have("notify-send")
+local last_output = nil
+
+while true do
+    local updates = run("paru -Qu 2>/dev/null || true")
+    local output = build_output(updates)
+    if output ~= last_output then
+        print(output)
+        io.stdout:flush()
+        last_output = output
+    end
+    os.execute("sleep " .. INTERVAL)
+end
