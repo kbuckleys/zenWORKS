@@ -13,7 +13,8 @@ hl.window_rule({ match = { title = "bandwhich" }, float = true, size = { 1000, 8
 hl.window_rule({ match = { class = "swayimg" }, float = true, center = true})
 hl.window_rule({ match = { initial_title = "Friends List" }, float = true})
 hl.window_rule({ match = { class = "mpv" }, float = true, center = true})
+hl.window_rule({ match = { class = "helium" }, suppress_event = "maximize" })
 
 -- BORDERS
+hl.window_rule({ match = { float = true }, center = true, border_color = "rgba(182, 224, 164, 0.6)"})
 hl.window_rule({ match = { fullscreen = true }, border_color = "rgba(250, 179, 135, 0.6)"})
-hl.window_rule({ match = { float = true }, border_color = "rgba(182, 224, 164, 0.6)"})

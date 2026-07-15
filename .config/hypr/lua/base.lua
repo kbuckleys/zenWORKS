@@ -4,8 +4,8 @@
 -- https://github.com/kbuckleys/
 
 -- MONITORS
-hl.monitor({ output = "HDMI-A-1", mode = "1920x1080@100", position = "auto", transform = 3, })
 hl.monitor({ output = "DP-1", mode = "2560x1440@180", position = "auto", })
+hl.monitor({ output = "HDMI-A-1", mode = "1920x1080@100", position = "auto", transform = 3, })
 
 -- ENV
 -- Nvidia cache limit set to 20 GB
@@ -22,6 +22,7 @@ hl.config({
 	misc = {
 		font_family = "0xProto Nerd Font",
 		disable_splash_rendering = true,
+		initial_workspace_tracking = 0,
 		close_special_on_empty = true,
 		disable_hyprland_logo = true,
 		background_color = 0x000000,
