@@ -4,7 +4,6 @@
 -- https://github.com/kbuckleys/
 
 local fzf_files = require("fzf")
-
 vim.keymap.set("n", "<leader>f", fzf_files.open, { desc = "Find (FZF)" })
 vim.keymap.set('n', '<leader><leader>', '<cmd>Yazi<cr>', { desc = 'Yazi' })
 
@@ -31,12 +30,6 @@ vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><
 vim.keymap.set("n", "<leader>X", "<cmd>!chmod +x %<CR>", { silent = true, desc = "makes file executable" })
 
 vim.keymap.set("n", "<leader>re", "<cmd>restart<cr>", { desc = "Restart config :restart)" })
-vim.keymap.set("n", "<leader>o", function()
-  local width = math.floor(vim.o.columns * 0.35)
-  vim.cmd("vsplit | terminal opencode")
-  vim.cmd("startinsert")
-  vim.cmd("vertical resize " .. width)
-end, { desc = "OpenCode TUI (right split, 35%)" })
 
 vim.keymap.set("n", "<leader>+", function()
   vim.cmd("vertical resize +5")

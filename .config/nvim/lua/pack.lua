@@ -23,7 +23,6 @@ vim.pack.add({
   "https://github.com/tpope/vim-fugitive",
   "https://github.com/folke/noice.nvim",
   "https://github.com/windwp/nvim-autopairs",
-  "https://github.com/silvabyte/opencode.nvim.git",
 })
 
 -- Load and configure nvim-autopairs
@@ -88,17 +87,4 @@ require("mini.completion").setup({
     lsp_completion = {
         auto_setup = true
     }
-})
-
-require("opencode").setup({
-  completion = {
-    auto_trigger = true,
-    debounce = 150,
-    accept_key = "<Tab>",
-    dismiss_key = "<C-e>",
-  },
-  model = {
-    provider = "anthropic",
-    model_id = "claude-sonnet-4-20250514",
-  },
 })
