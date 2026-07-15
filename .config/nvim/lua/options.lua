@@ -6,7 +6,7 @@
 vim.opt.termguicolors = true
 vim.g.netrw_banner = 0
 vim.g.mapleader = " "
-vim.opt.fillchars = { eob = " " }
+vim.opt.fillchars = { eob = " ", vert = "│" }
 
 vim.opt.nu = true
 vim.opt.number = true

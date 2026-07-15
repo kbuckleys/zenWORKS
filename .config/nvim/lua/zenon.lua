@@ -59,6 +59,9 @@ vim.api.nvim_set_hl(0, "Visual", { fg = "#000000", bg = "#c8a4e0", nocombine = t
 vim.api.nvim_set_hl(0, "CursorLine", { bg = "#20242a", nocombine = true })
 vim.api.nvim_set_hl(0, "WhichKeyNormal", { bg = "#20242a" })
 vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
+vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#20242a", bg = "#20242a" })
+vim.api.nvim_set_hl(0, "FloatBorder", { bg = "#20242a", fg = "#20242a" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#20242a" })
 
 -- Bufferline
 vim.api.nvim_set_hl(0, "BufferLineIndicatorSelected", { fg = "#000000", bg = "#000000", nocombine = true })
