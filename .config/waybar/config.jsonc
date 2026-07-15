@@ -162,6 +162,7 @@
     "custom/paru": {
         "on-click": "footclient -T \"ZENU\" -e lua ~/.config/scripts/ZENU.lua update",
         "exec": "~/.config/waybar/scripts/updates.lua",
-        "return-type": "json"
+        "return-type": "json",
+        "interval": 10
     }
 }

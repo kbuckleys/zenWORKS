@@ -9,10 +9,10 @@ local ICON          = " "
 local OFFICIAL_ICON = "󰣇"
 local AUR_ICON      = ""
 local MAX_ENTRIES   = 10
-local INTERVAL      = 300
 
 local CACHE_DIR  = (os.getenv("XDG_CACHE_HOME") or os.getenv("HOME") .. "/.cache") .. "/waybar"
 local CACHE_FILE = CACHE_DIR .. "/updates.list"
+local SYNC_FILE  = CACHE_DIR .. "/last_sync"
 
 local function trim(s)
     return s:match("^%s*(.-)%s*$")
@@ -145,15 +145,24 @@ end
 os.execute("mkdir -p " .. CACHE_DIR)
 
 local HAS_NOTIFY = have("notify-send")
-local last_output = nil
 
-while true do
-    local updates = run("paru -Qu 2>/dev/null || true")
-    local output = build_output(updates)
-    if output ~= last_output then
-        print(output)
-        io.stdout:flush()
-        last_output = output
+local updates = run("paru -Qu 2>/dev/null || true")
+local output = build_output(updates)
+print(output)
+io.stdout:flush()
+
+local should_sync = true
+local sf = io.open(SYNC_FILE, "r")
+if sf then
+    local last_sync = tonumber(sf:read("*a"))
+    sf:close()
+    if last_sync and (os.time() - last_sync) < 3600 then
+        should_sync = false
     end
-    os.execute("sleep " .. INTERVAL)
+end
+
+if should_sync then
+    os.execute("timeout 10 paru -Sy --quiet 2>/dev/null &")
+    local wf = io.open(SYNC_FILE, "w")
+    if wf then wf:write(os.time()); wf:close() end
 end
