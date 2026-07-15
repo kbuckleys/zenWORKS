@@ -100,14 +100,6 @@ local function hard_clear()
   sh("stty sane 2>/dev/null")
 end
 
--- Reads a single raw keypress (no echo) via bash, mirroring `read -n1 -r`.
-local function read_key()
-  -- -d '' disables the default newline-as-delimiter behavior of `read`,
-  -- which otherwise discards a newline byte instead of storing it -
-  -- meaning Enter/Return would come back as an empty string, not "\n".
-  return capture([[bash -c 'IFS= read -rsn1 -d "" c; printf "%s" "$c"']])
-end
-
 -- sudo keep-alive (mirrors the background `while true; do sudo -n true...`)
 
 local sudo_handle = nil
@@ -182,10 +174,14 @@ local function ensure_paru()
   sh("rm -rf " .. build_dir)
 end
 
+local function sync_repos()
+  sh("paru -Scc --noconfirm && paru --clean && rm -rf ~/.cache/paru/ && paru -Sy")
+end
+
 -- Update Packages
 
 local function refresh_updates(switch_tmp)
-  sh("paru -Scc --noconfirm && paru --clean && rm -rf ~/.cache/paru/ && paru -Sy")
+  sync_repos()
 
   local raw = capture("paru -Qu --color=never | sort -u")
   local updates = lines_of(raw)
@@ -278,6 +274,8 @@ update_packages = function()
     local sf = io.open(switch_tmp, "r")
     local switch = (sf and sf:read("*a") or ""):gsub("%s+$", "")
     if sf then sf:close() end
+    local wf = io.open(switch_tmp, "w")
+    if wf then wf:write(""); wf:close() end
 
     if switch == "manage" then
       -- C-u was pressed inside the fzf list - jump straight to the
@@ -287,9 +285,9 @@ update_packages = function()
       return -- safety net; manage_packages() only returns via its own toggle
     end
 
-local choice = fzf({
-  "Re-check for updates",
-  "Return to Package Manager",
+    local choice = fzf({
+      "Re-check for updates",
+      "Return to Package Manager",
     }, table.concat({
       "--no-input",
       "--no-scrollbar",
@@ -301,17 +299,17 @@ local choice = fzf({
     }, " ")):gsub("%s+$", "")
 
     if choice == "Return to Package Manager" then
-          os.remove(switch_tmp)
-          manage_packages()
-          return
+      os.remove(switch_tmp)
+      manage_packages()
+      return
     end
-end
+  end
 end
 
 -- Add/Remove Packages
 
 manage_packages = function()
-  sh("paru -Scc --noconfirm && paru --clean && rm -rf ~/.cache/paru/ && paru -Sy")
+  sync_repos()
   hard_clear()
   local switch_tmp2 = write_tmp("")
 
@@ -385,14 +383,12 @@ manage_packages = function()
     local full_tmp      = write_tmp(table.concat(combined, "\n"))
     local installed_tmp = write_tmp(table.concat(installed_only, "\n"))
     local state_tmp      = write_tmp("full")
-    local q2 = "'\\''" -- represents the shell escape sequence '\''
-
     -- C-s toggle: read which list is currently shown from state_tmp,
     -- flip it, and print the newly-selected list for fzf to reload from.
     local toggle_script = 'state=$(cat "' .. state_tmp .. '"); '
       .. 'if [ "$state" = "full" ]; then echo installed > "' .. state_tmp .. '"; cat "' .. installed_tmp .. '"; '
       .. 'else echo full > "' .. state_tmp .. '"; cat "' .. full_tmp .. '"; fi'
-    local toggle_cmd = "bash -c " .. q2 .. toggle_script .. q2
+    local toggle_cmd = "bash -c " .. q .. toggle_script .. q
 
     local args = table.concat({
       "--multi", "--ansi", "--nth 2", "--tiebreak=chunk,index", "--no-scrollbar", FZF_COLOR,
@@ -405,7 +401,7 @@ manage_packages = function()
       "--header-border=line",
       "--bind 'esc:ignore,ctrl-a:toggle-all,ctrl-d:clear-multi,ctrl-s:reload(" .. toggle_cmd .. "),ctrl-u:execute-silent(echo update > \"" .. switch_tmp2 .. "\")+abort'",
       '--header="' .. header_centered .. '"',
-      '--prompt="  > "',
+      '--prompt="\027[38;2;155;191;191m  > \027[0m"',
       preview_arg,
       '--preview-window="bottom:50%,noinfo"',
     }, " ")
@@ -472,7 +468,6 @@ manage_packages = function()
 
         if choice == "Check for updates" then
           update_packages()
-          return
         end
       end
     end
@@ -498,7 +493,6 @@ local function main()
     manage_packages()
   end
 
-  sudo_stop()
 end
 
 local ok, err = pcall(main)
