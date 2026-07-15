@@ -38,7 +38,6 @@ hl.bind("SUPER + 3", hl.dsp.focus({ workspace = 3 }))
 hl.bind("SUPER + 4", hl.dsp.focus({ workspace = 4 }))
 hl.bind("SUPER + 5", hl.dsp.focus({ workspace = 5 }))
 
-hl.bind("SUPER + SHIFT + GRAVE", hl.dsp.window.move({ workspace = "special:special" }))
 local function move_and_center(ws)
 	hl.dispatch(hl.dsp.window.move({ workspace = ws }))
 	local win = hl.get_active_window()
@@ -47,6 +46,7 @@ local function move_and_center(ws)
 	end
 end
 
+hl.bind("SUPER + SHIFT + GRAVE", function() move_and_center("special:special") end)
 hl.bind("SUPER + SHIFT + 1", function() move_and_center(1) end)
 hl.bind("SUPER + SHIFT + 2", function() move_and_center(2) end)
 hl.bind("SUPER + SHIFT + 3", function() move_and_center(3) end)
