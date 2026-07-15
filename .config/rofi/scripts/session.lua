@@ -7,9 +7,9 @@
 
 local entries = {
   { id="lockscreen", label="Lock", cmd="hyprlock", confirm=false },
-  { id="kill", label="Kill", cmd=os.getenv("HOME").."/.config/rofi/scripts/PKILL.sh", confirm=false },
+  { id="kill", label="Kill", cmd=os.getenv("HOME").."/.config/rofi/scripts/PKILL.lua", confirm=false },
   { id="suspend", label="Suspend", cmd="systemctl suspend", confirm=false },
-  { id="logout", label="Logout", cmd="hyprshutdown -p 'loginctl terminate-session ${XDG_SESSION_ID-}'", confirm=true },
+  { id="logout", label="Logout", cmd="hyprshutdown -p 'loginctl terminate-session " .. (os.getenv("XDG_SESSION_ID") or "") .. "'", confirm=true },
   { id="reboot", label="Reboot", cmd="hyprshutdown -p 'systemctl reboot'", confirm=true },
   { id="shutdown", label="Shutdown", cmd="hyprshutdown -p 'systemctl poweroff'", confirm=true },
 }
@@ -44,7 +44,7 @@ local function execute(id, cmd)
   if id == "kill" then
     os.execute("setsid " .. shell_quote(cmd) .. " >/dev/null 2>&1 &")
   else
-    os.execute(shell_quote(cmd) .. " >/dev/null 2>&1 &")
+    os.execute(cmd .. " >/dev/null 2>&1 &")
   end
 end
 
