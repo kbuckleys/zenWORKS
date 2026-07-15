@@ -1,0 +1,56 @@
+/**
+* ┌─┐┌─┐┌┐┌┬ ┬┌─┐┬─┐┬┌─┌─┐
+* ┌─┘├┤ │││││││ │├┬┘├┴┐└─┐
+* └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
+* https://github.com/kbuckleys/ */
+
+@theme "ZENON"
+
+configuration {
+	  drun-display-format: "{name}";
+    kb-remove-to-sol: "BackSpace";
+    kb-remove-char-back: "";
+    terminal: "footclient";
+    recursivebrowser {
+        filter-regex: "(.*cache.*|.*\\.o)";
+        cancel-returns-1: true;
+        command: "xdg-open";
+        directory: "/";
+    }
+    filebrowser {
+        command: "footclient -e yazi";
+        show-hidden: true;
+    }
+}
+
+window {
+    location: south;
+    anchor: south;
+    width: 100%;
+}
+
+#textbox {
+    padding: 4px 12px 4px 12px;
+    background-color: #e78284;
+    color: #000000;
+}
+
+inputbar {
+    enabled: false;
+}
+
+listview {
+    layout: horizontal;
+    lines: 50;
+}
+
+element {
+    padding: 4px 10px 4px 10px;
+}
+element-text {
+    highlight: none;
+}
+element-text selected {
+    background-color: transparent;
+    text-color: #9bbfbf;
+}

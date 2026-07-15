@@ -1,0 +1,35 @@
+/**
+* ┌─┐┌─┐┌┐┌┬ ┬┌─┐┬─┐┬┌─┌─┐
+* ┌─┘├┤ │││││││ │├┬┘├┴┐└─┐
+* └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
+* https://github.com/kbuckleys/ */
+
+@theme "ZENON"
+
+configuration {
+    kb-remove-char-back: "BackSpace";
+    kb-remove-to-sol: "";
+}
+
+window {
+    location: south;
+    anchor: south;
+    width: 500px;
+}
+
+mainbox {
+    children: [inputbar];
+}
+
+inputbar {
+    children: [textbox-prompt-colon, entry];
+    padding: 4px 8px;
+    spacing: 4px;
+}
+textbox-prompt-colon {
+    color: #e0d8a4;
+    str: " ";
+}
+entry {
+    color: #e0d8a4;
+}
