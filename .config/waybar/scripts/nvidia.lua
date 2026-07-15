@@ -110,7 +110,7 @@ local function main()
     local gpu_text = colorize(gpu_util, MID_UTIL, WARN_UTIL)
     local temp_text = colorize(gpu_temp, MID_TEMP, WARN_TEMP)
 
-    local text = "GPU " .. gpu_text .. "%  VRAM " .. vram_gb .. "G  " .. temp_text .. "°"
+    local text = " GPU " .. gpu_text .. "%  VRAM " .. vram_gb .. "G  " .. temp_text .. "°"
     local tooltip = string.format(
         "%s\nUtilization: %d%%\nTemperature: %d°C\nVRAM: %s GB\nPower: %gw\nClock: %d MHz",
         gpu_name, gpu_util, gpu_temp, vram_gb, gpu_power, gpu_clock
