@@ -120,19 +120,25 @@ hl.bind("SUPER + SHIFT + EQUAL", hl.dsp.exec_cmd("playerctl next"))
 
 -- SCREEN ZOOM
 local MAX_ZOOM = 10
-local MIN_ZOOM = 1
 local ZOOM_TOGGLE_FACTOR = 0.5
 
 local function zoom(offset)
     local current = hl.get_config("cursor.zoom_factor")
     if offset ~= nil then
+        if current == 0 then
+            current = 1
+        end
         current = current + offset
-    elseif current ~= MIN_ZOOM then
-        current = MIN_ZOOM
+    elseif current ~= 0 then
+        current = 0
     else
         current = ZOOM_TOGGLE_FACTOR
     end
-    current = math.max(MIN_ZOOM, math.min(MAX_ZOOM, current))
+    if current <= 1 then
+        current = 0
+    else
+        current = math.min(MAX_ZOOM, current)
+    end
     hl.config({ cursor = { zoom_factor = current } })
 end
 
