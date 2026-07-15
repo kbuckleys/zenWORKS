@@ -39,11 +39,19 @@ hl.bind("SUPER + 4", hl.dsp.focus({ workspace = 4 }))
 hl.bind("SUPER + 5", hl.dsp.focus({ workspace = 5 }))
 
 hl.bind("SUPER + SHIFT + GRAVE", hl.dsp.window.move({ workspace = "special:special" }))
-hl.bind("SUPER + SHIFT + 1", hl.dsp.window.move({ workspace = 1 }))
-hl.bind("SUPER + SHIFT + 2", hl.dsp.window.move({ workspace = 2 }))
-hl.bind("SUPER + SHIFT + 3", hl.dsp.window.move({ workspace = 3 }))
-hl.bind("SUPER + SHIFT + 4", hl.dsp.window.move({ workspace = 4 }))
-hl.bind("SUPER + SHIFT + 5", hl.dsp.window.move({ workspace = 5 }))
+local function move_and_center(ws)
+	hl.dispatch(hl.dsp.window.move({ workspace = ws }))
+	local win = hl.get_active_window()
+	if win and win.floating then
+		hl.dispatch(hl.dsp.window.center())
+	end
+end
+
+hl.bind("SUPER + SHIFT + 1", function() move_and_center(1) end)
+hl.bind("SUPER + SHIFT + 2", function() move_and_center(2) end)
+hl.bind("SUPER + SHIFT + 3", function() move_and_center(3) end)
+hl.bind("SUPER + SHIFT + 4", function() move_and_center(4) end)
+hl.bind("SUPER + SHIFT + 5", function() move_and_center(5) end)
 
 -- WINDOW MANIPULATION
 hl.bind("SUPER + Z", hl.dsp.window.fullscreen({ mode = "maximized" }))
