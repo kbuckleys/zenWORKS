@@ -18,7 +18,7 @@
 }
 
 #workspaces {
-    padding: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 4px;
 }
 #workspaces button {
     padding: 0px 8px 0px 8px;
@@ -33,7 +33,7 @@
     color: #9bbfbf;
 }
 #workspaces button.special {
-    padding: 0px 8px 0px 10px;
+    padding: 0px 8px 0px 6px;
     color: #eebebe;
 }
 #workspaces button.special.active {
