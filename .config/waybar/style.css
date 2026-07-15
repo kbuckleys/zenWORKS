@@ -33,8 +33,11 @@
     color: #9bbfbf;
 }
 #workspaces button.special {
-    background: none;
-    color: #fab387;
+    padding: 0px 0px 0px 10px;
+    color: #eebebe;
+}
+#workspaces button.special.active {
+    color: #e78284;
 }
 
 #custom-div {
