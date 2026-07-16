@@ -10,7 +10,7 @@ linemode = "size"
 
 [opener]
 open = [{ run = 'xdg-open "$@" & disown' }]
-edit = [{ run = 'footclient nvim "$@"', desc = "Open in Neovim" }]
+edit = [{ run = 'kitty -1 nvim "$@"', desc = "Open in Neovim" }]
 bulk_rename = [{ run = 'nvim "$@"', block = true, desc = "Bulk Rename" }]
 
 [[open.prepend_rules]]

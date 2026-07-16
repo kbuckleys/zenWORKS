@@ -4,7 +4,7 @@
 -- https://github.com/kbuckleys/
 
 -- DEFAULTS
-local term = "footclient"
+local term = "kitty -1"
 local web = "helium-browser"
 local fman = term .. " yazi"
 

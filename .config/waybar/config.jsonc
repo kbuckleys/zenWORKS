@@ -80,7 +80,7 @@
         "format": " CPU  {usage}% ",
         "format-mid": "CPU  {usage}% ",
         "format-high": "CPU  {usage}% ",
-        "on-click": "footclient -T sysmon btop",
+        "on-click": "kitty -1 -T sysmon btop",
         "tooltip": true,
         "interval": 1,
         "states": {
@@ -108,7 +108,7 @@
 
     "pulseaudio": {
         "format": "{volume}",
-        "on-click": "footclient -T Wiremix wiremix",
+        "on-click": "kitty -1 -T Wiremix wiremix",
         "on-click-right": "pamixer -t",
         "format-muted": " "
     },
@@ -128,7 +128,7 @@
         "format-disconnected": "󰱟 ",
         "tooltip-format-disconnected": "{ifname}NO NETWORK SIGNAL",
         "tooltip-format": "{ifname}: {ipaddr}",
-        "on-click": "footclient -T bandwhich sudo bandwhich",
+        "on-click": "kitty -1 -T bandwhich sudo bandwhich",
         "tooltip": true,
         "interval": 1
     },
@@ -160,7 +160,7 @@
     },
 
     "custom/paru": {
-        "on-click": "footclient -T ZENU lua ~/.config/scripts/ZENU.lua update",
+        "on-click": "kitty -1 -T ZENU lua ~/.config/scripts/ZENU.lua update",
         "exec": "waybar-updates -n -i 10 -f '  {total}'",
         "exec-if": "which waybar-updates",
         "return-type": "json"
