@@ -115,7 +115,9 @@ end)
 
 -- force set scale mode on window resize (useful for tiling compositors)
 swayimg.on_window_resize(function()
-	swayimg.viewer.set_fix_scale("optimal")
+	if swayimg.get_mode() == "viewer" then
+		swayimg.viewer.set_fix_scale("optimal")
+	end
 end)
 
 -- bind the Delete key in slide show mode to delete the current file and display a status message
