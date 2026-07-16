@@ -6,12 +6,12 @@
 -- DEFAULTS
 local term = "footclient"
 local web = "helium-browser"
-local fman = term .. " -e yazi"
+local fman = term .. " yazi"
 
 -- MISC
-hl.bind("SUPER + M", hl.dsp.exec_cmd(term .. " -T 'ZENU' -e ~/.config/scripts/ZENU.lua"))
+hl.bind("SUPER + M", hl.dsp.exec_cmd(term .. " -T ZENU ~/.config/scripts/ZENU.lua"))
 hl.bind("SUPER + SHIFT + ESCAPE", hl.dsp.exec_cmd("hyprshutdown"), { locked = true })
-hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd(term .. " -T sysmon -e btop"))
+hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd(term .. " -T sysmon btop"))
 hl.bind("SUPER + SHIFT + Y", hl.dsp.exec_cmd("killall waybar && waybar"))
 hl.bind("SUPER + Y", hl.dsp.exec_cmd("killall -SIGUSR1 waybar"))
 hl.bind("SUPER + CONTROL + P", hl.dsp.exec_cmd("hyprpicker -a"))
@@ -119,7 +119,7 @@ hl.bind("SUPER + SHIFT + CONTROL + UP", hl.dsp.window.move({ out_of_group = true
 -- AUDIO
 hl.bind("SUPER + EQUAL", hl.dsp.exec_cmd("pamixer -i 1"), { repeating = true })
 hl.bind("SUPER + MINUS", hl.dsp.exec_cmd("pamixer -d 1"), { repeating = true })
-hl.bind("SUPER + 9", hl.dsp.exec_cmd(term .. " -T Wiremix -e wiremix"))
+hl.bind("SUPER + 9", hl.dsp.exec_cmd(term .. " -T Wiremix wiremix"))
 hl.bind("SUPER + 0", hl.dsp.exec_cmd("pamixer -t"))
 
 hl.bind("SUPER + SHIFT + MINUS", hl.dsp.exec_cmd("playerctl play-pause"), { repeating = true })

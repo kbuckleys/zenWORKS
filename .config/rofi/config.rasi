@@ -18,7 +18,7 @@ configuration {
         directory: "/";
     }
     filebrowser {
-        command: "footclient -e yazi";
+        command: "footclient yazi";
         show-hidden: true;
     }
 }
