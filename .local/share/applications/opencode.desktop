@@ -1,8 +1,8 @@
 [Desktop Entry]
-Name=opencode
+Name=OpenCode
 Comment=AI coding agent for the terminal
-Exec=/usr/bin/opencode
-Terminal=true
+Exec=footclient opencode
+erminal=true
 Type=Application
 Categories=Development;IDE;
 Keywords=code;ai;agent;terminal;
