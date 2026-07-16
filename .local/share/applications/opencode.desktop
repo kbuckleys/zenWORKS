@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=OpenCode
 Comment=AI coding agent for the terminal
-Exec=kitty -1 opencode
+Exec=footclient opencode
 erminal=true
 Type=Application
 Categories=Development;IDE;
