@@ -34,6 +34,8 @@ unset_main = { fg = "#e0d8a4", bold = true }
 unset_alt = { fg = "#e0d8a4" }
 
 [indicator]
+parent  = { reversed = true, bold = true }
+current = { reversed = true, bold = true }
 preview = { underline = false }
 padding = { open = "█", close = "█" }
 
