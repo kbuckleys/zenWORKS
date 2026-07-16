@@ -9,7 +9,7 @@ local web = "helium-browser"
 local fman = term .. " yazi"
 
 -- MISC
-hl.bind("SUPER + M", hl.dsp.exec_cmd(term .. " -T ZENU ~/.config/scripts/ZENU.lua"))
+hl.bind("SUPER + P", hl.dsp.exec_cmd(term .. " -T ZENU ~/.config/scripts/ZENU.lua"))
 hl.bind("SUPER + SHIFT + ESCAPE", hl.dsp.exec_cmd("hyprshutdown"), { locked = true })
 hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd(term .. " -T sysmon btop"))
 hl.bind("SUPER + SHIFT + Y", hl.dsp.exec_cmd("killall waybar && waybar"))
@@ -20,14 +20,15 @@ hl.bind("SUPER + E", hl.dsp.exec_cmd(fman))
 hl.bind("SUPER + B", hl.dsp.exec_cmd(web))
 
 -- ROFI
-hl.bind("SUPER + ESCAPE", hl.dsp.exec_cmd('rofi -show power-menu -modi "power-menu:~/.config/rofi/scripts/session.lua" -theme ~/.config/rofi/session.rasi'))
+hl.bind("SUPER + ESCAPE", hl.dsp.exec_cmd('rofi -show power-menu -modi "power-menu:~/.config/rofi/scripts/session/session.lua" -theme ~/.config/rofi/scripts/session/session.rasi'))
 hl.bind("SUPER + SHIFT + C", hl.dsp.exec_cmd("rofi -show calc -modi calc -no-show-match -no-sort -calc-command \"echo '{result}' | cliphist store\" -theme ~/.config/rofi/calc.rasi"))
 hl.bind("SUPER + C", hl.dsp.exec_cmd("cliphist list | rofi -i -dmenu -theme ~/.config/rofi/cliphist.rasi | cliphist decode | wl-copy"))
-hl.bind("SUPER + S", hl.dsp.exec_cmd("rofi -i -show recursivebrowser -disable-history -theme ~/.config/rofi/rootsearch.rasi"))   
+hl.bind("SUPER + S", hl.dsp.exec_cmd("rofi -i -show recursivebrowser -disable-history -theme ~/.config/rofi/rootsearch.rasi"))
 hl.bind("SUPER + J", hl.dsp.exec_cmd('rofimoji -a type copy --selector-args="-theme ~/.config/rofi/rofimoji.rasi"'))
+hl.bind("SUPER + M", hl.dsp.exec_cmd("~/.config/rofi/scripts/spotify/spotify.lua"))
 hl.bind("SUPER + V", hl.dsp.exec_cmd('rofi-rbw --selector-args="-theme rbw"'))
-hl.bind("SUPER + K", hl.dsp.exec_cmd("~/.config/rofi/scripts/PKILL.lua"))
-hl.bind("SUPER + D", hl.dsp.exec_cmd("~/.config/rofi/scripts/dict.lua"))
+hl.bind("SUPER + K", hl.dsp.exec_cmd("~/.config/rofi/scripts/PKILL/PKILL.lua"))
+hl.bind("SUPER + D", hl.dsp.exec_cmd("~/.config/rofi/scripts/dictionary/dict.lua"))
 hl.bind("SUPER + SPACE", hl.dsp.exec_cmd("rofi -show drun"))
 
 -- WORKSPACES

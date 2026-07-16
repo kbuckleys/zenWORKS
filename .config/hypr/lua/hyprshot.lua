@@ -18,6 +18,6 @@ grim -o "$monitor" "$file" && wl-copy < "$file" && notify-send -i "$file" "Scree
 end   
 
 -- BINDS
-hl.bind("SUPER + SHIFT + CONTROL + P", hl.dsp.exec_cmd("hyprshot -m region -o ~/Pictures/Screenshots/"))
-hl.bind("SUPER + SHIFT + P", hl.dsp.exec_cmd("hyprshot -m window -o ~/Pictures/Screenshots/"))
-hl.bind("SUPER + P", screenshot)
+hl.bind("SUPER + SHIFT + PRINT", hl.dsp.exec_cmd("hyprshot -m region -o ~/Pictures/Screenshots/"))
+hl.bind("SUPER + PRINT", hl.dsp.exec_cmd("hyprshot -m window -o ~/Pictures/Screenshots/"))
+hl.bind("PRINT", screenshot)
