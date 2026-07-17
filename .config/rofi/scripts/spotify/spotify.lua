@@ -904,12 +904,24 @@ local function ensure_daemon()
     local pid = trim(shell("pgrep -x spotify_player 2>/dev/null") or "")
     if pid == "" then
         os.execute("spotify_player -d &")
-        os.execute("sleep 1")
+        os.execute("sleep 0.2")
     end
 end
 
 local function load_user_data_from_sp_cache()
-    local raw = read_file(HOME .. "/.cache/spotify-player/SavedAlbums_cache.json")
+    local raw = read_file(HOME .. "/.cache/spotify-player/SavedTracks_cache.json")
+    if raw then
+        local data = safe_json_decode(raw)
+        if data then
+            for _, v in pairs(data) do
+                if type(v) == "table" and v.id then
+                    liked_tracks[v.id] = true
+                end
+            end
+        end
+    end
+
+    raw = read_file(HOME .. "/.cache/spotify-player/SavedAlbums_cache.json")
     if raw then
         local data = safe_json_decode(raw)
         if data then
