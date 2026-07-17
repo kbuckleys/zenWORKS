@@ -48,8 +48,14 @@ local function main()
     end
     local formatted = table.concat(lines, "\n") .. "\n"
 
+    local uptime_handle = io.popen("uptime -p")
+    local uptime_str = uptime_handle and uptime_handle:read("*a"):gsub("^up ", ""):gsub("\n$", "") or "unknown uptime"
+    if uptime_handle then uptime_handle:close() end
+
+    local mesg = string.format("%d Processes ~ Uptime: %s", #lines, uptime_str)
+
     local selection = rofi(formatted, string.format(
-        "-dmenu -i -p 'Kill Process' -theme '%s'", THEME))
+        "-dmenu -i -p 'Kill Process' -mesg '%s' -theme '%s'", mesg, THEME))
 
     if not selection or selection == "" then
         os.exit(0)
