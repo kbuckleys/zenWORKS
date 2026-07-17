@@ -23,7 +23,7 @@ inputbar {
 }
 
 textbox {
-    text-color: #e0d8a4;
+    text-color: #6a707f;
     horizontal-align: 0.5;
     font: "0xProto Nerd Font 12";
 }

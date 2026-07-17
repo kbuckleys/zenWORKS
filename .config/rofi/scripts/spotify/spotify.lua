@@ -28,6 +28,12 @@ local followed_artists = {}
 local current_track_id = nil
 local current_track_item = nil
 local current_is_playing = false
+local current_shuffle = false
+local current_repeat = "off"
+
+local QUEUE_FILE = HOME .. "/.cache/spotify_rofi/playback_queue.json"
+local queue_tracks = nil
+local queue_idx = 0
 
 local function shell(cmd)
     local handle = io.popen(cmd, "r")
@@ -158,24 +164,6 @@ local function fetch_liked_order()
     return nil
 end
 
-local function start_context_at_uri(context_uri, track_id)
-    local token = get_spotify_token()
-    if not token then return false end
-    local payload = string.format(
-        '{"context_uri":"%s","offset":{"uri":"spotify:track:%s"}}',
-        context_uri, track_id
-    )
-    local tmpfile = os.tmpname()
-    write_file(tmpfile, payload)
-    local cmd = string.format(
-        "curl -s -w '%%{http_code}' -X PUT 'https://api.spotify.com/v1/me/player/play' -H 'Authorization: Bearer %s' -H 'Content-Type: application/json' -d @%s -o /dev/null",
-        token, tmpfile
-    )
-    local result = shell(cmd)
-    os.remove(tmpfile)
-    return result and result:match("204") ~= nil
-end
-
 local function add_to_queue(track_id)
     local token = get_spotify_token()
     if not token then return false end
@@ -214,10 +202,7 @@ local function ensure_cache_dir()
 end
 
 local function load_cached_user_data()
-    local f = io.open(CACHE_FILE, "r")
-    if not f then return false end
-    local raw = f:read("*a")
-    f:close()
+    local raw = read_file(CACHE_FILE)
     if not raw or raw == "" then return false end
     local data = safe_json_decode(raw)
     if not data then return false end
@@ -239,10 +224,7 @@ local function save_cached_user_data()
         user_playlists = user_playlists,
         followed_artists = followed_artists,
     }
-    local f = io.open(CACHE_FILE, "w")
-    if not f then return end
-    f:write(json.encode(data))
-    f:close()
+    write_file(CACHE_FILE, json.encode(data))
 end
 
 local function load_user_data()
@@ -342,6 +324,8 @@ local function get_playback_status()
     current_track_id = track.id
     current_track_item = track
     current_is_playing = data.is_playing == true
+    current_shuffle = data.shuffle_state == true
+    current_repeat = val(data, "repeat_state", "off")
     local artists = {}
     for _, a in ipairs(track.artists or {}) do
         if type(a) == "table" and a.name then
@@ -359,6 +343,38 @@ end
 local function invalidate_playback_cache()
     playback_cache = nil
     playback_cache_ts = 0
+end
+
+local function load_queue()
+    local raw = read_file(QUEUE_FILE)
+    if not raw then return false end
+    local ok, data = pcall(json.decode, raw)
+    if not ok or type(data) ~= "table" then return false end
+    if not data.tracks or type(data.tracks) ~= "table" or #data.tracks == 0 then return false end
+    if not data.idx or type(data.idx) ~= "number" then return false end
+    if data.idx < 1 or data.idx > #data.tracks then return false end
+    queue_tracks = data.tracks
+    queue_idx = data.idx
+    return true
+end
+
+local function save_queue(all_items, idx)
+    if not all_items then return end
+    local tids = {}
+    for i, t in ipairs(all_items) do
+        if t.id then tids[i] = t.id end
+    end
+    if #tids == 0 then return end
+    queue_tracks = tids
+    queue_idx = idx
+    local data = { tracks = tids, idx = idx }
+    write_file(QUEUE_FILE, json.encode(data))
+end
+
+local function flush_queue()
+    if not queue_tracks then return end
+    local data = { tracks = queue_tracks, idx = queue_idx }
+    write_file(QUEUE_FILE, json.encode(data))
 end
 
 local function rofi_dmenu(opts)
@@ -494,48 +510,10 @@ local function do_action(action, item, category, context, context_type, context_
     local id = item.id
     if not id then return end
     if action == "Play" then
-        local played = false
-        if context_type and context_id then
-            local uri = "spotify:" .. context_type .. ":" .. context_id
-            played = start_context_at_uri(uri, id)
-            if not played then
-                os.execute(string.format("spotify_player playback start context %s --id %s &", context_type, context_id))
-            end
-        elseif context == "liked" then
-            played = start_context_at_uri("spotify:collection:tracks", id)
-            if not played then
-                os.execute("spotify_player playback start track --id " .. shell_quote(id) .. " &")
-            end
-        elseif context == "discover-weekly" then
-            played = start_context_at_uri("spotify:playlist:37i9dQZEVXcQHbTJZxVQMH", id)
-            if not played then
-                os.execute("spotify_player playback start track --id " .. shell_quote(id) .. " &")
-            end
-        elseif context == "top-tracks" then
-            os.execute("spotify_player playback start track --id " .. shell_quote(id) .. " &")
-            if all_items and current_idx then
-                local token = get_spotify_token()
-                if token then
-                    local lines = {"#!/bin/sh"}
-                    for i = current_idx + 1, math.min(current_idx + 49, #all_items) do
-                        lines[#lines + 1] = string.format(
-                            "curl -s -o /dev/null -X POST 'https://api.spotify.com/v1/me/player/queue?uri=spotify:track:%s' -H 'Authorization: Bearer %s' && sleep 0.2",
-                            all_items[i].id, token
-                        )
-                    end
-                    local tmpfile = os.tmpname()
-                    write_file(tmpfile, table.concat(lines, "\n"))
-                    os.execute("sh " .. shell_quote(tmpfile) .. " &")
-                    os.execute("sleep 5 && rm -f " .. shell_quote(tmpfile) .. " &")
-                end
-            end
-        elseif context == "artist" then
-            os.execute("spotify_player playback start context artist --id " .. shell_quote(id) .. " &")
-        else
-            os.execute("spotify_player playback start track --id " .. shell_quote(id) .. " &")
+        if all_items and current_idx then
+            save_queue(all_items, current_idx)
         end
-    elseif action == "Add to Queue" then
-        add_to_queue(id)
+        os.execute("spotify_player playback start track --id " .. shell_quote(id))
     elseif action == "Like" then
         local token = get_spotify_token()
         if token then
@@ -590,35 +568,12 @@ local function artist_browse_flow(artist)
         for i, t in ipairs(tracks) do
             track_entries[#track_entries + 1] = string.format("%2d. %s", i, display_track(t, true))
         end
-        while true do
-            local tidx = rofi_dmenu({
-                entries = track_entries,
-                prompt = album.name,
-                mesg = string.format('%s - %s', album.name, artist_names(album)),
-                custom = false,
-                by_index = true,
-            })
-            if not tidx then break end
-            if tidx >= 1 and tidx <= #tracks then
-                local result = show_actions(tracks[tidx], "track", "album", "album", album.id)
-                if result == "played" then return "played" end
-                if result then
-                    table.remove(tracks, tidx)
-                    table.remove(track_entries, tidx)
-                else
-                    track_entries[tidx] = string.format("%2d. %s", tidx, display_track(tracks[tidx], true))
-                end
-            end
-        end
+        if browse_loop(track_entries, tracks, string.format('%s - %s', album.name, artist_names(album)), "track", "album", "album", album.id) == "played" then return "played" end
         ::continue::
     end
 end
 
 show_actions = function(item, category, context, context_type, context_id, all_items, current_idx)
-    if category ~= "track" then
-        do_action("Play", item, category, context, context_type, context_id)
-        return "played"
-    end
 
     local is_liked = liked_tracks[item.id]
 
@@ -712,10 +667,14 @@ show_actions = function(item, category, context, context_type, context_id, all_i
                         local line = raw_line
                         if #line > 80 then
                             while #line > 80 do
-                                local break_at = line:sub(1, 80):match(".*()%s")
-                                if not break_at or break_at < 20 then break_at = 80 end
-                                lines[#lines + 1] = line:sub(1, break_at)
-                                line = line:sub(break_at + 1):match("^%s*(.*)") or line:sub(break_at + 1)
+                                local bp = line:sub(1, 80):match(".*()%s")
+                                if bp and bp >= 20 then
+                                    lines[#lines + 1] = line:sub(1, bp - 1)
+                                    line = line:sub(bp + 1):match("^%s*(.*)") or line:sub(bp + 1)
+                                else
+                                    lines[#lines + 1] = line:sub(1, 80)
+                                    line = line:sub(81)
+                                end
                             end
                             if #line > 0 then lines[#lines + 1] = line end
                         else
@@ -784,13 +743,6 @@ browse_loop = function(entries, items, mesg, category, context, context_type, co
             local result = show_actions(item, "track", context, context_type, context_id, items, idx)
             if result == "played" then
                 played = true
-            elseif result then
-                table.remove(items, idx)
-                table.remove(entries, idx)
-                if #items == 0 then
-                    rofi_message("No tracks left")
-                    return nil
-                end
             else
                 entries[idx] = string.format("%2d. %s", idx, display_track(item))
             end
@@ -957,24 +909,8 @@ local function ensure_daemon()
 end
 
 local function load_user_data_from_sp_cache()
-    local f = io.open(HOME .. "/.cache/spotify-player/SavedTracks_cache.json", "r")
-    if f then
-        local raw = f:read("*a")
-        f:close()
-        local data = safe_json_decode(raw)
-        if data then
-            for _, v in pairs(data) do
-                if type(v) == "table" and v.id then
-                    liked_tracks[v.id] = true
-                end
-            end
-        end
-    end
-
-    f = io.open(HOME .. "/.cache/spotify-player/SavedAlbums_cache.json", "r")
-    if f then
-        local raw = f:read("*a")
-        f:close()
+    local raw = read_file(HOME .. "/.cache/spotify-player/SavedAlbums_cache.json")
+    if raw then
         local data = safe_json_decode(raw)
         if data then
             for _, v in ipairs(data) do
@@ -985,10 +921,8 @@ local function load_user_data_from_sp_cache()
         end
     end
 
-    f = io.open(HOME .. "/.cache/spotify-player/Playlists_cache.json", "r")
-    if f then
-        local raw = f:read("*a")
-        f:close()
+    raw = read_file(HOME .. "/.cache/spotify-player/Playlists_cache.json")
+    if raw then
         local data = safe_json_decode(raw)
         if data then
             for _, v in ipairs(data) do
@@ -1000,10 +934,8 @@ local function load_user_data_from_sp_cache()
         end
     end
 
-    f = io.open(HOME .. "/.cache/spotify-player/FollowedArtists_cache.json", "r")
-    if f then
-        local raw = f:read("*a")
-        f:close()
+    raw = read_file(HOME .. "/.cache/spotify-player/FollowedArtists_cache.json")
+    if raw then
         local data = safe_json_decode(raw)
         if data then
             for _, v in ipairs(data) do
@@ -1017,10 +949,8 @@ end
 
 local function load_liked_tracks_from_cache()
     local tracks = {}
-    local f = io.open(HOME .. "/.cache/spotify-player/SavedTracks_cache.json", "r")
-    if not f then return tracks end
-    local raw = f:read("*a")
-    f:close()
+    local raw = read_file(HOME .. "/.cache/spotify-player/SavedTracks_cache.json")
+    if not raw then return tracks end
     local data = safe_json_decode(raw)
     if not data then return tracks end
     for _, v in pairs(data) do
@@ -1065,12 +995,30 @@ local function liked_tracks_flow()
     return track_browse_flow(tracks, "Liked Tracks", "liked")
 end
 
+local function ensure_defaults()
+    get_playback_status()
+    if current_shuffle then
+        os.execute("spotify_player playback shuffle")
+    end
+    local attempts = 0
+    while current_repeat ~= "off" and attempts < 3 do
+        os.execute("spotify_player playback repeat")
+        attempts = attempts + 1
+    end
+    if current_shuffle or attempts > 0 then
+        invalidate_playback_cache()
+        get_playback_status()
+    end
+end
+
 local function main()
     ensure_daemon()
     load_user_data_from_sp_cache()
     if not (next(liked_tracks) and next(saved_albums) and next(user_playlists) and next(followed_artists)) then
         load_user_data()
     end
+    ensure_defaults()
+    load_queue()
 
     while true do
         get_playback_status()
@@ -1085,8 +1033,8 @@ local function main()
             "Play / Pause",
             "Next Track",
             "Previous Track",
-            "Shuffle",
-            "Repeat",
+            current_shuffle and "Shuffle: On" or "Shuffle: Off",
+            current_repeat == "off" and "Repeat: Off" or (current_repeat == "track" and "Repeat: Track" or "Repeat: Context"),
             "Volume",
         }
 
@@ -1128,15 +1076,27 @@ local function main()
             os.execute("spotify_player playback play-pause")
             return
         elseif selection == "Next Track" then
-            os.execute("spotify_player playback next")
+            if queue_tracks and queue_idx < #queue_tracks then
+                queue_idx = queue_idx + 1
+                os.execute("spotify_player playback start track --id " .. shell_quote(queue_tracks[queue_idx]))
+                flush_queue()
+            else
+                os.execute("spotify_player playback next")
+            end
             invalidate_playback_cache()
         elseif selection == "Previous Track" then
-            os.execute("spotify_player playback previous")
+            if queue_tracks and queue_idx > 1 then
+                queue_idx = queue_idx - 1
+                os.execute("spotify_player playback start track --id " .. shell_quote(queue_tracks[queue_idx]))
+                flush_queue()
+            else
+                os.execute("spotify_player playback previous")
+            end
             invalidate_playback_cache()
-        elseif selection == "Shuffle" then
+        elseif selection:find("^Shuffle") then
             os.execute("spotify_player playback shuffle")
             invalidate_playback_cache()
-        elseif selection == "Repeat" then
+        elseif selection:find("^Repeat") then
             os.execute("spotify_player playback repeat")
             invalidate_playback_cache()
         elseif selection == "Volume" then
@@ -1161,6 +1121,41 @@ local function main()
                 end
             end
         end
+    end
+end
+
+-- ── CLI TRANSPORT MODE ─────────────────────────────────────────────────────
+-- Handles keyboard keybind requests (next, prev, play-pause) by reading
+-- the self-managed playback queue written by the rofi browse interface.
+--
+-- Keybinds should use a fallback chain in their Hyprland/desktop config:
+--   lua ~/.config/rofi/scripts/spotify/spotify.lua next || playerctl next
+--
+-- When there is no active queue file, this exits non-zero so playerctl
+-- handles it.  When a queue exists, the correct track from the album /
+-- playlist / liked-tracks list is played directly via `spotify_player
+-- playback start track --id`, bypassing the daemon's broken context queue.
+--
+-- Accepted arguments:  next, prev, play-pause
+
+if arg and arg[1] then
+    local action = arg[1]
+    if action == "play-pause" then
+        os.execute("spotify_player playback play-pause")
+        os.exit(0)
+    end
+    if action == "next" or action == "prev" then
+        if not load_queue() then os.exit(1) end
+        if action == "next" then
+            if queue_idx >= #queue_tracks then os.exit(1) end
+            queue_idx = queue_idx + 1
+        else
+            if queue_idx <= 1 then os.exit(1) end
+            queue_idx = queue_idx - 1
+        end
+        flush_queue()
+        os.execute("spotify_player playback start track --id " .. shell_quote(queue_tracks[queue_idx]))
+        os.exit(0)
     end
 end
 

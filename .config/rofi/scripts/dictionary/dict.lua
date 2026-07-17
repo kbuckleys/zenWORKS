@@ -16,7 +16,7 @@ local COLOR_HEAD = "#9bbfbf"
 local COLOR_PHON = "#9bbfbf"
 local COLOR_POS = "#6a707f"
 local COLOR_EX = "#eebebe"
-local COLOR_SYN = "#b6e0a4"
+local COLOR_SYN = "#9bbfbf"
 local COLOR_ERROR = "#e78284"
 
 -- JSON parsing
@@ -237,7 +237,9 @@ local function parse_synonyms(response)
 end
 
 -- Format output lines from parsed rows
+-- Returns: message, lines
 local function format_output(rows, phonetic, synonyms)
+    local message = ""
     local lines = {}
     local pending_pos_idx = -1
 
@@ -264,11 +266,10 @@ local function format_output(rows, phonetic, synonyms)
             local content = row:sub(tab_pos + 1)
 
             if typ == "head" then
-                local headline = "<b><span foreground=\"" .. COLOR_HEAD .. "\">" .. content .. "</span></b>"
+                message = "<b><span foreground=\"" .. COLOR_HEAD .. "\">" .. content .. "</span></b>"
                 if phonetic ~= "" then
-                    headline = headline .. "  <span foreground=\"" .. COLOR_PHON .. "\">" .. phonetic .. "</span>"
+                    message = message .. "  <span foreground=\"" .. COLOR_PHON .. "\">" .. phonetic .. "</span>"
                 end
-                lines[#lines + 1] = headline
 
             elseif typ == "pos" then
                 drop_empty_pos()
@@ -309,7 +310,7 @@ local function format_output(rows, phonetic, synonyms)
         lines[#lines] = nil
     end
 
-    return lines
+    return message, lines
 end
 
 -- Debug mode
@@ -407,11 +408,16 @@ while true do
         local phonetic = parse_phonetic(phon_response)
         local synonyms = parse_synonyms(syn_response)
         local rows = parse_rows(word, def_response, MAX_DEFS_PER_POS)
-        local lines = format_output(rows, phonetic, synonyms)
+        local message, lines = format_output(rows, phonetic, synonyms)
 
         local n_lines = #lines
         if n_lines > MAX_LINES then n_lines = MAX_LINES end
         if n_lines < 1 then n_lines = 1 end
+
+        local mesg_flag = ""
+        if message ~= "" then
+            mesg_flag = " -mesg " .. shell_quote(message)
+        end
 
         local tmpfile = os.tmpname()
         local f = io.open(tmpfile, "w")
@@ -420,8 +426,8 @@ while true do
         end
         f:close()
         shell(string.format(
-            'cat %s | rofi -dmenu -wayland-layer top -theme %s -no-sort -lines %d -p "Definition" -markup-rows',
-            tmpfile, shell_quote(ROFI_THEME_RESULTS), n_lines
+            'cat %s | rofi -dmenu -wayland-layer top -theme %s -no-sort -lines %d -p "Definition" -markup-rows%s',
+            tmpfile, shell_quote(ROFI_THEME_RESULTS), n_lines, mesg_flag
         ))
         remove_file(tmpfile)
     end
