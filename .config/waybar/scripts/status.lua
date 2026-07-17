@@ -139,7 +139,7 @@ detect_process("wf-recorder", "rec")
 -- Waybar output
 local text = ""
 local tooltip = ""
-local classes = "privacydot"
+local classes = "status"
 
 for _, key in ipairs(KEYS) do
     local on = STATE[key] == 1

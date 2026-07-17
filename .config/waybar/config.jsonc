@@ -39,6 +39,7 @@
     },
 
     "hyprland/workspaces": {
+        "ipc": true,
         "show-special": true,
         "all-outputs": true,
         "format": "{icon}",
@@ -71,7 +72,7 @@
     "custom/nvidia": {
         "exec": "~/.config/waybar/scripts/nvidia.lua",
         "return-type": "json",
-        "interval": 1,
+        "interval": 3,
         "format": "{text}",
         "tooltip": true,
         "markup": "pango"
@@ -124,16 +125,16 @@
             "paused": ""
         },
         "tooltip-format": "{title}\n{artist}\n{album}",
-        "on-click-middle": "playerctl play-pause",
-        "on-click-right": "playerctl next",
-        "on-click-left": "playerctl previous",
+        "on-click-middle": "lua ~/.config/rofi/scripts/spotify/spotify.lua play-pause || playerctl play-pause",
+        "on-click-right": "lua ~/.config/rofi/scripts/spotify/spotify.lua next || playerctl next",
+        "on-click": "lua ~/.config/rofi/scripts/spotify/spotify.lua prev || playerctl previous",
         "interval": 1
     },
 
     "custom/status": {
         "exec": "~/.config/waybar/scripts/status.lua",
         "return-type": "json",
-        "interval": 1,
+        "interval": 3,
         "format": "{text}",
         "tooltip": true,
         "escape": false,
