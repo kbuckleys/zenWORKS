@@ -22,10 +22,7 @@ mainbox {
 }
 
 inputbar {
-    enabled: true;
-    children: [textbox-prompt-colon, entry];
-    padding: 4px 8px;
-    spacing: 4px;
+    enabled: false;
 }
 
 textbox {
@@ -33,24 +30,20 @@ textbox {
     horizontal-align: 0.5;
     font: "0xProto Nerd Font Bold 12";
 }
-textbox-prompt-colon {
-    str: "";
-    color: #b6e0a4;
-    padding: 0px 8px 0px 2px;
-}
 
 listview {
     fixed-columns: false;
     fixed-height: false;
     scrollbar: false;
-    columns: 2;
-    lines: 10;
+    columns: 1;
+    lines: 8;
 }
 
 element {
     padding: 2px 8px;
 }
 element-text {
+    font: "0xProto Nerd Font 14";
     highlight: bold #b6e0a4;
 }
 element-text selected {

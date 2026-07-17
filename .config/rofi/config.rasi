@@ -7,7 +7,7 @@
 @theme "ZENON"
 
 configuration {
-	  drun-display-format: "{name}";
+	drun-display-format: "{name}";
     kb-remove-to-sol: "BackSpace";
     kb-remove-char-back: "";
     terminal: "footclient";

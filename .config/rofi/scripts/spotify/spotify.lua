@@ -9,6 +9,7 @@ local HOME = os.getenv("HOME")
 local DIR = HOME .. "/.config/rofi/scripts/spotify"
 local THEME = DIR .. "/spotify.rasi"
 local THEME_MENU = DIR .. "/spotify-menus.rasi"
+local THEME_LYRICS = DIR .. "/lyrics.rasi"
 local CACHE_FILE = HOME .. "/.cache/spotify_rofi/user_data.json"
 local LIKED_ORDER_CACHE = HOME .. "/.cache/spotify_rofi/liked_order.json"
 local TOKEN_FILE = HOME .. "/.cache/spotify-player/user_client_token.json"
@@ -26,6 +27,7 @@ local user_playlists = {}
 local followed_artists = {}
 local current_track_id = nil
 local current_track_item = nil
+local current_is_playing = false
 
 local function shell(cmd)
     local handle = io.popen(cmd, "r")
@@ -174,6 +176,17 @@ local function start_context_at_uri(context_uri, track_id)
     return result and result:match("204") ~= nil
 end
 
+local function add_to_queue(track_id)
+    local token = get_spotify_token()
+    if not token then return false end
+    local cmd = string.format(
+        "curl -s -w '%%{http_code}' -X POST 'https://api.spotify.com/v1/me/player/queue?uri=spotify:track:%s' -H 'Authorization: Bearer %s' -o /dev/null",
+        track_id, token
+    )
+    local result = shell(cmd)
+    return result and result:match("2..") ~= nil
+end
+
 local function trim(s)
     if not s then return "" end
     return s:match("^%s*(.-)%s*$") or ""
@@ -311,14 +324,23 @@ local function load_user_data()
     save_cached_user_data()
 end
 
+local playback_cache = nil
+local playback_cache_ts = 0
+local PLAYBACK_CACHE_TTL = 5
+
 local function get_playback_status()
+    local now = os.time()
+    if playback_cache and (now - playback_cache_ts) < PLAYBACK_CACHE_TTL then
+        return playback_cache
+    end
     local out = shell("timeout 1 spotify_player get key playback 2>/dev/null")
     local data = safe_json_decode(out)
-    if not data then current_track_id = nil; current_track_item = nil; return nil end
+    if not data then current_track_id = nil; current_track_item = nil; current_is_playing = false; playback_cache = nil; playback_cache_ts = now; return nil end
     local track = data.item
-    if not track or type(track) ~= "table" then current_track_id = nil; current_track_item = nil; return nil end
+    if not track or type(track) ~= "table" then current_track_id = nil; current_track_item = nil; current_is_playing = false; playback_cache = nil; playback_cache_ts = now; return nil end
     current_track_id = track.id
     current_track_item = track
+    current_is_playing = data.is_playing == true
     local artists = {}
     for _, a in ipairs(track.artists or {}) do
         if type(a) == "table" and a.name then
@@ -327,8 +349,10 @@ local function get_playback_status()
     end
     local artist = #artists > 0 and table.concat(artists, ", ") or "Unknown"
     local name = track.name or "Unknown"
-    local state = data.is_playing and "Playing" or "Paused"
-    return string.format("%s \u{f01d9} %s - %s", state, name, artist)
+    local status = string.format("%s \u{f01d9} %s", name, artist)
+    playback_cache = status
+    playback_cache_ts = now
+    return status
 end
 
 local function rofi_dmenu(opts)
@@ -341,8 +365,9 @@ local function rofi_dmenu(opts)
     local custom = opts.custom ~= false
     local use_menu = opts.use_menu ~= false
     local by_index = opts.by_index or false
+    local override_theme = opts.theme
 
-    local theme = use_menu and THEME_MENU or THEME
+    local theme = override_theme or (use_menu and THEME_MENU or THEME)
     local args = { "rofi", "-dmenu", "-theme", theme, "-p", prompt, "-i" }
     if not custom then args[#args + 1] = "-no-custom" end
     if markup then
@@ -386,7 +411,7 @@ end
 
 
 local function rofi_message(msg)
-    os.execute("rofi -e " .. shell_quote(msg) .. " -theme " .. shell_quote(THEME) .. " 2>/dev/null &")
+    os.execute("rofi -e " .. shell_quote(msg) .. " -theme " .. shell_quote(THEME) .. " 2>/dev/null")
 end
 
 local function artist_names(item)
@@ -399,7 +424,7 @@ end
 
 local function display_track(item)
     local artists = artist_names(item)
-    local playing = item.id == current_track_id and "▶  " or ""
+    local playing = item.id == current_track_id and (current_is_playing and "\u{f04b}  " or "\u{f04c}  ") or ""
     local liked = liked_tracks[item.id] and (ICON_LIKED .. " ") or ""
     local explicit = val(item, "explicit", false) and (ICON_EXPLICIT .. " ") or ""
     local icons = playing .. explicit .. liked
@@ -445,7 +470,7 @@ local function display_playlist(item)
     return string.format("%s%s  by %s", liked, item.name or "Unknown", owner_name)
 end
 
-local function do_action(action, item, category, context, context_type, context_id)
+local function do_action(action, item, category, context, context_type, context_id, all_items, current_idx)
     local id = item.id
     if not id then return end
     if action == "Play" then
@@ -461,15 +486,38 @@ local function do_action(action, item, category, context, context_type, context_
             if not played then
                 os.execute("spotify_player playback start track --id " .. shell_quote(id) .. " &")
             end
+        elseif context == "discover-weekly" then
+            played = start_context_at_uri("spotify:playlist:37i9dQZEVXcQHbTJZxVQMH", id)
+            if not played then
+                os.execute("spotify_player playback start track --id " .. shell_quote(id) .. " &")
+            end
+        elseif context == "top-tracks" then
+            os.execute("spotify_player playback start track --id " .. shell_quote(id) .. " &")
+            if all_items and current_idx then
+                local token = get_spotify_token()
+                if token then
+                    local lines = {"#!/bin/sh"}
+                    for i = current_idx + 1, math.min(current_idx + 49, #all_items) do
+                        lines[#lines + 1] = string.format(
+                            "curl -s -o /dev/null -X POST 'https://api.spotify.com/v1/me/player/queue?uri=spotify:track:%s' -H 'Authorization: Bearer %s' && sleep 0.2",
+                            all_items[i].id, token
+                        )
+                    end
+                    local tmpfile = os.tmpname()
+                    write_file(tmpfile, table.concat(lines, "\n"))
+                    os.execute("sh " .. shell_quote(tmpfile) .. " &")
+                    os.execute("sleep 5 && rm -f " .. shell_quote(tmpfile) .. " &")
+                end
+            end
         elseif context == "artist" then
             os.execute("spotify_player playback start context artist --id " .. shell_quote(id) .. " &")
         else
             os.execute("spotify_player playback start track --id " .. shell_quote(id) .. " &")
         end
     elseif action == "Play Next" then
-        os.execute("spotify_player playback add next --id " .. shell_quote(id) .. " &")
+        add_to_queue(id)
     elseif action == "Add to Queue" then
-        os.execute("spotify_player playback add queue --id " .. shell_quote(id) .. " &")
+        add_to_queue(id)
     elseif action == "Like" then
         local token = get_spotify_token()
         if token then
@@ -491,32 +539,30 @@ end
 
 local browse_loop
 
-local function show_actions(item, category, context, context_type, context_id)
+local function show_actions(item, category, context, context_type, context_id, all_items, current_idx)
     local is_liked = category == "track" and liked_tracks[item.id]
     local was_unliked = false
 
     local actions
     if category == "track" then
-        actions = { "Play", "Play Next", "Add to Queue", is_liked and "Unlike" or "Like", "Go to Album", "Go to Artist", "Open in Spotify" }
+        actions = { "Play", "Play Next", "Add to Queue", is_liked and "Unlike" or "Like", "Go to Album", "Go to Artist", "Lyrics", "Open in Spotify" }
     else
         actions = { "Play", "Open in Spotify" }
     end
 
-    local name = item.name or "Unknown"
-    local cat_label = category:sub(1, 1):upper() .. category:sub(2)
-    if context then cat_label = cat_label .. " (" .. context .. ")" end
+    local mesg = item.name .. " \u{f01d9} " .. artist_names(item)
 
     while true do
         local sel = rofi_dmenu({
             entries = actions,
             prompt = "Action",
-            mesg = cat_label .. "  " .. name,
+            mesg = mesg,
             sel = 0,
             custom = false,
         })
         if not sel or sel == "" then return false end
         if sel == "Play" then
-            do_action(sel, item, category, context, context_type, context_id)
+            do_action(sel, item, category, context, context_type, context_id, all_items, current_idx)
             return "played"
         elseif sel == "Go to Album" then
             local album = item.album
@@ -529,7 +575,7 @@ local function show_actions(item, category, context, context_type, context_id)
             local tracks = adata.tracks
             local track_entries = {}
             for i, t in ipairs(tracks) do
-                track_entries[i] = display_track(t)
+                track_entries[i] = string.format("%2d. %s", i, display_track(t))
             end
             local album_name = album.name or "Album"
             local result = browse_loop(track_entries, tracks, string.format('%s - %s', album_name, artist_names(album)), "track", "album")
@@ -611,6 +657,45 @@ local function show_actions(item, category, context, context_type, context_id)
             end
             if played then return "played" end
             return false
+        elseif sel == "Lyrics" then
+            local out = shell("timeout 2 spotify_player lyrics --id " .. shell_quote(item.id) .. " 2>/dev/null")
+            out = out and trim(out) or ""
+            if out == "" then
+                rofi_message("No lyrics found")
+            else
+                local lines = {}
+                local skip_first = true
+                for raw_line in out:gmatch("[^\n]+") do
+                    if skip_first then
+                        skip_first = false
+                    else
+                        local line = raw_line
+                        if #line > 80 then
+                            while #line > 80 do
+                                local break_at = line:sub(1, 80):match(".*()%s")
+                                if not break_at or break_at < 20 then break_at = 80 end
+                                lines[#lines + 1] = line:sub(1, break_at)
+                                line = line:sub(break_at + 1):match("^%s*(.*)") or line:sub(break_at + 1)
+                            end
+                            if #line > 0 then lines[#lines + 1] = line end
+                        else
+                            lines[#lines + 1] = line
+                        end
+                    end
+                end
+                local play_icon = item.id == current_track_id and (current_is_playing and "\u{f04b}" or "\u{f04c}") or ""
+                local liked = liked_tracks[item.id] and (ICON_LIKED .. "  ") or ""
+                local explicit = val(item, "explicit", false) and (ICON_EXPLICIT .. "  ") or ""
+                local mesg = play_icon .. (play_icon ~= "" and "  " or "") .. item.name .. "  " .. artist_names(item) .. "  " .. liked .. explicit
+                rofi_dmenu({
+                    entries = lines,
+                    prompt = "Lyrics",
+                    mesg = mesg,
+                    custom = false,
+                    use_menu = true,
+                    theme = THEME_LYRICS,
+                })
+            end
         elseif sel == "Like" or sel == "Unlike" then
             do_action(sel, item, category, context, context_type, context_id)
             if sel == "Unlike" then was_unliked = true end
@@ -623,7 +708,7 @@ local function show_actions(item, category, context, context_type, context_id)
     end
 end
 
-browse_loop = function(entries, items, mesg, category, context)
+browse_loop = function(entries, items, mesg, category, context, context_type, context_id)
     local played = false
     while not played do
         local idx = rofi_dmenu({
@@ -753,7 +838,7 @@ browse_loop = function(entries, items, mesg, category, context)
                 end
             end
         elseif category == "track" then
-            local result = show_actions(item, "track", context)
+            local result = show_actions(item, "track", context, context_type, context_id, items, idx)
             if result == "played" then
                 played = true
             elseif result then
@@ -761,7 +846,7 @@ browse_loop = function(entries, items, mesg, category, context)
                 table.remove(entries, idx)
                 mesg = string.format('%d track%s', #items, #items ~= 1 and "s" or "")
             else
-                entries[idx] = display_track(item)
+                entries[idx] = string.format("%2d. %s", idx, display_track(item))
             end
         end
 
@@ -799,7 +884,7 @@ local function search_flow(category)
         for i = 1, n do
             local display
             if category == "track" then
-                display = display_track(items[i])
+                display = string.format("%2d. %s", i, display_track(items[i]))
             elseif category == "album" then
                 display = display_album(items[i])
             elseif category == "artist" then
@@ -815,6 +900,112 @@ local function search_flow(category)
 
         ::continue::
     end
+end
+
+local function categories_flow()
+    local token = get_spotify_token()
+    if not token then rofi_message("No Spotify token") return end
+
+    local cmd = string.format(
+        "curl -s -H 'Authorization: Bearer %s' 'https://api.spotify.com/v1/browse/categories?limit=50&locale=en_US'",
+        token
+    )
+    local raw = shell(cmd)
+    local data = safe_json_decode(raw)
+    if not data or not data.categories or not data.categories.items then
+        rofi_message("Failed to load categories")
+        return
+    end
+
+    local cats = data.categories.items
+    local cat_entries = {}
+    for _, c in ipairs(cats) do
+        cat_entries[#cat_entries + 1] = c.name
+    end
+
+    while true do
+        local idx = rofi_dmenu({
+            entries = cat_entries,
+            prompt = "Categories",
+            mesg = string.format('%d categories', #cats),
+            custom = false,
+            by_index = true,
+        })
+        if not idx then return end
+        if idx < 1 or idx > #cats then goto continue end
+
+        local cat = cats[idx]
+        local pcmd = string.format(
+            "curl -s -H 'Authorization: Bearer %s' 'https://api.spotify.com/v1/browse/categories/%s/playlists?limit=20'",
+            token, cat.id
+        )
+        local praw = shell(pcmd)
+        local pdata = safe_json_decode(praw)
+        if not pdata or not pdata.playlists or not pdata.playlists.items then
+            rofi_message("No playlists found")
+            goto continue
+        end
+
+        local playlists = pdata.playlists.items
+        local pl_entries = {}
+        for _, pl in ipairs(playlists) do
+            pl_entries[#pl_entries + 1] = display_playlist(pl)
+        end
+
+        local result = browse_loop(pl_entries, playlists, string.format('%d playlist%s', #playlists, #playlists ~= 1 and "s" or ""), "playlist", "playlist")
+        if result == "played" then return "played" end
+
+        ::continue::
+    end
+end
+
+local function top_tracks_flow()
+    local token = get_spotify_token()
+    if not token then rofi_message("No Spotify token") return end
+
+    local tracks
+    for _, range in ipairs({ "short_term", "medium_term", "long_term" }) do
+        local cmd = string.format(
+            "curl -s -H 'Authorization: Bearer %s' 'https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=%s'",
+            token, range
+        )
+        local raw = shell(cmd)
+        local data = safe_json_decode(raw)
+        if data and data.items and #data.items > 0 then
+            tracks = data.items
+            break
+        end
+    end
+
+    if not tracks then
+        rofi_message("No top tracks found")
+        return
+    end
+
+    local entries = {}
+    for i, t in ipairs(tracks) do
+        entries[i] = string.format("%2d. %s", i, display_track(t))
+    end
+
+    local result = browse_loop(entries, tracks, string.format('%d top track%s', #tracks, #tracks ~= 1 and "s" or ""), "track", "top-tracks")
+    if result == "played" then return "played" end
+end
+
+local function weekly_flow()
+    local data = safe_json_decode(shell("timeout 2 spotify_player get item playlist --id 37i9dQZEVXcQHbTJZxVQMH 2>/dev/null"))
+    if not data or not data.tracks or #data.tracks == 0 then
+        rofi_message("No tracks found")
+        return
+    end
+
+    local tracks = data.tracks
+    local track_entries = {}
+    for i, t in ipairs(tracks) do
+        track_entries[i] = string.format("%2d. %s", i, display_track(t))
+    end
+
+    local result = browse_loop(track_entries, tracks, string.format('%d track%s', #tracks, #tracks ~= 1 and "s" or ""), "track", "discover-weekly")
+    if result == "played" then return "played" end
 end
 
 local function ensure_daemon()
@@ -926,7 +1117,7 @@ local function track_browse_flow(items, mesg, context)
     local n = #items
     local entries = {}
     for i = 1, n do
-        entries[#entries + 1] = display_track(items[i])
+        entries[#entries + 1] = string.format("%2d. %s", i, display_track(items[i]))
     end
     return browse_loop(entries, items, string.format('%d track%s', n, n ~= 1 and "s" or ""), "track", context)
 end
@@ -940,24 +1131,26 @@ local function main()
     local playback = get_playback_status()
 
     local options = {
-        "Search Tracks",
-        "Search Albums",
-        "Search Artists",
-        "Search Playlists",
+        "Track Options",
         "Liked Tracks",
+        "Top Tracks",
+        "Discover Weekly",
+        "Categories",
+        "Search",
         "Play / Pause",
         "Next Track",
         "Previous Track",
         "Shuffle",
         "Repeat",
         "Volume",
-        "Current Track Options",
     }
 
     local mesg = nil
-    if playback then
-        local like_icon = is_liked and (ICON_LIKED .. "  ") or ""
-        mesg = like_icon .. playback
+    if playback and current_track_item then
+        local play_icon = current_is_playing and "\u{f04b}" or "\u{f04c}"
+        local liked = liked_tracks[current_track_id] and (ICON_LIKED .. "  ") or ""
+        local explicit = val(current_track_item, "explicit", false) and (ICON_EXPLICIT .. "  ") or ""
+        mesg = play_icon .. "  " .. playback .. "  " .. liked .. explicit
     end
 
     local selection = rofi_dmenu({
@@ -970,16 +1163,28 @@ local function main()
     })
     if not selection or selection == "" then return false end
 
-    if selection == "Search Tracks" then
-        if search_flow("track") == "played" then return false end
-    elseif selection == "Search Albums" then
-        if search_flow("album") == "played" then return false end
-    elseif selection == "Search Artists" then
-        if search_flow("artist") == "played" then return false end
-    elseif selection == "Search Playlists" then
-        if search_flow("playlist") == "played" then return false end
+    if selection == "Search" then
+        local types = { "Tracks", "Albums", "Artists", "Playlists" }
+        local prompts = { "Track", "Album", "Artist", "Playlist" }
+        local search_idx = rofi_dmenu({
+            entries = types,
+            prompt = "Search",
+            mesg = mesg,
+            custom = false,
+            by_index = true,
+            use_menu = false,
+        })
+        if search_idx and search_idx >= 1 and search_idx <= #types then
+            if search_flow(prompts[search_idx]:lower()) == "played" then return false end
+        end
     elseif selection == "Liked Tracks" then
         if liked_tracks_flow() == "played" then return false end
+    elseif selection == "Categories" then
+        if categories_flow() == "played" then return false end
+    elseif selection == "Top Tracks" then
+        if top_tracks_flow() == "played" then return false end
+    elseif selection == "Discover Weekly" then
+        if weekly_flow() == "played" then return false end
     elseif selection == "Play / Pause" then
         os.execute("spotify_player playback play-pause &")
     elseif selection == "Next Track" then
@@ -1002,7 +1207,7 @@ local function main()
             local vol = vol_idx * 25
             os.execute("spotify_player playback volume " .. vol .. " &")
         end
-    elseif selection == "Current Track Options" then
+    elseif selection == "Track Options" then
         if not current_track_item then
             rofi_message("No track playing")
         else
@@ -1014,6 +1219,7 @@ end
 
 ensure_daemon()
 load_user_data_from_sp_cache()
-load_user_data()
-fetch_liked_order()
+if not (next(liked_tracks) and next(saved_albums) and next(user_playlists) and next(followed_artists)) then
+    load_user_data()
+end
 while main() do end
