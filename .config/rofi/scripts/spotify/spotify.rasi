@@ -26,10 +26,6 @@ textbox {
     horizontal-align: 0.5;
     font: "0xProto Nerd Font Bold 12";
 }
-textbox-prompt-colon {
-    str: " ";
-    color: #b6e0a4;
-}
 
 listview {
     fixed-columns: false;
