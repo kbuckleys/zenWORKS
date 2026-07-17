@@ -20,6 +20,16 @@ local REPO_COLORS = {
   LOCAL    = "\027[97m", -- white
 }
 local COLOR_RESET = "\027[0m"
+
+local CACHE = {}
+local function invalidate_cache()
+  CACHE.available_raw  = nil
+  CACHE.installed_raw  = nil
+  CACHE.repo_map       = nil
+  CACHE.available_pkgs = nil
+  CACHE.installed_set  = nil
+  CACHE.installed_pkgs = nil
+end
 local FZF_COLOR   = "--color=fg+:#dfdfdd,bg+:#20242a,pointer:#e0d8a4,marker:#fab387,hl+:#b6e0a4,hl::#b6e0a4,spinner:#9bbfbf,border:#20242a"
 
 -- low level helpers
@@ -175,7 +185,8 @@ local function ensure_paru()
 end
 
 local function sync_repos()
-  sh("paru -Scc --noconfirm && paru --clean && rm -rf ~/.cache/paru/ && paru -Sy")
+  sh("paru -Sy && paru --clean")
+  invalidate_cache()
 end
 
 -- Update Packages
@@ -249,6 +260,7 @@ local function refresh_updates(switch_tmp)
     end
     if #selected > 0 then
       sh("paru -S --noconfirm " .. table.concat(selected, " "))
+      invalidate_cache()
       installed_any = true
     end
   end
@@ -262,6 +274,31 @@ end
 -- each other directly (the C-u toggle between the two views).
 local update_packages
 local manage_packages
+
+local function ensure_cache()
+  if not CACHE.available_raw then
+    CACHE.available_raw = capture("paru -Sl 2>/dev/null")
+    CACHE.repo_map = {}
+    CACHE.available_pkgs = {}
+    for _, line in ipairs(lines_of(CACHE.available_raw)) do
+      local repo, pkg = line:match("^(%S+)%s+(%S+)")
+      if repo and pkg then
+        CACHE.available_pkgs[#CACHE.available_pkgs + 1] = pkg
+        CACHE.repo_map[pkg] = repo:upper()
+      end
+    end
+  end
+  if not CACHE.installed_raw then
+    CACHE.installed_raw = capture("paru -Qq")
+    CACHE.installed_set = {}
+    CACHE.installed_pkgs = {}
+    for _, pkg in ipairs(lines_of(CACHE.installed_raw)) do
+      CACHE.installed_set[pkg] = true
+      CACHE.installed_pkgs[#CACHE.installed_pkgs + 1] = pkg
+    end
+  end
+  return CACHE.repo_map, CACHE.available_pkgs, CACHE.installed_set, CACHE.installed_pkgs
+end
 
 update_packages = function()
   local switch_tmp = write_tmp("")
@@ -314,21 +351,7 @@ manage_packages = function()
   local switch_tmp2 = write_tmp("")
 
   while true do
-    -- One call gives us name + repo together (core/extra/multilib/aur),
-    -- instead of a separate lookup per package.
-    local repo_map = {}
-    local available_pkgs = {}
-    for _, line in ipairs(lines_of(capture("paru -Sl 2>/dev/null"))) do
-      local repo, pkg = line:match("^(%S+)%s+(%S+)")
-      if repo and pkg then
-        available_pkgs[#available_pkgs + 1] = pkg
-        repo_map[pkg] = repo:upper()
-      end
-    end
-    local installed_pkgs_l = lines_of(capture("paru -Qq"))
-
-    local installed_set = {}
-    for _, pkg in ipairs(installed_pkgs_l) do installed_set[pkg] = true end
+    local repo_map, available_pkgs, installed_set, installed_pkgs_l = ensure_cache()
 
     -- Right-align a colorized repo tag to the terminal edge, same
     -- treatment as the version columns in the update view.
@@ -448,6 +471,7 @@ manage_packages = function()
       end
 
       if #to_install > 0 or #to_uninstall > 0 then
+        invalidate_cache()
         print("Cleaning paru cache...")
         sh("paru --clean")
 
