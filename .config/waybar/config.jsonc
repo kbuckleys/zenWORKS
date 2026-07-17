@@ -27,6 +27,7 @@
         "temperature",
         "custom/div",
         "memory",
+        "mpris",
         "pulseaudio",
         "clock",
         "custom/status"
@@ -110,7 +111,23 @@
         "format": "{volume}",
         "on-click": "footclient -T Wiremix wiremix",
         "on-click-right": "pamixer -t",
-        "format-muted": " "
+        "format-muted": " "
+    },
+
+    "mpris": {
+        "format": "{player_icon}",
+        "format-paused": "{status_icon}",
+        "player-icons": {
+             "default": ""
+        },
+        "status-icons": {
+            "paused": ""
+        },
+        "tooltip-format": "{title}\n{artist}\n{album}",
+        "on-click-middle": "playerctl play-pause",
+        "on-click-right": "playerctl next",
+        "on-click-left": "playerctl previous",
+        "interval": 1
     },
 
     "custom/status": {

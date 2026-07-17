@@ -56,8 +56,13 @@
 }
 
 #pulseaudio {
-    padding: 0px 8px 0px 16px;
+    padding: 0px 8px 0px 12px;
     font-weight: bold;
+    color: #9bbfbf;
+}
+
+#mpris {
+    padding: 0px 0px 0px 16px;
     color: #9bbfbf;
 }
 
