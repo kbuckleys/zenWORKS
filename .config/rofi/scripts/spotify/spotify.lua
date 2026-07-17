@@ -513,7 +513,44 @@ local function do_action(action, item, category, context, context_type, context_
         if all_items and current_idx then
             save_queue(all_items, current_idx)
         end
-        os.execute("spotify_player playback start track --id " .. shell_quote(id))
+        local context_uri
+        if context_type and context_id then
+            context_uri = "spotify:" .. context_type .. ":" .. context_id
+        elseif context == "discover-weekly" then
+            context_uri = "spotify:playlist:37i9dQZEVXcQHbTJZxVQMH"
+        end
+        local token = get_spotify_token()
+        if context_uri and token then
+            local offset = current_idx and (current_idx - 1) or 0
+            local body = json.encode({
+                context_uri = context_uri,
+                offset = { position = offset }
+            })
+            os.execute(string.format(
+                "curl -s -o /dev/null -X PUT 'https://api.spotify.com/v1/me/player/play' -H 'Authorization: Bearer %s' -H 'Content-Type: application/json' -d %s &",
+                token, shell_quote(body)
+            ))
+        elseif all_items and current_idx and token then
+            local uris = {}
+            local max_idx = math.min(#all_items, current_idx + 49)
+            for i = current_idx, max_idx do
+                local t = all_items[i]
+                if t and t.id then
+                    uris[#uris + 1] = "spotify:track:" .. t.id
+                end
+            end
+            if #uris > 0 then
+                local body = json.encode({ uris = uris, offset = { position = 0 } })
+                os.execute(string.format(
+                    "curl -s -o /dev/null -X PUT 'https://api.spotify.com/v1/me/player/play' -H 'Authorization: Bearer %s' -H 'Content-Type: application/json' -d %s &",
+                    token, shell_quote(body)
+                ))
+            else
+                os.execute("spotify_player playback start track --id " .. shell_quote(id))
+            end
+        else
+            os.execute("spotify_player playback start track --id " .. shell_quote(id))
+        end
     elseif action == "Like" then
         local token = get_spotify_token()
         if token then
