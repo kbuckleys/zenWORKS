@@ -601,7 +601,7 @@ local function artist_browse_flow(artist)
             if not tidx then break end
             if tidx >= 1 and tidx <= #tracks then
                 local result = show_actions(tracks[tidx], "track", "album", "album", album.id)
-                if result == "played" then goto continue end
+                if result == "played" then return "played" end
                 if result then
                     table.remove(tracks, tidx)
                     table.remove(track_entries, tidx)
@@ -667,7 +667,7 @@ show_actions = function(item, category, context, context_type, context_id, all_i
                     for i, t in ipairs(tracks) do
                         track_entries[i] = string.format("%2d. %s", i, display_track(t, true))
                     end
-                    browse_loop(track_entries, tracks, string.format('%s - %s', album.name or "Album", artist_names(album)), "track", "album", "album", album.id)
+                    if browse_loop(track_entries, tracks, string.format('%s - %s', album.name or "Album", artist_names(album)), "track", "album", "album", album.id) == "played" then return "played" end
                 else
                     rofi_message("No tracks found")
                 end
@@ -694,7 +694,7 @@ show_actions = function(item, category, context, context_type, context_id, all_i
                     end
                 end
                 if artist then
-                    artist_browse_flow(artist)
+                    if artist_browse_flow(artist) == "played" then return "played" end
                 end
             end
         elseif sel == "Lyrics" then
@@ -767,7 +767,7 @@ browse_loop = function(entries, items, mesg, category, context, context_type, co
             for i, t in ipairs(tracks) do
                 track_entries[#track_entries + 1] = string.format("%2d. %s", i, display_track(t, true))
             end
-            browse_loop(track_entries, tracks, string.format('%s - %s', item.name, artist_names(item)), "track", "album", "album", item.id)
+            if browse_loop(track_entries, tracks, string.format('%s - %s', item.name, artist_names(item)), "track", "album", "album", item.id) == "played" then return "played" end
         elseif category == "playlist" then
             local data = safe_json_decode(shell("timeout 2 spotify_player get item playlist --id " .. shell_quote(item.id) .. " 2>/dev/null"))
             if not data or not data.tracks or #data.tracks == 0 then
@@ -779,7 +779,7 @@ browse_loop = function(entries, items, mesg, category, context, context_type, co
             for i, t in ipairs(tracks) do
                 track_entries[#track_entries + 1] = string.format("%2d. %s", i, display_track(t))
             end
-            browse_loop(track_entries, tracks, string.format('%s - %d track%s', item.name, #tracks, #tracks ~= 1 and "s" or ""), "track", "playlist", "playlist", item.id)
+            if browse_loop(track_entries, tracks, string.format('%s - %d track%s', item.name, #tracks, #tracks ~= 1 and "s" or ""), "track", "playlist", "playlist", item.id) == "played" then return "played" end
         elseif category == "track" then
             local result = show_actions(item, "track", context, context_type, context_id, items, idx)
             if result == "played" then
@@ -841,7 +841,7 @@ local function search_flow(category)
             entries[#entries + 1] = display
         end
 
-        browse_loop(entries, items, string.format('%d %s for %s', n, key, query), category, category)
+        if browse_loop(entries, items, string.format('%d %s for %s', n, key, query), category, category) == "played" then return "played" end
     end
 end
 
@@ -895,7 +895,7 @@ local function categories_flow()
             pl_entries[#pl_entries + 1] = display_playlist(pl)
         end
 
-        browse_loop(pl_entries, playlists, string.format('%s - %d playlist%s', cat.name, #playlists, #playlists ~= 1 and "s" or ""), "playlist", "playlist")
+        if browse_loop(pl_entries, playlists, string.format('%s - %d playlist%s', cat.name, #playlists, #playlists ~= 1 and "s" or ""), "playlist", "playlist") == "played" then return "played" end
 
         ::continue::
     end
@@ -929,7 +929,7 @@ local function top_tracks_flow()
         entries[i] = string.format("%2d. %s", i, display_track(t))
     end
 
-    browse_loop(entries, tracks, string.format('Top Tracks - %d track%s', #tracks, #tracks ~= 1 and "s" or ""), "track", "top-tracks")
+    return browse_loop(entries, tracks, string.format('Top Tracks - %d track%s', #tracks, #tracks ~= 1 and "s" or ""), "track", "top-tracks")
 end
 
 local function weekly_flow()
@@ -945,7 +945,7 @@ local function weekly_flow()
         track_entries[i] = string.format("%2d. %s", i, display_track(t))
     end
 
-    browse_loop(track_entries, tracks, string.format('Discover Weekly - %d track%s', #tracks, #tracks ~= 1 and "s" or ""), "track", "discover-weekly")
+    return browse_loop(track_entries, tracks, string.format('Discover Weekly - %d track%s', #tracks, #tracks ~= 1 and "s" or ""), "track", "discover-weekly")
 end
 
 local function ensure_daemon()
@@ -1117,16 +1117,16 @@ local function main()
                 search_flow(prompts[search_idx]:lower())
             end
         elseif selection == "Liked Tracks" then
-            liked_tracks_flow()
+            if liked_tracks_flow() == "played" then return end
         elseif selection == "Categories" then
-            categories_flow()
+            if categories_flow() == "played" then return end
         elseif selection == "Top Tracks" then
-            top_tracks_flow()
+            if top_tracks_flow() == "played" then return end
         elseif selection == "Discover Weekly" then
-            weekly_flow()
+            if weekly_flow() == "played" then return end
         elseif selection == "Play / Pause" then
             os.execute("spotify_player playback play-pause")
-            invalidate_playback_cache()
+            return
         elseif selection == "Next Track" then
             os.execute("spotify_player playback next")
             invalidate_playback_cache()
