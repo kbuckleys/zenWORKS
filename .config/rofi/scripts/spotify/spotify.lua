@@ -556,10 +556,13 @@ local function do_action(action, item, category, context, context_type, context_
                 context_uri = context_uri,
                 offset = { position = offset }
             })
-            os.execute(string.format(
-                "curl -s -o /dev/null -X PUT 'https://api.spotify.com/v1/me/player/play' -H 'Authorization: Bearer %s' -H 'Content-Type: application/json' -d %s &",
+            local result = shell(string.format(
+                "curl -s --max-time 3 -o /dev/null -w '%%{http_code}' -X PUT 'https://api.spotify.com/v1/me/player/play' -H 'Authorization: Bearer %s' -H 'Content-Type: application/json' -d %s",
                 token, shell_quote(body)
             ))
+            if not (result and result:match("^2")) then
+                os.execute("spotify_player playback start track --id " .. shell_quote(id))
+            end
         elseif all_items and current_idx and token then
             local uris = {}
             local max_idx = math.min(#all_items, current_idx + 49)
@@ -571,10 +574,13 @@ local function do_action(action, item, category, context, context_type, context_
             end
             if #uris > 0 then
                 local body = json.encode({ uris = uris, offset = { position = 0 } })
-                os.execute(string.format(
-                    "curl -s -o /dev/null -X PUT 'https://api.spotify.com/v1/me/player/play' -H 'Authorization: Bearer %s' -H 'Content-Type: application/json' -d %s &",
+                local result = shell(string.format(
+                    "curl -s --max-time 3 -o /dev/null -w '%%{http_code}' -X PUT 'https://api.spotify.com/v1/me/player/play' -H 'Authorization: Bearer %s' -H 'Content-Type: application/json' -d %s",
                     token, shell_quote(body)
                 ))
+                if not (result and result:match("^2")) then
+                    os.execute("spotify_player playback start track --id " .. shell_quote(id))
+                end
             else
                 os.execute("spotify_player playback start track --id " .. shell_quote(id))
             end
