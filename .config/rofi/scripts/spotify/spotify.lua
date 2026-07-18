@@ -844,7 +844,12 @@ local function show_artist_actions(artist)
 end
 
 local function show_lyrics(item)
-    push_session({ view = "lyrics", track_id = item.id })
+    push_session({
+        view = "lyrics",
+        track_id = item.id,
+        track_name = item.name or "Unknown",
+        track_artists = item.artists or {},
+    })
     local out = shell("timeout 2 spotify_player lyrics --id " .. shell_quote(item.id) .. " 2>/dev/null")
     out = out and trim(out) or ""
     if out == "" then
@@ -1341,12 +1346,19 @@ local function main()
         local handled = true
         if session.view == "action" and current_track_item and session.track_id == current_track_item.id then
             show_actions(current_track_item, "track", nil)
-        elseif session.view == "lyrics" and current_track_item and session.track_id == current_track_item.id then
-            show_lyrics(current_track_item)
+        elseif session.view == "lyrics" and session.track_id then
+            local litem = {
+                id = session.track_id,
+                name = session.track_name or "Unknown",
+                artists = session.track_artists or {},
+            }
+            show_lyrics(litem)
             local s2 = peek_session()
-            if s2 and s2.view == "action" and current_track_item and s2.track_id == current_track_item.id then
+            if s2 and s2.view == "action" then
                 pop_session()
-                show_actions(current_track_item, "track", nil)
+                if current_track_item and s2.track_id == current_track_item.id then
+                    show_actions(current_track_item, "track", nil)
+                end
             end
         elseif session.view == "album" and session.album_id then
             local data = safe_json_decode(shell("timeout 2 spotify_player get item album --id " .. shell_quote(session.album_id) .. " 2>/dev/null"))
