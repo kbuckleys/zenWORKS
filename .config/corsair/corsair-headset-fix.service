@@ -1,0 +1,11 @@
+[Unit]
+Description=Fix Corsair VOID ELITE headset audio (analog profile + gain)
+After=pipewire.service
+Wants=pipewire.service
+
+[Service]
+Type=oneshot
+ExecStart=%h/.config/corsair/corsair-headset-fix
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,47 @@
+#!/bin/sh
+# corsair-headset-fix — portable, idempotent, safe on any machine
+
+set -e
+
+find_card() {
+  for c in /proc/asound/card*; do
+    [ -d "$c" ] || continue
+    grep -q "1b1c:0a53" "$c/usbid" 2>/dev/null && { echo "${c##*card}"; return 0; }
+  done
+  return 1
+}
+
+CARD=$(find_card) || exit 0
+
+CARD_NAME=$(pactl list cards 2>/dev/null | awk -v card="$CARD" '
+  /^Card #/          { name="" }
+  /Name:/            { name=$2 }
+  /alsa\.card = "/   { gsub(/"/,"",$3); acard=$3 }
+  acard == card      { print name; exit }
+')
+
+[ -n "$CARD_NAME" ] || exit 0
+
+# 1) Switch to Analog Stereo Duplex if currently using digital output
+ACTIVE=$(pactl list cards 2>/dev/null | awk -v cn="$CARD_NAME" '
+  $0 ~ "Card.*" cn { found=1 }
+  found && /Active Profile:/ { print $NF; exit }
+')
+
+if [ -n "$ACTIVE" ] && echo "$ACTIVE" | grep -q "iec958"; then
+  pactl set-card-profile "$CARD_NAME" output:analog-stereo+input:analog-stereo 2>/dev/null || true
+  sleep 1
+fi
+
+# 2) Max out hardware gain boost (Unit 11: 0 → +16 dB)
+amixer -c "$CARD" cset numid=7  4096   >/dev/null 2>&1 || true
+
+# 3) Max out hardware volume (Unit 5: 0 → +5 dB) to use full ALSA range
+amixer -c "$CARD" cset numid=9 55,55  >/dev/null 2>&1 || true
+
+# 4) Set PipeWire software volume to 100%
+pactl list short sinks 2>/dev/null | awk '/Corsair.*VOID.*ELITE/ {print $2}' | while read -r sink; do
+  pactl set-sink-volume "$sink" 100% 2>/dev/null || true
+done
+
+echo "Corsair VOID ELITE: analog + hardware maxed (+21dB) + volume 100%"
