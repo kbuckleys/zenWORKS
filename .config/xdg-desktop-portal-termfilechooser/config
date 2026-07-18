@@ -1,7 +1,7 @@
 [filechooser]
-cmd=yazi-wrapper.sh
+cmd=~/.config/xdg-desktop-portal-termfilechooser/yazi-wrapper.sh
 default_dir=$HOME
-env=TERMCMD=kitty --class filechooser --title filechooser
+env=TERMCMD=kitty -1 --class filechooser --title filechooser
 
 open_mode=suggested
 save_mode=suggested
