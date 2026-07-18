@@ -19,7 +19,7 @@ if [ "$debug" = 1 ]; then
 fi
 
 cmd="yazi"
-termcmd="${TERMCMD:-kitty -1 --title 'termfilechooser'}"
+termcmd="${TERMCMD:-kitty -1 --wait-for-single-instance-window-close --title 'termfilechooser'}"
 
 if [ "$save" = "1" ]; then
     set -- --chooser-file="$out" "$path"
@@ -36,11 +36,6 @@ for arg in "$@"; do
     escaped=$(printf "%s" "$arg" | sed 's/"/\\"/g')
     command="$command \"$escaped\""
 done
-
-echo "wrapper: $(date)" >> /tmp/termfilechooser.log
-echo "TERMCMD='$TERMCMD'" >> /tmp/termfilechooser.log
-echo "termcmd='$termcmd'" >> /tmp/termfilechooser.log
-echo "command='$command'" >> /tmp/termfilechooser.log
 
 sh -c "$command"
 
