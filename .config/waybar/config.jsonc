@@ -13,7 +13,7 @@
     "height": 28,
 
     "modules-left": [
-        "custom/paru",
+        "custom/ZARU",
         "group/tray-expander",
         "hyprland/workspaces"
     ],
@@ -176,9 +176,10 @@
         "spacing": 12
     },
 
-    "custom/paru": {
+    "custom/ZARU": {
         "on-click": "footclient -T ZENU lua ~/.config/scripts/ZENU.lua update",
-        "exec": "~/.config/waybar/scripts/update.lua -n -i 10 -f '  {total}'",
-        "return-type": "json"
+        "exec": "~/.config/waybar/scripts/ZARU.lua -n -i 10 -f '  {total}'",
+        "return-type": "json",
+        "markup": "pango"
     }
 }
