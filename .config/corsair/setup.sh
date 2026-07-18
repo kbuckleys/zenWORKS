@@ -1,5 +1,11 @@
 #!/bin/sh
-# Deploy corsair-headset-fix — one command to set up everything
+
+# ┌─┐┌─┐┌┐┌┬ ┬┌─┐┬─┐┬┌─┌─┐
+# ┌─┘├┤ │││││││ │├┬┘├┴┐└─┐
+# └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
+# https://github.com/kbuckleys/
+# Deploy corsair-headset-fix — one-command setup
+
 set -e
 
 DIR="$(cd "$(dirname "$0")" && pwd)"

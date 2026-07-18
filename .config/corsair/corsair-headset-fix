@@ -1,5 +1,10 @@
 #!/bin/sh
-# corsair-headset-fix — portable, idempotent, safe on any machine
+
+# ┌─┐┌─┐┌┐┌┬ ┬┌─┐┬─┐┬┌─┌─┐
+# ┌─┘├┤ │││││││ │├┬┘├┴┐└─┐
+# └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
+# https://github.com/kbuckleys/
+# corsair-headset-fix
 
 set -e
 
