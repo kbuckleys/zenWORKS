@@ -112,7 +112,7 @@
         "format": "{volume}",
         "on-click": "footclient -T Wiremix wiremix",
         "on-click-right": "pamixer -t",
-        "format-muted": " "
+        "format-muted": ""
     },
 
     "mpris": {
