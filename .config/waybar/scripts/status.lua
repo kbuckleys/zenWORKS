@@ -1,7 +1,7 @@
 #!/usr/bin/lua
 
 -- ┌─┐┌─┐┌┐┌┬ ┬┌─┐┬─┐┬┌─┌─┐
--- ┌─┘├┤ │││││││ │├┬┘├┴┐└─┘
+-- ┌─┘├┤ │││││││ │├┬┘├┴┐└─┐
 -- └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
 -- https://github.com/kbuckleys/
 
@@ -15,42 +15,76 @@ local APP   = {}
 
 local CACHE = {}
 
+local function _getpid()
+    local f = io.open("/proc/self/stat")
+    if not f then return 0 end
+    local pid = f:read("*a"):match("^(%d+)")
+    f:close()
+    return tonumber(pid) or 0
+end
+local _tmplock = _getpid()
+local _tmp_n   = 0
+
 local function trim(s)
     return s:match("^%s*(.-)%s*$")
 end
 
+local function pango_escape(s)
+    return s:gsub('&', '&amp;')
+            :gsub('<', '&lt;')
+            :gsub('>', '&gt;')
+end
+
 local function run(cmd)
     local h = io.popen(cmd)
-    if not h then return "" end
+    if not h then return "", false end
     local r = trim(h:read("*a"))
-    h:close()
-    return r
+    local ok = h:close()
+    return r, ok ~= nil
 end
 
 local function have(cmd)
     if CACHE[cmd] == nil then
-        CACHE[cmd] = run("command -v " .. cmd .. " 2>/dev/null") ~= ""
+        local _, ok = run("command -v " .. cmd .. " 2>/dev/null")
+        CACHE[cmd] = ok
     end
     return CACHE[cmd]
 end
 
 local function append_app(key, value)
     if not value or value == "" then return end
-    APP[key] = APP[key] and APP[key] ~= "" and (APP[key] .. ", " .. value) or value
+    local prev = APP[key]
+    if prev and prev ~= "" then
+        APP[key] = prev .. ", " .. value
+    else
+        APP[key] = value
+    end
+end
+
+local function batch_app(key, pids)
+    if #pids == 0 then return end
+    local joined = table.concat(pids, ",")
+    local out = run("ps -p " .. joined .. " -o comm= 2>/dev/null")
+    for comm in out:gmatch("[^\n]+") do
+        append_app(key, trim(comm))
+    end
 end
 
 local function detect_process(proc, key)
     if not have("pgrep") then return end
     local pids = run("pgrep -x " .. proc .. " 2>/dev/null")
     if pids == "" then return end
-    STATE[key] = 1
+    STATE[key] = true
+    local plist = {}
     for pid in pids:gmatch("%d+") do
-        append_app(key, run("ps -p " .. pid .. " -o comm= 2>/dev/null"))
+        plist[#plist + 1] = pid
     end
+    batch_app(key, plist)
 end
 
 local function with_tmpfile(content, fn)
-    local path = os.tmpname()
+    _tmp_n = _tmp_n + 1
+    local path = string.format("/tmp/lua_status_%d_%d", _tmplock, _tmp_n)
     local f = io.open(path, "w")
     f:write(content)
     f:close()
@@ -62,14 +96,14 @@ end
 
 local function jq(datafile, filter)
     return with_tmpfile(filter, function(filterfile)
-        return run(string.format("jq -r -f %s %s", filterfile, datafile))
+        return run(string.format("jq -r -f '%s' '%s'", filterfile, datafile))
     end)
 end
 
 -- PipeWire
 if have("pw-dump") and have("jq") then
-    local dump = run("pw-dump 2>/dev/null")
-    if dump ~= "" then
+    local dump, ok = run("pw-dump 2>/dev/null")
+    if ok and dump ~= "" then
         with_tmpfile(dump, function(dumpfile)
             local out = jq(dumpfile, [==[
                 (any(.[]; .type=="PipeWire:Interface:Node"
@@ -97,11 +131,11 @@ if have("pw-dump") and have("jq") then
             end
 
             if lines[1] == "true" then
-                STATE.mic = 1
+                STATE.mic = true
                 APP.mic = lines[2]
             end
             if lines[3] == "true" then
-                STATE.scr = 1
+                STATE.scr = true
                 APP.scr = lines[4]
             end
         end)
@@ -118,11 +152,10 @@ if have("fuser") then
                 local dev = "/dev/" .. entry
                 local pids = run("fuser " .. dev .. " 2>/dev/null")
                 if pids ~= "" then
-                    STATE.cam = 1
+                    STATE.cam = true
                     for pid in pids:gmatch("%d+") do
                         if not seen[pid] then
                             seen[pid] = true
-                            append_app("cam", run("ps -p " .. pid .. " -o comm= 2>/dev/null"))
                         end
                     end
                 end
@@ -130,6 +163,11 @@ if have("fuser") then
         end
         handle:close()
     end
+    local plist = {}
+    for pid in pairs(seen) do
+        plist[#plist + 1] = pid
+    end
+    batch_app("cam", plist)
 end
 
 -- Other process detection
@@ -142,11 +180,11 @@ local tooltip = ""
 local classes = "status"
 
 for _, key in ipairs(KEYS) do
-    local on = STATE[key] == 1
+    local on = STATE[key]
     if on then
         text = text .. '<span foreground="' .. COLOR[key] .. '">' .. ICON[key] .. "</span>  "
     end
-    tooltip = tooltip .. LABEL[key] .. ": " .. (APP[key] or "OFF") .. "\n"
+    tooltip = tooltip .. LABEL[key] .. ": " .. pango_escape(APP[key] or "OFF") .. "\n"
     classes = classes .. " " .. key .. (on and "-on" or "-off")
 end
 
