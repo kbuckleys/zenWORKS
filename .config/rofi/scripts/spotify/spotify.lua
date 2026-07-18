@@ -797,10 +797,12 @@ end
 
 local function show_artist_actions(artist)
     push_session({ view = "artist_actions", artist_id = artist.id, artist_name = artist.name })
+    local is_followed = followed_artists[artist.id]
     local actions = {
         "View All Albums",
         "View Liked Tracks",
         "View Top Tracks",
+        is_followed and "Unfollow Artist" or "Follow Artist",
     }
     while true do
         local sel = rofi_dmenu({
@@ -817,6 +819,26 @@ local function show_artist_actions(artist)
             liked_tracks_by_artist_flow(artist)
         elseif sel == "View Top Tracks" then
             artist_top_tracks_flow(artist)
+        elseif sel == "Follow Artist" or sel == "Unfollow Artist" then
+            local token = get_spotify_token()
+            if token then
+                if is_followed then
+                    os.execute(string.format(
+                        "curl -s -o /dev/null -X DELETE 'https://api.spotify.com/v1/me/following?type=artist&ids=%s' -H 'Authorization: Bearer %s' &",
+                        artist.id, token
+                    ))
+                    followed_artists[artist.id] = nil
+                else
+                    os.execute(string.format(
+                        "curl -s -o /dev/null -X PUT 'https://api.spotify.com/v1/me/following?type=artist&ids=%s' -H 'Authorization: Bearer %s' &",
+                        artist.id, token
+                    ))
+                    followed_artists[artist.id] = true
+                end
+                save_cached_user_data()
+                is_followed = not is_followed
+                actions[4] = is_followed and "Unfollow Artist" or "Follow Artist"
+            end
         end
     end
 end
@@ -1145,7 +1167,6 @@ local function top_tracks_flow()
         entries[i] = string.format("%2d. %s", i, display_track(t))
     end
 
-    push_session({ view = "top_tracks" })
     return browse_loop(entries, tracks, string.format('Top Tracks - %d track%s', #tracks, #tracks ~= 1 and "s" or ""), "track", "top-tracks")
 end
 
@@ -1162,7 +1183,6 @@ local function weekly_flow()
         track_entries[i] = string.format("%2d. %s", i, display_track(t))
     end
 
-    push_session({ view = "discover_weekly" })
     return browse_loop(track_entries, tracks, string.format('Discover Weekly - %d track%s', #tracks, #tracks ~= 1 and "s" or ""), "track", "discover-weekly")
 end
 
@@ -1263,7 +1283,6 @@ local function track_browse_flow(items, name, context)
         rofi_message("No tracks found")
         return nil
     end
-    push_session({ view = "tracks", context = context, name = name })
     local n = #items
     local entries = {}
     for i = 1, n do
