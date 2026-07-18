@@ -1,0 +1,25 @@
+/**
+* ┌─┐┌─┐┌┐┌┬ ┬┌─┐┬─┐┬┌─┌─┐
+* ┌─┘├┤ │││││││ │├┬┘├┴┐└─┐
+* └─┘└─┘┘└┘└┴┘└─┘┴└─┴ ┴└─┘
+* https://github.com/kbuckleys/ */
+
+@theme "ZENON"
+
+window {
+    location: south;
+    anchor: south;
+    width: 600px;
+}
+
+mainbox {
+    children: [ textbox ];
+}
+
+textbox {
+    text-color: #000000;
+    horizontal-align: 0.5;
+    font: "0xProto Nerd Font 12";
+    padding: 8px;
+    background-color: #e78284;
+}

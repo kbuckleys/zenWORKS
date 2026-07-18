@@ -55,7 +55,6 @@ element-text {
 }
 element-text selected {
     background-color: transparent;
-    text-color: #b6e0a4;
 }
 
 message {

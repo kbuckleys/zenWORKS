@@ -10,6 +10,7 @@ local DIR = HOME .. "/.config/rofi/scripts/spotify"
 local THEME = DIR .. "/spotify.rasi"
 local THEME_MENU = DIR .. "/spotify-menus.rasi"
 local THEME_LYRICS = DIR .. "/lyrics.rasi"
+local THEME_MESSAGE = DIR .. "/message.rasi"
 local CACHE_FILE = HOME .. "/.cache/spotify_rofi/user_data.json"
 local LIKED_ORDER_CACHE = HOME .. "/.cache/spotify_rofi/liked_order.json"
 local TOKEN_FILE = HOME .. "/.cache/spotify-player/user_client_token.json"
@@ -87,11 +88,12 @@ local function get_spotify_token()
                 local ts = os.time({year=tonumber(y), month=tonumber(m), day=tonumber(d),
                     hour=tonumber(h), min=tonumber(min), sec=tonumber(s)})
                 if os.time() > ts + 60 then
+                    local refreshed = false
                     if data.refresh_token then
                         local cmd = string.format(
                             "curl -s -X POST https://accounts.spotify.com/api/token -d grant_type=refresh_token --data-urlencode %s -d client_id=%s",
                             shell_quote("refresh_token=" .. data.refresh_token),
-                            "d8a5ed958d274c2e8ee717e6a4b0971d"
+                            "d420a117a32841c2b3474932e49fb54b"
                         )
                         local h = io.popen(cmd, "r")
                         if h then
@@ -107,9 +109,11 @@ local function get_spotify_token()
                                     data.expires_at = os.date("!%Y-%m-%dT%H:%M:%SZ", os.time() + tonumber(rdata.expires_in))
                                 end
                                 write_file(TOKEN_FILE, json.encode(data))
+                                refreshed = true
                             end
                         end
                     end
+                    if not refreshed then return nil end
                 end
             end
         end
@@ -296,10 +300,10 @@ local function load_user_data()
     if load_cached_user_data() then return end
 
     for attempt = 1, 3 do
-        local h_liked = io.popen("timeout 10 spotify_player get key user-liked-tracks 2>/dev/null", "r")
-        local h_albums = io.popen("timeout 10 spotify_player get key user-saved-albums 2>/dev/null", "r")
-        local h_playlists = io.popen("timeout 10 spotify_player get key user-playlists 2>/dev/null", "r")
-        local h_artists = io.popen("timeout 10 spotify_player get key user-followed-artists 2>/dev/null", "r")
+        local h_liked = io.popen("timeout 3 spotify_player get key user-liked-tracks 2>/dev/null", "r")
+        local h_albums = io.popen("timeout 3 spotify_player get key user-saved-albums 2>/dev/null", "r")
+        local h_playlists = io.popen("timeout 3 spotify_player get key user-playlists 2>/dev/null", "r")
+        local h_artists = io.popen("timeout 3 spotify_player get key user-followed-artists 2>/dev/null", "r")
 
         local raw_liked = h_liked and h_liked:read("*a") or ""
         local raw_albums = h_albums and h_albums:read("*a") or ""
@@ -373,7 +377,7 @@ local function get_playback_status()
         if playback_cache == false then return nil end
         return playback_cache
     end
-    local out = shell("timeout 1 spotify_player get key playback 2>/dev/null")
+    local out = shell("timeout 0.5 spotify_player get key playback 2>/dev/null")
     local data = safe_json_decode(out)
     if not data then
         current_track_id = nil; current_track_item = nil; current_is_playing = false
@@ -442,16 +446,37 @@ local function flush_queue()
     write_file(QUEUE_FILE, json.encode(data))
 end
 
-local function save_session(data)
-    write_file(SESSION_FILE, json.encode(data))
+local function push_session(data)
+    local raw = read_file(SESSION_FILE)
+    local stack = {}
+    if raw then
+        local ok, s = pcall(json.decode, raw)
+        if ok and type(s) == "table" and type(s.stack) == "table" then stack = s.stack end
+    end
+    stack[#stack + 1] = data
+    write_file(SESSION_FILE, json.encode({ stack = stack }))
 end
 
-local function load_session()
+local function peek_session()
     local raw = read_file(SESSION_FILE)
     if not raw then return nil end
     local ok, data = pcall(json.decode, raw)
     if not ok or type(data) ~= "table" then return nil end
-    return data
+    local stack = data.stack
+    if type(stack) ~= "table" or #stack == 0 then return nil end
+    return stack[#stack]
+end
+
+local function pop_session()
+    local raw = read_file(SESSION_FILE)
+    if not raw then return end
+    local ok, data = pcall(json.decode, raw)
+    if not ok or type(data) ~= "table" then return end
+    local stack = data.stack
+    if type(stack) ~= "table" or #stack == 0 then return end
+    table.remove(stack)
+    if #stack == 0 then os.remove(SESSION_FILE)
+    else write_file(SESSION_FILE, json.encode({ stack = stack })) end
 end
 
 local function clear_session()
@@ -494,28 +519,21 @@ local function rofi_dmenu(opts)
         args[#args + 1] = mesg
     end
 
-    local out_file = os.tmpname()
-    local ec_file = os.tmpname()
-
     local quoted_args = {}
     for _, a in ipairs(args) do
         quoted_args[#quoted_args + 1] = shell_quote(a)
     end
-    local cmd = table.concat(quoted_args, " ") .. " < " .. shell_quote(entries_file) .. " > " .. shell_quote(out_file) .. " 2>/dev/null; echo $? > " .. shell_quote(ec_file)
-    os.execute(cmd)
-
-    local result = read_file(out_file)
-    local ec_raw = read_file(ec_file)
+    local cmd = table.concat(quoted_args, " ") .. " < " .. shell_quote(entries_file) .. " 2>/dev/null; printf '\\n__EXIT__%d__' $?"
+    local raw = shell(cmd)
     os.remove(entries_file)
-    pcall(os.remove, out_file)
-    pcall(os.remove, ec_file)
 
-    local exit_code = tonumber((ec_raw or ""):match("%d+")) or 0
+    local exit_code = tonumber((raw or ""):match("__EXIT__(%d+)__")) or 0
+    local result = (raw or ""):match("^(.-)\n__EXIT__%d+__") or ""
 
-    if exit_code == 10 then return nil end
+    if exit_code == 10 then pop_session(); return nil end
     if exit_code ~= 0 then os.exit(0) end
 
-    result = result and trim(result) or ""
+    result = trim(result)
     if by_index then
         if result == "" then return nil end
         local n = tonumber(result)
@@ -527,7 +545,7 @@ end
 
 
 local function rofi_message(msg)
-    os.execute("rofi -e " .. shell_quote(msg) .. " -theme " .. shell_quote(THEME) .. " 2>/dev/null")
+    os.execute("rofi -e " .. shell_quote(msg) .. " -theme " .. shell_quote(THEME_MESSAGE) .. " -markup 2>/dev/null")
 end
 
 local function artist_names(item)
@@ -540,15 +558,21 @@ end
 
 local function display_track(item, hide_artist)
     local artists = hide_artist and "" or artist_names(item)
-    local playing = item.id == current_track_id and (current_is_playing and "\u{f04b}  " or "\u{f04c}  ") or ""
+    local playing = item.id == current_track_id and (current_is_playing and "\u{f04b} " or "\u{f04c} ") or ""
     local liked = liked_tracks[item.id] and (ICON_LIKED .. " ") or ""
     local explicit = val(item, "explicit", false) and (ICON_EXPLICIT .. " ") or ""
     local icons = playing .. explicit .. liked
     if #icons > 0 then icons = icons .. " " end
+    local text
     if hide_artist then
-        return string.format("%s%s", icons, item.name or "Unknown")
+        text = string.format("%s%s", icons, item.name or "Unknown")
+    else
+        text = string.format("%s%s  %s", icons, item.name or "Unknown", artists)
     end
-    return string.format("%s%s  %s", icons, item.name or "Unknown", artists)
+    if item.id == current_track_id then
+        text = "<span foreground=\"#b6e0a4\">" .. text .. "</span>"
+    end
+    return text
 end
 
 local function display_album(item)
@@ -675,9 +699,67 @@ end
 local show_actions
 local browse_loop
 
+local function liked_tracks_by_artist_flow(artist)
+    push_session({ view = "liked_by_artist", artist_id = artist.id, artist_name = artist.name })
+    local raw = read_file(HOME .. "/.cache/spotify-player/SavedTracks_cache.json")
+    local data = safe_json_decode(raw)
+    if not data then rofi_message("No saved tracks cache") return end
+    local tracks = {}
+    for _, v in pairs(data) do
+        if type(v) == "table" and v.id then
+            local song_artists = v.artists or {}
+            for _, a in ipairs(song_artists) do
+                if a.id == artist.id or (a.name or ""):lower() == (artist.name or ""):lower() then
+                    tracks[#tracks + 1] = v
+                    break
+                end
+            end
+        end
+    end
+    if #tracks == 0 then rofi_message("No liked tracks by this artist") return end
+    table.sort(tracks, function(a, b) return (a.name or ""):lower() < (b.name or ""):lower() end)
+    local entries = {}
+    for i, t in ipairs(tracks) do
+        entries[i] = string.format("%2d. %s", i, display_track(t))
+    end
+    browse_loop(entries, tracks, string.format('%s - %d liked track%s', artist.name, #tracks, #tracks ~= 1 and "s" or ""), "track", "liked-by-artist")
+end
+
+local function artist_top_tracks_flow(artist)
+    push_session({ view = "top_tracks_by_artist", artist_id = artist.id, artist_name = artist.name })
+    local token = get_spotify_token()
+    if not token then rofi_message("No Spotify token") return end
+    local raw = shell(string.format(
+        "curl -s -H 'Authorization: Bearer %s' 'https://api.spotify.com/v1/artists/%s/top-tracks?market=US'",
+        token, artist.id
+    ))
+    local data = safe_json_decode(raw)
+    if not data or not data.tracks or #data.tracks == 0 then
+        rofi_message("No top tracks found")
+        return
+    end
+    local tracks = data.tracks
+    local entries = {}
+    for i, t in ipairs(tracks) do
+        entries[i] = string.format("%2d. %s", i, display_track(t))
+    end
+    browse_loop(entries, tracks, string.format('%s - Top Tracks - %d track%s', artist.name, #tracks, #tracks ~= 1 and "s" or ""), "track", "top-tracks-by-artist")
+end
+
 local function artist_browse_flow(artist)
-    save_session({ view = "artist_albums", artist_id = artist.id, artist_name = artist.name })
-    local data = safe_json_decode(shell("timeout 2 spotify_player get item artist --id " .. shell_quote(artist.id) .. " 2>/dev/null"))
+    push_session({ view = "artist_albums", artist_id = artist.id, artist_name = artist.name })
+    local token = get_spotify_token()
+    local data
+    if token then
+        local raw = shell(string.format(
+            "curl -s --max-time 3 -H 'Authorization: Bearer %s' 'https://api.spotify.com/v1/artists/%s/albums?limit=50&include_groups=album,single,compilation'",
+            token, artist.id
+        ))
+        local api_data = safe_json_decode(raw)
+        if api_data and api_data.items then
+            data = { albums = api_data.items }
+        end
+    end
     if not data or not data.albums or #data.albums == 0 then
         rofi_message("No albums found")
         return nil
@@ -713,8 +795,34 @@ local function artist_browse_flow(artist)
     end
 end
 
+local function show_artist_actions(artist)
+    push_session({ view = "artist_actions", artist_id = artist.id, artist_name = artist.name })
+    local actions = {
+        "View All Albums",
+        "View Liked Tracks",
+        "View Top Tracks",
+    }
+    while true do
+        local sel = rofi_dmenu({
+            entries = actions,
+            prompt = artist.name,
+            mesg = string.format('%s - Artist Options', artist.name),
+            sel = 0,
+            custom = false,
+        })
+        if not sel or sel == "" then return false end
+        if sel == "View All Albums" then
+            artist_browse_flow(artist)
+        elseif sel == "View Liked Tracks" then
+            liked_tracks_by_artist_flow(artist)
+        elseif sel == "View Top Tracks" then
+            artist_top_tracks_flow(artist)
+        end
+    end
+end
+
 local function show_lyrics(item)
-    save_session({ view = "lyrics", track_id = item.id })
+    push_session({ view = "lyrics", track_id = item.id })
     local out = shell("timeout 2 spotify_player lyrics --id " .. shell_quote(item.id) .. " 2>/dev/null")
     out = out and trim(out) or ""
     if out == "" then
@@ -756,7 +864,7 @@ local function show_lyrics(item)
 end
 
 show_actions = function(item, category, context, context_type, context_id, all_items, current_idx)
-    save_session({ view = "action", track_id = item.id })
+    push_session({ view = "action", track_id = item.id })
 
     local is_liked = liked_tracks[item.id]
 
@@ -831,7 +939,7 @@ show_actions = function(item, category, context, context_type, context_id, all_i
                     end
                 end
                 if artist then
-                    artist_browse_flow(artist)
+                    show_artist_actions(artist)
                 end
             end
         elseif sel == "Lyrics" then
@@ -842,19 +950,23 @@ show_actions = function(item, category, context, context_type, context_id, all_i
     end
 end
 
+local function save_browse_session(ctx, ctx_type, ctx_id, msg)
+    if ctx_type == "album" and ctx_id then
+        push_session({ view = "album", album_id = ctx_id, album_name = msg:match("^(.-)%s+%-") or "" })
+    elseif ctx_type == "playlist" and ctx_id then
+        push_session({ view = "playlist", playlist_id = ctx_id, playlist_name = msg or "" })
+    elseif ctx == "liked" then
+        push_session({ view = "tracks", context = "liked" })
+    elseif ctx == "top-tracks" then
+        push_session({ view = "top_tracks" })
+    elseif ctx == "discover-weekly" then
+        push_session({ view = "discover_weekly" })
+    end
+end
+
 browse_loop = function(entries, items, mesg, category, context, context_type, context_id)
     if category == "track" then
-        if context_type == "album" and context_id then
-            save_session({ view = "album", album_id = context_id, album_name = mesg:match("^(.-)%s+%-") or "" })
-        elseif context_type == "playlist" and context_id then
-            save_session({ view = "playlist", playlist_id = context_id, playlist_name = mesg or "" })
-        elseif context == "liked" then
-            save_session({ view = "tracks", context = "liked" })
-        elseif context == "top-tracks" then
-            save_session({ view = "top_tracks" })
-        elseif context == "discover-weekly" then
-            save_session({ view = "discover_weekly" })
-        end
+        save_browse_session(context, context_type, context_id, mesg)
     end
     while true do
         local idx = rofi_dmenu({
@@ -863,13 +975,14 @@ browse_loop = function(entries, items, mesg, category, context, context_type, co
             mesg = mesg,
             custom = false,
             by_index = true,
+            markup = (category == "track"),
         })
         if not idx then return nil end
         if idx < 1 or idx > #items then goto continue end
         local item = items[idx]
 
         if category == "artist" then
-            artist_browse_flow(item)
+            show_artist_actions(item)
         elseif category == "album" then
             local data = safe_json_decode(shell("timeout 2 spotify_player get item album --id " .. shell_quote(item.id) .. " 2>/dev/null"))
             if not data or not data.tracks or #data.tracks == 0 then
@@ -881,7 +994,6 @@ browse_loop = function(entries, items, mesg, category, context, context_type, co
             for i, t in ipairs(tracks) do
                 track_entries[#track_entries + 1] = string.format("%2d. %s", i, display_track(t, true))
             end
-            save_session({ view = "album", album_id = item.id, album_name = item.name })
             browse_loop(track_entries, tracks, string.format('%s - %s', item.name, artist_names(item)), "track", "album", "album", item.id)
         elseif category == "playlist" then
             local data = safe_json_decode(shell("timeout 2 spotify_player get item playlist --id " .. shell_quote(item.id) .. " 2>/dev/null"))
@@ -894,22 +1006,11 @@ browse_loop = function(entries, items, mesg, category, context, context_type, co
             for i, t in ipairs(tracks) do
                 track_entries[#track_entries + 1] = string.format("%2d. %s", i, display_track(t))
             end
-            save_session({ view = "playlist", playlist_id = item.id, playlist_name = item.name })
             browse_loop(track_entries, tracks, string.format('%s - %d track%s', item.name, #tracks, #tracks ~= 1 and "s" or ""), "track", "playlist", "playlist", item.id)
         elseif category == "track" then
             show_actions(item, "track", context, context_type, context_id, items, idx)
             entries[idx] = string.format("%2d. %s", idx, display_track(item))
-            if context_type == "album" and context_id then
-                save_session({ view = "album", album_id = context_id, album_name = mesg:match("^(.-)%s+%-") or "" })
-            elseif context_type == "playlist" and context_id then
-                save_session({ view = "playlist", playlist_id = context_id, playlist_name = mesg or "" })
-            elseif context == "liked" then
-                save_session({ view = "tracks", context = "liked" })
-            elseif context == "top-tracks" then
-                save_session({ view = "top_tracks" })
-            elseif context == "discover-weekly" then
-                save_session({ view = "discover_weekly" })
-            end
+            save_browse_session(context, context_type, context_id, mesg)
         end
 
         ::continue::
@@ -981,7 +1082,7 @@ local function categories_flow()
         cat_entries[#cat_entries + 1] = c.name
     end
 
-    save_session({ view = "browse_categories" })
+    push_session({ view = "browse_categories" })
     while true do
         local idx = rofi_dmenu({
             entries = cat_entries,
@@ -1045,7 +1146,7 @@ local function top_tracks_flow()
         entries[i] = string.format("%2d. %s", i, display_track(t))
     end
 
-    save_session({ view = "top_tracks" })
+    push_session({ view = "top_tracks" })
     return browse_loop(entries, tracks, string.format('Top Tracks - %d track%s', #tracks, #tracks ~= 1 and "s" or ""), "track", "top-tracks")
 end
 
@@ -1062,15 +1163,18 @@ local function weekly_flow()
         track_entries[i] = string.format("%2d. %s", i, display_track(t))
     end
 
-    save_session({ view = "discover_weekly" })
+    push_session({ view = "discover_weekly" })
     return browse_loop(track_entries, tracks, string.format('Discover Weekly - %d track%s', #tracks, #tracks ~= 1 and "s" or ""), "track", "discover-weekly")
 end
 
 local function ensure_daemon()
     local pid = trim(shell("pgrep -x spotify_player 2>/dev/null") or "")
     if pid == "" then
-        os.execute("spotify_player -d &")
-        os.execute("sleep 0.2")
+        if not get_spotify_token() then
+            os.execute("rofi -e " .. shell_quote("Authenticate spotify-player in order to use this interface") .. " -theme " .. shell_quote(THEME_MESSAGE) .. " -markup 2>/dev/null")
+            os.exit(0)
+        end
+        os.execute("nohup spotify_player -d </dev/null &")
     end
 end
 
@@ -1160,7 +1264,7 @@ local function track_browse_flow(items, name, context)
         rofi_message("No tracks found")
         return nil
     end
-    save_session({ view = "tracks", context = context, name = name })
+    push_session({ view = "tracks", context = context, name = name })
     local n = #items
     local entries = {}
     for i = 1, n do
@@ -1174,20 +1278,34 @@ local function liked_tracks_flow()
     return track_browse_flow(tracks, "Liked Tracks", "liked")
 end
 
-local function ensure_defaults()
-    get_playback_status()
-    if current_shuffle then
-        os.execute("spotify_player playback shuffle")
+local function saved_albums_flow()
+    local raw = read_file(HOME .. "/.cache/spotify-player/SavedAlbums_cache.json")
+    local data = safe_json_decode(raw)
+    if not data then rofi_message("No saved albums") return end
+    local albums = {}
+    for _, a in ipairs(data) do
+        if type(a) == "table" and a.id then albums[#albums + 1] = a end
     end
-    local attempts = 0
-    while current_repeat ~= "off" and attempts < 3 do
-        os.execute("spotify_player playback repeat")
-        attempts = attempts + 1
+    if #albums == 0 then rofi_message("No saved albums") return end
+    table.sort(albums, function(a, b) return (a.name or ""):lower() < (b.name or ""):lower() end)
+    local entries = {}
+    for i, a in ipairs(albums) do entries[i] = display_album(a) end
+    browse_loop(entries, albums, string.format('Saved Albums - %d album%s', #albums, #albums ~= 1 and "s" or ""), "album", "album")
+end
+
+local function followed_artists_flow()
+    local raw = read_file(HOME .. "/.cache/spotify-player/FollowedArtists_cache.json")
+    local data = safe_json_decode(raw)
+    if not data then rofi_message("No followed artists") return end
+    local artists = {}
+    for _, a in ipairs(data) do
+        if type(a) == "table" and a.id then artists[#artists + 1] = a end
     end
-    if current_shuffle or attempts > 0 then
-        invalidate_playback_cache()
-        get_playback_status()
-    end
+    if #artists == 0 then rofi_message("No followed artists") return end
+    table.sort(artists, function(a, b) return (a.name or ""):lower() < (b.name or ""):lower() end)
+    local entries = {}
+    for i, a in ipairs(artists) do entries[i] = display_artist(a) end
+    browse_loop(entries, artists, string.format('Followed Artists - %d artist%s', #artists, #artists ~= 1 and "s" or ""), "artist", "artist")
 end
 
 local function main()
@@ -1196,19 +1314,22 @@ local function main()
     if not (next(liked_tracks) and next(saved_albums) and next(user_playlists) and next(followed_artists)) then
         load_user_data()
     end
-    ensure_defaults()
     load_queue()
 
-    local session = load_session()
-    if session then
+    local session = peek_session()
+    while session do
+        pop_session()
         get_playback_status()
+        local handled = true
         if session.view == "action" and current_track_item and session.track_id == current_track_item.id then
             show_actions(current_track_item, "track", nil)
-            invalidate_playback_cache()
         elseif session.view == "lyrics" and current_track_item and session.track_id == current_track_item.id then
             show_lyrics(current_track_item)
-            show_actions(current_track_item, "track", nil)
-            invalidate_playback_cache()
+            local s2 = peek_session()
+            if s2 and s2.view == "action" and current_track_item and s2.track_id == current_track_item.id then
+                pop_session()
+                show_actions(current_track_item, "track", nil)
+            end
         elseif session.view == "album" and session.album_id then
             local data = safe_json_decode(shell("timeout 2 spotify_player get item album --id " .. shell_quote(session.album_id) .. " 2>/dev/null"))
             if data and data.tracks and #data.tracks > 0 then
@@ -1230,19 +1351,27 @@ local function main()
                 browse_loop(track_entries, tracks, string.format('%s - %d track%s', session.playlist_name or "Playlist", #tracks, #tracks ~= 1 and "s" or ""), "track", "playlist", "playlist", session.playlist_id)
             end
         elseif session.view == "tracks" and session.context then
-            if session.context == "liked" then
-                liked_tracks_flow()
-            end
+            if session.context == "liked" then liked_tracks_flow() end
         elseif session.view == "top_tracks" then
             top_tracks_flow()
         elseif session.view == "discover_weekly" then
             weekly_flow()
         elseif session.view == "artist_albums" and session.artist_id then
             artist_browse_flow({ id = session.artist_id, name = session.artist_name or "" })
+        elseif session.view == "artist_actions" and session.artist_id then
+            show_artist_actions({ id = session.artist_id, name = session.artist_name or "" })
+        elseif session.view == "liked_by_artist" and session.artist_id then
+            liked_tracks_by_artist_flow({ id = session.artist_id, name = session.artist_name or "" })
+        elseif session.view == "top_tracks_by_artist" and session.artist_id then
+            artist_top_tracks_flow({ id = session.artist_id, name = session.artist_name or "" })
         elseif session.view == "browse_categories" then
             categories_flow()
+        else
+            handled = false
         end
-        clear_session()
+        if handled then invalidate_playback_cache() end
+        if not handled then clear_session(); break end
+        session = peek_session()
     end
 
     while true do
@@ -1252,6 +1381,8 @@ local function main()
             "Track Options",
             "Liked Tracks",
             "Top Tracks",
+            "Saved Albums",
+            "Followed Artists",
             "Discover Weekly",
             "Categories",
             "Search",
@@ -1291,6 +1422,10 @@ local function main()
             end
         elseif selection == "Liked Tracks" then
             liked_tracks_flow()
+        elseif selection == "Saved Albums" then
+            saved_albums_flow()
+        elseif selection == "Followed Artists" then
+            followed_artists_flow()
         elseif selection == "Categories" then
             categories_flow()
         elseif selection == "Top Tracks" then
