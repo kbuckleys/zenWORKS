@@ -9,13 +9,18 @@ show_hidden = true
 linemode = "size"
 
 [opener]
-open = [{ run = 'xdg-open "$@" & disown' }]
-edit = [{ run = 'footclient nvim "$@"', desc = "Open in Neovim" }]
-bulk_rename = [{ run = 'nvim "$@"', block = true, desc = "Bulk Rename" }]
+open = [{ run = 'xdg-open %s & disown', desc = "Open" }]
+edit = [{ run = 'kitty -1 nvim %s', desc = "Open in Neovim" }]
+bulk_rename = [{ run = 'nvim %s', block = true, desc = "Bulk Rename" }]
+image = [{ run = 'swayimg %s', orphan = true, for = "unix" }]
 
 [[open.prepend_rules]]
 url = "bulk-rename.txt"
 use = "bulk_rename"
+
+[[open.prepend_rules]]
+mime = "image/*"
+use = "image"
 
 [[open.prepend_rules]]
 mime = "text/*"
