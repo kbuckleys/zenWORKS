@@ -1,7 +1,7 @@
 [Unit]
 Description=Fix Corsair VOID ELITE headset audio (analog profile + gain)
-After=pipewire.service
-Wants=pipewire.service
+After=pipewire.service wireplumber.service
+Wants=pipewire.service wireplumber.service
 
 [Service]
 Type=oneshot
