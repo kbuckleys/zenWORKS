@@ -23,7 +23,7 @@ inputbar {
 }
 
 textbox {
-    text-color: #6a707f;
+    text-color: #dfdfdd;
     horizontal-align: 0.5;
     font: "0xProto Nerd Font 12";
 }
@@ -52,6 +52,6 @@ element-text selected {
 }
 
 message {
-    background-color: #000000;
+    background-color: #20242a;
     padding: 4px;
 }

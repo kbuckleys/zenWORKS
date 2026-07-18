@@ -1229,19 +1229,39 @@ local function main()
             os.execute("spotify_player playback play-pause")
             invalidate_playback_cache()
         elseif selection == "Next Track" then
-            if queue_tracks and queue_idx < #queue_tracks then
-                queue_idx = queue_idx + 1
-                os.execute("spotify_player playback start track --id " .. shell_quote(queue_tracks[queue_idx]))
-                flush_queue()
+            if queue_tracks then
+                local pos = queue_idx
+                if current_track_id then
+                    for i, tid in ipairs(queue_tracks) do
+                        if tid == current_track_id then pos = i; break end
+                    end
+                end
+                if pos < #queue_tracks then
+                    queue_idx = pos + 1
+                    os.execute("spotify_player playback start track --id " .. shell_quote(queue_tracks[queue_idx]))
+                    flush_queue()
+                else
+                    os.execute("spotify_player playback next")
+                end
             else
                 os.execute("spotify_player playback next")
             end
             invalidate_playback_cache()
         elseif selection == "Previous Track" then
-            if queue_tracks and queue_idx > 1 then
-                queue_idx = queue_idx - 1
-                os.execute("spotify_player playback start track --id " .. shell_quote(queue_tracks[queue_idx]))
-                flush_queue()
+            if queue_tracks then
+                local pos = queue_idx
+                if current_track_id then
+                    for i, tid in ipairs(queue_tracks) do
+                        if tid == current_track_id then pos = i; break end
+                    end
+                end
+                if pos > 1 then
+                    queue_idx = pos - 1
+                    os.execute("spotify_player playback start track --id " .. shell_quote(queue_tracks[queue_idx]))
+                    flush_queue()
+                else
+                    os.execute("spotify_player playback previous")
+                end
             else
                 os.execute("spotify_player playback previous")
             end
@@ -1297,12 +1317,21 @@ if arg and arg[1] then
     end
     if action == "next" or action == "prev" then
         if not load_queue() then os.exit(1) end
+        local pos = queue_idx
+        local raw = shell("timeout 1 spotify_player get key playback 2>/dev/null")
+        local data = safe_json_decode(raw)
+        local current_id = data and data.item and data.item.id
+        if current_id then
+            for i, tid in ipairs(queue_tracks) do
+                if tid == current_id then pos = i; break end
+            end
+        end
         if action == "next" then
-            if queue_idx >= #queue_tracks then os.exit(1) end
-            queue_idx = queue_idx + 1
+            if pos >= #queue_tracks then os.exit(1) end
+            queue_idx = pos + 1
         else
-            if queue_idx <= 1 then os.exit(1) end
-            queue_idx = queue_idx - 1
+            if pos <= 1 then os.exit(1) end
+            queue_idx = pos - 1
         end
         flush_queue()
         os.execute("spotify_player playback start track --id " .. shell_quote(queue_tracks[queue_idx]))

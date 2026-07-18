@@ -6,6 +6,7 @@
 -- https://github.com/kbuckleys/
 -- Zero-miss Arch Linux update checker for waybar
 -- Full rewrite of savely-krasovsky/waybar-updates in pure Lua
+-- This script strictly uses paru
 
 local HOME = os.getenv("HOME") or "/tmp"
 local CACHE_DIR = HOME .. "/.cache/waybar-updates"
@@ -26,6 +27,10 @@ local CFG = {
     update_cmd = "alacritty -e sudo pacman -Syu",
     db_max_age = 21600,
 }
+
+local ICON  = { pacman = "",  aur = "",  dev = "󰘬",  kernel = "" }
+local LABEL = { pacman = "pacman", aur = "AUR", dev = "dev", kernel = "kernel" }
+local KEYS  = { "pacman", "aur", "dev", "kernel" }
 
 -- ====== cli ======
 
@@ -96,14 +101,12 @@ local function json_escape(s)
             :gsub("\t", "\\t")
 end
 
-local function shell(cmd, timeout, strict)
-    timeout = timeout or 30
+local function shell(cmd, strict)
     if strict == nil then strict = true end
-    local p = io.popen("timeout " .. timeout .. " " .. cmd, "r")
+    local p = io.popen(cmd, "r")
     if not p then return nil end
     local data = p:read("*a")
     local _, _, code = p:close()
-    if code == 124 then return nil end
     if strict and code ~= nil and code ~= 0 then return nil end
     return data
 end
@@ -111,20 +114,13 @@ end
 local function curl(url, timeout)
     timeout = timeout or 15
     return shell(
-        "curl -fsSL --max-time " .. timeout .. " --connect-timeout 5 '" .. url .. "'",
-        timeout + 5
+        "curl -fsSL --max-time " .. timeout .. " --connect-timeout 5 '" .. url .. "'"
     )
 end
 
 local function file_mtime(path)
-    local d = shell("stat -c %Y " .. path, 5) or ""
+    local d = shell("stat -c %Y " .. path) or ""
     return tonumber(d:match("%d+")) or 0
-end
-
-local function sha256(data)
-    local p = io.popen("printf '%s' '" .. data:gsub("'", "'\\''") .. "' | sha256sum 2>/dev/null", "r")
-    if not p then return "" end
-    return (p:read("*a") or ""):match("%w+") or ""
 end
 
 local function file_exists(path)
@@ -174,9 +170,9 @@ end
 
 local function init_state()
     local defaults = {
-        pacman_count=0, pacman_list="", pacman_hash="",
-        aur_count=0,    aur_list="",    aur_hash="",
-        devel_count=0,  devel_list="",  devel_hash="",  devel_cache="",
+        pacman_count=0, pacman_list="",
+        aur_count=0,    aur_list="",
+        devel_count=0,  devel_list="",  devel_cache="",
         kernel_count=0, kernel_list="",
         total_count=0,  pacman_stale=false,
     }
@@ -187,22 +183,26 @@ end
 
 -- ====== paru ======
 
+local foreign_cache = nil
+
 local function check_paru()
-    local data = shell("paru -Qu --color=never 2>/dev/null", 60)
+    local data = shell("paru -Qu --color=never 2>/dev/null")
 
     if not data or not data:match("%S") then
-        state.pacman_count = 0; state.pacman_list = ""; state.pacman_hash = ""
-        state.aur_count    = 0; state.aur_list    = ""; state.aur_hash    = ""
+        state.pacman_count = 0; state.pacman_list = ""
+        state.aur_count    = 0; state.aur_list    = ""
         state.pacman_stale = (os.time() - file_mtime("/var/lib/pacman/sync/core.db")) > CFG.db_max_age
         return
     end
 
-    local foreign = {}
-    local qm = shell("pacman -Qm 2>/dev/null", 10)
-    if qm then
-        for line in qm:gmatch("[^\r\n]+") do
-            local name = line:match("^(%S+)")
-            if name then foreign[name] = true end
+    if not foreign_cache then
+        foreign_cache = {}
+        local qm = shell("pacman -Qm 2>/dev/null")
+        if qm then
+            for line in qm:gmatch("[^\r\n]+") do
+                local name = line:match("^(%S+)")
+                if name then foreign_cache[name] = true end
+            end
         end
     end
 
@@ -212,7 +212,7 @@ local function check_paru()
         local cleaned = trim(line)
         if cleaned ~= "" then
             local name = cleaned:match("^(%S+)")
-            if name and foreign[name] then
+            if name and foreign_cache[name] then
                 aur_lines[#aur_lines + 1] = cleaned
             else
                 pacman_lines[#pacman_lines + 1] = cleaned
@@ -223,17 +223,15 @@ local function check_paru()
     if #pacman_lines > 0 then
         state.pacman_count = #pacman_lines
         state.pacman_list  = table.concat(pacman_lines, "\n")
-        state.pacman_hash  = sha256(table.concat(pacman_lines, "\n"))
     else
-        state.pacman_count = 0; state.pacman_list = ""; state.pacman_hash = ""
+        state.pacman_count = 0; state.pacman_list = ""
     end
 
     if #aur_lines > 0 then
         state.aur_count = #aur_lines
         state.aur_list  = table.concat(aur_lines, "\n")
-        state.aur_hash  = sha256(table.concat(aur_lines, "\n"))
     else
-        state.aur_count = 0; state.aur_list = ""; state.aur_hash = ""
+        state.aur_count = 0; state.aur_list = ""
     end
 
     state.pacman_stale = (os.time() - file_mtime("/var/lib/pacman/sync/core.db")) > CFG.db_max_age
@@ -243,19 +241,19 @@ end
 
 local function check_devel(online)
     if not CFG.devel then
-        state.devel_count = 0; state.devel_list = ""; state.devel_hash = ""
+        state.devel_count = 0; state.devel_list = ""
         return
     end
 
-    local ignored_data = shell("pacman-conf IgnorePkg 2>/dev/null", 5, false)
+    local ignored_data = shell("pacman-conf IgnorePkg 2>/dev/null", false)
     local ignored = {}
     if ignored_data then
         for pkg in ignored_data:gmatch("%S+") do ignored[pkg] = true end
     end
 
-    local qm = shell("pacman -Qm 2>/dev/null | grep -iE '(git|hg|svn|bzr)'", 10)
+    local qm = shell("pacman -Qm 2>/dev/null | grep -iE '(git|hg|svn|bzr)'")
     if not qm or not qm:match("%S") then
-        state.devel_count = 0; state.devel_list = ""; state.devel_hash = ""
+        state.devel_count = 0; state.devel_list = ""
         return
     end
 
@@ -266,7 +264,6 @@ local function check_devel(online)
         if list == "" then n = 0 end
         state.devel_count = n
         state.devel_list = list
-        state.devel_hash = sha256(list)
         return
     end
 
@@ -284,7 +281,7 @@ local function check_devel(online)
         src = src:match("^(.-)#") or src
 
         local remote = shell(
-            "git ls-remote --heads " .. src .. " 2>/dev/null | head -1 | awk '{print $1}' | cut -c1-7", 15
+            "timeout 30 git ls-remote --heads " .. src .. " 2>/dev/null | head -1 | awk '{print $1}' | cut -c1-7"
         )
         if not remote or not remote:match("%S+") then goto next_dev end
         remote = remote:match("%S+")
@@ -299,18 +296,21 @@ local function check_devel(online)
     state.devel_cache = list
     state.devel_count = #updates
     state.devel_list = list
-    state.devel_hash = sha256(list)
 end
 
 -- ====== kernel ======
 
+local kernel_running = nil
+
 local function check_kernel(prefetched_data, is_prefetched)
     if not CFG.kernel then state.kernel_count = 0; return end
 
-    local running_full = shell("uname -r", 5)
-    if not running_full then return end
-    running_full = trim(running_full)
-    local running = running_full:match("^(%d+%.%d+%.%d+)") or running_full
+    if not kernel_running then
+        local full = shell("uname -r")
+        if full then kernel_running = trim(full) end
+    end
+    if not kernel_running then return end
+    local running = kernel_running:match("^(%d+%.%d+%.%d+)") or kernel_running
 
     local latest
     if is_prefetched then
@@ -331,19 +331,20 @@ local function check_kernel(prefetched_data, is_prefetched)
         state.kernel_count = 0; state.kernel_list = ""
     else
         state.kernel_count = 1
-        state.kernel_list = "kernel " .. running_full .. " -> " .. latest
+        state.kernel_list = "kernel " .. kernel_running .. " -> " .. latest
     end
 end
 
 -- ====== aggregate ======
 
 local function check_updates(online)
+    if online then foreign_cache = nil end
     check_paru()
     check_devel(online)
 
     local kernel_h
     if online and CFG.kernel then
-        kernel_h = io.popen("timeout 10 curl -fsSL --max-time 10 --connect-timeout 5 'https://www.kernel.org/finger_banner'", "r")
+        kernel_h = io.popen("curl -fsSL --max-time 10 --connect-timeout 5 'https://www.kernel.org/finger_banner'", "r")
     end
 
     if kernel_h then
@@ -363,13 +364,10 @@ end
 
 local function format(str, mode)
     if not str then return "" end
-    local counts = {
-        aur    = state.aur_count,
-        pacman = state.pacman_count,
-        total  = state.total_count,
-        dev    = state.devel_count,
-        kernel = state.kernel_count,
-    }
+    local counts = { total = state.total_count }
+    for _, key in ipairs(KEYS) do
+        counts[key] = state[key .. "_count"]
+    end
     for key, count in pairs(counts) do
         str = str:gsub("{" .. "([^}]-):%s*" .. key .. "%s*:?([^}]*)}", function(pfx, sfx)
             if count > 0 then return pfx .. tostring(count) .. sfx end
@@ -381,32 +379,22 @@ local function format(str, mode)
         end)
     end
     if mode == "tooltip" then
-        local ICON = { pacman = "", aur = "", dev = "󰘬", kernel = "" }
         str = str:gsub("{}", function()
             local blocks = {}
-            local sources = {
-                {"pacman", state.pacman_count, state.pacman_list},
-                {"aur",    state.aur_count,    state.aur_list},
-                {"dev",    state.devel_count,  state.devel_list},
-                {"kernel", state.kernel_count, state.kernel_list},
-            }
-            for _, src in ipairs(sources) do
-                local key, count, list = src[1], src[2], src[3]
+            for _, key in ipairs(KEYS) do
+                local count = state[key .. "_count"] or 0
+                local list  = state[key .. "_list"] or ""
                 if count > 0 and list ~= "" then
                     if key == "kernel" then
                         blocks[#blocks + 1] = ICON[key] .. " " .. list
                     else
                         local header = ICON[key] .. " " .. count
                         local items = {}
-                        local shown = 0
                         for line in list:gmatch("[^\r\n]+") do
-                            shown = shown + 1
-                            if shown <= CFG.limit then
-                                items[#items + 1] = trim(line)
+                            local cleaned = trim(line)
+                            if cleaned ~= "" then
+                                items[#items + 1] = cleaned
                             end
-                        end
-                        if shown > CFG.limit then
-                            items[#items + 1] = "+" .. (shown - CFG.limit) .. " more"
                         end
                         blocks[#blocks + 1] = header .. "\n" .. table.concat(items, "\n")
                     end
@@ -437,20 +425,11 @@ end
 local function notify_all()
     if not CFG.notify or state.total_count == 0 then return end
 
-    local ICON = { pacman = "", aur = "", dev = "󰘬", kernel = "" }
-    local LABEL = { pacman = "pacman", aur = "AUR", dev = "dev", kernel = "kernel" }
-
     local lines = { "" }
-
-    local sources = {
-        {"pacman", state.pacman_count, state.pacman_list},
-        {"aur",    state.aur_count,    state.aur_list},
-        {"dev",    state.devel_count,  state.devel_list},
-        {"kernel", state.kernel_count, state.kernel_list},
-    }
     local first = true
-    for _, src in ipairs(sources) do
-        local key, count, list = src[1], src[2], src[3]
+    for _, key in ipairs(KEYS) do
+        local count = state[key .. "_count"] or 0
+        local list  = state[key .. "_list"] or ""
         if count > 0 and list ~= "" then
             if not first then lines[#lines + 1] = "" end
             first = false
@@ -476,7 +455,7 @@ local function notify_all()
     shell(
         "notify-send -a update -u normal -t 10000 -i software-update-available-symbolic " ..
         "'" .. state.total_count .. " Updates available' '" ..
-        body:gsub("'", "'\\''") .. "'", 5
+        body:gsub("'", "'\\''") .. "'"
     )
 end
 
@@ -528,9 +507,9 @@ local function main()
     show_progress()
     check_updates(true)
 
-    local prev_ph = state.pacman_hash
-    local prev_ah = state.aur_hash
-    local prev_dh = state.devel_hash
+    local prev_pl = state.pacman_list
+    local prev_al = state.aur_list
+    local prev_dl = state.devel_list
 
     local changed = send_output()
     if changed then
@@ -542,9 +521,9 @@ local function main()
     while true do
         os.execute("sleep " .. CFG.interval)
 
-        prev_ph = state.pacman_hash
-        prev_ah = state.aur_hash
-        prev_dh = state.devel_hash
+        prev_pl = state.pacman_list
+        prev_al = state.aur_list
+        prev_dl = state.devel_list
 
         cycle = cycle + 1
         local online = cycle >= CFG.cycles
@@ -557,8 +536,8 @@ local function main()
         local ok, err = pcall(function() check_updates(online) end)
         if not ok then
             io.stderr:write("[update.lua] " .. tostring(err) .. "\n")
-        elseif state.pacman_hash ~= prev_ph or state.aur_hash ~= prev_ah
-               or state.devel_hash ~= prev_dh then
+        elseif state.pacman_list ~= prev_pl or state.aur_list ~= prev_al
+               or state.devel_list ~= prev_dl then
             local changed = send_output()
             if changed then
                 notify_all()
