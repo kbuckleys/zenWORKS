@@ -57,7 +57,6 @@ Here's a list of the absolute essentials for a functional setup. The rest of the
 - rofimoji
 - rofi-calc
 - waybar
-- waybar-updates
 - yazi
 
 # Theme Elements
