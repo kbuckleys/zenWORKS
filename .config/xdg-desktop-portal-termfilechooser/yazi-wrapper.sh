@@ -37,10 +37,6 @@ for arg in "$@"; do
     command="$command \"$escaped\""
 done
 
-echo "TERMCMD='$TERMCMD'" >> /tmp/termfilechooser.log
-echo "termcmd='$termcmd'" >> /tmp/termfilechooser.log
-echo "command='$command'" >> /tmp/termfilechooser.log
-
 sh -c "$command"
 
 if [ "$directory" = "1" ]; then

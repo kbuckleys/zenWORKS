@@ -10,7 +10,7 @@ configuration {
 	drun-display-format: "{name}";
     kb-remove-to-sol: "BackSpace";
     kb-remove-char-back: "";
-    terminal: "footclient";
+    terminal: "kitty -1";
     recursivebrowser {
         filter-regex: "(.*cache.*|.*\\.o)";
         cancel-returns-1: true;
@@ -18,7 +18,7 @@ configuration {
         directory: "/";
     }
     filebrowser {
-        command: "footclient yazi";
+        command: "kitty -1 yazi";
         show-hidden: true;
     }
 }
