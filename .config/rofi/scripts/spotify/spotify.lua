@@ -454,7 +454,9 @@ local function push_session(data)
         if ok and type(s) == "table" and type(s.stack) == "table" then stack = s.stack end
     end
     stack[#stack + 1] = data
-    write_file(SESSION_FILE, json.encode({ stack = stack }))
+    local tmp = SESSION_FILE .. ".tmp"
+    write_file(tmp, json.encode({ stack = stack }))
+    os.rename(tmp, SESSION_FILE)
 end
 
 local function peek_session()
@@ -476,7 +478,11 @@ local function pop_session()
     if type(stack) ~= "table" or #stack == 0 then return end
     table.remove(stack)
     if #stack == 0 then os.remove(SESSION_FILE)
-    else write_file(SESSION_FILE, json.encode({ stack = stack })) end
+    else
+        local tmp = SESSION_FILE .. ".tmp"
+        write_file(tmp, json.encode({ stack = stack }))
+        os.rename(tmp, SESSION_FILE)
+    end
 end
 
 local function clear_session()
@@ -496,7 +502,7 @@ local function rofi_dmenu(opts)
     local override_theme = opts.theme
 
     local theme = override_theme or (use_menu and THEME_MENU or THEME)
-    local args = { "rofi", "-dmenu", "-theme", theme, "-p", prompt, "-i", "-kb-custom-1", "Alt+BackSpace" }
+    local args = { "rofi", "-dmenu", "-theme", theme, "-p", prompt, "-i", "-kb-custom-1", "Alt+BackSpace", "-kb-custom-2", "Alt+space" }
     if not custom then args[#args + 1] = "-no-custom" end
     if markup then
         args[#args + 1] = "-markup-rows"
@@ -530,7 +536,8 @@ local function rofi_dmenu(opts)
     local exit_code = tonumber((raw or ""):match("__EXIT__(%d+)__")) or 0
     local result = (raw or ""):match("^(.-)\n__EXIT__%d+__") or ""
 
-    if exit_code == 10 then pop_session(); return nil end
+    if exit_code == 10 then pcall(pop_session); return nil end
+    if exit_code == 11 then clear_session(); return nil end
     if exit_code ~= 0 then os.exit(0) end
 
     result = trim(result)
@@ -573,6 +580,10 @@ local function display_track(item, hide_artist)
         text = "<span foreground=\"#b6e0a4\">" .. text .. "</span>"
     end
     return text
+end
+
+local function display_track_compact(item)
+    return display_track(item, item.artists and #item.artists == 1)
 end
 
 local function display_album(item)
@@ -703,7 +714,7 @@ local function liked_tracks_by_artist_flow(artist)
     push_session({ view = "liked_by_artist", artist_id = artist.id, artist_name = artist.name })
     local raw = read_file(HOME .. "/.cache/spotify-player/SavedTracks_cache.json")
     local data = safe_json_decode(raw)
-    if not data then rofi_message("No saved tracks cache") return end
+    if not data then pop_session(); rofi_message("No saved tracks cache") return end
     local tracks = {}
     for _, v in pairs(data) do
         if type(v) == "table" and v.id then
@@ -716,11 +727,11 @@ local function liked_tracks_by_artist_flow(artist)
             end
         end
     end
-    if #tracks == 0 then rofi_message("No liked tracks by this artist") return end
+    if #tracks == 0 then pop_session(); rofi_message("No liked tracks by this artist") return end
     table.sort(tracks, function(a, b) return (a.name or ""):lower() < (b.name or ""):lower() end)
     local entries = {}
     for i, t in ipairs(tracks) do
-        entries[i] = string.format("%2d. %s", i, display_track(t))
+        entries[i] = string.format("%2d. %s", i, display_track_compact(t))
     end
     browse_loop(entries, tracks, string.format('%s - %d liked track%s', artist.name, #tracks, #tracks ~= 1 and "s" or ""), "track", "liked-by-artist")
 end
@@ -728,20 +739,21 @@ end
 local function artist_top_tracks_flow(artist)
     push_session({ view = "top_tracks_by_artist", artist_id = artist.id, artist_name = artist.name })
     local token = get_spotify_token()
-    if not token then rofi_message("No Spotify token") return end
+    if not token then pop_session(); rofi_message("No Spotify token") return end
     local raw = shell(string.format(
         "curl -s -H 'Authorization: Bearer %s' 'https://api.spotify.com/v1/artists/%s/top-tracks?market=US'",
         token, artist.id
     ))
     local data = safe_json_decode(raw)
     if not data or not data.tracks or #data.tracks == 0 then
+        pop_session()
         rofi_message("No top tracks found")
         return
     end
     local tracks = data.tracks
     local entries = {}
     for i, t in ipairs(tracks) do
-        entries[i] = string.format("%2d. %s", i, display_track(t))
+        entries[i] = string.format("%2d. %s", i, display_track_compact(t))
     end
     browse_loop(entries, tracks, string.format('%s - Top Tracks - %d track%s', artist.name, #tracks, #tracks ~= 1 and "s" or ""), "track", "top-tracks-by-artist")
 end
@@ -761,6 +773,7 @@ local function artist_browse_flow(artist)
         end
     end
     if not data or not data.albums or #data.albums == 0 then
+        pop_session()
         rofi_message("No albums found")
         return nil
     end
@@ -1400,7 +1413,6 @@ local function main()
             handled = false
         end
         if handled then invalidate_playback_cache() end
-        if not handled then clear_session(); break end
         session = peek_session()
     end
 
