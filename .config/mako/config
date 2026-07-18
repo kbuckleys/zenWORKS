@@ -28,3 +28,7 @@ background-color=#fab387
 [urgency=high]
 background-color=#e78284
 default-timeout=0
+
+[app-name=update]
+height=300
+default-timeout=6000

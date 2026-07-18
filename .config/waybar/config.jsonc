@@ -127,8 +127,7 @@
         "tooltip-format": "{title}\n{artist}\n{album}",
         "on-click-middle": "lua ~/.config/rofi/scripts/spotify/spotify.lua play-pause || playerctl play-pause",
         "on-click-right": "lua ~/.config/rofi/scripts/spotify/spotify.lua next || playerctl next",
-        "on-click": "lua ~/.config/rofi/scripts/spotify/spotify.lua prev || playerctl previous",
-        "interval": 1
+        "on-click": "lua ~/.config/rofi/scripts/spotify/spotify.lua prev || playerctl previous"
     },
 
     "custom/status": {
@@ -179,8 +178,7 @@
 
     "custom/paru": {
         "on-click": "footclient -T ZENU lua ~/.config/scripts/ZENU.lua update",
-        "exec": "waybar-updates -n -i 10 -f '  {total}'",
-        "exec-if": "which waybar-updates",
+        "exec": "~/.config/waybar/scripts/update.lua -n -i 10 -f '  {total}'",
         "return-type": "json"
     }
 }
