@@ -1,5 +1,5 @@
 [Desktop Entry]
 Name=Spotify Player
 Comment=Spotify TUI player
-Exec=footclient spotify_player
+Exec=kitty -1 spotify_player
 Type=Application
