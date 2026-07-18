@@ -44,6 +44,7 @@ element {
 }
 element-text {
     font: "0xProto Nerd Font 14";
+    horizontal-align: 0.5;
     highlight: bold #b6e0a4;
 }
 element-text selected {

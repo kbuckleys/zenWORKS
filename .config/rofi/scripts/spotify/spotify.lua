@@ -165,6 +165,70 @@ local function fetch_liked_order()
     return nil
 end
 
+local function liked_order_add(item)
+    -- Update liked_order.json
+    local raw = read_file(LIKED_ORDER_CACHE)
+    if raw then
+        local ok, order = pcall(json.decode, raw)
+        if ok and type(order) == "table" then
+            local entry = {
+                id = item.id,
+                name = item.name or "Unknown",
+                duration_ms = item.duration_ms or ((item.duration and item.duration.secs or 0) * 1000),
+                added_at = os.date("!%Y-%m-%dT%H:%M:%SZ")
+            }
+            for i = #order, 1, -1 do
+                if order[i].id == entry.id then table.remove(order, i); break end
+            end
+            table.insert(order, 1, entry)
+            write_file(LIKED_ORDER_CACHE, json.encode(order))
+        end
+    end
+    -- Update SavedTracks_cache.json
+    local cache_file = HOME .. "/.cache/spotify-player/SavedTracks_cache.json"
+    local craw = read_file(cache_file)
+    if not craw then return end
+    local ok, cache = pcall(json.decode, craw)
+    if not ok or type(cache) ~= "table" then return end
+    local dur = item.duration
+    if not dur and item.duration_ms then
+        local ms = item.duration_ms
+        dur = { secs = math.floor(ms / 1000), nanos = (ms % 1000) * 1000000 }
+    end
+    local key = "spotify:track:" .. item.id
+    cache[key] = {
+        id = item.id,
+        name = item.name or "Unknown",
+        duration = dur or { secs = 0, nanos = 0 },
+        artists = item.artists or {},
+        album = item.album or {},
+    }
+    write_file(cache_file, json.encode(cache))
+end
+
+local function liked_order_remove(id)
+    local raw = read_file(LIKED_ORDER_CACHE)
+    if raw then
+        local ok, order = pcall(json.decode, raw)
+        if ok and type(order) == "table" then
+            for i = #order, 1, -1 do
+                if order[i].id == id then
+                    table.remove(order, i)
+                    write_file(LIKED_ORDER_CACHE, json.encode(order))
+                    break
+                end
+            end
+        end
+    end
+    local cache_file = HOME .. "/.cache/spotify-player/SavedTracks_cache.json"
+    local craw = read_file(cache_file)
+    if not craw then return end
+    local ok, cache = pcall(json.decode, craw)
+    if not ok or type(cache) ~= "table" then return end
+    cache["spotify:track:" .. id] = nil
+    write_file(cache_file, json.encode(cache))
+end
+
 local function add_to_queue(track_id)
     local token = get_spotify_token()
     if not token then return false end
@@ -593,6 +657,7 @@ local function do_action(action, item, category, context, context_type, context_
             os.execute(string.format("curl -s -o /dev/null -X PUT 'https://api.spotify.com/v1/me/tracks?ids=%s' -H 'Authorization: Bearer %s' &", id, token))
         end
         liked_tracks[id] = true
+        liked_order_add(item)
         save_cached_user_data()
     elseif action == "Unlike" then
         local token = get_spotify_token()
@@ -600,6 +665,7 @@ local function do_action(action, item, category, context, context_type, context_
             os.execute(string.format("curl -s -o /dev/null -X DELETE 'https://api.spotify.com/v1/me/tracks?ids=%s' -H 'Authorization: Bearer %s' &", id, token))
         end
         liked_tracks[id] = nil
+        liked_order_remove(id)
         save_cached_user_data()
     elseif action == "Open in Spotify" then
         os.execute("xdg-open " .. shell_quote("spotify:" .. category .. ":" .. id) .. " &")
