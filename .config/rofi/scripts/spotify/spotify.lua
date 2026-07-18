@@ -1010,7 +1010,6 @@ browse_loop = function(entries, items, mesg, category, context, context_type, co
         elseif category == "track" then
             show_actions(item, "track", context, context_type, context_id, items, idx)
             entries[idx] = string.format("%2d. %s", idx, display_track(item))
-            save_browse_session(context, context_type, context_id, mesg)
         end
 
         ::continue::
