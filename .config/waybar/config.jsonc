@@ -178,6 +178,7 @@
 
     "custom/ZARU": {
         "on-click": "footclient -T ZENU lua ~/.config/scripts/ZENU.lua update",
+        "on-click-right": "touch ~/.cache/ZARU/refresh",
         "exec": "~/.config/waybar/scripts/ZARU.lua -n -i 10 -f '  {total}'",
         "return-type": "json",
         "markup": "pango"

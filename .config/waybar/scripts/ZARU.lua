@@ -42,7 +42,7 @@ ZARU.lua [options]
   -t, --tooltip  STR   Custom tooltip format
   -i, --interval INT   Seconds between checks       (default: ]] .. CFG.interval .. [[)
   -c, --cycles   INT   Offline cycles before re-sync (default: ]] .. CFG.cycles .. [[)
-  -l, --limit    INT   Max packages in tooltip       (default: ]] .. CFG.limit .. [[)
+  -l, --limit    INT   Packages per source in notifications (default: ]] .. CFG.limit .. [[)
   -d, --devel          Also check -git/-hg devel packages
   -n, --notify         Send desktop notifications
   -k, --kernel         Check kernel vs kernel.org latest
@@ -78,7 +78,7 @@ local function load_config()
     local f = io.open(CFG_FILE)
     if not f then return end
     local chunk = f:read("*a"); f:close()
-    local fn, err = load(chunk, CFG_FILE, "t", {})
+    local fn, err = load(chunk, CFG_FILE, "t", setmetatable({}, {__index = _G}))
     if fn then
         local ok, result = pcall(fn)
         if ok and type(result) == "table" then
@@ -186,7 +186,7 @@ end
 local foreign_cache = nil
 
 local function check_paru()
-    local data = shell("paru -Qu --color=never 2>/dev/null")
+    local data = shell("timeout 120 paru -Qu --color=never 2>/dev/null")
 
     if not data or not data:match("%S") then
         state.pacman_count = 0; state.pacman_list = ""
@@ -218,6 +218,31 @@ local function check_paru()
                 pacman_lines[#pacman_lines + 1] = cleaned
             end
         end
+    end
+
+    -- sort by build date (newest first)
+    if #pacman_lines + #aur_lines > 0 then
+        local want = {}
+        for _, line in ipairs(pacman_lines) do
+            local n = line:match("^(%S+)"); if n then want[n] = true end
+        end
+        for _, line in ipairs(aur_lines) do
+            local n = line:match("^(%S+)"); if n then want[n] = true end
+        end
+        local dates = {}
+        local p = io.popen("for d in /var/lib/pacman/local/*/desc; do awk '/^%NAME%/{getline; n=$0} /^%BUILDDATE%/{getline; print n, $0}' \"$d\"; done", "r")
+        if p then
+            for line in p:read("*a"):gmatch("[^\n]+") do
+                local n, d = line:match("^(%S+)%s+(%d+)")
+                if n and d and want[n] then dates[n] = tonumber(d) end
+            end
+            p:close()
+        end
+        local function by_date(a, b)
+            return (dates[a:match("^(%S+)")] or 0) > (dates[b:match("^(%S+)")] or 0)
+        end
+        table.sort(pacman_lines, by_date)
+        table.sort(aur_lines, by_date)
     end
 
     if #pacman_lines > 0 then
@@ -302,7 +327,7 @@ end
 
 local kernel_running = nil
 
-local function check_kernel(prefetched_data, is_prefetched)
+local function check_kernel(remote_data, is_prefetched)
     if not CFG.kernel then state.kernel_count = 0; return end
 
     if not kernel_running then
@@ -314,7 +339,7 @@ local function check_kernel(prefetched_data, is_prefetched)
 
     local latest
     if is_prefetched then
-        latest = prefetched_data
+        latest = remote_data
         if not latest then return end
     else
         latest = curl("https://www.kernel.org/finger_banner", 10)
@@ -357,7 +382,7 @@ local function check_updates(online)
         check_kernel(nil, false)
     end
 
-    state.total_count = state.pacman_count + state.aur_count + state.devel_count + state.kernel_count
+    state.total_count = state.pacman_count + state.aur_count + state.devel_count
 end
 
 -- ====== format engine ======
@@ -430,27 +455,25 @@ local function notify_all()
     local lines = { "" }
     local first = true
     for _, key in ipairs(KEYS) do
+        if key == "kernel" then goto next_src end
         local count = state[key .. "_count"] or 0
         local list  = state[key .. "_list"] or ""
         if count > 0 and list ~= "" then
             if not first then lines[#lines + 1] = "" end
             first = false
-            if key == "kernel" then
-                lines[#lines + 1] = ICON[key] .. " " .. list
-            else
-                lines[#lines + 1] = ICON[key] .. " " .. LABEL[key] .. " " .. count
-                local shown = 0
-                for line in list:gmatch("[^\r\n]+") do
-                    shown = shown + 1
-                    if shown <= CFG.limit then
-                        lines[#lines + 1] = trim(line)
-                    end
-                end
-                if shown > CFG.limit then
-                    lines[#lines + 1] = "+" .. (shown - CFG.limit) .. " more"
+            lines[#lines + 1] = ICON[key] .. " " .. LABEL[key] .. " " .. count
+            local shown = 0
+            for line in list:gmatch("[^\r\n]+") do
+                shown = shown + 1
+                if shown <= CFG.limit then
+                    lines[#lines + 1] = trim(line)
                 end
             end
+            if shown > CFG.limit then
+                lines[#lines + 1] = "+" .. (shown - CFG.limit) .. " more"
+            end
         end
+        ::next_src::
     end
 
     local body = table.concat(lines, "\n")
@@ -507,7 +530,10 @@ local function main()
     io.stdout:setvbuf("line")
 
     show_progress()
-    check_updates(true)
+    local ok, err = pcall(function() check_updates(true) end)
+    if not ok then
+        io.stderr:write("[ZARU] startup: " .. tostring(err) .. "\n")
+    end
 
     local prev_pl = state.pacman_list
     local prev_al = state.aur_list
@@ -522,6 +548,25 @@ local function main()
     local cycle = 0
     while true do
         os.execute("sleep " .. CFG.interval)
+
+        local trigger = CACHE_DIR .. "/refresh"
+        if file_exists(trigger) then
+            os.remove(trigger)
+            prev_pl = state.pacman_list
+            prev_al = state.aur_list
+            prev_dl = state.devel_list
+            show_progress()
+            local ok, err = pcall(function() check_updates(true) end)
+            if not ok then
+                io.stderr:write("[ZARU] refresh: " .. tostring(err) .. "\n")
+            end
+            if state.pacman_list ~= prev_pl or state.aur_list ~= prev_al
+               or state.devel_list ~= prev_dl then
+                send_output()
+                save_state()
+            end
+            cycle = 0
+        end
 
         prev_pl = state.pacman_list
         prev_al = state.aur_list
