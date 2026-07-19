@@ -6,7 +6,12 @@
 -- https://github.com/kbuckleys/
 -- Zero-miss Arch Linux update checker for waybar
 -- Full rewrite of savely-krasovsky/waybar-updates in pure Lua
--- This script strictly uses paru
+
+-- Dependencies
+--   Core:            paru, pacman, awk, stat, cp, rm, mkdir
+--   Conditional:     fakeroot (stale DB fallback), curl (-k, -d),
+--                    git (-d), notify-send (-n)
+--   Lua:             pure stdlib (no external modules)
 
 local HOME = os.getenv("HOME") or "/tmp"
 local CACHE_DIR = HOME .. "/.cache/ZARU"
@@ -185,6 +190,27 @@ end
 
 local foreign_cache = nil
 
+local function sort_by_build_date(lines)
+    if #lines == 0 then return end
+    local want = {}
+    for _, line in ipairs(lines) do
+        local n = line:match("^(%S+)"); if n then want[n] = true end
+    end
+    local dates = {}
+    local p = io.popen("for d in /var/lib/pacman/local/*/desc; do awk '/^%NAME%/{getline; n=$0} /^%BUILDDATE%/{getline; print n, $0}' \"$d\"; done", "r")
+    if p then
+        for line in p:read("*a"):gmatch("[^\n]+") do
+            local n, d = line:match("^(%S+)%s+(%d+)")
+            if n and d and want[n] then dates[n] = tonumber(d) end
+        end
+        p:close()
+    end
+    local function by_date(a, b)
+        return (dates[a:match("^(%S+)")] or 0) > (dates[b:match("^(%S+)")] or 0)
+    end
+    table.sort(lines, by_date)
+end
+
 local function check_paru()
     local data = shell("timeout 120 paru -Qu --color=never 2>/dev/null")
 
@@ -220,30 +246,8 @@ local function check_paru()
         end
     end
 
-    -- sort by build date (newest first)
-    if #pacman_lines + #aur_lines > 0 then
-        local want = {}
-        for _, line in ipairs(pacman_lines) do
-            local n = line:match("^(%S+)"); if n then want[n] = true end
-        end
-        for _, line in ipairs(aur_lines) do
-            local n = line:match("^(%S+)"); if n then want[n] = true end
-        end
-        local dates = {}
-        local p = io.popen("for d in /var/lib/pacman/local/*/desc; do awk '/^%NAME%/{getline; n=$0} /^%BUILDDATE%/{getline; print n, $0}' \"$d\"; done", "r")
-        if p then
-            for line in p:read("*a"):gmatch("[^\n]+") do
-                local n, d = line:match("^(%S+)%s+(%d+)")
-                if n and d and want[n] then dates[n] = tonumber(d) end
-            end
-            p:close()
-        end
-        local function by_date(a, b)
-            return (dates[a:match("^(%S+)")] or 0) > (dates[b:match("^(%S+)")] or 0)
-        end
-        table.sort(pacman_lines, by_date)
-        table.sort(aur_lines, by_date)
-    end
+    sort_by_build_date(pacman_lines)
+    sort_by_build_date(aur_lines)
 
     if #pacman_lines > 0 then
         state.pacman_count = #pacman_lines
@@ -260,6 +264,38 @@ local function check_paru()
     end
 
     state.pacman_stale = (os.time() - file_mtime("/var/lib/pacman/sync/core.db")) > CFG.db_max_age
+end
+
+local function fresh_pacman_sync()
+    local tmp = CACHE_DIR .. "/sync." .. tostring(os.getpid())
+    os.execute("mkdir -p " .. tmp)
+
+    local ok = shell(string.format(
+        "timeout 120 fakeroot pacman -Sy --dbonly --noconfirm --disable-sandbox --dbpath '%s' 2>/dev/null", tmp
+    ), true)
+    if not ok then os.execute("rm -rf " .. tmp); return end
+
+    os.execute(string.format("rm -rf '%s/local' && cp -a /var/lib/pacman/local '%s/local'", tmp, tmp))
+
+    local data = shell(string.format(
+        "pacman -Qu --dbpath '%s' 2>/dev/null", tmp
+    ))
+    os.execute("rm -rf " .. tmp)
+
+    if not data or not data:match("%S") then return end
+
+    local lines = {}
+    for line in data:gmatch("[^\r\n]+") do
+        local cleaned = trim(line)
+        if cleaned ~= "" then lines[#lines + 1] = cleaned end
+    end
+    if #lines == 0 then return end
+
+    sort_by_build_date(lines)
+
+    state.pacman_count = #lines
+    state.pacman_list  = table.concat(lines, "\n")
+    state.pacman_stale = false
 end
 
 -- ====== devel ======
@@ -366,6 +402,7 @@ local function check_updates(online)
     if online then foreign_cache = nil end
     check_paru()
     check_devel(online)
+    if state.pacman_stale then fresh_pacman_sync() end
 
     local kernel_h
     if online and CFG.kernel then
