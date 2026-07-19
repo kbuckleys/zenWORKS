@@ -36,13 +36,14 @@
       "ndigits": 0
     },
     "key": {
-      "width": 18
+      "width": 20,
+      "paddingLeft": 2
     }
   },
   "modules": [
     {
       "type": "title",
-      "key": "   ",
+      "key": "  ",
       "keyColor": "bright_magenta"
     },
     "break",
@@ -189,6 +190,7 @@
     {
       "type": "colors",
       "symbol": "block",
+      "paddingLeft": 2,
       "block": {
         "width": 3
       }
