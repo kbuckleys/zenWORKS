@@ -6,6 +6,10 @@
 
 @theme "ZENON"
 
+* {
+    selected-normal-background: #e78284;
+}
+
 window {
     location: south;
     anchor: south;
@@ -16,23 +20,28 @@ mainbox {
     children: [ message, listview ];
 }
 
-listview {
-    fixed-height: false;
-    scrollbar: false;
-}
-
 textbox {
     text-color: #000000;
     horizontal-align: 0.5;
     font: "0xProto Nerd Font Bold 12";
 }
 
+listview {
+    fixed-height: false;
+    scrollbar: false;
+    columns: 2;
+    lines: 1;
+}
+
 element {
     padding: 2px 8px 2px 8px;
 }
-element-text selected {
-    background-color: transparent;
+element-text {
     text-color: #e78284;
+    horizontal-align: 0.5;
+}
+element-text.selected.normal {
+    text-color: #000000;
 }
 
 message {

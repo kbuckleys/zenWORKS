@@ -7,7 +7,7 @@
 @theme "ZENON"
 
 * {
-    selected-normal-background: #e78284;
+    selected-normal-background: #000000;
 }
 
 window {
@@ -17,32 +17,35 @@ window {
 }
 
 mainbox {
-    children: [ listview ];
+    children: [ message, listview ];
 }
 
-inputbar, element-icon {
-    enabled: false;
+textbox {
+    text-color: #e78284;
+    background-color: #000000;
+    horizontal-align: 0.5;
+    font: "0xProto Nerd Font Bold 12";
 }
 
 listview {
     background-color: #e78284;
     fixed-height: false;
     scrollbar: false;
-    columns: 6;
+    columns: 2;
     lines: 1;
 }
 
 element {
-    padding: 4px 10px 4px 10px;
+    padding: 2px 8px 2px 8px;
 }
 element-text {
-    color: #000000;
-    highlight: none;
+    text-color: #000000;
     horizontal-align: 0.5;
 }
-element selected.normal {
-    background-color: #000000;
+element-text.selected.normal {
+    text-color: #e78284;
 }
-element-text selected {
-    color: #e78284;
+
+message {
+    padding: 4px;
 }
