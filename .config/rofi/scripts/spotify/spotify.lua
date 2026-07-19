@@ -34,6 +34,7 @@ local current_repeat = "off"
 
 local search_all_pending = false
 local main_menu_pending = false
+local track_actions_pending = false
 
 local QUEUE_FILE = HOME .. "/.cache/spotify_rofi/playback_queue.json"
 local SESSION_FILE = HOME .. "/.cache/spotify_rofi/session.json"
@@ -72,7 +73,10 @@ local function file_age(path)
     local f = io.open(path, "r")
     if not f then return math.huge end
     f:close()
-    local attr = io.popen("stat -c %Y " .. shell_quote(path)):read("*n")
+    local h = io.popen("stat -c %Y " .. shell_quote(path))
+    if not h then return math.huge end
+    local attr = h:read("*n")
+    h:close()
     if not attr then return math.huge end
     return os.time() - attr
 end
@@ -139,7 +143,7 @@ local function fetch_liked_order()
     local limit = 50
     while true do
         local cmd = string.format(
-            "curl -s -H 'Authorization: Bearer %s' 'https://api.spotify.com/v1/me/tracks?limit=%d&offset=%d&fields=items(track(id,name,duration_ms),added_at)'",
+            "curl -s --max-time 5 -H 'Authorization: Bearer %s' 'https://api.spotify.com/v1/me/tracks?limit=%d&offset=%d&fields=items(track(id,name,duration_ms),added_at)'",
             token, limit, offset
         )
         local handle = io.popen(cmd, "r")
@@ -240,7 +244,7 @@ local function add_to_queue(track_id)
     local token = get_spotify_token()
     if not token then return false end
     local cmd = string.format(
-        "curl -s -w '%%{http_code}' -X POST 'https://api.spotify.com/v1/me/player/queue?uri=spotify:track:%s' -H 'Authorization: Bearer %s' -o /dev/null",
+        "curl -s --max-time 5 -w '%%{http_code}' -X POST 'https://api.spotify.com/v1/me/player/queue?uri=spotify:track:%s' -H 'Authorization: Bearer %s' -o /dev/null",
         track_id, token
     )
     local result = shell(cmd)
@@ -380,7 +384,7 @@ local function get_playback_status()
         if playback_cache == false then return nil end
         return playback_cache
     end
-    local out = shell("timeout 0.5 spotify_player get key playback 2>/dev/null")
+    local out = shell("timeout 1 spotify_player get key playback 2>/dev/null")
     local data = safe_json_decode(out)
     if not data then
         current_track_id = nil; current_track_item = nil; current_is_playing = false
@@ -495,7 +499,7 @@ end
 local search_flow
 
 local function rofi_dmenu(opts)
-    if search_all_pending or main_menu_pending then return nil end
+    if search_all_pending or main_menu_pending or track_actions_pending then return nil end
     local entries = opts.entries or {}
     local prompt = opts.prompt or ""
     local mesg = opts.mesg
@@ -508,7 +512,7 @@ local function rofi_dmenu(opts)
     local override_theme = opts.theme
 
     local theme = override_theme or (use_menu and THEME_MENU or THEME)
-    local args = { "rofi", "-dmenu", "-theme", theme, "-p", prompt, "-i", "-kb-custom-1", "Alt+BackSpace", "-kb-custom-2", "Alt+space", "-kb-custom-3", "Alt+slash" }
+    local args = { "rofi", "-dmenu", "-theme", theme, "-p", prompt, "-i", "-kb-custom-1", "Alt+BackSpace", "-kb-custom-2", "Alt+space", "-kb-custom-3", "Alt+slash", "-kb-custom-4", "Alt+Return" }
     if not custom then args[#args + 1] = "-no-custom" end
     if markup then
         args[#args + 1] = "-markup-rows"
@@ -545,6 +549,7 @@ local function rofi_dmenu(opts)
     if exit_code == 10 then pcall(pop_session); return nil end
     if exit_code == 11 then clear_session(); main_menu_pending = true; return nil end
     if exit_code == 12 then clear_session(); search_all_pending = true; return nil end
+    if exit_code == 13 then track_actions_pending = true; return nil end
     if exit_code ~= 0 then os.exit(0) end
 
     result = trim(result)
@@ -767,7 +772,7 @@ local function artist_top_tracks_flow(artist)
     local token = get_spotify_token()
     if not token then pop_session(); rofi_message("No Spotify token") return end
     local raw = shell(string.format(
-        "curl -s -H 'Authorization: Bearer %s' 'https://api.spotify.com/v1/artists/%s/top-tracks?market=US'",
+        "curl -s --max-time 5 -H 'Authorization: Bearer %s' 'https://api.spotify.com/v1/artists/%s/top-tracks?market=US'",
         token, artist.id
     ))
     local data = safe_json_decode(raw)
@@ -1185,7 +1190,7 @@ local function categories_flow()
     if not token then rofi_message("No Spotify token") return end
 
     local cmd = string.format(
-        "curl -s -H 'Authorization: Bearer %s' 'https://api.spotify.com/v1/browse/categories?limit=50&locale=en_US'",
+        "curl -s --max-time 5 -H 'Authorization: Bearer %s' 'https://api.spotify.com/v1/browse/categories?limit=50&locale=en_US'",
         token
     )
     local raw = shell(cmd)
@@ -1215,7 +1220,7 @@ local function categories_flow()
 
         local cat = cats[idx]
         local pcmd = string.format(
-            "curl -s -H 'Authorization: Bearer %s' 'https://api.spotify.com/v1/browse/categories/%s/playlists?limit=20'",
+            "curl -s --max-time 5 -H 'Authorization: Bearer %s' 'https://api.spotify.com/v1/browse/categories/%s/playlists?limit=20'",
             token, cat.id
         )
         local praw = shell(pcmd)
@@ -1244,7 +1249,7 @@ local function top_tracks_flow()
     local tracks
     for _, range in ipairs({ "short_term", "medium_term", "long_term" }) do
         local cmd = string.format(
-            "curl -s -H 'Authorization: Bearer %s' 'https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=%s'",
+            "curl -s --max-time 5 -H 'Authorization: Bearer %s' 'https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=%s'",
             token, range
         )
         local raw = shell(cmd)
@@ -1425,6 +1430,10 @@ local function followed_artists_flow()
 end
 
 local function main()
+    local lock = "/tmp/spotify_rofi_instance.pid"
+    local prev = read_file(lock)
+    if prev then os.execute("kill " .. (tonumber(prev:match("%d+")) or 0) .. " 2>/dev/null; sleep 0.05") end
+    os.execute("echo $PPID > " .. shell_quote(lock))
     ensure_daemon()
     load_user_data_from_sp_cache()
     if not (next(liked_tracks) and next(saved_albums) and next(user_playlists) and next(followed_artists)) then
@@ -1533,6 +1542,18 @@ local function main()
         if search_all_pending then
             search_all_pending = false
             search_flow("all")
+            goto main_continue
+        end
+        if track_actions_pending then
+            track_actions_pending = false
+            if not current_track_item then
+                invalidate_playback_cache()
+                get_playback_status()
+            end
+            if current_track_item then
+                show_actions(current_track_item, "track", nil)
+                invalidate_playback_cache()
+            end
             goto main_continue
         end
         if not selection or selection == "" then goto main_continue end
