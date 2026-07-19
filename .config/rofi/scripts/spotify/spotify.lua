@@ -33,6 +33,7 @@ local current_shuffle = false
 local current_repeat = "off"
 
 local search_all_pending = false
+local main_menu_pending = false
 
 local QUEUE_FILE = HOME .. "/.cache/spotify_rofi/playback_queue.json"
 local SESSION_FILE = HOME .. "/.cache/spotify_rofi/session.json"
@@ -494,7 +495,7 @@ end
 local search_flow
 
 local function rofi_dmenu(opts)
-    if search_all_pending then return nil end
+    if search_all_pending or main_menu_pending then return nil end
     local entries = opts.entries or {}
     local prompt = opts.prompt or ""
     local mesg = opts.mesg
@@ -542,7 +543,7 @@ local function rofi_dmenu(opts)
     local result = (raw or ""):match("^(.-)\n__EXIT__%d+__") or ""
 
     if exit_code == 10 then pcall(pop_session); return nil end
-    if exit_code == 11 then clear_session(); return nil end
+    if exit_code == 11 then clear_session(); main_menu_pending = true; return nil end
     if exit_code == 12 then clear_session(); search_all_pending = true; return nil end
     if exit_code ~= 0 then os.exit(0) end
 
@@ -631,10 +632,10 @@ end
 
 local function display_all_entry(item)
     local prefix = ""
-    if item._stype == "tracks" then prefix = "\u{f0987} "
-    elseif item._stype == "albums" then prefix = "\u{f0025} "
-    elseif item._stype == "artists" then prefix = "\u{f0415} "
-    elseif item._stype == "playlists" then prefix = "\u{f0411} "
+    if item._stype == "tracks" then prefix = "\u{F0387} "
+    elseif item._stype == "albums" then prefix = "\u{F0025} "
+    elseif item._stype == "artists" then prefix = "\u{F415} "
+    elseif item._stype == "playlists" then prefix = "\u{F0411} "
     end
     if item._stype == "tracks" then
         return prefix .. display_track(item)
@@ -1135,7 +1136,9 @@ local function search_flow(category)
             for _, rk in ipairs({ "tracks", "albums", "artists", "playlists" }) do
                 local cat_items = results[rk]
                 if cat_items and type(cat_items) == "table" then
-                    for _, item in ipairs(cat_items) do
+                    local n = math.min(#cat_items, 5)
+                    for i = 1, n do
+                        local item = cat_items[i]
                         item._stype = rk
                         items[#items + 1] = item
                     end
@@ -1523,6 +1526,10 @@ local function main()
             custom = false,
             use_menu = false,
         })
+        if main_menu_pending then
+            main_menu_pending = false
+            goto main_continue
+        end
         if search_all_pending then
             search_all_pending = false
             search_flow("all")
