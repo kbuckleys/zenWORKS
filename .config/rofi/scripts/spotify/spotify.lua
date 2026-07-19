@@ -34,7 +34,6 @@ local current_repeat = "off"
 
 local search_all_pending = false
 local main_menu_pending = false
-local track_actions_pending = false
 
 local QUEUE_FILE = HOME .. "/.cache/spotify_rofi/playback_queue.json"
 local SESSION_FILE = HOME .. "/.cache/spotify_rofi/session.json"
@@ -384,7 +383,7 @@ local function get_playback_status()
         if playback_cache == false then return nil end
         return playback_cache
     end
-    local out = shell("timeout 1 spotify_player get key playback 2>/dev/null")
+    local out = shell("timeout 2 spotify_player get key playback 2>/dev/null")
     local data = safe_json_decode(out)
     if not data then
         current_track_id = nil; current_track_item = nil; current_is_playing = false
@@ -497,9 +496,11 @@ local function clear_session()
 end
 
 local search_flow
+local show_actions
+local browse_loop
 
 local function rofi_dmenu(opts)
-    if search_all_pending or main_menu_pending or track_actions_pending then return nil end
+    if search_all_pending or main_menu_pending then return nil end
     local entries = opts.entries or {}
     local prompt = opts.prompt or ""
     local mesg = opts.mesg
@@ -549,7 +550,23 @@ local function rofi_dmenu(opts)
     if exit_code == 10 then pcall(pop_session); return nil end
     if exit_code == 11 then clear_session(); main_menu_pending = true; return nil end
     if exit_code == 12 then clear_session(); search_all_pending = true; return nil end
-    if exit_code == 13 then track_actions_pending = true; return nil end
+    if exit_code == 13 then
+        get_playback_status()
+        if not current_track_item then
+            local raw = shell("timeout 3 spotify_player get key playback 2>/dev/null")
+            local data = safe_json_decode(raw)
+            if data and data.item then
+                current_track_id = data.item.id
+                current_track_item = data.item
+                current_is_playing = not not data.is_playing
+            end
+        end
+        if current_track_item then
+            show_actions(current_track_item, "track", nil)
+            invalidate_playback_cache()
+        end
+        return nil
+    end
     if exit_code ~= 0 then os.exit(0) end
 
     result = trim(result)
@@ -737,9 +754,6 @@ local function do_action(action, item, category, context, context_type, context_
         os.execute("xdg-open " .. shell_quote("spotify:" .. category .. ":" .. id) .. " &")
     end
 end
-
-local show_actions
-local browse_loop
 
 local function liked_tracks_by_artist_flow(artist)
     push_session({ view = "liked_by_artist", artist_id = artist.id, artist_name = artist.name })
@@ -1542,18 +1556,6 @@ local function main()
         if search_all_pending then
             search_all_pending = false
             search_flow("all")
-            goto main_continue
-        end
-        if track_actions_pending then
-            track_actions_pending = false
-            if not current_track_item then
-                invalidate_playback_cache()
-                get_playback_status()
-            end
-            if current_track_item then
-                show_actions(current_track_item, "track", nil)
-                invalidate_playback_cache()
-            end
             goto main_continue
         end
         if not selection or selection == "" then goto main_continue end
