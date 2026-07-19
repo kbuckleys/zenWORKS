@@ -44,7 +44,7 @@ listview {
     fixed-height: false;
     scrollbar: false;
     columns: 2;
-    lines: 10;
+    lines: 14;
 }
 
 element {

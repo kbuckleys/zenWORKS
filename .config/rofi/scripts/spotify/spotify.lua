@@ -17,6 +17,8 @@ local TOKEN_FILE = HOME .. "/.cache/spotify-player/user_client_token.json"
 local CACHE_MAX_AGE = 300
 local LIKED_ORDER_MAX_AGE = 86400
 local MAX_RESULTS = 20
+local DAEMON_REFRESH_FILE = HOME .. "/.cache/spotify_rofi/daemon_state.json"
+local DAEMON_REFRESH_INTERVAL = 3600
 local ICON_LIKED = "\u{f05d}"
 local ICON_EXPLICIT = "󰯹"
 
@@ -250,6 +252,19 @@ local function add_to_queue(track_id)
     return result and result:match("2..") ~= nil
 end
 
+local function is_track_in_queue(track_id)
+    local raw = shell("timeout 3 spotify_player get key queue 2>/dev/null")
+    local ok, data = pcall(json.decode, raw or "")
+    if not ok or type(data) ~= "table" then return false end
+    if data.currently_playing and data.currently_playing.id == track_id then return true end
+    if data.queue then
+        for _, t in ipairs(data.queue) do
+            if t.id == track_id then return true end
+        end
+    end
+    return false
+end
+
 local function trim(s)
     if not s then return "" end
     return s:match("^%s*(.-)%s*$") or ""
@@ -300,6 +315,27 @@ local function save_cached_user_data()
         followed_artists = followed_artists,
     }
     write_file(CACHE_FILE, json.encode(data))
+end
+
+local function invalidate_user_cache()
+    liked_tracks = {}
+    saved_albums = {}
+    user_playlists = {}
+    followed_artists = {}
+    os.execute("rm -f " .. shell_quote(CACHE_FILE))
+end
+
+local function load_daemon_state()
+    local raw = read_file(DAEMON_REFRESH_FILE)
+    if not raw then return { last_restart = 0 } end
+    local ok, data = pcall(json.decode, raw)
+    if not ok or type(data) ~= "table" then return { last_restart = 0 } end
+    return data
+end
+
+local function save_daemon_state(state)
+    ensure_cache_dir()
+    write_file(DAEMON_REFRESH_FILE, json.encode(state))
 end
 
 local function load_user_data()
@@ -750,8 +786,6 @@ local function do_action(action, item, category, context, context_type, context_
         liked_tracks[id] = nil
         liked_order_remove(id)
         save_cached_user_data()
-    elseif action == "Open in Spotify" then
-        os.execute("xdg-open " .. shell_quote("spotify:" .. category .. ":" .. id) .. " &")
     end
 end
 
@@ -853,6 +887,8 @@ local function artist_browse_flow(artist)
     end
 end
 
+local related_artists_flow -- forward declaration
+
 local function show_artist_actions(artist)
     push_session({ view = "artist_actions", artist_id = artist.id, artist_name = artist.name })
     local is_followed = followed_artists[artist.id]
@@ -860,6 +896,7 @@ local function show_artist_actions(artist)
         "View All Albums",
         "View Liked Tracks",
         "View Top Tracks",
+        "Related Artists",
         is_followed and "Unfollow Artist" or "Follow Artist",
     }
     while true do
@@ -877,6 +914,8 @@ local function show_artist_actions(artist)
             liked_tracks_by_artist_flow(artist)
         elseif sel == "View Top Tracks" then
             artist_top_tracks_flow(artist)
+        elseif sel == "Related Artists" then
+            related_artists_flow(artist)
         elseif sel == "Follow Artist" or sel == "Unfollow Artist" then
             local token = get_spotify_token()
             if token then
@@ -895,9 +934,42 @@ local function show_artist_actions(artist)
                 end
                 save_cached_user_data()
                 is_followed = not is_followed
-                actions[4] = is_followed and "Unfollow Artist" or "Follow Artist"
+                actions[5] = is_followed and "Unfollow Artist" or "Follow Artist"
             end
         end
+    end
+end
+
+related_artists_flow = function(artist)
+    local token = get_spotify_token()
+    if not token then rofi_message("No Spotify token") return end
+    local raw = shell(string.format(
+        "curl -s --max-time 5 -H 'Authorization: Bearer %s' 'https://api.spotify.com/v1/artists/%s/related-artists'",
+        token, artist.id
+    ))
+    local data = safe_json_decode(raw)
+    if not data or not data.artists or #data.artists == 0 then
+        rofi_message("No related artists found")
+        return
+    end
+    local artists = data.artists
+    local entries = {}
+    for i, a in ipairs(artists) do
+        entries[i] = display_artist(a)
+    end
+    push_session({ view = "related_artists", artist_id = artist.id, artist_name = artist.name })
+    while true do
+        local idx = rofi_dmenu({
+            entries = entries,
+            prompt = "Related to " .. artist.name,
+            mesg = string.format('%s - %d related artist%s', artist.name, #artists, #artists ~= 1 and "s" or ""),
+            custom = false,
+            by_index = true,
+        })
+        if not idx then return end
+        if idx < 1 or idx > #artists then goto continue end
+        show_artist_actions(artists[idx])
+        ::continue::
     end
 end
 
@@ -948,10 +1020,85 @@ local function show_lyrics(item)
     })
 end
 
+local function add_to_playlist_flow(track_id)
+    local token = get_spotify_token()
+    if not token then rofi_message("Auth error") return end
+
+    local cmd = string.format(
+        "curl -s --max-time 5 -H 'Authorization: Bearer %s' 'https://api.spotify.com/v1/me/playlists?limit=50'",
+        token
+    )
+    local raw = shell(cmd)
+    local ok, data = pcall(json.decode, raw or "")
+    if not ok or type(data) ~= "table" or not data.items then
+        rofi_message("No playlists found")
+        return
+    end
+
+    local my_id_cmd = string.format(
+        "curl -s --max-time 5 -H 'Authorization: Bearer %s' 'https://api.spotify.com/v1/me'",
+        token
+    )
+    local me_raw = shell(my_id_cmd)
+    local me_ok, me_data = pcall(json.decode, me_raw or "")
+    local my_id = me_ok and me_data and me_data.id
+
+    local names = { "Create New Playlist" }
+    local ids = { "__create__" }
+    for _, p in ipairs(data.items) do
+        if p.owner and ((p.owner.id == my_id) or p.collaborative) then
+            names[#names + 1] = p.name
+            ids[#ids + 1] = p.id
+        end
+    end
+
+    local idx = rofi_dmenu({
+        entries = names,
+        prompt = "Add to Playlist",
+        custom = false,
+        by_index = true,
+    })
+    if not idx or idx < 1 or idx > #names then return end
+
+    local target_id
+    if ids[idx] == "__create__" then
+        local name_cmd = "echo | rofi -dmenu -p 'New Playlist' -theme " .. shell_quote(THEME_MENU)
+        local handle = io.popen(name_cmd, "r")
+        local pl_name = handle and trim(handle:read("*a")) or ""
+        handle:close()
+        if pl_name == "" then return end
+        local create_cmd = string.format(
+            "curl -s --max-time 5 -X POST 'https://api.spotify.com/v1/users/%s/playlists' -H 'Authorization: Bearer %s' -H 'Content-Type: application/json' -d '{\"name\":\"%s\"}'",
+            my_id, token, pl_name:gsub('"', '\\"')
+        )
+        local create_resp = shell(create_cmd)
+        local c_ok, c_data = pcall(json.decode, create_resp or "")
+        if not c_ok or not c_data or not c_data.id then
+            rofi_message("Failed to create playlist")
+            return
+        end
+        target_id = c_data.id
+    else
+        target_id = ids[idx]
+    end
+
+    local add_cmd = string.format(
+        "curl -s --max-time 5 -w '%%{http_code}' -X POST 'https://api.spotify.com/v1/playlists/%s/tracks' -H 'Authorization: Bearer %s' -H 'Content-Type: application/json' -d '{\"uris\":[\"spotify:track:%s\"]}' -o /dev/null",
+        target_id, token, track_id
+    )
+    local result = shell(add_cmd)
+    if result and result:match("2..") then
+        rofi_message("Added to " .. (names[idx] ~= "Create New Playlist" and names[idx] or "new playlist"))
+    else
+        rofi_message("Failed to add track")
+    end
+end
+
 show_actions = function(item, category, context, context_type, context_id, all_items, current_idx)
     push_session({ view = "action", track_id = item.id })
 
     local is_liked = liked_tracks[item.id]
+    local in_playlist = context_type == "playlist" and context_id
 
     local actions = {
         "Play / Pause",
@@ -959,10 +1106,11 @@ show_actions = function(item, category, context, context_type, context_id, all_i
         is_liked and "Unlike" or "Like",
         "Go to Album",
         "Go to Artist",
-        "Lyrics",
-        "Open in Spotify",
-        "Copy URL",
+        "Add to Playlist",
     }
+    if in_playlist then actions[#actions + 1] = "Remove from Playlist" end
+    actions[#actions + 1] = "Lyrics"
+    actions[#actions + 1] = "Copy URL"
 
     local mesg = build_track_mesg(item)
 
@@ -1028,10 +1176,29 @@ show_actions = function(item, category, context, context_type, context_id, all_i
                     show_artist_actions(artist)
                 end
             end
+        elseif sel == "Add to Playlist" then
+            add_to_playlist_flow(item.id)
+        elseif sel == "Remove from Playlist" then
+            local token = get_spotify_token()
+            if not token then rofi_message("No Spotify token") return "removed" end
+            local uri = "spotify:track:" .. item.id
+            local body = json.encode({ tracks = { { uri = uri } } })
+            local cmd = string.format(
+                "curl -s --max-time 5 -w '%%{http_code}' -X DELETE 'https://api.spotify.com/v1/playlists/%s/tracks' -H 'Authorization: Bearer %s' -H 'Content-Type: application/json' -d %s -o /dev/null",
+                context_id, token, shell_quote(body)
+            )
+            local result = shell(cmd)
+            if result and result:match("2..") then
+                rofi_message("Removed from playlist")
+                if all_items and current_idx then
+                    table.remove(all_items, current_idx)
+                end
+                return "removed"
+            else
+                rofi_message("Failed to remove track")
+            end
         elseif sel == "Lyrics" then
             show_lyrics(item)
-        elseif sel == "Open in Spotify" then
-            os.execute("xdg-open " .. shell_quote("spotify:" .. category .. ":" .. item.id) .. " &")
         elseif sel == "Copy URL" then
             os.execute("echo -n 'https://open.spotify.com/track/" .. item.id .. "' | wl-copy &")
         end
@@ -1049,6 +1216,12 @@ local function save_browse_session(ctx, ctx_type, ctx_id, msg)
         push_session({ view = "top_tracks" })
     elseif ctx == "discover-weekly" then
         push_session({ view = "discover_weekly" })
+    elseif ctx == "release-radar" then
+        push_session({ view = "release_radar" })
+    elseif ctx == "new-music-friday" then
+        push_session({ view = "new_music_friday" })
+    elseif ctx == "your-queue" then
+        push_session({ view = "your_queue" })
     end
 end
 
@@ -1124,8 +1297,15 @@ browse_loop = function(entries, items, mesg, category, context, context_type, co
             end
             browse_loop(track_entries, tracks, string.format('%s - %d track%s', item.name, #tracks, #tracks ~= 1 and "s" or ""), "track", "playlist", "playlist", item.id)
         elseif category == "track" then
-            show_actions(item, "track", context, context_type, context_id, items, idx)
-            entries[idx] = string.format("%2d. %s", idx, display_track(item))
+            local result = show_actions(item, "track", context, context_type, context_id, items, idx)
+            if result == "removed" then
+                table.remove(entries, idx)
+                for i = idx, #entries do
+                    entries[i] = string.format("%2d. %s", i, display_track(items[i]))
+                end
+            else
+                entries[idx] = string.format("%2d. %s", idx, display_track(item))
+            end
         end
 
         ::continue::
@@ -1303,6 +1483,34 @@ local function weekly_flow()
     return browse_loop(track_entries, tracks, string.format('Discover Weekly - %d track%s', #tracks, #tracks ~= 1 and "s" or ""), "track", "discover-weekly")
 end
 
+local function release_radar_flow()
+    local data = safe_json_decode(shell("timeout 2 spotify_player get item playlist --id 37i9dQZEVXbxxd7f2YoHEu 2>/dev/null"))
+    if not data or not data.tracks or #data.tracks == 0 then
+        rofi_message("No tracks found")
+        return
+    end
+    local tracks = data.tracks
+    local track_entries = {}
+    for i, t in ipairs(tracks) do
+        track_entries[i] = string.format("%2d. %s", i, display_track(t))
+    end
+    return browse_loop(track_entries, tracks, string.format('Release Radar - %d track%s', #tracks, #tracks ~= 1 and "s" or ""), "track", "release-radar")
+end
+
+local function new_music_friday_flow()
+    local data = safe_json_decode(shell("timeout 10 spotify_player get item playlist --id 37i9dQZF1DWXJfnUiYjUKT 2>/dev/null"))
+    if not data or not data.tracks or #data.tracks == 0 then
+        rofi_message("No tracks found")
+        return
+    end
+    local tracks = data.tracks
+    local track_entries = {}
+    for i, t in ipairs(tracks) do
+        track_entries[i] = string.format("%2d. %s", i, display_track(t))
+    end
+    return browse_loop(track_entries, tracks, string.format('New Music Friday - %d track%s', #tracks, #tracks ~= 1 and "s" or ""), "track", "new-music-friday")
+end
+
 local function ensure_daemon()
     local pid = trim(shell("pgrep -x spotify_player 2>/dev/null") or "")
     if pid == "" then
@@ -1311,6 +1519,23 @@ local function ensure_daemon()
             os.exit(0)
         end
         os.execute("nohup spotify_player -d </dev/null &")
+        os.execute("sleep 2")
+        save_daemon_state({ last_restart = os.time() })
+    else
+        local state = load_daemon_state()
+        local elapsed = os.time() - (state.last_restart or 0)
+        if elapsed >= DAEMON_REFRESH_INTERVAL then
+            get_playback_status()
+            if not current_is_playing then
+                os.execute("pkill -x spotify_player 2>/dev/null")
+                os.execute("sleep 1")
+                os.execute("nohup spotify_player -d </dev/null &")
+                os.execute("sleep 2")
+                invalidate_playback_cache()
+                invalidate_user_cache()
+                save_daemon_state({ last_restart = os.time() })
+            end
+        end
     end
 end
 
@@ -1408,6 +1633,15 @@ local function track_browse_flow(items, name, context)
     return browse_loop(entries, items, string.format('%s - %d track%s', name, n, n ~= 1 and "s" or ""), "track", context)
 end
 
+local function your_queue_flow()
+    local data = safe_json_decode(shell("timeout 3 spotify_player get key queue 2>/dev/null"))
+    if not data or not data.queue or #data.queue == 0 then
+        rofi_message("Queue is empty")
+        return
+    end
+    return track_browse_flow(data.queue, "Your Queue", "your-queue")
+end
+
 local function liked_tracks_flow()
     local tracks = load_liked_tracks_from_cache()
     return track_browse_flow(tracks, "Liked Tracks", "liked")
@@ -1443,12 +1677,151 @@ local function followed_artists_flow()
     browse_loop(entries, artists, string.format('Followed Artists - %d artist%s', #artists, #artists ~= 1 and "s" or ""), "artist", "artist")
 end
 
+local function playlist_actions_flow(playlist)
+    push_session({ view = "playlist_actions", playlist_id = playlist.id, playlist_name = playlist.name or "Playlist" })
+
+    local actions = { "Open Playlist", "Rename Playlist", "Delete Playlist" }
+    while true do
+        local sel = rofi_dmenu({
+            entries = actions,
+            prompt = playlist.name or "Playlist",
+            mesg = display_playlist(playlist),
+            sel = 0,
+            custom = false,
+        })
+        if not sel or sel == "" then return end
+
+        if sel == "Open Playlist" then
+            local pdata = safe_json_decode(shell("timeout 2 spotify_player get item playlist --id " .. shell_quote(playlist.id) .. " 2>/dev/null"))
+            if not pdata or not pdata.tracks or #pdata.tracks == 0 then
+                rofi_message("No tracks found")
+                return
+            end
+            local tracks = pdata.tracks
+            local track_entries = {}
+            for i, t in ipairs(tracks) do
+                track_entries[i] = string.format("%2d. %s", i, display_track(t))
+            end
+            browse_loop(track_entries, tracks, string.format('%s - %d track%s', playlist.name or "Playlist", #tracks, #tracks ~= 1 and "s" or ""), "track", "playlist", "playlist", playlist.id)
+            return
+
+        elseif sel == "Rename Playlist" then
+            local name_cmd = "echo " .. shell_quote(playlist.name or "") .. " | rofi -dmenu -p 'New Name' -theme " .. shell_quote(THEME_MENU)
+            local handle = io.popen(name_cmd, "r")
+            local new_name = handle and trim(handle:read("*a")) or ""
+            handle:close()
+            if new_name == "" or new_name == (playlist.name or "") then goto continue end
+            local token = get_spotify_token()
+            if not token then rofi_message("No Spotify token") goto continue end
+            local body = json.encode({ name = new_name })
+            local cmd = string.format(
+                "curl -s --max-time 5 -w '%%{http_code}' -X PUT 'https://api.spotify.com/v1/playlists/%s' -H 'Authorization: Bearer %s' -H 'Content-Type: application/json' -d %s -o /dev/null",
+                playlist.id, token, shell_quote(body)
+            )
+            local result = shell(cmd)
+            if result and result:match("2..") then
+                playlist.name = new_name
+                rofi_message("Playlist renamed")
+            else
+                rofi_message("Failed to rename playlist")
+            end
+
+        elseif sel == "Delete Playlist" then
+            local confirm = rofi_dmenu({
+                entries = { "Yes, delete", "Cancel" },
+                prompt = "Delete",
+                mesg = string.format('Delete "%s"?', playlist.name or "Playlist"),
+                custom = false,
+                by_index = true,
+            })
+            if confirm == 1 then
+                local token = get_spotify_token()
+                if not token then rofi_message("No Spotify token") goto continue end
+                local cmd = string.format(
+                    "curl -s --max-time 5 -w '%%{http_code}' -X DELETE 'https://api.spotify.com/v1/playlists/%s/followers' -H 'Authorization: Bearer %s' -o /dev/null",
+                    playlist.id, token
+                )
+                local result = shell(cmd)
+                if result and result:match("2..") then
+                    rofi_message("Playlist deleted")
+                    return
+                else
+                    rofi_message("Failed to delete playlist")
+                end
+            end
+        end
+        ::continue::
+    end
+end
+
+local function playlists_flow()
+    local token = get_spotify_token()
+    if not token then rofi_message("No Spotify token") return end
+
+    local cmd = string.format(
+        "curl -s --max-time 5 -H 'Authorization: Bearer %s' 'https://api.spotify.com/v1/me/playlists?limit=50'",
+        token
+    )
+    local raw = shell(cmd)
+    local data = safe_json_decode(raw)
+    local playlists = (data and data.items) or {}
+    local entries = { "Create New Playlist" }
+    for i, p in ipairs(playlists) do
+        entries[#entries + 1] = display_playlist(p)
+    end
+
+    push_session({ view = "playlists_list" })
+    while true do
+        local idx = rofi_dmenu({
+            entries = entries,
+            prompt = "Playlists",
+            mesg = #playlists > 0 and string.format('Playlists - %d playlist%s', #playlists, #playlists ~= 1 and "s" or "") or "No playlists yet",
+            custom = false,
+            by_index = true,
+        })
+        if not idx then return end
+        if idx == 1 then
+            local name_cmd = "echo | rofi -dmenu -p 'New Playlist' -theme " .. shell_quote(THEME_MENU)
+            local handle = io.popen(name_cmd, "r")
+            local pl_name = handle and trim(handle:read("*a")) or ""
+            handle:close()
+            if pl_name == "" then goto continue end
+            local me_raw = shell(string.format("curl -s --max-time 5 -H 'Authorization: Bearer %s' 'https://api.spotify.com/v1/me'", token))
+            local me_data = safe_json_decode(me_raw)
+            local my_id = me_data and me_data.id
+            if not my_id then rofi_message("Failed to get user ID") goto continue end
+            local create_cmd = string.format(
+                "curl -s --max-time 5 -X POST 'https://api.spotify.com/v1/users/%s/playlists' -H 'Authorization: Bearer %s' -H 'Content-Type: application/json' -d '{\"name\":\"%s\"}'",
+                my_id, token, pl_name:gsub('"', '\\"')
+            )
+            local create_resp = shell(create_cmd)
+            local c_ok, c_data = pcall(json.decode, create_resp or "")
+            if c_ok and c_data and c_data.id then
+                playlist_actions_flow(c_data)
+                return
+            else
+                rofi_message("Failed to create playlist")
+            end
+            goto continue
+        end
+        if idx < 1 or idx - 1 > #playlists then goto continue end
+
+        local playlist = playlists[idx - 1]
+        playlist_actions_flow(playlist)
+
+        ::continue::
+    end
+end
+
 local function main()
     local lock = "/tmp/spotify_rofi_instance.pid"
     local prev = read_file(lock)
     if prev then os.execute("kill " .. (tonumber(prev:match("%d+")) or 0) .. " 2>/dev/null; sleep 0.05") end
     os.execute("echo $PPID > " .. shell_quote(lock))
     ensure_daemon()
+    local state = load_daemon_state()
+    state.last_invocation = os.time()
+    save_daemon_state(state)
     load_user_data_from_sp_cache()
     if not (next(liked_tracks) and next(saved_albums) and next(user_playlists) and next(followed_artists)) then
         load_user_data()
@@ -1502,6 +1875,10 @@ local function main()
             top_tracks_flow()
         elseif session.view == "discover_weekly" then
             weekly_flow()
+        elseif session.view == "release_radar" then
+            release_radar_flow()
+        elseif session.view == "new_music_friday" then
+            new_music_friday_flow()
         elseif session.view == "artist_albums" and session.artist_id then
             artist_browse_flow({ id = session.artist_id, name = session.artist_name or "" })
         elseif session.view == "artist_actions" and session.artist_id then
@@ -1510,8 +1887,16 @@ local function main()
             liked_tracks_by_artist_flow({ id = session.artist_id, name = session.artist_name or "" })
         elseif session.view == "top_tracks_by_artist" and session.artist_id then
             artist_top_tracks_flow({ id = session.artist_id, name = session.artist_name or "" })
+        elseif session.view == "related_artists" and session.artist_id then
+            related_artists_flow({ id = session.artist_id, name = session.artist_name or "" })
         elseif session.view == "browse_categories" then
             categories_flow()
+        elseif session.view == "your_queue" then
+            your_queue_flow()
+        elseif session.view == "playlists_list" then
+            playlists_flow()
+        elseif session.view == "playlist_actions" and session.playlist_id then
+            playlist_actions_flow({ id = session.playlist_id, name = session.playlist_name or "Playlist" })
         else
             handled = false
         end
@@ -1528,8 +1913,12 @@ local function main()
             "Top Tracks",
             "Saved Albums",
             "Followed Artists",
+            "Playlists",
             "Discover Weekly",
+            "Release Radar",
+            "New Music Friday",
             "Categories",
+            "Your Queue",
             "Search",
             "Play / Pause",
             "Next Track",
@@ -1537,6 +1926,8 @@ local function main()
             current_shuffle and "Shuffle: On" or "Shuffle: Off",
             current_repeat == "off" and "Repeat: Off" or (current_repeat == "track" and "Repeat: Track" or "Repeat: Context"),
             "Volume",
+            '<span foreground="#e78284">Restart Daemon</span>',
+            "Keybinds",
         }
 
         local mesg = get_playback_message()
@@ -1548,7 +1939,9 @@ local function main()
             sel = 0,
             custom = false,
             use_menu = false,
+            markup = true,
         })
+        if selection then selection = selection:gsub("<[^>]+>", "") end
         if main_menu_pending then
             main_menu_pending = false
             goto main_continue
@@ -1580,12 +1973,20 @@ local function main()
             saved_albums_flow()
         elseif selection == "Followed Artists" then
             followed_artists_flow()
+        elseif selection == "Playlists" then
+            playlists_flow()
         elseif selection == "Categories" then
             categories_flow()
+        elseif selection == "Your Queue" then
+            your_queue_flow()
         elseif selection == "Top Tracks" then
             top_tracks_flow()
         elseif selection == "Discover Weekly" then
             weekly_flow()
+        elseif selection == "Release Radar" then
+            release_radar_flow()
+        elseif selection == "New Music Friday" then
+            new_music_friday_flow()
         elseif selection == "Play / Pause" then
             os.execute("spotify_player playback play-pause")
             invalidate_playback_cache()
@@ -1652,6 +2053,20 @@ local function main()
                 show_actions(current_track_item, "track", nil)
                 invalidate_playback_cache()
             end
+        elseif selection == "Restart Daemon" then
+            os.execute("pkill -x spotify_player 2>/dev/null")
+            os.execute("sleep 1")
+            invalidate_playback_cache()
+            invalidate_user_cache()
+            save_daemon_state({ last_restart = os.time() })
+            ensure_daemon()
+        elseif selection == "Keybinds" then
+            rofi_message(
+                "Alt+Return  →  Current track actions\n" ..
+                "Alt+Backspace  →  Go back\n" ..
+                "Alt+Space  →  Main menu\n" ..
+                "Alt+/  →  Search all"
+            )
         end
         ::main_continue::
     end
