@@ -52,6 +52,7 @@ ZARU.lua [options]
   -n, --notify         Send desktop notifications
   -k, --kernel         Check kernel vs kernel.org latest
       --update         Run update command and exit
+      --once           Run one check cycle and exit
   -h, --help           Show this help
 ]])
     os.exit(2)
@@ -60,6 +61,7 @@ end
 local function parse_args(a)
     a = a or {}
     local i = 1
+    local action = "run"
     while i <= #a do
         local v = a[i]
         if v == "-f" or v == "--format" then i = i + 1; CFG.format = a[i] or CFG.format
@@ -70,13 +72,14 @@ local function parse_args(a)
         elseif v == "-d" or v == "--devel" then CFG.devel = true
         elseif v == "-n" or v == "--notify" then CFG.notify = true
         elseif v == "-k" or v == "--kernel" then CFG.kernel = true
-        elseif v == "--update" then return "update"
+        elseif v == "--update" then action = "update"
+        elseif v == "--once" then action = "once"
         elseif v == "-h" or v == "--help" then usage()
         else io.stderr:write("Unknown: " .. v .. "\n"); usage()
         end
         i = i + 1
     end
-    return "run"
+    return action
 end
 
 local function load_config()
@@ -180,6 +183,7 @@ local function init_state()
         devel_count=0,  devel_list="",  devel_cache="",
         kernel_count=0, kernel_list="",
         total_count=0,  pacman_stale=false,
+        last_online=0,
     }
     for k, v in pairs(defaults) do
         if state[k] == nil then state[k] = v end
@@ -189,22 +193,22 @@ end
 -- ====== paru ======
 
 local foreign_cache = nil
+local build_dates_cache = nil
 
 local function sort_by_build_date(lines)
     if #lines == 0 then return end
-    local want = {}
-    for _, line in ipairs(lines) do
-        local n = line:match("^(%S+)"); if n then want[n] = true end
-    end
-    local dates = {}
-    local p = io.popen("for d in /var/lib/pacman/local/*/desc; do awk '/^%NAME%/{getline; n=$0} /^%BUILDDATE%/{getline; print n, $0}' \"$d\"; done", "r")
-    if p then
-        for line in p:read("*a"):gmatch("[^\n]+") do
-            local n, d = line:match("^(%S+)%s+(%d+)")
-            if n and d and want[n] then dates[n] = tonumber(d) end
+    if not build_dates_cache then
+        build_dates_cache = {}
+        local p = io.popen("for d in /var/lib/pacman/local/*/desc; do awk '/^%NAME%/{getline; n=$0} /^%BUILDDATE%/{getline; print n, $0}' \"$d\"; done", "r")
+        if p then
+            for line in p:read("*a"):gmatch("[^\n]+") do
+                local n, d = line:match("^(%S+)%s+(%d+)")
+                if n and d then build_dates_cache[n] = tonumber(d) end
+            end
+            p:close()
         end
-        p:close()
     end
+    local dates = build_dates_cache
     local function by_date(a, b)
         return (dates[a:match("^(%S+)")] or 0) > (dates[b:match("^(%S+)")] or 0)
     end
@@ -275,7 +279,7 @@ local function fresh_pacman_sync()
     ), true)
     if not ok then os.execute("rm -rf " .. tmp); return end
 
-    os.execute(string.format("rm -rf '%s/local' && cp -a /var/lib/pacman/local '%s/local'", tmp, tmp))
+    os.execute(string.format("rm -rf '%s/local' && cp -al /var/lib/pacman/local '%s/local' 2>/dev/null || cp -a /var/lib/pacman/local '%s/local'", tmp, tmp, tmp))
 
     local data = shell(string.format(
         "pacman -Qu --dbpath '%s' 2>/dev/null", tmp
@@ -398,8 +402,13 @@ end
 
 -- ====== aggregate ======
 
-local function check_updates(online)
-    if online then foreign_cache = nil end
+local function check_updates()
+    local online = (os.time() - (state.last_online or 0)) >= (CFG.cycles * CFG.interval)
+    if online then
+        state.last_online = os.time()
+        foreign_cache = nil
+        build_dates_cache = nil
+    end
     check_paru()
     check_devel(online)
     if state.pacman_stale then fresh_pacman_sync() end
@@ -564,10 +573,42 @@ local function main()
     load_state()
     init_state()
 
+    if action == "once" then
+        local trigger = CACHE_DIR .. "/refresh"
+        if file_exists(trigger) then
+            os.remove(trigger)
+            show_progress()
+            local ok, err = pcall(function() check_updates() end)
+            if not ok then
+                io.stderr:write("[ZARU] refresh: " .. tostring(err) .. "\n")
+            end
+            send_output()
+            save_state()
+            os.exit(0)
+        end
+
+        local prev_pl = state.pacman_list
+        local prev_al = state.aur_list
+        local prev_dl = state.devel_list
+
+        if state.last_online == 0 then show_progress() end
+        local ok, err = pcall(function() check_updates() end)
+        if not ok then
+            io.stderr:write("[ZARU] " .. tostring(err) .. "\n")
+        end
+        send_output()
+        if state.pacman_list ~= prev_pl or state.aur_list ~= prev_al
+           or state.devel_list ~= prev_dl then
+            if state.total_count > 0 then notify_all() end
+        end
+        save_state()
+        os.exit(0)
+    end
+
     io.stdout:setvbuf("line")
 
     show_progress()
-    local ok, err = pcall(function() check_updates(true) end)
+    local ok, err = pcall(function() check_updates() end)
     if not ok then
         io.stderr:write("[ZARU] startup: " .. tostring(err) .. "\n")
     end
@@ -582,7 +623,6 @@ local function main()
     end
     save_state()
 
-    local cycle = 0
     while true do
         os.execute("sleep " .. CFG.interval)
 
@@ -593,7 +633,7 @@ local function main()
             prev_al = state.aur_list
             prev_dl = state.devel_list
             show_progress()
-            local ok, err = pcall(function() check_updates(true) end)
+            local ok, err = pcall(function() check_updates() end)
             if not ok then
                 io.stderr:write("[ZARU] refresh: " .. tostring(err) .. "\n")
             end
@@ -602,22 +642,13 @@ local function main()
                 send_output()
                 save_state()
             end
-            cycle = 0
         end
 
         prev_pl = state.pacman_list
         prev_al = state.aur_list
         prev_dl = state.devel_list
 
-        cycle = cycle + 1
-        local online = cycle >= CFG.cycles
-
-        if online then
-            show_progress()
-            cycle = 0
-        end
-
-        local ok, err = pcall(function() check_updates(online) end)
+        local ok, err = pcall(function() check_updates() end)
         if not ok then
             io.stderr:write("[ZARU] " .. tostring(err) .. "\n")
         elseif state.pacman_list ~= prev_pl or state.aur_list ~= prev_al
