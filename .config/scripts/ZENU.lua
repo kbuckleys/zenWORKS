@@ -191,6 +191,35 @@ end
 
 -- Update Packages
 
+local function build_log_entries()
+  local log_path = "/var/log/pacman.log"
+  local f = io.open(log_path, "r")
+  if not f then return {} end
+
+  local entries = {}
+  for line in f:lines() do
+    if line:find("%[ALPM%] installed") or line:find("%[ALPM%] upgraded") then
+      entries[#entries + 1] = line
+    end
+  end
+  f:close()
+
+  -- Show last 50 entries
+  local start = math.max(1, #entries - 49)
+  local display = {}
+  for i = start, #entries do
+    local e = entries[i]
+    local date, action, pkg, ver = e:match("%[(.-)%]%s*%[ALPM%]%s*(%w+)%s+(.-)%s*%((.-)%)")
+    if date and pkg then
+      local tag = action == "upgraded" and "↑" or "+"
+      display[#display + 1] = date .. "  " .. tag .. "  " .. pkg .. " " .. ver
+    else
+      display[#display + 1] = e
+    end
+  end
+  return display
+end
+
 local function refresh_updates(switch_tmp)
   sync_repos()
 
@@ -232,8 +261,21 @@ local function refresh_updates(switch_tmp)
       string.format(row_fmt, pkg_display, old_ver_display, new_ver_display)
   end
 
-  local header_text = "TAB Flag  󰇙  C-a Invert  󰇙  C-d Clear  󰇙  C-u Manage  󰇙  RETURN Sync"
+  local log_list = build_log_entries()
+
+  local header_text = "TAB Flag  󰇙  C-a Invert  󰇙  C-d Clear  󰇙  C-r History  󰇙  C-u Manage  󰇙  RETURN Sync"
   local header_centered = center_text(header_text, W)
+
+  local q = "'\\''"
+  local updates_tmp     = write_tmp(table.concat(selection_list, "\n"))
+  local log_tmp         = write_tmp(table.concat(log_list, "\n"))
+  local state_tmp       = write_tmp("updates")
+  -- C-r toggle: read which list is currently shown from state_tmp,
+  -- flip it, and print the newly-selected list for fzf to reload from.
+  local toggle_script = 'state=$(cat "' .. state_tmp .. '"); '
+    .. 'if [ "$state" = "updates" ]; then echo history > "' .. state_tmp .. '"; cat "' .. log_tmp .. '"; '
+    .. 'else echo updates > "' .. state_tmp .. '"; cat "' .. updates_tmp .. '"; fi'
+  local toggle_cmd = "bash -c " .. q .. toggle_script .. q
 
   local args = table.concat({
     "--multi", "--no-input", "--no-scrollbar", FZF_COLOR,
@@ -241,14 +283,17 @@ local function refresh_updates(switch_tmp)
     "--no-scrollbar",
     "--border=top",
     "--header-border=line",
-    "--bind 'esc:ignore,ctrl-a:toggle-all,ctrl-d:clear-multi,ctrl-u:execute-silent(echo manage > \"" .. switch_tmp .. "\")+abort'",
+    "--bind 'esc:ignore,ctrl-a:toggle-all,ctrl-d:clear-multi,ctrl-r:reload(" .. toggle_cmd .. "),ctrl-u:execute-silent(echo manage > \"" .. switch_tmp .. "\")+abort'",
     '--header="' .. header_centered .. '"',
     "--delimiter ' '",
     '--preview="paru -Si {1}"',
     '--preview-window="bottom:50%,noinfo"',
   }, " ")
 
-  local selected_raw = fzf(selection_list, args)
+  local selected_raw = capture("fzf " .. args .. " < " .. updates_tmp)
+  os.remove(updates_tmp)
+  os.remove(log_tmp)
+  os.remove(state_tmp)
 
   print("")
   local installed_any = false
@@ -323,6 +368,7 @@ update_packages = function()
     end
 
     local choice = fzf({
+      "View History",
       "Re-check for updates",
       "Return to Package Manager",
     }, table.concat({
@@ -339,6 +385,28 @@ update_packages = function()
       os.remove(switch_tmp)
       manage_packages()
       return
+    elseif choice == "View History" then
+      local log_list = build_log_entries()
+      if #log_list == 0 then
+        hard_clear()
+        print("No history found.")
+      else
+        local W = term_width()
+        local header_text = "RETURN Close"
+        local header_centered = center_text(header_text, W)
+        local args = table.concat({
+          "--no-input",
+          "--no-scrollbar",
+          "--border=top",
+          "--header-border=line",
+          "--info=hidden",
+          "--height=60%",
+          "--reverse",
+          FZF_COLOR,
+          '--header="' .. header_centered .. '"',
+        }, " ")
+        fzf(log_list, args)
+      end
     end
   end
 end
