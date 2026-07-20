@@ -25,7 +25,7 @@ hl.bind("SUPER + SHIFT + C", hl.dsp.exec_cmd("rofi -show calc -modi calc -no-sho
 hl.bind("SUPER + C", hl.dsp.exec_cmd("cliphist list | rofi -i -dmenu -theme ~/.config/rofi/cliphist.rasi | cliphist decode | wl-copy"))
 hl.bind("SUPER + S", hl.dsp.exec_cmd("rofi -i -show recursivebrowser -disable-history -theme ~/.config/rofi/rootsearch.rasi"))
 hl.bind("SUPER + J", hl.dsp.exec_cmd('rofimoji -a type copy --selector-args="-theme ~/.config/rofi/rofimoji.rasi"'))
-hl.bind("SUPER + M", hl.dsp.exec_cmd("~/.config/rofi/scripts/spotify/spotify.lua"))
+hl.bind("SUPER + M", hl.dsp.exec_cmd("~/.config/rofi/scripts/spotirofi/spotirofi.lua"))
 hl.bind("SUPER + V", hl.dsp.exec_cmd('rofi-rbw --selector-args="-theme rbw"'))
 hl.bind("SUPER + K", hl.dsp.exec_cmd("~/.config/rofi/scripts/RUN/RUN.lua"))
 hl.bind("SUPER + SHIFT + K", hl.dsp.exec_cmd("~/.config/rofi/scripts/PKILL/PKILL.lua"))
