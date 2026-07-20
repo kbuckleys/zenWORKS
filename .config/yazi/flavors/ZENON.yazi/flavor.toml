@@ -40,7 +40,7 @@ preview = { underline = false }
 padding = { open = "█", close = "█" }
 
 [status]
-overall = { fg = "#9bbfbf" }
+overall = { fg = "#000000" }
 sep_left = { open = "", close = "" }
 sep_right = { open = "", close = "" }
 
