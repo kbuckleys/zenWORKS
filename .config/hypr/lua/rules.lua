@@ -12,7 +12,6 @@ hl.window_rule({ match = { title = "sysmon" }, float = true, size = { 1000, 1100
 hl.window_rule({ match = { title = "Wiremix" }, float = true, size = { 650, 650 }})
 hl.window_rule({ match = { title = "ZENU" }, float = true, size = { 1000, 1100 }})
 hl.window_rule({ match = { class = "swayimg" }, float = true })
-hl.window_rule({ match = { initial_title = "Friends List" }, })
 hl.window_rule({ match = { class = "mpv" }, float = true, })
 
 -- Temp workaround for Helium
