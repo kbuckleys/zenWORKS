@@ -203,6 +203,7 @@ dirs = [
 	{ name = "hypr", text = " " },
 	{ name = "hyprland", text = " " },
 	{ name = "spotify", text = " " },
+	{ name = "spotifyd", text = " " },
 	{ name = "spotirofi", text = " " },
 	{ name = "spicetify", text = " " },
 	{ name = "spotify-player", text = " " },
