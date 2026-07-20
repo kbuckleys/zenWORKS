@@ -124,9 +124,9 @@ hl.bind("SUPER + MINUS", hl.dsp.exec_cmd("pamixer -d 1"), { repeating = true })
 hl.bind("SUPER + 9", hl.dsp.exec_cmd(term .. " -T Wiremix wiremix"))
 hl.bind("SUPER + 0", hl.dsp.exec_cmd("pamixer -t"))
 
-hl.bind("SUPER + SHIFT + MINUS", hl.dsp.exec_cmd("lua ~/.config/rofi/scripts/spotify/spotify.lua play-pause || playerctl play-pause"))
-hl.bind("SUPER + SHIFT + 0", hl.dsp.exec_cmd("lua ~/.config/rofi/scripts/spotify/spotify.lua prev || playerctl previous"))
-hl.bind("SUPER + SHIFT + EQUAL", hl.dsp.exec_cmd("lua ~/.config/rofi/scripts/spotify/spotify.lua next || playerctl next"))
+hl.bind("SUPER + SHIFT + MINUS", hl.dsp.exec_cmd("lua ~/.config/rofi/scripts/spotirofi/spotirofi.lua play-pause || playerctl play-pause"))
+hl.bind("SUPER + SHIFT + 0", hl.dsp.exec_cmd("lua ~/.config/rofi/scripts/spotirofi/spotirofi.lua prev || playerctl previous"))
+hl.bind("SUPER + SHIFT + EQUAL", hl.dsp.exec_cmd("lua ~/.config/rofi/scripts/spotirofi/spotirofi.lua next || playerctl next"))
 
 -- SCREEN ZOOM
 local MAX_ZOOM = 10
