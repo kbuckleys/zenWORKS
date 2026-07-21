@@ -70,7 +70,7 @@ if selection == "" then
   os.exit(0)
 end
 
-if selection == row("CONFIRM") and confirm_action then
+if selection == row("") and confirm_action then
   for _, e in ipairs(entries) do
     if e.id == confirm_action then
       execute(e.id, e.cmd)
