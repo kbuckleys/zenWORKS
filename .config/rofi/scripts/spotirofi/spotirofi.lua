@@ -24,7 +24,7 @@ local THEME_LYR  = DIR .. "/lyrics.rasi"
 local THEME_MSG  = DIR .. "/message.rasi"
 
 local MAX_RESULTS = 20
-local CACHE_TTL  = 3600
+local CACHE_TTL  = 43200
 local SPOTIFY_ID  = "d420a117a32841c2b3474932e49fb54b"
 local liked = {}  -- set of liked track IDs
 
@@ -1574,13 +1574,6 @@ local function replay_session()
             end
         elseif v == "add-to-playlist" and s.track_id then
             view_add_pl(s.track_id)
-        elseif v == "volume" then
-            local vm = current_track and track_mesg(current_track) or "Volume"
-            local vi = rofi_dmenu({"25%","50%","75%","100%"}, {prompt="Volume", mesg=vm, custom=false, by_index=true, use_menu=true})
-            if vi and vi >= 1 and vi <= 4 then
-                local token = get_token()
-                if token then shell("curl -s --max-time 3 -o /dev/null -X PUT 'https://api.spotify.com/v1/me/player/volume?volume_percent=" .. (vi*25) .. "' -H 'Authorization: Bearer " .. token .. "'") end
-            end
         end
 
         inv_playback()
@@ -1642,8 +1635,9 @@ local function main()
         add("Play / Pause"); add("Next Track"); add("Previous Track")
         add(is_shuffle and "Shuffle: On" or "Shuffle: Off")
         add(repeat_state=="off" and "Repeat: Off" or (repeat_state=="track" and "Repeat: Track" or "Repeat: Context"))
-        add("Volume"); add("Keybinds")
-        add('<span foreground="#e78284">Restart Daemon</span>')
+        add("Keybinds")
+        add('<span foreground="#fab387">Restart Daemons</span>')
+        add('<span foreground="#e78284">Kill Daemons</span>')
 
         local sel = rofi_dmenu(entries, {prompt="Spotify", mesg=mesg, sel=0, custom=false, markup=true})
         if sel then sel = sel:gsub("<[^>]+>", "") end
@@ -1683,21 +1677,19 @@ local function main()
             local new_state = repeat_state == "off" and "context" or (repeat_state == "context" and "track" or "off")
             if token then shell("curl -s --max-time 3 -o /dev/null -w '%{http_code}' -X PUT 'https://api.spotify.com/v1/me/player/repeat?state=" .. new_state .. "' -H 'Authorization: Bearer " .. token .. "' -H 'Content-Length: 0'") end
             inv_playback()
-        elseif  sel == "Volume" then
-            session_push({view="volume"})
-            local vm = current_track and track_mesg(current_track) or "Volume"
-            local vi = rofi_dmenu({"25%","50%","75%","100%"}, {prompt="Volume", mesg=vm, custom=false, by_index=true})
-            if vi and vi >= 1 and vi <= 4 then
-                local token = get_token()
-                if token then shell("curl -s --max-time 3 -o /dev/null -X PUT 'https://api.spotify.com/v1/me/player/volume?volume_percent=" .. (vi*25) .. "' -H 'Authorization: Bearer " .. token .. "'") end
-            end
+        elseif  sel == "Kill Daemons" then
+            os.execute("pkill -x spotifyd 2>/dev/null")
+            os.execute("pkill -f 'spotirofi.*--daemon' 2>/dev/null")
+            os.execute("pkill -x rofi 2>/dev/null")
+            os.exit(0)
         elseif  sel == "Keybinds" then
             rofi_message("Alt+Return  →  Current track actions\nAlt+Backspace  →  Go back\nAlt+Space  →  Main menu\nAlt+/  →  Search all")
-        elseif  sel == "Restart Daemon" then
-            os.execute("pkill -x spotifyd 2>/dev/null"); os.execute("sleep 1")
+        elseif  sel == "Restart Daemons" then
+            os.execute("pkill -x spotifyd 2>/dev/null"); os.execute("pkill -f 'spotirofi.*--daemon' 2>/dev/null"); os.execute("sleep 1")
             inv_playback()
             os.execute("spotifyd --no-daemon --device-name spotirofi --backend pulseaudio --use-mpris --initial-volume 100 > /dev/null 2>&1 &")
             os.execute("sleep 3")
+            os.execute(HOME .. "/.config/rofi/scripts/spotirofi/spotirofi.lua --daemon &")
         end
         ::m1::
     end
