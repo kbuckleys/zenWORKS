@@ -13,7 +13,7 @@
 window {
     location: south;
     anchor: south;
-    width: 550px;
+    width: 250px;
 }
 
 mainbox {
@@ -24,7 +24,7 @@ textbox {
     text-color: #e78284;
     background-color: #000000;
     horizontal-align: 0.5;
-    font: "0xProto Nerd Font Bold 12";
+    font: "0xProto Nerd Font Bold 14";
 }
 
 listview {
@@ -41,6 +41,7 @@ element {
 element-text {
     text-color: #000000;
     horizontal-align: 0.5;
+    font: "0xProto Nerd Font Bold 14";
 }
 element-text.selected.normal {
     text-color: #e78284;
