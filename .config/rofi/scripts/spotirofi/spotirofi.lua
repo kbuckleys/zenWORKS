@@ -986,7 +986,7 @@ view_actions = function(item, ctx, ctx_type, ctx_id, all_items, cidx, entries)
     local in_pl    = ctx_type == "playlist" and ctx_id
 
     local play_label = item.id == current_id and (is_playing and "Pause" or "Play") or "Play"
-    local actions = {play_label, "Add to Queue",
+    local actions = {play_label, "Seek", "Add to Queue",
                      is_liked and "Unlike" or "Like",
                      "Go to Album", "Go to Artist", "Add to Playlist"}
     if in_pl then actions[#actions+1] = "Remove from Playlist" end
@@ -1040,8 +1040,20 @@ view_actions = function(item, ctx, ctx_type, ctx_id, all_items, cidx, entries)
                 end
             end
         elseif sel == "Lyrics" then view_lyrics(item)
-        elseif sel == "Copy URL" then
-            os.execute("echo -n " .. shell_quote("https://open.spotify.com/track/" .. item.id) .. " | wl-copy &")
+        elseif sel == "Seek" then
+            session_push({view="seek", track_id=item.id, track_name=item.name or "", track_artists=item.artists or {}})
+            local seeks = {"+10s", "-10s", "+30s", "-30s", "1:00", "2:00", "0:00"}
+            while true do
+                local si = rofi_dmenu(seeks, {prompt="Seek", mesg=track_mesg(item), sel=0, custom=false, theme=THEME_SUB})
+                if not si or si == "" then break end
+                if si:match("^([%+%-])(%d+)s$") then
+                    local sign, secs = si:match("^([%+%-])(%d+)s$")
+                    os.execute("playerctl position " .. secs .. sign .. " &")
+                else
+                    local m, s = si:match("^(%d+):(%d+)$")
+                    if m and s then os.execute("playerctl position " .. (tonumber(m) * 60 + tonumber(s)) .. " &") end
+                end
+            end
         end
     end
 end
@@ -1626,6 +1638,7 @@ local function main()
     load_queue()
     populate_liked_ids()
     replay_session()
+    last_playback = 0
 
     while true do
         get_playback()
