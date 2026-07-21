@@ -6,6 +6,11 @@
 
 @theme "ZENON"
 
+configuration {
+    kb-remove-char-back: "BackSpace";
+    kb-remove-to-sol: "";
+}
+
 window {
     location: south;
     anchor: south;
@@ -13,45 +18,38 @@ window {
 }
 
 mainbox {
-    children: [ inputbar, listview, message ];
+    children: [ inputbar, message, listview ];
 }
 
 inputbar {
-    children: [textbox-prompt-colon, entry];
-    padding: 4px 8px;
-    spacing: 4px;
+    enabled: false;
 }
 
 textbox {
-    text-color: #dfdfdd;
+    text-color: #b6e0a4;
     horizontal-align: 0.5;
-    font: "0xProto Nerd Font 12";
-}
-textbox-prompt-colon {
-    str: " ";
-    color: #e78284;
-}
-entry {
-    text-color: #eebebe;
+    font: "0xProto Nerd Font Bold 12";
 }
 
 listview {
     fixed-columns: false;
     fixed-height: false;
     scrollbar: false;
-    columns: 2;
-    lines: 12;
+    columns: 1;
+    lines: 8;
 }
 
 element {
-    padding: 2px 8px 2px 8px;
+    padding: 2px 8px;
 }
 element-text {
-    highlight: bold #eebebe;
+    font: "0xProto Nerd Font 14";
+    horizontal-align: 0.5;
+    highlight: bold #b6e0a4;
 }
 element-text selected {
     background-color: transparent;
-    text-color: #e78284;
+    text-color: #b6e0a4;
 }
 
 message {
