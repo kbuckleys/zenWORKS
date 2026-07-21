@@ -9,7 +9,7 @@ local HOME = os.getenv("HOME")
 local XDG_SESSION_ID = os.getenv("XDG_SESSION_ID") or ""
 
 local entries = {
-  { id="lockscreen", label="", cmd="hyprlock", confirm=false },
+  { id="lockscreen", label="", cmd="hyprlock", confirm=false },
   { id="logout", label="󰍃", cmd="hyprshutdown -p 'loginctl terminate-session " .. XDG_SESSION_ID .. "'", confirm=true },
   { id="suspend", label="󰤄", cmd="systemctl suspend", confirm=true },
   { id="reboot", label="", cmd="hyprshutdown -p 'systemctl reboot'", confirm=true },
