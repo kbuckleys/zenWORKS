@@ -9,11 +9,11 @@ local HOME = os.getenv("HOME")
 local XDG_SESSION_ID = os.getenv("XDG_SESSION_ID") or ""
 
 local entries = {
-  { id="lockscreen", label="Lock", cmd="hyprlock", confirm=false },
-  { id="logout", label="Logout", cmd="hyprshutdown -p 'loginctl terminate-session " .. XDG_SESSION_ID .. "'", confirm=true },
-  { id="suspend", label="Suspend", cmd="systemctl suspend", confirm=true },
-  { id="reboot", label="Reboot", cmd="hyprshutdown -p 'systemctl reboot'", confirm=true },
-  { id="shutdown", label="Shutdown", cmd="hyprshutdown -p 'systemctl poweroff'", confirm=true },
+  { id="lockscreen", label="", cmd="hyprlock", confirm=false },
+  { id="logout", label="󰍃", cmd="hyprshutdown -p 'loginctl terminate-session " .. XDG_SESSION_ID .. "'", confirm=true },
+  { id="suspend", label="󰤄", cmd="systemctl suspend", confirm=true },
+  { id="reboot", label="", cmd="hyprshutdown -p 'systemctl reboot'", confirm=true },
+  { id="shutdown", label="⏻", cmd="hyprshutdown -p 'systemctl poweroff'", confirm=true },
 }
 
 local dryrun = false
@@ -24,7 +24,7 @@ if #args >= 1 and args[1] == "--dry-run" then
   table.remove(args, 1)
 end
 
-local CANCEL = '<span font_size="medium">CANCEL</span>'
+local CANCEL = '<span font_size="medium"></span>'
 
 local function row(label)
   return string.format('<span font_size="medium">%s</span>', label)
@@ -51,7 +51,7 @@ local confirm_action = os.getenv("SESSION_CONFIRM_ACTION")
 if confirm_action and #args == 0 then
   for _, e in ipairs(entries) do
     if e.id == confirm_action then
-      io.write("\0message\x1f" .. e.label, "\n", row("CONFIRM"), "\n", CANCEL)
+      io.write("\0message\x1f" .. e.label, "\n", row(""), "\n", CANCEL)
       os.exit(0)
     end
   end
