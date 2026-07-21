@@ -13,6 +13,8 @@ open = [{ run = 'xdg-open %s & disown', desc = "Open" }]
 edit = [{ run = 'kitty -1 nvim %s', desc = "Open in Neovim" }]
 bulk_rename = [{ run = 'nvim %s', block = true, desc = "Bulk Rename" }]
 image = [{ run = 'swayimg %s', orphan = true, for = "unix" }]
+new_tab = [{ run = 'ya emit tab_create "%s"', desc = "Open in new tab" }]
+new_window = [{ run = 'kitty -1 yazi "%s"', orphan = true, desc = "Open in new window" }]
 
 [[open.prepend_rules]]
 url = "bulk-rename.txt"
@@ -25,3 +27,7 @@ use = "image"
 [[open.prepend_rules]]
 mime = "text/*"
 use = "edit"   
+
+[[open.prepend_rules]]
+url = "*/"
+use = ["new_tab", "new_window"]
