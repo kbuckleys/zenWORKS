@@ -9,6 +9,7 @@
 local HOME       = os.getenv("HOME")
 local DIR        = HOME .. "/.config/rofi/scripts/spotirofi"
 local CACHE      = HOME .. "/.cache/spotirofi"
+local LYRICS_DIR = CACHE .. "/lyrics"
 local SCR_TOKEN  = CACHE .. "/token.json"
 local LIKED_CACHE = CACHE .. "/liked_tracks.json"
 local ALBUM_CACHE = CACHE .. "/saved_albums.json"
@@ -53,6 +54,12 @@ local function shell_quote(s)
     return "'" .. tostring(s):gsub("'", "'\\''") .. "'"
 end
 
+local function url_encode(s)
+    return (s:gsub(" ", "+"):gsub("[^%w+]", function(c)
+        return string.format("%%%02X", string.byte(c))
+    end))
+end
+
 local function read_file(p)
     local f = io.open(p, "r")
     if not f then return nil end
@@ -93,7 +100,7 @@ local function safe_decode(s)
 end
 
 local function ensure_cache()
-    os.execute("mkdir -p " .. shell_quote(CACHE))
+    os.execute("mkdir -p " .. shell_quote(CACHE) .. " " .. shell_quote(LYRICS_DIR))
 end
 
 local _mem = {}
@@ -469,28 +476,35 @@ local function api_get(path, params)
     if not token then return nil end
     local url = "https://api.spotify.com/v1/" .. path
     if params then url = url .. "?" .. params end
-    local hdr = os.tmpname()
-    local r = shell("curl -s --max-time 5 -D " .. shell_quote(hdr) .. " -w '\\n%{http_code}' -H 'Authorization: Bearer " .. token .. "' " .. shell_quote(url))
-    local status = tonumber(string.match(r or "", "\n(%d+)$")) or 0
-    local body = string.match(r or "", "^(.-)\n%d+$") or r or ""
-    local function read_retry_after()
+
+    local function do_request()
+        local hdr = os.tmpname()
+        local r = shell("curl -s --max-time 5 -D " .. shell_quote(hdr) .. " -w '\\n%{http_code}' -H 'Authorization: Bearer " .. token .. "' " .. shell_quote(url))
+        local status = tonumber(string.match(r or "", "\n(%d+)$")) or 0
+        local body = string.match(r or "", "^(.-)\n%d+$") or r or ""
+        local retry = nil
         local hf = io.open(hdr, "r")
-        if not hf then return "30" end
-        local headers = hf:read("*a"); hf:close()
-        return string.match(headers, "[Rr]etry%-[Aa]fter:%s*(%d+)") or "30"
-    end
-    if status == 429 and not rate_limit_shown then
-        rate_limit_shown = true
-        local secs = read_retry_after()
+        if hf then
+            local headers = hf:read("*a"); hf:close()
+            retry = tonumber(string.match(headers, "[Rr]etry%-[Aa]fter:%s*(%d+)"))
+        end
         os.remove(hdr)
-        write_file("/tmp/spotirofi_rate_cooldown", os.time() + tonumber(secs) + 30) -- 0 API calls next launch + buffer
-        rofi_message("Spotify API rate limit reached (429). Retry after " .. secs .. "s.")
-        os.exit(0)
+        return status, body, retry
     end
-    os.remove(hdr)
+
+    local status, body, retry = do_request()
+    if status == 429 then
+        os.execute("sleep " .. tostring(retry or 1))
+        status, body = do_request()
+    end
     if status == 401 and not rate_limit_shown then
         rate_limit_shown = true
         rofi_message("Spotify token expired (401). Restart rofi to refresh.")
+        os.exit(0)
+    end
+    if status == 429 then
+        rate_limit_shown = true
+        rofi_message("Spotify API rate limit reached (429).")
         os.exit(0)
     end
     if status >= 400 then return nil end
@@ -516,6 +530,7 @@ local function load_liked_tracks_full()
         end
         if #d.items < 50 then break end
         offset = offset + 50
+        os.execute("sleep 0.5")
     end
     table.sort(tracks, function(a,b) return (a.added_at or "") > (b.added_at or "") end)
     return tracks
@@ -557,6 +572,7 @@ local function load_saved_albums()
         end
         if #d.items < 50 then break end
         offset = offset + 50
+        os.execute("sleep 0.5")
     end
     table.sort(items, function(a,b) return (a.name or ""):lower() < (b.name or ""):lower() end)
     if #items > 0 then
@@ -583,6 +599,7 @@ local function load_followed_artists()
         for _, a in ipairs(d.artists.items) do items[#items+1] = a end
         if not d.artists.next then break end
         after = d.artists.cursors and d.artists.cursors.after
+        os.execute("sleep 0.5")
     end
     table.sort(items, function(a,b) return (a.name or ""):lower() < (b.name or ""):lower() end)
     if #items > 0 then
@@ -951,14 +968,13 @@ local function api_get_made_for_you()
 end
 
 local function api_get_lyrics(track_name, artist_name)
-    local q = (track_name .. " " .. artist_name):gsub("[^%w%s]", ""):gsub("%s+", " ")
-    local r = trim(shell("curl -s --max-time 5 " .. shell_quote("https://lrclib.net/api/search?q=" .. q:gsub(" ", "+"))))
+    local q = (track_name .. " " .. artist_name):gsub("%s+", " "):match("^%s*(.-)%s*$")
+    local r = trim(shell("curl -s --max-time 5 " .. shell_quote("https://lrclib.net/api/search?q=" .. url_encode(q))))
     local d = safe_decode(r)
-    if d and #d > 0 and d[1].syncedLyrics then
+    if d and #d > 0 and d[1].plainLyrics then
         local lines = {}
-        for line in (d[1].syncedLyrics or ""):gmatch("[^\n]+") do
-            local text = line:match("%]%s*(.*)")
-            if text and #text > 0 then lines[#lines+1] = text end
+        for line in d[1].plainLyrics:gmatch("[^\n]+") do
+            if #line > 0 then lines[#lines+1] = line end
         end
         return lines
     end
@@ -1255,7 +1271,10 @@ end
 
 view_lyrics = function(item)
     session_push({view="lyrics", track_id=item.id, track_name=item.name or "", track_artists=item.artists or {}})
-    local lines = api_get_lyrics(item.name, artist_names(item))
+    local id = item.id or ""
+    local lines = cached_fetch("lyrics_" .. id, LYRICS_DIR .. "/lyrics_" .. id .. ".json", 2592000, function()
+        return api_get_lyrics(item.name, artist_names(item))
+    end)
     if not lines or #lines == 0 then session_pop(); rofi_message("No lyrics found"); return end
     rofi_dmenu(lines, {prompt="Lyrics", mesg=track_mesg(item), custom=false, use_menu=true, theme=THEME_LYR})
 end
@@ -1788,17 +1807,6 @@ local function main()
         os.execute(HOME .. "/.config/rofi/scripts/spotirofi/spotirofi.lua --daemon &")
     end
 
-    local rate_cool = read_file("/tmp/spotirofi_rate_cooldown")
-    if rate_cool then
-        local until_t = tonumber(trim(rate_cool))
-        if until_t and os.time() < until_t then
-            local secs = until_t - os.time()
-            rofi_message("Spotify API rate limit active.\nRetry after " .. secs .. "s.")
-            os.exit(0)
-        end
-        os.remove("/tmp/spotirofi_rate_cooldown")
-    end
-
     ensure_spotifyd_auth()
     ensure_auth()
     ensure_spotifyd()
@@ -1962,6 +1970,13 @@ local function daemon_mode()
                 if title and title ~= "" and title ~= last_title then
                     daemon_notify(title, artist, art_url, track_id)
                     last_title = title
+                    if track_id and title and title ~= "" then
+                        os.execute("nohup lua " .. shell_quote(DIR .. "/spotirofi.lua")
+                            .. " --prefetch-lyrics " .. shell_quote(track_id)
+                            .. " " .. shell_quote(title)
+                            .. " " .. shell_quote(artist or "")
+                            .. " > /dev/null 2>&1 &")
+                    end
                 end
             end
         end
@@ -1977,6 +1992,20 @@ end
 
 if arg and arg[1] == "--daemon" then
     daemon_mode()
+elseif arg and arg[1] == "--prefetch-lyrics" and arg[2] and arg[3] and arg[4] then
+    ensure_cache()
+    local id = arg[2]
+    local key = "lyrics_" .. id
+    if mem_get(key) then os.exit(0) end
+    local disk = LYRICS_DIR .. "/lyrics_" .. id .. ".json"
+    local existing = disk_get(disk, 2592000)
+    if existing then mem_set(key, existing, 2592000); os.exit(0) end
+    local lines = api_get_lyrics(arg[3], arg[4])
+    if lines and #lines > 0 then
+        mem_set(key, lines, 2592000)
+        disk_set(disk, lines)
+    end
+    os.exit(0)
 else
     main()
 end
