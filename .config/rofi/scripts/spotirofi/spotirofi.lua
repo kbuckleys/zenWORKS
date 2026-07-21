@@ -984,7 +984,8 @@ view_actions = function(item, ctx, ctx_type, ctx_id, all_items, cidx, entries)
     local is_liked = liked[item.id]
     local in_pl    = ctx_type == "playlist" and ctx_id
 
-    local actions = {"Play / Pause", "Add to Queue",
+    local play_label = item.id == current_id and (is_playing and "Pause" or "Play") or "Play"
+    local actions = {play_label, "Add to Queue",
                      is_liked and "Unlike" or "Like",
                      "Go to Album", "Go to Artist", "Add to Playlist"}
     if in_pl then actions[#actions+1] = "Remove from Playlist" end
@@ -992,13 +993,17 @@ view_actions = function(item, ctx, ctx_type, ctx_id, all_items, cidx, entries)
     actions[#actions+1] = "Copy URL"
 
     while true do
-        local sel = rofi_dmenu(actions, {prompt="Action", mesg=track_mesg(item), sel=0, custom=false, use_menu=true})
+        local sel = rofi_dmenu(actions, {prompt="Action", mesg=track_mesg(item), sel=0, custom=false, theme=THEME})
         if not sel or sel == "" then return end
 
-        if sel == "Play / Pause" then
+        if sel == "Play" then
             if item.id == current_id then
-                if is_playing then do_playback_put("pause") else do_playback_put("play") end
+                do_playback_put("play")
             else do_play(item, ctx, ctx_type, ctx_id, all_items, cidx) end
+            actions[1] = "Pause"
+        elseif sel == "Pause" then
+            do_playback_put("pause")
+            actions[1] = "Play"
         elseif sel == "Add to Queue" then do_add_queue(item.id)
         elseif sel == "Like" or sel == "Unlike" then
             if do_like(item, sel == "Unlike") then
@@ -1631,11 +1636,14 @@ local function main()
         add("Track Options")
         add("Your Queue"); add("Liked Tracks"); add("Top Tracks"); add("Saved Albums")
         add("Followed Artists"); add("Playlists"); add("Discover Weekly"); add("Release Radar")
-        add("New Music Friday"); add("Search"); add("Categories")
-        add("Play / Pause"); add("Next Track"); add("Previous Track")
+        add("New Music Friday"); add("Categories"); add("Search")
+        add(current_track and (is_playing and "Pause" or "Play") or "No track playing")
+        add("Next Track"); add("Previous Track")
         add(is_shuffle and "Shuffle: On" or "Shuffle: Off")
         add(repeat_state=="off" and "Repeat: Off" or (repeat_state=="track" and "Repeat: Track" or "Repeat: Context"))
+        add("Volume")
         add("Keybinds")
+        add('<span foreground="#e0d8a4">Refresh Library</span>')
         add('<span foreground="#fab387">Restart Daemons</span>')
         add('<span foreground="#e78284">Kill Daemons</span>')
 
@@ -1663,9 +1671,9 @@ local function main()
         elseif  sel == "Discover Weekly"  then view_weekly()
         elseif  sel == "Release Radar"    then view_release_radar()
         elseif  sel == "New Music Friday" then view_new_music_friday()
-        elseif  sel == "Play / Pause" then
-            if is_playing then do_playback_put("pause") else do_playback_put("play") end
-            inv_playback()
+        elseif  sel == "Pause" then do_playback_put("pause"); inv_playback()
+        elseif  sel == "Play" then do_playback_put("play"); inv_playback()
+        elseif  sel == "No track playing" then -- nothing
         elseif  sel == "Next Track"    then do_playback_cmd("next");     inv_playback()
         elseif  sel == "Previous Track" then do_playback_cmd("previous"); inv_playback()
         elseif  sel:find("^Shuffle") then
@@ -1684,6 +1692,18 @@ local function main()
             os.exit(0)
         elseif  sel == "Keybinds" then
             rofi_message("Alt+Return  →  Current track actions\nAlt+Backspace  →  Go back\nAlt+Space  →  Main menu\nAlt+/  →  Search all")
+        elseif  sel == "Volume" then
+            local vm = current_track and track_mesg(current_track) or "Volume"
+            local vi = rofi_dmenu({"25%","50%","75%","100%"}, {prompt="Volume", mesg=vm, custom=false, by_index=true})
+            if vi and vi >= 1 and vi <= 4 then
+                local token = get_token()
+                if token then shell("curl -s --max-time 3 -o /dev/null -X PUT 'https://api.spotify.com/v1/me/player/volume?volume_percent=" .. (vi*25) .. "' -H 'Authorization: Bearer " .. token .. "'") end
+            end
+        elseif  sel == "Refresh Library" then
+            os.execute("notify-send -t 10000 --app-name=spotirofi 'Spotirofi' 'Refreshing library...' &")
+            os.remove(LIKED_CACHE); os.remove(ALBUM_CACHE); os.remove(ARTIST_CACHE); os.remove(LIKED_IDS)
+            load_liked_tracks(); load_saved_albums(); load_followed_artists(); populate_liked_ids()
+            os.execute("notify-send -t 3000 --app-name=spotirofi 'Spotirofi' 'Library refreshed' &")
         elseif  sel == "Restart Daemons" then
             os.execute("pkill -x spotifyd 2>/dev/null"); os.execute("pkill -f 'spotirofi.*--daemon' 2>/dev/null"); os.execute("sleep 1")
             inv_playback()
