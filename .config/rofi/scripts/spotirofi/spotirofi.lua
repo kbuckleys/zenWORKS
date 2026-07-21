@@ -22,6 +22,7 @@ local THEME      = DIR .. "/main.rasi"
 local THEME_MENU = DIR .. "/menu.rasi"
 local THEME_LYR  = DIR .. "/lyrics.rasi"
 local THEME_MSG  = DIR .. "/message.rasi"
+local THEME_SUB  = DIR .. "/sub.rasi"
 
 local MAX_RESULTS = 20
 local CACHE_TTL  = 43200
@@ -993,7 +994,7 @@ view_actions = function(item, ctx, ctx_type, ctx_id, all_items, cidx, entries)
     actions[#actions+1] = "Copy URL"
 
     while true do
-        local sel = rofi_dmenu(actions, {prompt="Action", mesg=track_mesg(item), sel=0, custom=false, theme=THEME})
+        local sel = rofi_dmenu(actions, {prompt="Action", mesg=track_mesg(item), sel=0, custom=false, theme=THEME_SUB})
         if not sel or sel == "" then return end
 
         if sel == "Play" then
