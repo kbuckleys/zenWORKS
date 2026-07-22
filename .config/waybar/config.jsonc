@@ -180,7 +180,7 @@
         "format": "{icon}{0}",
         "return-type": "json",
         "format-icons": {
-            "pending-updates": ""
+            "pending-updates": "  "
         },
         "exec-if": "which waybar-updates",
         "exec": "waybar-updates -d -n -c 3600",
