@@ -18,6 +18,7 @@ local SESSION_FILE = CACHE .. "/session.json"
 local QUEUE_FILE   = CACHE .. "/playback_queue.json"
 local ART_DIR      = CACHE .. "/art"
 local LIKED_IDS    = CACHE .. "/liked_ids.json"
+local VOLUME_FILE  = CACHE .. "/volume.json"
 
 local THEME      = DIR .. "/main.rasi"
 local THEME_MENU = DIR .. "/menu.rasi"
@@ -37,11 +38,10 @@ local is_shuffle    = false
 local repeat_state  = "off"
 local last_playback = 0
 
+
 local json = require("cjson")
 
---===================================================================
 -- UTILITIES
---===================================================================
 
 local function shell(cmd)
     local h = io.popen(cmd, "r")
@@ -106,6 +106,21 @@ local function ensure_cache()
     _cache_ready = true
 end
 
+local function get_saved_volume()
+    local raw = read_file(VOLUME_FILE)
+    if not raw then return 100 end
+    local ok, d = pcall(json.decode, raw)
+    if ok and type(d) == "table" and d.volume and tonumber(d.volume) then
+        return math.max(0, math.min(100, tonumber(d.volume)))
+    end
+    return 100
+end
+
+local function save_volume(pct)
+    ensure_cache()
+    write_file(VOLUME_FILE, json.encode({volume=pct}))
+end
+
 local _mem = {}
 local function mem_get(key)
     local e = _mem[key]
@@ -161,9 +176,7 @@ local function populate_liked_ids()
     end
 end
 
---===================================================================
 -- SESSION STACK
---===================================================================
 
 local function session_peek()
     local raw = read_file(SESSION_FILE)
@@ -202,9 +215,7 @@ local function session_clear()
     os.remove(SESSION_FILE)
 end
 
---===================================================================
 -- ROFI
---===================================================================
 
 local search_pending = false
 local main_pending   = false
@@ -297,9 +308,7 @@ local function rofi_input(prompt, preset)
     return r
 end
 
---===================================================================
 -- TOKEN
---===================================================================
 
 local function get_token()
     local cached = mem_get("token")
@@ -391,9 +400,7 @@ local function ensure_auth()
     oauth_get_token()
 end
 
---===================================================================
 -- NOTIFY
---===================================================================
 
 local function artist_names(item)
     local a = {}
@@ -432,9 +439,7 @@ local function notify_track(track)
     os.execute(cmd .. " &")
 end
 
---===================================================================
 -- SPOTIFYD MANAGEMENT
---===================================================================
 
 local function get_spotifyd_device()
     local cached = mem_get("spotifyd_device")
@@ -470,7 +475,7 @@ end
 local function ensure_spotifyd()
     local pid = trim(shell("pgrep -x spotifyd 2>/dev/null") or "")
     if pid == "" then
-        os.execute("spotifyd --no-daemon --device-name spotirofi --backend pulseaudio --use-mpris --initial-volume 100 > /dev/null 2>&1 &")
+            os.execute("spotifyd --no-daemon --device-name spotirofi --backend pulseaudio --use-mpris --initial-volume " .. get_saved_volume() .. " > /dev/null 2>&1 &")
         for _ = 1, 15 do
             pid = trim(shell("pgrep -x spotifyd 2>/dev/null") or "")
             if pid ~= "" then break end
@@ -481,9 +486,7 @@ local function ensure_spotifyd()
     end
 end
 
---===================================================================
 -- DATA CACHE
---===================================================================
 
 local rate_limit_shown = false
 
@@ -627,9 +630,7 @@ local function load_followed_artists()
     return items
 end
 
---===================================================================
 -- PLAYBACK STATE
---===================================================================
 
 get_playback = function()
     if os.time() - last_playback < 5 then return end
@@ -649,9 +650,7 @@ local function inv_playback()
     current_track = nil; current_id = nil; is_playing = false; last_playback = 0
 end
 
---===================================================================
 -- DISPLAY HELPERS
---===================================================================
 
 local function display_track(item, hide_artist)
     local an = hide_artist and "" or artist_names(item)
@@ -679,6 +678,13 @@ local function get_playerctl_position()
     return tonumber(trim(raw or "")) or 0
 end
 
+local function get_playerctl_volume()
+    local raw = shell("playerctl volume 2>/dev/null")
+    local v = tonumber(trim(raw or ""))
+    if v and v > 0 then return math.floor(v * 100 + 0.5) end
+    return get_saved_volume()
+end
+
 local function track_mesg(item)
     local p = item.id == current_id and (is_playing and "\u{f04b}" or "\u{f04c}") or ""
     local l = liked[item.id] and "\u{f05d}" or ""
@@ -699,9 +705,17 @@ local function seek_mesg(item)
     return row1 .. "\n" .. elapsed .. "  " .. bar .. "  " .. total
 end
 
---===================================================================
+local function vol_mesg()
+    local row1 = current_track and track_mesg(current_track) or "Volume"
+    local vol = get_playerctl_volume()
+    local pct = math.min(vol / 100, 1)
+    local bar_w = 20
+    local filled = math.floor(pct * bar_w + 0.5)
+    local bar = string.rep("\u{2588}", filled) .. string.rep("\u{2591}", bar_w - filled)
+    return row1 .. "\n" .. vol .. "%  " .. bar .. "  100%"
+end
+
 -- QUEUE
---===================================================================
 
 local queue_tracks = nil
 local queue_idx    = 0
@@ -731,9 +745,7 @@ local function flush_queue()
     write_file(QUEUE_FILE, json.encode({tracks=queue_tracks, idx=queue_idx}))
 end
 
---===================================================================
 -- ACTIONS
---===================================================================
 
 local function do_play(item, ctx, ctx_type, ctx_id, all_items, idx)
     if all_items and idx then save_queue(all_items, idx) end
@@ -863,9 +875,7 @@ local function do_playback_cmd(cmd)
     return r
 end
 
---===================================================================
 -- API HELPERS
---===================================================================
 
 local function api_get_album(album_id)
     return cached_fetch("album_" .. album_id, CACHE .. "/album_" .. album_id .. ".json", 86400, function()
@@ -1065,9 +1075,7 @@ local function api_get_lyrics(track_name, artist_name, album_name, duration)
     return best and lyrics_to_lines(best.plainLyrics)
 end
 
---===================================================================
 -- VIEW: BROWSE
---===================================================================
 
 local function view_browse(entries, items, mesg, ctx, ctx_type, ctx_id)
     local is_track = ctx == "liked" or ctx == "top-tracks"
@@ -1194,9 +1202,7 @@ local function view_browse(entries, items, mesg, ctx, ctx_type, ctx_id)
     end
 end
 
---===================================================================
 -- VIEW: TRACK ACTIONS
---===================================================================
 
 view_actions = function(item, ctx, ctx_type, ctx_id, all_items, cidx, entries)
     session_push({view="action", track_id=item.id, track_name=item.name or "",
@@ -1271,8 +1277,8 @@ view_actions = function(item, ctx, ctx_type, ctx_id, all_items, cidx, entries)
             while true do
                 local si = rofi_dmenu(seeks, {prompt="Seek", mesg=seek_mesg(item), sel=0, custom=false, theme=THEME_SUB})
                 if not si or si == "" then break end
-                if si:match("^([%+%-])(%d+)s$") then
-                    local sign, secs = si:match("^([%+%-])(%d+)s$")
+                local sign, secs = si:match("^([%+%-])(%d+)s$")
+                if sign then
                     os.execute("playerctl position " .. secs .. sign .. " &")
                 else
                     local m, s = si:match("^(%d+):(%d+)$")
@@ -1283,9 +1289,7 @@ view_actions = function(item, ctx, ctx_type, ctx_id, all_items, cidx, entries)
     end
 end
 
---===================================================================
 -- VIEW: ARTIST ACTIONS
---===================================================================
 
 view_artist = function(artist)
     session_push({view="artist-actions", artist_id=artist.id, artist_name=artist.name or ""})
@@ -1371,9 +1375,7 @@ view_artist = function(artist)
     end
 end
 
---===================================================================
 -- VIEW: LYRICS (via lrclib.net)
---===================================================================
 
 view_lyrics = function(item)
     session_push({view="lyrics", track_id=item.id, track_name=item.name or "", track_artists=item.artists or {}})
@@ -1387,9 +1389,7 @@ view_lyrics = function(item)
     rofi_dmenu(lines, {prompt="Lyrics", mesg=track_mesg(item), custom=false, use_menu=true, theme=THEME_LYR})
 end
 
---===================================================================
 -- VIEW: ADD TO PLAYLIST
---===================================================================
 
 view_add_pl = function(track_id)
     session_push({view="add-to-playlist", track_id=track_id})
@@ -1431,9 +1431,7 @@ view_add_pl = function(track_id)
     session_pop()
 end
 
---===================================================================
 -- VIEW: PLAYLISTS
---===================================================================
 
 local function view_playlists()
     session_push({view="playlists"})
@@ -1496,9 +1494,7 @@ local function view_playlists()
     end
 end
 
---===================================================================
 -- VIEW: SEARCH
---===================================================================
 
 local function view_search(category)
     while true do
@@ -1540,9 +1536,7 @@ local function view_search(category)
     end
 end
 
---===================================================================
 -- VIEW: CATEGORIES
---===================================================================
 
 local function view_categories()
     local cats = api_get_categories()
@@ -1566,9 +1560,7 @@ local function view_categories()
     end
 end
 
---===================================================================
 -- VIEW: TOP TRACKS / LIKED / SAVED / FOLLOWED / CURATED / QUEUE
---===================================================================
 
 local function view_top_tracks()
     local tracks = api_get_top_tracks()
@@ -1695,9 +1687,7 @@ local function view_your_queue()
     return view_browse(entries, tracks, mesg, "your-queue", nil, nil)
 end
 
---===================================================================
 -- VIEW: SYSTEM
---===================================================================
 
 local function view_system()
     local items = {"Keybinds", '<span foreground="#e0d8a4">Refresh Library</span>',
@@ -1717,7 +1707,7 @@ local function view_system()
         elseif clean == "Restart Daemons" then
             os.execute("pkill -x spotifyd 2>/dev/null"); os.execute("pkill -f 'spotirofi.*--daemon' 2>/dev/null"); os.execute("sleep 1")
             inv_playback()
-            os.execute("spotifyd --no-daemon --device-name spotirofi --backend pulseaudio --use-mpris --initial-volume 100 > /dev/null 2>&1 &")
+        os.execute("spotifyd --no-daemon --device-name spotirofi --backend pulseaudio --use-mpris --initial-volume " .. get_saved_volume() .. " > /dev/null 2>&1 &")
             os.execute("sleep 3")
             os.execute(HOME .. "/.config/rofi/scripts/spotirofi/spotirofi.lua --daemon &")
         elseif clean == "Kill Daemons" then
@@ -1729,28 +1719,14 @@ local function view_system()
     end
 end
 
---===================================================================
 -- SESSION REPLAY
---===================================================================
 
 local function replay_session()
-    local function pop_file()
-        local raw = read_file(SESSION_FILE)
-        if not raw then return end
-        local ok, d = pcall(json.decode, raw)
-        if not ok or type(d) ~= "table" then return end
-        local s = d.stack
-        if type(s) ~= "table" or #s == 0 then return end
-        table.remove(s)
-        if #s == 0 then os.remove(SESSION_FILE)
-        else write_file(SESSION_FILE, json.encode({stack=s})) end
-    end
-
     local s = session_peek()
     if not s then return end
 
     while s do
-        pop_file()
+        session_pop()
         get_playback()
         local v = s.view
 
@@ -1925,9 +1901,7 @@ local function replay_session()
     inv_playback()
 end
 
---===================================================================
 -- MAIN
---===================================================================
 
 local function main()
     local lock = "/tmp/spotirofi_instance.pid"
@@ -2050,13 +2024,28 @@ local function main()
             if supports_vol == false then
                 rofi_message("Device doesn't support volume control")
             else
-                local vm = current_track and track_mesg(current_track) or "Volume"
-                local vi = rofi_dmenu({"25%","50%","75%","100%"}, {prompt="Volume", mesg=vm, custom=false, by_index=true, use_menu=true, theme=THEME_SUB})
-                if vi and vi >= 1 and vi <= 4 then
-                    local token = get_token()
-                    if token then
-                        local r = shell("curl -s --max-time 3 -o /dev/null -w '%{http_code}' -X PUT 'https://api.spotify.com/v1/me/player/volume?volume_percent=" .. (vi*25) .. "' -H 'Authorization: Bearer " .. token .. "' -H 'Content-Length: 0'")
-                        if not r or not r:match("2..") then rofi_message("Failed to set volume") end
+                while true do
+                    local vi = rofi_dmenu({"Volume +5", "Volume -5", '<span foreground="#20242a">────────────────────</span>',
+                                           "25%", "50%", "75%", "100%"},
+                        {prompt="Volume", mesg=vol_mesg(), custom=false, theme=THEME_SUB, markup=true})
+                    if not vi or vi == "" then break end
+    local vol = get_saved_volume()
+                    if vi == "Volume +5" then
+                        local nv = math.min(vol + 5, 100)
+                        os.execute("playerctl volume " .. string.format("%.2f", nv / 100) .. " 2>/dev/null")
+                        save_volume(nv)
+                    elseif vi == "Volume -5" then
+                        local nv = math.max(vol - 5, 0)
+                        os.execute("playerctl volume " .. string.format("%.2f", nv / 100) .. " 2>/dev/null")
+                        save_volume(nv)
+                    elseif vi == "25%" then
+                        os.execute("playerctl volume 0.25 2>/dev/null"); save_volume(25)
+                    elseif vi == "50%" then
+                        os.execute("playerctl volume 0.50 2>/dev/null"); save_volume(50)
+                    elseif vi == "75%" then
+                        os.execute("playerctl volume 0.75 2>/dev/null"); save_volume(75)
+                    elseif vi == "100%" then
+                        os.execute("playerctl volume 1.00 2>/dev/null"); save_volume(100)
                     end
                 end
             end
@@ -2065,9 +2054,7 @@ local function main()
     end
 end
 
---===================================================================
 -- DAEMON MODE — MPRIS listener for zero-API-call notifications
---===================================================================
 
 local function daemon_mode()
     local lock = "/tmp/spotirofi_daemon.pid"
