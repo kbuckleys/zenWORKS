@@ -143,7 +143,7 @@
     "network": {
         "format": "󱞡 {bandwidthDownBytes} ~ {bandwidthUpBytes} 󱞿 ",
         "format-disconnected": "󰱟 ",
-        "tooltip-format-disconnected": "{ifname}NO NETWORK SIGNAL",
+        "tooltip-format-disconnected": "NO NETWORK SIGNAL",
         "tooltip-format": "{ifname}: {ipaddr}",
         "on-click": "kitty -1 -T bandwhich sudo bandwhich",
         "tooltip": true,

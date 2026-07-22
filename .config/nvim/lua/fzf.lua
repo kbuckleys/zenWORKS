@@ -178,4 +178,126 @@ function M.open()
   vim.cmd("startinsert")
 end
 
+function M.history()
+  if state.win and vim.api.nvim_win_is_valid(state.win) then
+    vim.api.nvim_set_current_win(state.win)
+    return
+  end
+
+  if vim.fn.executable("fzf") ~= 1 then
+    vim.notify("fzf.lua: fzf not found", vim.log.levels.ERROR)
+    return
+  end
+
+  local log_path = "/var/log/pacman.log"
+  local f = io.open(log_path, "r")
+  if not f then
+    vim.notify("fzf.lua: cannot read " .. log_path, vim.log.levels.ERROR)
+    return
+  end
+
+  local entries = {}
+  for line in f:lines() do
+    if line:find("%[ALPM%] installed") or line:find("%[ALPM%] upgraded") then
+      entries[#entries + 1] = line
+    end
+  end
+  f:close()
+
+  local start = math.max(1, #entries - 49)
+  local display = {}
+  for i = start, #entries do
+    local e = entries[i]
+    local date, action, pkg, ver = e:match("%[(.-)%]%s*%[ALPM%]%s*(%w+)%s+(.-)%s*%((.-)%)")
+    if date and pkg then
+      local tag = action == "upgraded" and "↑" or "+"
+      display[#display + 1] = date .. "  " .. tag .. "  " .. pkg .. " " .. ver
+    else
+      display[#display + 1] = e
+    end
+  end
+
+  if #display == 0 then
+    vim.notify("fzf.lua: no history found", vim.log.levels.INFO)
+    return
+  end
+
+  local tmpfile = vim.fn.tempname()
+  local input = table.concat(display, "\n")
+  vim.fn.writefile(vim.split(input, "\n"), tmpfile)
+
+  local width = math.min(100, vim.o.columns - 4)
+  local height = math.floor(vim.o.lines * 0.6)
+  local geo = {
+    width = width,
+    height = height,
+    row = math.floor((vim.o.lines - height) / 2),
+    col = math.floor((vim.o.columns - width) / 2),
+  }
+
+  local buf = vim.api.nvim_create_buf(false, true)
+  local win = vim.api.nvim_open_win(buf, true, {
+    relative = "editor",
+    width = geo.width,
+    height = geo.height,
+    row = geo.row,
+    col = geo.col,
+    style = "minimal",
+    border = "single",
+  })
+  state.win, state.buf = win, buf
+
+  vim.wo[win].winhighlight = "Normal:Normal,FloatBorder:FloatBorder,NormalFloat:Normal"
+
+  local fzf_colors = build_fzf_colors()
+  local header = "RETURN Close"
+  local header_pad = math.floor((width - #header) / 2)
+  local header_centered = string.rep(" ", math.max(0, header_pad)) .. header
+
+  local cmd = string.format(
+    "FZF_DEFAULT_OPTS=\"--color=%s\" fzf "
+      .. "--no-input "
+      .. "--no-scrollbar "
+      .. "--border=top "
+      .. "--header-border=line "
+      .. "--info=hidden "
+      .. "--height=60%% "
+      .. "--reverse "
+      .. "--header='%s' "
+      .. "< %s",
+    fzf_colors,
+    header_centered:gsub("'", "'\\''"),
+    tmpfile
+  )
+
+  local function cleanup()
+    if vim.api.nvim_win_is_valid(win) then
+      vim.api.nvim_win_close(win, true)
+    end
+    if vim.api.nvim_buf_is_valid(buf) then
+      vim.api.nvim_buf_delete(buf, { force = true })
+    end
+    if state.win == win then
+      state.win, state.buf = nil, nil
+    end
+  end
+
+  local job_id = vim.fn.jobstart(cmd, {
+    term = true,
+    on_exit = function()
+      cleanup()
+      vim.fn.delete(tmpfile)
+    end,
+  })
+
+  if job_id <= 0 then
+    vim.notify("fzf.lua: failed to start fzf job", vim.log.levels.ERROR)
+    cleanup()
+    vim.fn.delete(tmpfile)
+    return
+  end
+
+  vim.cmd("startinsert")
+end
+
 return M

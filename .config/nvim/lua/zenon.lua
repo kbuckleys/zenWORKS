@@ -54,7 +54,7 @@ local zenon = {
 }
 
 -- UI
-vim.api.nvim_set_hl(0, "YankHighlight", { fg = "#000000", bg = "#dfdfdd", nocombine = true })
+vim.api.nvim_set_hl(0, "YankHighlight", { fg = "#000000", bg = "#eebebe", nocombine = true })
 vim.api.nvim_set_hl(0, "Visual", { fg = "#000000", bg = "#c8a4e0", nocombine = true })
 vim.api.nvim_set_hl(0, "CursorLine", { bg = "#20242a", nocombine = true })
 vim.api.nvim_set_hl(0, "WhichKeyNormal", { bg = "#20242a" })
