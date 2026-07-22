@@ -23,17 +23,17 @@ audio=$(pactl list sources | grep -m1 'Name:.*monitor' | awk '{print $2}')
 case "]] .. mode .. [[" in
   "full")
     notify-send "󰑋 Full Screen" "$monitor"
-    wf-recorder -c libx264rgb --audio="$audio" -o "$monitor" -f "$filename" &
+    wf-recorder -c h264_nvenc -p preset=lossless -p rgb_mode=yuv444 -p qp=0 --audio="$audio" -o "$monitor" -f "$filename" &
     ;;
   "region")
     geometry=$(slurp)
-    [ -n "$geometry" ] && notify-send " Region Selected" && wf-recorder -c libx264rgb --audio="$audio" -g "$geometry" -f "$filename" &
+    [ -n "$geometry" ] && notify-send " Region Selected" && wf-recorder -c h264_nvenc -p preset=lossless -p rgb_mode=yuv444 -p qp=0 --audio="$audio" -g "$geometry" -f "$filename" &
     ;;
   "window")
     win_info=$(hyprctl activewindow -j | jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"')
     [ "$win_info" = "null" ] && { notify-send " No window"; exit 1; }
     notify-send " Window Recording"
-    wf-recorder -c libx264rgb --audio="$audio" -g "$win_info" -f "$filename" &
+    wf-recorder -c h264_nvenc -p preset=lossless -p rgb_mode=yuv444 -p qp=0 --audio="$audio" -g "$win_info" -f "$filename" &
     ;;
 esac
 ]]
