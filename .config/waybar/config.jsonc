@@ -13,7 +13,7 @@
     "height": 28,
 
     "modules-left": [
-        "custom/ZARU",
+        "custom/update",
         "group/tray-expander",
         "hyprland/workspaces"
     ],
@@ -176,13 +176,14 @@
         "spacing": 12
     },
 
-    "custom/ZARU": {
-        "on-click": "kitty -1 -T ZENU lua ~/.config/scripts/ZENU.lua update",
-        "on-click-right": "touch ~/.cache/ZARU/refresh",
-        "exec": "~/.config/waybar/scripts/ZARU.lua -n -k -f '  {total}' --once",
+    "custom/update": {
+        "format": "{icon}{0}",
         "return-type": "json",
-        "format": "{text}",
-        "interval": 10,
-        "markup": "pango"
+        "format-icons": {
+            "pending-updates": ""
+        },
+        "exec-if": "which waybar-updates",
+        "exec": "waybar-updates -d -n -c 3600",
+        "on-click": "kitty -1 -T ZENU lua ~/.config/scripts/ZENU.lua update"
     }
 }
