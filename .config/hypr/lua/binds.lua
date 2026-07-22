@@ -10,11 +10,16 @@ local fman = term .. " yazi"
 
 -- MISC
 hl.bind("SUPER + P", hl.dsp.exec_cmd(term .. " -T ZENU ~/.config/scripts/ZENU.lua"))
+hl.bind("SUPER + SHIFT + P", hl.dsp.exec_cmd(term .. " -T ZENU ~/.config/scripts/ZENU.lua update"))
 hl.bind("SUPER + SHIFT + ESCAPE", hl.dsp.exec_cmd("hyprshutdown"), { locked = true })
 hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd(term .. " -T sysmon btop"))
 hl.bind("SUPER + SHIFT + Y", hl.dsp.exec_cmd("killall waybar && waybar"))
 hl.bind("SUPER + Y", hl.dsp.exec_cmd("killall -SIGUSR1 waybar"))
 hl.bind("SUPER + CONTROL + P", hl.dsp.exec_cmd("hyprpicker -a"))
+hl.bind("SUPER + SHIFT + H", function()
+    hl.clear_crashed_lockscreen()
+    hl.exec_cmd("hyprlock")
+end, { locked = true })
 hl.bind("SUPER + RETURN", hl.dsp.exec_cmd(term))
 hl.bind("SUPER + E", hl.dsp.exec_cmd(fman))
 hl.bind("SUPER + B", hl.dsp.exec_cmd(web))
