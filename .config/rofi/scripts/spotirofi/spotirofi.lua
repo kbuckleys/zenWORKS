@@ -1013,6 +1013,8 @@ local function view_browse(entries, items, mesg, ctx, ctx_type, ctx_id)
                         view_browse(te, ad.tracks, item.name .. " - " .. artist_names(item), "album", "album", item.id)
                     end
                 end
+            elseif st == "artists" then
+                view_artist(item)
             elseif st == "playlists" then
                 local action = rofi_dmenu({"Open Playlist", "Save Playlist"}, {prompt=item.name or "Playlist", mesg=artist_names(item), custom=false, theme=THEME_SUB})
                 if action == "Save Playlist" then
