@@ -922,20 +922,7 @@ local function api_get_top_tracks()
     end
 end
 
-local function api_get_recently_played()
-    return cached_fetch("recently_played", CACHE .. "/recently_played.json", 1800, function()
-        local d = api_get("me/player/recently-played", "limit=50")
-        if not d or not d.items then return nil end
-        local tracks = {}
-        for _, entry in ipairs(d.items) do
-            if entry.track and entry.track.id then
-                entry.track.played_at = entry.played_at
-                tracks[#tracks+1] = entry.track
-            end
-        end
-        return #tracks > 0 and tracks or nil
-    end)
-end
+
 
 local function api_get_new_releases()
     return cached_fetch("new_releases", CACHE .. "/new_releases.json", 86400, function()
@@ -957,18 +944,56 @@ local function api_get_made_for_you()
     end)
 end
 
-local function api_get_lyrics(track_name, artist_name)
-    local q = (track_name .. " " .. artist_name):gsub("%s+", " "):match("^%s*(.-)%s*$")
-    local r = trim(shell("curl -s --max-time 5 " .. shell_quote("https://lrclib.net/api/search?q=" .. url_encode(q))))
-    local d = safe_decode(r)
-    if d and #d > 0 and d[1].plainLyrics then
-        local lines = {}
-        for line in d[1].plainLyrics:gmatch("[^\n]+") do
-            if #line > 0 then lines[#lines+1] = line end
-        end
-        return lines
+local function lyrics_to_lines(plain)
+    if not plain then return nil end
+    local lines = {}
+    for line in plain:gmatch("[^\n]+") do
+        if #line > 0 then lines[#lines+1] = line end
     end
-    return nil
+    return #lines > 0 and lines or nil
+end
+
+local function normalize_str(s)
+    return (s or ""):lower():gsub("[^%w%s]", ""):gsub("%s+", " "):match("^%s*(.-)%s*$")
+end
+
+local function api_get_lyrics(track_name, artist_name, album_name, duration)
+    local get_url = "https://lrclib.net/api/get?track_name=" .. url_encode(track_name)
+    if artist_name and #artist_name > 0 then get_url = get_url .. "&artist_name=" .. url_encode(artist_name) end
+    if album_name and #album_name > 0 then get_url = get_url .. "&album_name=" .. url_encode(album_name) end
+    if duration and duration > 0 then get_url = get_url .. "&duration=" .. tostring(math.floor(duration)) end
+    local r = trim(shell("curl -s --max-time 5 " .. shell_quote(get_url)))
+    local d = safe_decode(r)
+    if d and d.plainLyrics then
+        local lines = lyrics_to_lines(d.plainLyrics)
+        if lines then return lines end
+    end
+
+    local search_url = "https://lrclib.net/api/search?track_name=" .. url_encode(track_name)
+    if artist_name and #artist_name > 0 then search_url = search_url .. "&artist_name=" .. url_encode(artist_name) end
+    r = trim(shell("curl -s --max-time 5 " .. shell_quote(search_url)))
+    d = safe_decode(r)
+    if not d or #d == 0 then return nil end
+
+    local norm_track  = normalize_str(track_name)
+    local norm_artist = normalize_str(artist_name)
+    local norm_album  = normalize_str(album_name)
+    local best, best_score = nil, -1
+    for _, entry in ipairs(d) do
+        if entry.plainLyrics then
+            local score = 0
+            if normalize_str(entry.trackName)  == norm_track  then score = score + 10 end
+            if normalize_str(entry.artistName) == norm_artist then score = score + 10 end
+            if norm_album ~= "" and normalize_str(entry.albumName) == norm_album then score = score + 3 end
+            if duration and entry.duration then
+                local diff = math.abs(duration - entry.duration)
+                if diff <= 2 then score = score + 5
+                elseif diff <= 10 then score = score + 2 end
+            end
+            if score > best_score then best_score = score; best = entry end
+        end
+    end
+    return best and lyrics_to_lines(best.plainLyrics)
 end
 
 --===================================================================
@@ -979,7 +1004,6 @@ local function view_browse(entries, items, mesg, ctx, ctx_type, ctx_id)
     local is_track = ctx == "liked" or ctx == "top-tracks"
                   or ctx == "discover-weekly" or ctx == "release-radar"
                   or ctx == "new-music-friday" or ctx == "your-queue"
-                  or ctx == "recently-played"
                   or ctx == "liked-by-artist" or ctx == "top-by-artist"
                   or ctx == "track"
                   or (ctx_type and ctx_id)
@@ -1264,8 +1288,10 @@ end
 view_lyrics = function(item)
     session_push({view="lyrics", track_id=item.id, track_name=item.name or "", track_artists=item.artists or {}})
     local id = item.id or ""
+    local dur = item.duration_ms and item.duration_ms / 1000 or nil
+    local alb = item.album and item.album.name or nil
     local lines = cached_fetch("lyrics_" .. id, LYRICS_DIR .. "/lyrics_" .. id .. ".json", nil, function()
-        return api_get_lyrics(item.name, artist_names(item))
+        return api_get_lyrics(item.name, artist_names(item), alb, dur)
     end)
     if not lines or #lines == 0 then session_pop(); rofi_message("No lyrics found"); return end
     rofi_dmenu(lines, {prompt="Lyrics", mesg=track_mesg(item), custom=false, use_menu=true, theme=THEME_LYR})
@@ -1518,15 +1544,6 @@ local function view_new_music_friday()
     return view_browse(entries, tracks, "New Music Friday - " .. #tracks .. " tracks", "new-music-friday", nil, nil)
 end
 
-local function view_recently_played()
-    local tracks = api_get_recently_played() or {}
-    if #tracks == 0 then if not rofi_message("No recently played tracks") then os.exit(0) end; return end
-    session_push({view="recently-played"})
-    local entries = {}
-    for i, t in ipairs(tracks) do entries[i] = string.format("%2d. %s", i, display_track(t)) end
-    return view_browse(entries, tracks, "Recently Played - " .. #tracks .. " tracks", "recently-played", nil, nil)
-end
-
 local function view_new_releases()
     local albums = api_get_new_releases() or {}
     if #albums == 0 then if not rofi_message("No new releases") then os.exit(0) end; return end
@@ -1583,6 +1600,40 @@ local function view_your_queue()
 end
 
 --===================================================================
+-- VIEW: SYSTEM
+--===================================================================
+
+local function view_system()
+    local items = {"Keybinds", '<span foreground="#e0d8a4">Refresh Library</span>',
+                   '<span foreground="#fab387">Restart Daemons</span>',
+                   '<span foreground="#e78284">Kill Daemons</span>'}
+    while true do
+        local sel = rofi_dmenu(items, {prompt="System", mesg="System", custom=false, use_menu=true, theme=THEME_SUB, markup=true})
+        if not sel then break end
+        local clean = sel:gsub("<[^>]+>", "")
+        if clean == "Keybinds" then
+            rofi_message("Alt+Return  →  Current track actions\nAlt+Backspace  →  Go back\nAlt+Space  →  Main menu\nAlt+/  →  Search all")
+        elseif clean == "Refresh Library" then
+            os.execute("notify-send -t 10000 --app-name=spotirofi 'Spotirofi' 'Refreshing library...' &")
+            os.remove(LIKED_CACHE); os.remove(ALBUM_CACHE); os.remove(ARTIST_CACHE); os.remove(LIKED_IDS)
+            load_liked_tracks(); load_saved_albums(); load_followed_artists(); populate_liked_ids()
+            os.execute("notify-send -t 3000 --app-name=spotirofi 'Spotirofi' 'Library refreshed' &")
+        elseif clean == "Restart Daemons" then
+            os.execute("pkill -x spotifyd 2>/dev/null"); os.execute("pkill -f 'spotirofi.*--daemon' 2>/dev/null"); os.execute("sleep 1")
+            inv_playback()
+            os.execute("spotifyd --no-daemon --device-name spotirofi --backend pulseaudio --use-mpris --initial-volume 100 > /dev/null 2>&1 &")
+            os.execute("sleep 3")
+            os.execute(HOME .. "/.config/rofi/scripts/spotirofi/spotirofi.lua --daemon &")
+        elseif clean == "Kill Daemons" then
+            os.execute("pkill -x spotifyd 2>/dev/null")
+            os.execute("pkill -f 'spotirofi.*--daemon' 2>/dev/null")
+            os.execute("pkill -x rofi 2>/dev/null")
+            os.exit(0)
+        end
+    end
+end
+
+--===================================================================
 -- SESSION REPLAY
 --===================================================================
 
@@ -1636,7 +1687,7 @@ local function replay_session()
         elseif v == "release-radar"      then view_release_radar()
         elseif v == "new-music-friday"   then view_new_music_friday()
         elseif v == "your-queue"         then view_your_queue()
-        elseif v == "recently-played"   then view_recently_played()
+
         elseif v == "new-releases"      then view_new_releases()
         elseif v == "made-for-you"      then view_made_for_you()
         elseif v == "artist-actions" and s.artist_id then
@@ -1835,17 +1886,14 @@ local function main()
         local function add(v) if v then entries[#entries+1] = v end end
         add("Track Options")
         add("Your Queue"); add("Liked Tracks"); add("Top Tracks"); add("Saved Albums")
-        add("Followed Artists"); add("Playlists"); add("Recently Played"); add("New Releases")
+        add("Followed Artists"); add("Playlists"); add("New Releases")
         add("Made For You"); add("Categories"); add("Search")
         add(current_track and (is_playing and "Pause" or "Play") or "No track playing")
         add("Next Track"); add("Previous Track")
         add(is_shuffle and "Shuffle: On" or "Shuffle: Off")
         add(repeat_state=="off" and "Repeat: Off" or (repeat_state=="track" and "Repeat: Track" or "Repeat: Context"))
         add("Volume")
-        add("Keybinds")
-        add('<span foreground="#e0d8a4">Refresh Library</span>')
-        add('<span foreground="#fab387">Restart Daemons</span>')
-        add('<span foreground="#e78284">Kill Daemons</span>')
+        add("System")
 
         local sel = rofi_dmenu(entries, {prompt="Spotify", mesg=mesg, sel=0, custom=false, markup=true})
         if sel then sel = sel:gsub("<[^>]+>", "") end
@@ -1868,7 +1916,6 @@ local function main()
         elseif  sel == "Categories"       then view_categories()
         elseif  sel == "Your Queue"       then view_your_queue()
         elseif  sel == "Top Tracks"       then view_top_tracks()
-        elseif  sel == "Recently Played"   then view_recently_played()
         elseif  sel == "New Releases"     then view_new_releases()
         elseif  sel == "Made For You"     then view_made_for_you()
         elseif  sel == "Pause" then do_playback_put("pause"); inv_playback()
@@ -1885,31 +1932,14 @@ local function main()
             local new_state = repeat_state == "off" and "context" or (repeat_state == "context" and "track" or "off")
             if token then shell("curl -s --max-time 3 -o /dev/null -w '%{http_code}' -X PUT 'https://api.spotify.com/v1/me/player/repeat?state=" .. new_state .. "' -H 'Authorization: Bearer " .. token .. "' -H 'Content-Length: 0'") end
             inv_playback()
-        elseif  sel == "Kill Daemons" then
-            os.execute("pkill -x spotifyd 2>/dev/null")
-            os.execute("pkill -f 'spotirofi.*--daemon' 2>/dev/null")
-            os.execute("pkill -x rofi 2>/dev/null")
-            os.exit(0)
-        elseif  sel == "Keybinds" then
-            rofi_message("Alt+Return  →  Current track actions\nAlt+Backspace  →  Go back\nAlt+Space  →  Main menu\nAlt+/  →  Search all")
+        elseif  sel == "System"        then view_system()
         elseif  sel == "Volume" then
             local vm = current_track and track_mesg(current_track) or "Volume"
-            local vi = rofi_dmenu({"25%","50%","75%","100%"}, {prompt="Volume", mesg=vm, custom=false, by_index=true})
+            local vi = rofi_dmenu({"25%","50%","75%","100%"}, {prompt="Volume", mesg=vm, custom=false, by_index=true, use_menu=true, theme=THEME_SUB})
             if vi and vi >= 1 and vi <= 4 then
                 local token = get_token()
                 if token then shell("curl -s --max-time 3 -o /dev/null -X PUT 'https://api.spotify.com/v1/me/player/volume?volume_percent=" .. (vi*25) .. "' -H 'Authorization: Bearer " .. token .. "'") end
             end
-        elseif  sel == "Refresh Library" then
-            os.execute("notify-send -t 10000 --app-name=spotirofi 'Spotirofi' 'Refreshing library...' &")
-            os.remove(LIKED_CACHE); os.remove(ALBUM_CACHE); os.remove(ARTIST_CACHE); os.remove(LIKED_IDS)
-            load_liked_tracks(); load_saved_albums(); load_followed_artists(); populate_liked_ids()
-            os.execute("notify-send -t 3000 --app-name=spotirofi 'Spotirofi' 'Library refreshed' &")
-        elseif  sel == "Restart Daemons" then
-            os.execute("pkill -x spotifyd 2>/dev/null"); os.execute("pkill -f 'spotirofi.*--daemon' 2>/dev/null"); os.execute("sleep 1")
-            inv_playback()
-            os.execute("spotifyd --no-daemon --device-name spotirofi --backend pulseaudio --use-mpris --initial-volume 100 > /dev/null 2>&1 &")
-            os.execute("sleep 3")
-            os.execute(HOME .. "/.config/rofi/scripts/spotirofi/spotirofi.lua --daemon &")
         end
         ::m1::
     end
@@ -1961,27 +1991,33 @@ local function daemon_mode()
             .. " " .. shell_quote(artist or "") .. " &")
     end
 
+    local function process_snap(snap)
+        if not snap then return end
+        snap = trim(snap)
+        local title, artist, art_url, track_id, album, duration_raw = snap:match("^([^|]*)|([^|]*)|([^|]*)|([^|]*)|([^|]*)|([^|]*)$")
+        if track_id then track_id = track_id:gsub("^'", ""):gsub("'$", ""):match("^/spotify/track/(.+)") or track_id:match("^spotify:track:(.+)") or track_id end
+        local duration = tonumber(duration_raw) and tonumber(duration_raw) / 1000000 or nil
+        if title and title ~= "" and title ~= last_title then
+            daemon_notify(title, artist, art_url, track_id)
+            last_title = title
+            if track_id and title and title ~= "" then
+                os.execute("nohup lua " .. shell_quote(DIR .. "/spotirofi.lua")
+                    .. " --prefetch-lyrics " .. shell_quote(track_id)
+                    .. " " .. shell_quote(title)
+                    .. " " .. shell_quote(artist or "")
+                    .. " " .. shell_quote(album or "")
+                    .. " " .. shell_quote(duration and tostring(math.floor(duration)) or "")
+                    .. " > /dev/null 2>&1 &")
+            end
+        end
+    end
+
     local function daemon_loop()
+        process_snap(shell("playerctl metadata -f '{{title}}|{{artist}}|{{mpris:artUrl}}|{{mpris:trackid}}|{{album}}|{{mpris:length}}' 2>/dev/null"))
         local p = io.popen("playerctl --follow metadata 2>/dev/null", "r")
         if not p then return nil end
         for _ in p:lines() do
-            local snap = shell("playerctl metadata -f '{{title}}|{{artist}}|{{mpris:artUrl}}|{{mpris:trackid}}' 2>/dev/null")
-            if snap then
-                snap = trim(snap)
-                local title, artist, art_url, track_id = snap:match("^([^|]*)|([^|]*)|([^|]*)|(.+)$")
-                if track_id then track_id = track_id:gsub("^'", ""):gsub("'$", ""):match("^/spotify/track/(.+)") or track_id:match("^spotify:track:(.+)") or track_id end
-                if title and title ~= "" and title ~= last_title then
-                    daemon_notify(title, artist, art_url, track_id)
-                    last_title = title
-                    if track_id and title and title ~= "" then
-                        os.execute("nohup lua " .. shell_quote(DIR .. "/spotirofi.lua")
-                            .. " --prefetch-lyrics " .. shell_quote(track_id)
-                            .. " " .. shell_quote(title)
-                            .. " " .. shell_quote(artist or "")
-                            .. " > /dev/null 2>&1 &")
-                    end
-                end
-            end
+            process_snap(shell("playerctl metadata -f '{{title}}|{{artist}}|{{mpris:artUrl}}|{{mpris:trackid}}|{{album}}|{{mpris:length}}' 2>/dev/null"))
         end
         p:close()
         return nil
@@ -2003,7 +2039,9 @@ elseif arg and arg[1] == "--prefetch-lyrics" and arg[2] and arg[3] and arg[4] th
     local disk = LYRICS_DIR .. "/lyrics_" .. id .. ".json"
     local existing = disk_get(disk)
     if existing then mem_set(key, existing); os.exit(0) end
-    local lines = api_get_lyrics(arg[3], arg[4])
+    local album = arg[5] ~= "" and arg[5] or nil
+    local duration = arg[6] and tonumber(arg[6]) or nil
+    local lines = api_get_lyrics(arg[3], arg[4], album, duration)
     if lines and #lines > 0 then
         mem_set(key, lines)
         disk_set(disk, lines)
