@@ -15,7 +15,7 @@ configuration {
         filter-regex: "(.*cache.*|.*\\.o)";
         cancel-returns-1: true;
         command: "xdg-open";
-        directory: "/";
+        directory: "~";
     }
     filebrowser {
         command: "kitty -1 yazi";
