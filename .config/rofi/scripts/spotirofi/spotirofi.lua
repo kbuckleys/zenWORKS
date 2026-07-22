@@ -656,7 +656,8 @@ local function display_track(item, hide_artist)
     local an = hide_artist and "" or artist_names(item)
     local p  = item.id == current_id and (is_playing and "\u{f04b} " or "\u{f04c} ") or ""
     local l  = liked[item.id] and "\u{f05d}  " or ""
-    local txt = p .. l .. (item.name or "Unknown") .. (hide_artist and "" or "  " .. an)
+    local e  = item.explicit and "\u{f071} " or ""
+    local txt = p .. l .. e .. (item.name or "Unknown") .. (hide_artist and "" or "  " .. an)
     if item.id == current_id then txt = "<span foreground=\"#b6e0a4\">" .. txt .. "</span>" end
     return txt
 end
@@ -687,8 +688,9 @@ end
 
 local function track_mesg(item)
     local p = item.id == current_id and (is_playing and "\u{f04b}" or "\u{f04c}") or ""
-    local l = liked[item.id] and "\u{f05d}" or ""
-    return p .. "  " .. (item.name or "") .. "  " .. artist_names(item) .. "  " .. l
+    local l = liked[item.id] and "\u{f05d} " or ""
+    local e = item.explicit and " \u{f071}" or ""
+    return p .. "  " .. (item.name or "") .. "  " .. artist_names(item) .. "  " .. l .. e
 end
 
 local function seek_mesg(item)
@@ -977,6 +979,11 @@ local function api_get_artist_related(artist_id)
     end)
 end
 
+local function api_get_recommendations(track_id)
+    local d = api_get("recommendations", "seed_tracks=" .. track_id .. "&limit=20")
+    return (d and d.tracks and #d.tracks > 0) and d.tracks or nil
+end
+
 local function api_get_categories()
     return cached_fetch("categories", CACHE .. "/categories.json", 86400, function()
         local d = api_get("browse/categories", "limit=50")
@@ -1082,7 +1089,7 @@ local function view_browse(entries, items, mesg, ctx, ctx_type, ctx_id)
                   or ctx == "discover-weekly" or ctx == "release-radar"
                   or ctx == "new-music-friday" or ctx == "your-queue"
                   or ctx == "liked-by-artist" or ctx == "top-by-artist"
-                  or ctx == "track"
+                  or ctx == "track" or ctx == "recommendations"
                   or (ctx_type and ctx_id)
     local is_album_list   = ctx == "album-list" or (ctx_type == "album" and not ctx_id) or ctx == "album" or ctx == "search-album"
     local is_artist_list  = ctx == "artist-list" or ctx == "artist"
@@ -1218,6 +1225,7 @@ view_actions = function(item, ctx, ctx_type, ctx_id, all_items, cidx, entries)
     if in_pl then actions[#actions+1] = "Remove from Playlist" end
     actions[#actions+1] = "Lyrics"
     actions[#actions+1] = "Copy URL"
+    actions[#actions+1] = "More Like This"
 
     while true do
         local sel = rofi_dmenu(actions, {prompt="Action", mesg=track_mesg(item), sel=0, custom=false, theme=THEME_SUB})
@@ -1271,6 +1279,19 @@ view_actions = function(item, ctx, ctx_type, ctx_id, all_items, cidx, entries)
                 end
             end
         elseif sel == "Lyrics" then view_lyrics(item)
+        elseif sel == "Copy URL" then
+            local url = "https://open.spotify.com/track/" .. (item.id or "")
+            os.execute("echo " .. shell_quote(url) .. " | wl-copy 2>/dev/null")
+            rofi_message("Copied URL")
+        elseif sel == "More Like This" then
+            local tracks = api_get_recommendations(item.id)
+            if not tracks then rofi_message("No recommendations found")
+            else
+                session_push({view="recommendations", track_id=item.id, track_name=item.name or "", track_artists=item.artists or {}})
+                local te = {}
+                for i, t in ipairs(tracks) do te[i] = string.format("%2d. %s", i, display_track(t)) end
+                view_browse(te, tracks, "More Like " .. (item.name or ""), "recommendations", nil, nil)
+            end
         elseif sel == "Seek" then
             session_push({view="seek", track_id=item.id, track_name=item.name or "", track_artists=item.artists or {}, track_duration_ms=item.duration_ms or 0})
             local seeks = {"+10s", "-10s", "+30s", "-30s", "1:00", "2:00", "0:00"}
@@ -1815,6 +1836,13 @@ local function replay_session()
                     if not ridx then break end
                     if ridx >= 1 and ridx <= #d.artists then view_artist(d.artists[ridx]) end
                 end
+            end
+        elseif v == "recommendations" and s.track_id then
+            local tracks = api_get_recommendations(s.track_id)
+            if tracks then
+                local te = {}
+                for i, t in ipairs(tracks) do te[i] = string.format("%2d. %s", i, display_track(t)) end
+                view_browse(te, tracks, "More Like " .. (s.track_name or ""), "recommendations", nil, nil)
             end
         elseif v == "categories"          then view_categories()
         elseif v == "playlists"           then view_playlists()
