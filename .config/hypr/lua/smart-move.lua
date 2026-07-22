@@ -48,4 +48,21 @@ hl.bind("SUPER + SHIFT + DOWN", function()
 	smart_move.smart_move("d")
 end, { repeating = true })
 
+-- SNAP TO EDGE
+hl.bind("SUPER + SHIFT + CONTROL + LEFT", function()
+	hl.dispatch(hl.dsp.window.move({ direction = "l" }))
+end)
+
+hl.bind("SUPER + SHIFT + CONTROL + RIGHT", function()
+	hl.dispatch(hl.dsp.window.move({ direction = "r" }))
+end)
+
+hl.bind("SUPER + SHIFT + CONTROL + UP", function()
+	hl.dispatch(hl.dsp.window.move({ direction = "u" }))
+end)
+
+hl.bind("SUPER + SHIFT + CONTROL + DOWN", function()
+	hl.dispatch(hl.dsp.window.move({ direction = "d" }))
+end)
+
 return smart_move
