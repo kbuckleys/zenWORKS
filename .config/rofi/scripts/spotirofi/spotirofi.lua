@@ -27,6 +27,7 @@ local THEME_MENU = DIR .. "/menu.rasi"
 local THEME_LYR  = DIR .. "/lyrics.rasi"
 local THEME_MSG  = DIR .. "/message.rasi"
 local THEME_SUB  = DIR .. "/sub.rasi"
+local THEME_BINDS = DIR .. "/binds.rasi"
 
 local MAX_RESULTS = 20
 local CACHE_TTL  = 43200
@@ -316,9 +317,9 @@ local function rofi_dmenu(entries, opts)
     end
 end
 
-local function rofi_message(msg)
+local function rofi_message(msg, theme)
     local tf = os.tmpname()
-    os.execute("rofi -e " .. shell_quote(msg) .. " -theme " .. shell_quote(THEME_MSG) .. " -markup 2>/dev/null; printf '\\n__EXIT__%d__' $? >> " .. shell_quote(tf))
+    os.execute("rofi -e " .. shell_quote(msg) .. " -theme " .. shell_quote(theme or THEME_MSG) .. " -markup 2>/dev/null; printf '\\n__EXIT__%d__' $? >> " .. shell_quote(tf))
     local raw = read_file(tf)
     os.remove(tf)
     local ec = tonumber((raw or ""):match("__EXIT__(%d+)__")) or 1
@@ -1525,9 +1526,22 @@ view_lyrics = function(item)
     if timestamps then
         local pre_sel = 0
         while true do
+            ::lr_next::
             local sel_line = rofi_dmenu(display_lines,
                 {prompt="Lyrics", mesg=mesg_base .. "\n&gt; Search or select a line to jump to &lt;", custom=false,
                  use_menu=true, theme=THEME_LYR, sel=pre_sel, markup=true})
+            if jump_to_track_pending then
+                jump_to_track_pending = false
+                if current_track and current_track.id == item.id then
+                    local pos = get_playerctl_position()
+                    local best = 1
+                    for i, ts in ipairs(timestamps) do
+                        if ts <= pos then best = i end
+                    end
+                    pre_sel = best - 1
+                end
+                goto lr_next
+            end
             if not sel_line then break end
             local found_idx
             for i, l in ipairs(display_lines) do
@@ -1563,8 +1577,13 @@ view_lyrics = function(item)
             end
         end
     else
-        rofi_dmenu(display_lines,
-            {prompt="Lyrics", mesg=mesg_base, custom=false, use_menu=true, theme=THEME_LYR})
+        while true do
+            ::lr_next_plain::
+            rofi_dmenu(display_lines,
+                {prompt="Lyrics", mesg=mesg_base, custom=false, use_menu=true, theme=THEME_LYR})
+            if jump_to_track_pending then jump_to_track_pending = false; goto lr_next_plain end
+            break
+        end
     end
 end
 
@@ -1910,7 +1929,7 @@ local function view_system()
         if not sel then break end
         local clean = sel:gsub("<[^>]+>", "")
         if clean == "Keybinds" then
-            rofi_message("Alt+Return  →  Current track actions\nAlt+Backspace  →  Go back / Main menu\nAlt+Space  →  Exit to main menu\nAlt+/  →  Search all\nAlt+l  →  Liked tracks\nAlt+q  →  Your queue\nAlt+v  →  Volume\nAlt+c  →  Jump to playing track\nAlt+s  →  Seek current track\nReturn  →  Select\nEscape  →  Close")
+            rofi_message("<b>Alt+Return      </b> Jump to main menu\n<b>Alt+Backspace   </b> Back one level\n<b>Alt+Space       </b> Exit to main menu\n<b>Alt+/           </b> Search all\n<b>Alt+l           </b> Liked tracks\n<b>Alt+q           </b> Your queue\n<b>Alt+v           </b> Volume\n<b>Alt+c           </b> Jump to playing track (list)\n                 Jump to current lyric line (lyrics)\n<b>Alt+s           </b> Seek current track\n<b>Return          </b> Select\n<b>Escape          </b> Close", THEME_BINDS)
         elseif clean:match("^Bitrate") then
             local br_opts = {}
             for _, v in ipairs({96, 160, 320}) do
