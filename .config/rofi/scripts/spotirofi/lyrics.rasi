@@ -6,11 +6,6 @@
 
 @theme "ZENON"
 
-configuration {
-    kb-remove-char-back: "BackSpace";
-    kb-remove-to-sol: "";
-}
-
 window {
     location: south;
     anchor: south;
