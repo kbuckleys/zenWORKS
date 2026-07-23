@@ -121,6 +121,18 @@ local function save_volume(pct)
     write_file(VOLUME_FILE, json.encode({volume=pct}))
 end
 
+local BITRATE_FILE = CACHE .. "/bitrate"
+local function get_saved_bitrate()
+    local raw = read_file(BITRATE_FILE)
+    local n = raw and tonumber(trim(raw))
+    if n and (n == 96 or n == 160 or n == 320) then return n end
+    return 160
+end
+local function save_bitrate(n)
+    ensure_cache()
+    write_file(BITRATE_FILE, tostring(n))
+end
+
 local _mem = {}
 local function mem_get(key)
     local e = _mem[key]
@@ -350,7 +362,7 @@ local function oauth_get_token()
     local scopes = "app-remote-control playlist-modify playlist-modify-private playlist-modify-public"
         .. " playlist-read playlist-read-collaborative playlist-read-private streaming"
         .. " user-follow-modify user-follow-read user-library-modify user-library-read"
-        .. " user-read-recently-played user-top-read"
+        .. " user-top-read"
         .. " user-modify-playback-state user-read-currently-playing user-read-playback-state"
         .. " user-read-private"
         .. " user-read-playback-position"
@@ -475,7 +487,7 @@ end
 local function ensure_spotifyd()
     local pid = trim(shell("pgrep -x spotifyd 2>/dev/null") or "")
     if pid == "" then
-            os.execute("spotifyd --no-daemon --device-name spotirofi --backend pulseaudio --use-mpris --initial-volume " .. get_saved_volume() .. " > /dev/null 2>&1 &")
+            os.execute("spotifyd --no-daemon --device-name spotirofi --backend pulseaudio --use-mpris --initial-volume " .. get_saved_volume() .. " --bitrate " .. get_saved_bitrate() .. " > /dev/null 2>&1 &")
         for _ = 1, 15 do
             pid = trim(shell("pgrep -x spotifyd 2>/dev/null") or "")
             if pid ~= "" then break end
@@ -1107,14 +1119,22 @@ local function view_browse(entries, items, mesg, ctx, ctx_type, ctx_id)
             if unliked and ctx == "liked" then
                 table.remove(entries, idx)
                 table.remove(items, idx)
-                mesg = has_track and track_mesg(current_track) or nil
+                mesg = current_track and track_mesg(current_track) or nil
                 if #items == 0 then return nil end
             else
-                entries[idx] = string.format("%2d. %s", idx, display_track(item))
+                get_playback()
+                for i = 1, #items do
+                    entries[i] = string.format("%2d. %s", i, display_track(items[i]))
+                end
             end
         elseif is_search_all then
             local st = item._stype
-            if st == "tracks" then view_actions(item, ctx, ctx_type, ctx_id, items, idx, entries)
+            if st == "tracks" then
+                view_actions(item, ctx, ctx_type, ctx_id, items, idx, entries)
+                get_playback()
+                for i = 1, #items do
+                    entries[i] = string.format("%2d. %s", i, display_track(items[i]))
+                end
             elseif st == "albums" then
                 local action = rofi_dmenu({"Open Album", "Save Album"}, {prompt=item.name or "Album", mesg=artist_names(item), custom=false, theme=THEME_SUB})
                 if action == "Save Album" then
@@ -1131,9 +1151,12 @@ local function view_browse(entries, items, mesg, ctx, ctx_type, ctx_id)
             elseif st == "artists" then
                 view_artist(item)
             elseif st == "playlists" then
-                local action = rofi_dmenu({"Open Playlist", "Save Playlist"}, {prompt=item.name or "Playlist", mesg=artist_names(item), custom=false, theme=THEME_SUB})
+                local action = rofi_dmenu({"Open Playlist", "Save Playlist", "Copy URL"}, {prompt=item.name or "Playlist", mesg=artist_names(item), custom=false, theme=THEME_SUB})
                 if action == "Save Playlist" then
                     rofi_message(do_save_playlist(item.id) and "Playlist saved" or "Failed to save playlist")
+                elseif action == "Copy URL" then
+                    os.execute("echo " .. shell_quote("https://open.spotify.com/playlist/" .. item.id) .. " | wl-copy 2>/dev/null")
+                    rofi_message("Copied URL")
                 elseif action == "Open Playlist" then
                 local tracks = api_get_playlist_tracks(item.id)
                 if tracks and #tracks > 0 then
@@ -1151,14 +1174,17 @@ local function view_browse(entries, items, mesg, ctx, ctx_type, ctx_id)
         elseif is_album_list then
             local do_open = true
             if ctx == "search-album" then
-                local action = rofi_dmenu({"Open Album", "Save Album"}, {prompt=item.name or "Album", mesg=artist_names(item), custom=false, theme=THEME_SUB})
+                local action = rofi_dmenu({"Open Album", "Save Album", "Copy URL"}, {prompt=item.name or "Album", mesg=artist_names(item), custom=false, theme=THEME_SUB})
                 if action == "Save Album" then
                     rofi_message(do_save_album(item.id) and "Album saved" or "Failed to save album")
                     do_open = false
+                elseif action == "Copy URL" then
+                    os.execute("echo " .. shell_quote("https://open.spotify.com/album/" .. item.id) .. " | wl-copy 2>/dev/null")
+                    rofi_message("Copied URL")
                 elseif action == "Open Album" then
                 end
             elseif ctx == "album-list" then
-                local action = rofi_dmenu({"Open Album", "Remove from Library"}, {prompt=item.name or "Album", mesg=artist_names(item), custom=false, theme=THEME_SUB})
+                local action = rofi_dmenu({"Open Album", "Remove from Library", "Copy URL"}, {prompt=item.name or "Album", mesg=artist_names(item), custom=false, theme=THEME_SUB})
                 if action == "Remove from Library" then
                     local token = get_token()
                     if token then
@@ -1171,6 +1197,9 @@ local function view_browse(entries, items, mesg, ctx, ctx_type, ctx_id)
                     end
                     do_open = false
                 elseif action == "Open Album" then
+                elseif action == "Copy URL" then
+                    os.execute("echo " .. shell_quote("https://open.spotify.com/album/" .. item.id) .. " | wl-copy 2>/dev/null")
+                    rofi_message("Copied URL")
                 end
             end
             if do_open then
@@ -1188,10 +1217,13 @@ local function view_browse(entries, items, mesg, ctx, ctx_type, ctx_id)
         elseif is_playlist_list then
             local do_open = true
             if ctx == "search-playlist" then
-                local action = rofi_dmenu({"Open Playlist", "Save Playlist"}, {prompt=item.name or "Playlist", mesg=artist_names(item), custom=false, theme=THEME_SUB})
+                local action = rofi_dmenu({"Open Playlist", "Save Playlist", "Copy URL"}, {prompt=item.name or "Playlist", mesg=artist_names(item), custom=false, theme=THEME_SUB})
                 if action == "Save Playlist" then
                     rofi_message(do_save_playlist(item.id) and "Playlist saved" or "Failed to save playlist")
                     do_open = false
+                elseif action == "Copy URL" then
+                    os.execute("echo " .. shell_quote("https://open.spotify.com/playlist/" .. item.id) .. " | wl-copy 2>/dev/null")
+                    rofi_message("Copied URL")
                 elseif action == "Open Playlist" then
                 end
             end
@@ -1237,7 +1269,10 @@ view_actions = function(item, ctx, ctx_type, ctx_id, all_items, cidx, entries)
             actions[1] = "Pause"
         elseif sel == "Play" then
             do_play(item, ctx, ctx_type, ctx_id, all_items, cidx)
-            inv_playback()
+            current_track = item
+            current_id = item.id
+            is_playing = true
+            last_playback = 0
             actions[1] = "Pause"
         elseif sel == "Pause" then
             os.execute("playerctl pause 2>/dev/null")
@@ -1711,15 +1746,24 @@ end
 -- VIEW: SYSTEM
 
 local function view_system()
-    local items = {"Keybinds", '<span foreground="#e0d8a4">Refresh Library</span>',
+    local cur_br = get_saved_bitrate()
+    local items = {"Keybinds", "Bitrate (" .. cur_br .. " kbps)",
+                   '<span foreground="#e0d8a4">Refresh Library</span>',
                    '<span foreground="#fab387">Restart Daemons</span>',
                    '<span foreground="#e78284">Kill Daemons</span>'}
     while true do
-        local sel = rofi_dmenu(items, {prompt="System", mesg="System", custom=false, use_menu=true, theme=THEME_SUB, markup=true})
+        local sel = rofi_dmenu(items, {prompt="System", mesg="Current bitrate: " .. cur_br .. " kbps", custom=false, use_menu=true, theme=THEME_SUB, markup=true})
         if not sel then break end
         local clean = sel:gsub("<[^>]+>", "")
         if clean == "Keybinds" then
-            rofi_message("Alt+Return  →  Current track actions\nAlt+Backspace  →  Go back\nAlt+Space  →  Main menu\nAlt+/  →  Search all")
+            rofi_message("Alt+Return  →  Current track actions\nAlt+Backspace  →  Go back / Main menu\nAlt+Space  →  Exit to main menu\nAlt+/  →  Search all\nReturn  →  Select\nEscape  →  Exit rofi")
+        elseif clean:match("^Bitrate") then
+            local chosen = rofi_dmenu({"96 kbps", "160 kbps", "320 kbps"},
+                {prompt="Bitrate", mesg="Current: " .. cur_br .. " kbps\nRestart daemons to apply", custom=false, theme=THEME_SUB})
+            if chosen then
+                local n = tonumber(chosen:match("(%d+)"))
+                if n then save_bitrate(n); cur_br = n; items[2] = "Bitrate (" .. n .. " kbps)" end
+            end
         elseif clean == "Refresh Library" then
             os.execute("notify-send -t 10000 --app-name=spotirofi 'Spotirofi' 'Refreshing library...' &")
             os.remove(LIKED_CACHE); os.remove(ALBUM_CACHE); os.remove(ARTIST_CACHE); os.remove(LIKED_IDS)
@@ -1728,7 +1772,7 @@ local function view_system()
         elseif clean == "Restart Daemons" then
             os.execute("pkill -x spotifyd 2>/dev/null"); os.execute("pkill -f 'spotirofi.*--daemon' 2>/dev/null"); os.execute("sleep 1")
             inv_playback()
-        os.execute("spotifyd --no-daemon --device-name spotirofi --backend pulseaudio --use-mpris --initial-volume " .. get_saved_volume() .. " > /dev/null 2>&1 &")
+        os.execute("spotifyd --no-daemon --device-name spotirofi --backend pulseaudio --use-mpris --initial-volume " .. get_saved_volume() .. " --bitrate " .. get_saved_bitrate() .. " > /dev/null 2>&1 &")
             os.execute("sleep 3")
             os.execute(HOME .. "/.config/rofi/scripts/spotirofi/spotirofi.lua --daemon &")
         elseif clean == "Kill Daemons" then
