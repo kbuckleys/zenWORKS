@@ -1182,6 +1182,7 @@ local function view_browse(entries, items, mesg, ctx, ctx_type, ctx_id)
 
         if is_track then
             local unliked = view_actions(item, ctx, ctx_type, ctx_id, items, idx, entries)
+            if seek_pending then return nil end
             if unliked and ctx == "liked" then
                 table.remove(entries, idx)
                 table.remove(items, idx)
@@ -1198,6 +1199,7 @@ local function view_browse(entries, items, mesg, ctx, ctx_type, ctx_id)
             local st = item._stype
             if st == "tracks" then
                 view_actions(item, ctx, ctx_type, ctx_id, items, idx, entries)
+                if seek_pending then return nil end
                 get_playback()
                 for i = 1, #items do
                     entries[i] = string.format("%2d. %s", i, display_track(items[i]))
@@ -1445,6 +1447,7 @@ view_artist = function(artist)
                             local te = {}
                             for i, t in ipairs(ad.tracks) do te[#te+1] = string.format("%2d. %s", i, display_track(t, true)) end
                             view_browse(te, ad.tracks, d.items[aidx].name .. " - " .. artist_names(d.items[aidx]), "album", "album", d.items[aidx].id)
+                            if seek_pending then return nil end
                         end
                     end
                 end
@@ -1486,7 +1489,10 @@ view_artist = function(artist)
                 while true do
                     local ridx = rofi_dmenu(ae, {prompt="Related to " .. artist.name, mesg=artist.name .. " - " .. #d.artists .. " related", custom=false, by_index=true, use_menu=true})
                     if not ridx then session_pop(); break end
-                    if ridx >= 1 and ridx <= #d.artists then view_artist(d.artists[ridx]) end
+                    if ridx >= 1 and ridx <= #d.artists then
+                        view_artist(d.artists[ridx])
+                        if seek_pending then return nil end
+                    end
                 end
             end
         elseif sel == "Follow Artist" or sel == "Unfollow Artist" then
@@ -1666,6 +1672,7 @@ local function view_playlists()
                     local te = {}
                     for i, t in ipairs(tracks) do te[#te+1] = string.format("%2d. %s", i, display_track(t)) end
                     view_browse(te, tracks, pl.name .. " - " .. #tracks .. " tracks", "playlist", "playlist", pl.id)
+                    if seek_pending then return nil end
                 end
                 goto pl_act
             elseif asel == "Rename Playlist" then
@@ -1721,6 +1728,7 @@ local function view_search(category)
                 entries[#entries+1] = string.format("%2d. %s", i, pfx .. (items[i].name or "Unknown"))
             end
             view_browse(entries, items, n .. " results for " .. query, "all", nil, nil)
+            if seek_pending then return nil end
         else
             local items = results[key]
             if not items or type(items) ~= "table" or #items == 0 then session_pop(); goto sr_loop end
@@ -1729,6 +1737,7 @@ local function view_search(category)
             local sctx = (category == "album" or category == "playlist") and "search-" .. category or category
             view_browse(entries, items, n .. " " .. key .. " for " .. query, sctx,
                         (category == "album" and "album" or category == "playlist" and "playlist" or nil), nil)
+            if seek_pending then return nil end
         end
         ::sr_loop::
     end
@@ -1754,6 +1763,7 @@ local function view_categories()
         local pe = {}
         for _, pl in ipairs(pls) do pe[#pe+1] = display_playlist(pl) end
         view_browse(pe, pls, cat.name .. " - " .. #pls .. " playlists", "playlist", "playlist", nil)
+        if seek_pending then return nil end
         ::cat_loop::
     end
 end
@@ -1831,7 +1841,7 @@ local function view_new_releases()
     for i, a in ipairs(albums) do entries[i] = display_album(a) end
     while true do
         local idx = rofi_dmenu(entries, {prompt="New Releases", mesg="New Releases - " .. #albums .. " albums", custom=false, by_index=true, use_menu=true})
-        if not idx then break end
+        if not idx then return end
         if idx >= 1 and idx <= #albums then
             local ad = api_get_album(albums[idx].id)
             if ad and ad.tracks and #ad.tracks > 0 then
@@ -1852,7 +1862,7 @@ local function view_made_for_you()
     for i, pl in ipairs(playlists) do entries[i] = display_playlist(pl) end
     while true do
         local idx = rofi_dmenu(entries, {prompt="Made For You", mesg="Made For You - " .. #playlists .. " playlists", custom=false, by_index=true, use_menu=true})
-        if not idx then break end
+        if not idx then return end
         if idx >= 1 and idx <= #playlists then
             local tracks = api_get_playlist_tracks(playlists[idx].id)
             if tracks and #tracks > 0 then
@@ -2031,6 +2041,7 @@ local function replay_session()
                             local te = {}
                             for i, t in ipairs(ad.tracks) do te[#te+1] = string.format("%2d. %s", i, display_track(t, true)) end
                             view_browse(te, ad.tracks, d.items[aidx].name .. " - " .. artist_names(d.items[aidx]), "album", "album", d.items[aidx].id)
+                            if seek_pending then return nil end
                         end
                     end
                 end
@@ -2066,7 +2077,10 @@ local function replay_session()
                 while true do
                     local ridx = rofi_dmenu(ae, {prompt="Related to " .. (s.artist_name or ""), mesg=(s.artist_name or "") .. " - " .. #d.artists .. " related", custom=false, by_index=true, use_menu=true})
                     if not ridx then break end
-                    if ridx >= 1 and ridx <= #d.artists then view_artist(d.artists[ridx]) end
+                    if ridx >= 1 and ridx <= #d.artists then
+                        view_artist(d.artists[ridx])
+                        if seek_pending then return nil end
+                    end
                 end
             end
         elseif v == "recommendations" and s.track_id then
@@ -2134,6 +2148,7 @@ local function replay_session()
                     local te = {}
                     for i, t in ipairs(tracks) do te[#te+1] = string.format("%2d. %s", i, display_track(t)) end
                     view_browse(te, tracks, pl.name .. " - " .. #tracks .. " tracks", "playlist", "playlist", pl.id)
+                    if seek_pending then return nil end
                 end
                 goto rp_act
             elseif asel == "Rename Playlist" then
