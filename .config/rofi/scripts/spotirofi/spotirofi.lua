@@ -229,13 +229,15 @@ end
 
 -- ROFI
 
-local search_pending = false
-local main_pending   = false
+local search_pending  = false
+local main_pending    = false
+local liked_pending   = false
+local queue_pending   = false
 local view_actions, view_artist, view_lyrics, view_add_pl
 local get_playback
 
 local function rofi_dmenu(entries, opts)
-    if search_pending or main_pending then return nil end
+    if search_pending or main_pending or liked_pending or queue_pending then return nil end
     opts = opts or {}
     local prompt   = opts.prompt or ""
     local mesg     = opts.mesg
@@ -249,7 +251,9 @@ local function rofi_dmenu(entries, opts)
         local args = {"rofi","-dmenu","-theme",theme,"-p",prompt,"-i",
                       "-kb-custom-1","Alt+BackSpace","-kb-custom-2","Alt+space",
                       "-kb-custom-3","Alt+slash","-kb-custom-4","Alt+Return",
-                      "-kb-custom-5","Alt+KP_Enter"}
+                      "-kb-custom-5","Alt+KP_Enter",
+                      "-kb-custom-6","Alt+l",
+                      "-kb-custom-7","Alt+q"}
         if opts.custom == false then args[#args+1] = "-no-custom" end
         if markup then args[#args+1] = "-markup-rows"; args[#args+1] = "-markup" end
         if by_index then args[#args+1] = "-format"; args[#args+1] = "i" end
@@ -280,6 +284,8 @@ local function rofi_dmenu(entries, opts)
         if exit_code == 10 then session_pop(); return nil end
         if exit_code == 11 then session_clear(); main_pending = true; return nil end
         if exit_code == 12 then session_clear(); search_pending = true; return nil end
+        if exit_code == 15 then session_clear(); liked_pending = true; return nil end
+        if exit_code == 16 then session_clear(); queue_pending = true; return nil end
         if exit_code == 13 or exit_code == 14 then
             last_playback = 0
             get_playback()
@@ -669,13 +675,13 @@ local function display_track(item, hide_artist)
     local p  = item.id == current_id and (is_playing and "\u{f04b} " or "\u{f04c} ") or ""
     local l  = liked[item.id] and "\u{f05d}  " or ""
     local e  = item.explicit and "\u{f071} " or ""
-    local txt = p .. l .. e .. (item.name or "Unknown") .. (hide_artist and "" or "  " .. an)
+    local txt = p .. l .. e .. (item.name or "Unknown") .. (hide_artist and "" or " - " .. an)
     if item.id == current_id then txt = "<span foreground=\"#b6e0a4\">" .. txt .. "</span>" end
     return txt
 end
 
 local function display_album(item)
-    return (item.name or "Unknown") .. "  " .. artist_names(item)
+    return (item.name or "Unknown") .. " - " .. artist_names(item)
 end
 
 local function display_artist(item)
@@ -702,7 +708,7 @@ local function track_mesg(item)
     local p = item.id == current_id and (is_playing and "\u{f04b}" or "\u{f04c}") or ""
     local l = liked[item.id] and "\u{f05d} " or ""
     local e = item.explicit and " \u{f071}" or ""
-    return p .. "  " .. (item.name or "") .. "  " .. artist_names(item) .. "  " .. l .. e
+    return p .. "  " .. (item.name or "") .. " - " .. artist_names(item) .. "  " .. l .. e
 end
 
 local function seek_mesg(item)
@@ -1756,13 +1762,28 @@ local function view_system()
         if not sel then break end
         local clean = sel:gsub("<[^>]+>", "")
         if clean == "Keybinds" then
-            rofi_message("Alt+Return  →  Current track actions\nAlt+Backspace  →  Go back / Main menu\nAlt+Space  →  Exit to main menu\nAlt+/  →  Search all\nReturn  →  Select\nEscape  →  Exit rofi")
+            rofi_message("Alt+Return  →  Current track actions\nAlt+Backspace  →  Go back / Main menu\nAlt+Space  →  Exit to main menu\nAlt+/  →  Search all\nAlt+l  →  Liked tracks\nAlt+q  →  Your queue\nReturn  →  Select\nEscape  →  Close")
         elseif clean:match("^Bitrate") then
-            local chosen = rofi_dmenu({"96 kbps", "160 kbps", "320 kbps"},
-                {prompt="Bitrate", mesg="Current: " .. cur_br .. " kbps\nRestart daemons to apply", custom=false, theme=THEME_SUB})
+            local br_opts = {}
+            for _, v in ipairs({96, 160, 320}) do
+                if v == cur_br then
+                    table.insert(br_opts, "<span foreground=\"#b6e0a4\">"
+                        .. "\u{f00c}  " .. v .. " kbps</span>")
+                else
+                    local label = v .. " kbps"
+                    if v == 160 then label = label .. " (default)" end
+                    table.insert(br_opts, label)
+                end
+            end
+            local chosen = rofi_dmenu(br_opts,
+                {prompt="Bitrate", mesg="Current: " .. cur_br .. " kbps\nRestart daemons to apply", custom=false, markup=true, theme=THEME_SUB})
             if chosen then
                 local n = tonumber(chosen:match("(%d+)"))
-                if n then save_bitrate(n); cur_br = n; items[2] = "Bitrate (" .. n .. " kbps)" end
+                if n then
+                    save_bitrate(n); cur_br = n
+                    items[2] = "Bitrate (" .. n .. " kbps)"
+                    os.execute("notify-send -t 3000 --app-name=spotirofi 'Spotirofi' '" .. n .. " kbps — restart daemons to apply' &")
+                end
             end
         elseif clean == "Refresh Library" then
             os.execute("notify-send -t 10000 --app-name=spotirofi 'Spotirofi' 'Refreshing library...' &")
@@ -2043,6 +2064,8 @@ local function main()
 
         if main_pending   then main_pending   = false; goto m1 end
         if search_pending then search_pending = false; session_push({view="search", query="all"}); view_search("all"); goto m1 end
+        if liked_pending  then liked_pending  = false; view_liked_tracks(); goto m1 end
+        if queue_pending  then queue_pending  = false; view_your_queue(); goto m1 end
         if not sel or sel == "" then goto m1 end
 
         if      sel == "Search" then
