@@ -161,6 +161,17 @@ local function disk_set(path, data)
     write_file(path, json.encode({data=data, fetched_at=os.time()}))
 end
 local function disk_bust(path) os.remove(path) end
+local function cache_exists(path)
+    local f = io.open(path)
+    if f then f:close(); return true end
+    return false
+end
+local function cache_stale(path)
+    local raw = read_file(path)
+    if not raw then return true end
+    local d = safe_decode(raw)
+    return not d or not d.fetched_at or os.time() - d.fetched_at >= CACHE_TTL
+end
 local function cached_fetch(key, disk_path, ttl, fetch_fn)
     local v = mem_get(key)
     if v ~= nil then return v end
@@ -508,7 +519,7 @@ end
 local function ensure_spotifyd()
     local pid = trim(shell("pgrep -x spotifyd 2>/dev/null") or "")
     if pid == "" then
-            os.execute("spotifyd --no-daemon --device-name spotirofi --backend pulseaudio --use-mpris --initial-volume " .. get_saved_volume() .. " --bitrate " .. get_saved_bitrate() .. " > /dev/null 2>&1 &")
+        os.execute("spotifyd --no-daemon --device-name spotirofi --backend pulseaudio --use-mpris --initial-volume " .. get_saved_volume() .. " --bitrate " .. get_saved_bitrate() .. " > /dev/null 2>&1 &")
         for _ = 1, 15 do
             pid = trim(shell("pgrep -x spotifyd 2>/dev/null") or "")
             if pid ~= "" then break end
@@ -521,8 +532,6 @@ end
 
 -- DATA CACHE
 
-local rate_limit_shown = false
-
 local function api_get(path, params)
     local token = get_token()
     if not token then return nil end
@@ -532,30 +541,23 @@ local function api_get(path, params)
     local r = shell("curl -s --max-time 5 -D " .. shell_quote(hdr) .. " -w '\\n%{http_code}' -H 'Authorization: Bearer " .. token .. "' " .. shell_quote(url))
     local status = tonumber(string.match(r or "", "\n(%d+)$")) or 0
     local body = string.match(r or "", "^(.-)\n%d+$") or r or ""
-    local function read_retry_after()
+    if status == 429 then
         local hf = io.open(hdr, "r")
-        if not hf then return "30" end
-        local headers = hf:read("*a"); hf:close()
-        return string.match(headers, "[Rr]etry%-[Aa]fter:%s*(%d+)") or "30"
-    end
-    if status == 429 and not rate_limit_shown then
-        rate_limit_shown = true
-        local secs = read_retry_after()
+        local headers = hf and hf:read("*a") or ""
+        if hf then hf:close() end
+        local secs = string.match(headers, "[Rr]etry%-[Aa]fter:%s*(%d+)") or "30"
         os.remove(hdr)
         write_file("/tmp/spotirofi_rate_cooldown", os.time() + tonumber(secs) + 30)
         rofi_message("Spotify API rate limit reached (429). Retry after " .. secs .. "s.")
         os.exit(0)
     end
     os.remove(hdr)
-    if status == 401 and not rate_limit_shown then
-        rate_limit_shown = true
+    if status == 401 then
         rofi_message("Spotify token expired (401). Restart rofi to refresh.")
         os.exit(0)
     end
     if status >= 400 then return nil end
-    local d = safe_decode(body)
-    rate_limit_shown = false
-    return d
+    return safe_decode(body)
 end
 
 local function load_liked_tracks_full()
@@ -590,7 +592,7 @@ local function load_liked_tracks()
             return c.tracks
         end
     end
-     local tracks = load_liked_tracks_full()
+    local tracks = load_liked_tracks_full()
     if #tracks > 0 then
         ensure_cache()
         write_file(LIKED_CACHE, json.encode({tracks=tracks, fetched_at=os.time()}))
@@ -1216,10 +1218,12 @@ local function view_browse(entries, items, mesg, ctx, ctx_type, ctx_id)
                         local te = {}
                         for i, t in ipairs(ad.tracks) do te[#te+1] = string.format("%2d. %s", i, display_track(t, true)) end
                         view_browse(te, ad.tracks, item.name .. " - " .. artist_names(item), "album", "album", item.id)
+                        if seek_pending then return nil end
                     else rofi_message("Failed to load album") end
                 end
             elseif st == "artists" then
                 view_artist(item)
+                if seek_pending then return nil end
             elseif st == "playlists" then
                 local action = rofi_dmenu({"Open Playlist", "Save Playlist", "Copy URL"}, {prompt=item.name or "Playlist", mesg=artist_names(item), custom=false, theme=THEME_SUB})
                 if action == "Save Playlist" then
@@ -1234,6 +1238,7 @@ local function view_browse(entries, items, mesg, ctx, ctx_type, ctx_id)
                     local te = {}
                     for i, t in ipairs(tracks) do te[#te+1] = string.format("%2d. %s", i, display_track(t)) end
                     view_browse(te, tracks, item.name .. " - " .. #tracks .. " tracks", "playlist", "playlist", item.id)
+                    if seek_pending then return nil end
                 else rofi_message("Failed to load playlist") end
                 end
             end
@@ -1279,10 +1284,12 @@ local function view_browse(entries, items, mesg, ctx, ctx_type, ctx_id)
                     local te = {}
                     for i, t in ipairs(ad.tracks) do te[#te+1] = string.format("%2d. %s", i, display_track(t, true)) end
                     view_browse(te, ad.tracks, item.name .. " - " .. artist_names(item), "album", "album", item.id)
+                    if seek_pending then return nil end
                 else rofi_message("Failed to load album") end
             end
         elseif is_artist_list then
             view_artist(item)
+            if seek_pending then return nil end
             entries[idx] = string.format("%2d. %s", idx, display_artist(item))
         elseif is_playlist_list then
             local do_open = true
@@ -1304,6 +1311,7 @@ local function view_browse(entries, items, mesg, ctx, ctx_type, ctx_id)
                     local te = {}
                     for i, t in ipairs(tracks) do te[#te+1] = string.format("%2d. %s", i, display_track(t)) end
                     view_browse(te, tracks, item.name .. " - " .. #tracks .. " tracks", "playlist", "playlist", item.id)
+                    if seek_pending then return nil end
                 else rofi_message("Failed to load playlist") end
             end
         end
@@ -1970,7 +1978,7 @@ local function view_system()
         elseif clean == "Restart Daemons" then
             os.execute("pkill -x spotifyd 2>/dev/null"); os.execute("pkill -f 'spotirofi.*--daemon' 2>/dev/null"); os.execute("sleep 1")
             inv_playback()
-        os.execute("spotifyd --no-daemon --device-name spotirofi --backend pulseaudio --use-mpris --initial-volume " .. get_saved_volume() .. " --bitrate " .. get_saved_bitrate() .. " > /dev/null 2>&1 &")
+            os.execute("spotifyd --no-daemon --device-name spotirofi --backend pulseaudio --use-mpris --initial-volume " .. get_saved_volume() .. " --bitrate " .. get_saved_bitrate() .. " > /dev/null 2>&1 &")
             os.execute("sleep 3")
             os.execute(HOME .. "/.config/rofi/scripts/spotirofi/spotirofi.lua --daemon &")
         elseif clean == "Kill Daemons" then
@@ -2212,13 +2220,6 @@ local function main()
     ensure_spotifyd()
     load_queue()
     populate_liked_ids()
-    local function cache_exists(path) local f = io.open(path); if f then f:close(); return true end; return false end
-    local function cache_stale(path)
-        local raw = read_file(path)
-        if not raw then return true end
-        local d = safe_decode(raw)
-        return not d or not d.fetched_at or os.time() - d.fetched_at >= CACHE_TTL
-    end
     if not (cache_exists(LIKED_CACHE) and cache_exists(ALBUM_CACHE) and cache_exists(ARTIST_CACHE)) then
         os.execute("notify-send -t 10000 --app-name=spotirofi 'Spotirofi' 'First run: building library...' &")
         load_liked_tracks()
