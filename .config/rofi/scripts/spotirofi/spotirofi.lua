@@ -47,6 +47,7 @@ local EXIT_VOLUME = 17
 local EXIT_TRACK = 18
 local EXIT_SEEK = 19
 local EXIT_ART = 20
+local SEP = " \u{F01D8} "
 local liked = {}  -- set of liked track IDs
 
 local current_track = nil
@@ -729,13 +730,13 @@ local function display_track(item, hide_artist)
     local p  = item.id == current_id and (is_playing and "\u{f04b} " or "\u{f04c} ") or ""
     local l  = liked[item.id] and "\u{f05d}  " or ""
     local e  = item.explicit and "\u{f071} " or ""
-    local txt = p .. l .. e .. (item.name or "Unknown") .. (hide_artist and "" or " - " .. an)
+    local txt = p .. l .. e .. (item.name or "Unknown") .. (hide_artist and "" or SEP .. an)
     if item.id == current_id then txt = "<span foreground=\"#b6e0a4\">" .. txt .. "</span>" end
     return txt
 end
 
 local function display_album(item)
-    return (item.name or "Unknown") .. " - " .. artist_names(item)
+    return (item.name or "Unknown") .. SEP .. artist_names(item)
 end
 
 local function display_artist(item)
@@ -762,7 +763,7 @@ local function track_mesg(item)
     local p = item.id == current_id and (is_playing and "\u{f04b}" or "\u{f04c}") or ""
     local l = liked[item.id] and "\u{f05d} " or ""
     local e = item.explicit and " \u{f071}" or ""
-    return p .. "  " .. (item.name or "") .. " - " .. artist_names(item) .. "  " .. l .. e
+    return p .. "  " .. (item.name or "") .. SEP .. artist_names(item) .. "  " .. l .. e
 end
 
 local function seek_mesg(item)
@@ -1248,7 +1249,7 @@ local function view_browse(entries, items, mesg, ctx, ctx_type, ctx_id)
                         session_push({view="album", album_id=item.id})
                         local te = {}
                         for i, t in ipairs(ad.tracks) do te[#te+1] = string.format("%2d. %s", i, display_track(t, true)) end
-                        view_browse(te, ad.tracks, item.name .. " - " .. artist_names(item), "album", "album", item.id)
+                        view_browse(te, ad.tracks, item.name .. SEP .. artist_names(item), "album", "album", item.id)
                         if seek_pending then return end
                     else rofi_message("Failed to load album") end
                 end
@@ -1268,12 +1269,12 @@ local function view_browse(entries, items, mesg, ctx, ctx_type, ctx_id)
                     session_push({view="playlist", playlist_id=item.id})
                     local te = {}
                     for i, t in ipairs(tracks) do te[#te+1] = string.format("%2d. %s", i, display_track(t)) end
-                    view_browse(te, tracks, item.name .. " - " .. #tracks .. " tracks", "playlist", "playlist", item.id)
+                    view_browse(te, tracks, item.name .. SEP .. #tracks .. " tracks", "playlist", "playlist", item.id)
                     if seek_pending then return end
                 else rofi_message("Failed to load playlist") end
                 end
             end
-            local pf = ""
+        local pf = ""
             if st=="tracks" then pf="\u{F0387} " elseif st=="albums" then pf="\u{F0025} "
             elseif st=="artists" then pf="\u{F415} " elseif st=="playlists" then pf="\u{F0411} " end
             entries[idx] = string.format("%2d. %s", idx, pf .. (item.name or "Unknown"))
@@ -1312,7 +1313,7 @@ local function view_browse(entries, items, mesg, ctx, ctx_type, ctx_id)
                     session_push({view="album", album_id=item.id})
                     local te = {}
                     for i, t in ipairs(ad.tracks) do te[#te+1] = string.format("%2d. %s", i, display_track(t, true)) end
-                    view_browse(te, ad.tracks, item.name .. " - " .. artist_names(item), "album", "album", item.id)
+                    view_browse(te, ad.tracks, item.name .. SEP .. artist_names(item), "album", "album", item.id)
                     if seek_pending then return end
                 else rofi_message("Failed to load album") end
             end
@@ -1338,7 +1339,7 @@ local function view_browse(entries, items, mesg, ctx, ctx_type, ctx_id)
                     session_push({view="playlist", playlist_id=item.id})
                     local te = {}
                     for i, t in ipairs(tracks) do te[#te+1] = string.format("%2d. %s", i, display_track(t)) end
-                    view_browse(te, tracks, item.name .. " - " .. #tracks .. " tracks", "playlist", "playlist", item.id)
+                    view_browse(te, tracks, item.name .. SEP .. #tracks .. " tracks", "playlist", "playlist", item.id)
                     if seek_pending then return end
                 else rofi_message("Failed to load playlist") end
             end
@@ -1357,7 +1358,7 @@ view_art = function(item)
     local art_url = item.album.images[1].url
     local art_path = ensure_art(art_url)
     if not art_path then rofi_message("No album art available"); return end
-    local mesg = (item.name or "Unknown") .. " - " .. artist_names(item)
+    local mesg = (item.name or "Unknown") .. SEP .. artist_names(item)
     local entry_tf = os.tmpname()
     local ef = io.open(entry_tf, "w")
     if ef then
@@ -1375,7 +1376,6 @@ end
 -- VIEW: TRACK ACTIONS
 
 local view_seek  -- forward declaration
-local view_art   -- forward declaration
 
 view_actions = function(item, ctx, ctx_type, ctx_id, all_items, cidx, entries)
     session_push({view="action", track_id=item.id, track_name=item.name or "",
@@ -1431,7 +1431,7 @@ view_actions = function(item, ctx, ctx_type, ctx_id, all_items, cidx, entries)
                     session_push({view="album", album_id=album.id})
                     local te = {}
                     for i, t in ipairs(ad.tracks) do te[#te+1] = string.format("%2d. %s", i, display_track(t, true)) end
-                    view_browse(te, ad.tracks, album.name .. " - " .. artist_names(album), "album", "album", album.id)
+                    view_browse(te, ad.tracks, album.name .. SEP .. artist_names(album), "album", "album", album.id)
                 end
             end
         elseif sel == "Go to Artist" then
@@ -1479,7 +1479,7 @@ local function fetch_artist_albums(artist_id, artist_name)
     if not d or not d.items then return nil end
     local ae = {}
     for i, a in ipairs(d.items) do ae[i] = display_album(a) end
-    return d.items, ae, (artist_name or "") .. " - " .. #d.items .. " albums"
+    return d.items, ae, (artist_name or "") .. SEP .. #d.items .. " albums"
 end
 
 local function fetch_liked_by_artist(artist_id, artist_name)
@@ -1489,7 +1489,7 @@ local function fetch_liked_by_artist(artist_id, artist_name)
     table.sort(tracks, function(a,b) return (a.name or ""):lower() < (b.name or ""):lower() end)
     local te = {}
     for i, t in ipairs(tracks) do te[i] = string.format("%2d. %s", i, display_track(t, true)) end
-    return tracks, te, (artist_name or "") .. " - " .. #tracks .. " liked tracks"
+    return tracks, te, (artist_name or "") .. SEP .. #tracks .. " liked tracks"
 end
 
 local function fetch_artist_top_tracks(artist_id, artist_name)
@@ -1497,7 +1497,7 @@ local function fetch_artist_top_tracks(artist_id, artist_name)
     if not d or not d.tracks or #d.tracks == 0 then return nil end
     local te = {}
     for i, t in ipairs(d.tracks) do te[i] = string.format("%2d. %s", i, display_track(t, true)) end
-    return d.tracks, te, (artist_name or "") .. " - " .. #d.tracks .. " top tracks"
+    return d.tracks, te, (artist_name or "") .. SEP .. #d.tracks .. " top tracks"
 end
 
 local function fetch_related_artists(artist_id, artist_name)
@@ -1505,7 +1505,7 @@ local function fetch_related_artists(artist_id, artist_name)
     if not d or not d.artists or #d.artists == 0 then return nil end
     local ae = {}
     for i, a in ipairs(d.artists) do ae[i] = display_artist(a) end
-    return d.artists, ae, (artist_name or "") .. " - " .. #d.artists .. " related"
+    return d.artists, ae, (artist_name or "") .. SEP .. #d.artists .. " related"
 end
 
 local function fetch_category_playlists(category_id, category_name)
@@ -1513,7 +1513,7 @@ local function fetch_category_playlists(category_id, category_name)
     if not pls then return nil end
     local pe = {}
     for _, pl in ipairs(pls) do pe[#pe+1] = display_playlist(pl) end
-    return pls, pe, (category_name or "") .. " - " .. #pls .. " playlists"
+    return pls, pe, (category_name or "") .. SEP .. #pls .. " playlists"
 end
 
 local function format_search_results(results, category, query)
@@ -1555,7 +1555,7 @@ view_artist = function(artist)
                      is_followed and "Unfollow Artist" or "Follow Artist"}
 
     while true do
-        local sel = rofi_dmenu(actions, {prompt=artist.name or "Artist", mesg=(artist.name or "") .. " - Artist Options", sel=0, custom=false, use_menu=true})
+        local sel = rofi_dmenu(actions, {prompt=artist.name or "Artist", mesg=(artist.name or "") .. SEP .. "Artist Options", sel=0, custom=false, use_menu=true})
         if not sel then
             if seek_pending or jump_to_track_pending then session_pop() end
             return
@@ -1575,7 +1575,7 @@ view_artist = function(artist)
                             session_push({view="album", album_id=items[aidx].id})
                             local te = {}
                             for i, t in ipairs(ad.tracks) do te[#te+1] = string.format("%2d. %s", i, display_track(t, true)) end
-                            view_browse(te, ad.tracks, items[aidx].name .. " - " .. artist_names(items[aidx]), "album", "album", items[aidx].id)
+                            view_browse(te, ad.tracks, items[aidx].name .. SEP .. artist_names(items[aidx]), "album", "album", items[aidx].id)
                             if seek_pending then return end
                         end
                     end
@@ -1762,7 +1762,7 @@ local function view_playlists()
     for i, p in ipairs(pls) do entries[#entries+1] = display_playlist(p) end
 
     while true do
-        local idx = rofi_dmenu(entries, {prompt="Playlists", mesg="Playlists - " .. #pls, custom=false, by_index=true, use_menu=true})
+        local idx = rofi_dmenu(entries, {prompt="Playlists", mesg="Playlists" .. SEP .. #pls, custom=false, by_index=true, use_menu=true})
         if not idx then
             if seek_pending or jump_to_track_pending then session_pop() end
             return
@@ -1793,7 +1793,7 @@ local function view_playlists()
                     session_push({view="playlist", playlist_id=pl.id})
                     local te = {}
                     for i, t in ipairs(tracks) do te[#te+1] = string.format("%2d. %s", i, display_track(t)) end
-                    view_browse(te, tracks, pl.name .. " - " .. #tracks .. " tracks", "playlist", "playlist", pl.id)
+                    view_browse(te, tracks, pl.name .. SEP .. #tracks .. " tracks", "playlist", "playlist", pl.id)
                     if seek_pending then session_pop(); return end
                 end
                 goto pl_act
@@ -1853,7 +1853,7 @@ local function view_categories()
     for _, c in ipairs(cats) do ce[#ce+1] = c.name end
 
     while true do
-        local idx = rofi_dmenu(ce, {prompt="Categories", mesg="Categories - " .. #cats, custom=false, by_index=true, use_menu=true})
+        local idx = rofi_dmenu(ce, {prompt="Categories", mesg="Categories" .. SEP .. #cats, custom=false, by_index=true, use_menu=true})
         if not idx then
             if seek_pending or jump_to_track_pending then session_pop() end
             return
@@ -1877,7 +1877,7 @@ local function view_top_tracks()
     session_push({view="top-tracks"})
     local entries = {}
     for i, t in ipairs(tracks) do entries[i] = string.format("%2d. %s", i, display_track(t)) end
-    view_browse(entries, tracks, "Top Tracks - " .. #tracks .. " tracks", "top-tracks", nil, nil)
+    view_browse(entries, tracks, "Top Tracks" .. SEP .. #tracks .. " tracks", "top-tracks", nil, nil)
     if seek_pending then session_pop() end
 end
 
@@ -1887,7 +1887,7 @@ local function view_liked_tracks()
     session_push({view="liked"})
     local entries = {}
     for i, t in ipairs(tracks) do entries[i] = string.format("%2d. %s", i, display_track(t)) end
-    view_browse(entries, tracks, "Liked Tracks - " .. #tracks .. " tracks", "liked", nil, nil)
+    view_browse(entries, tracks, "Liked Tracks" .. SEP .. #tracks .. " tracks", "liked", nil, nil)
     if seek_pending then session_pop() end
 end
 
@@ -1897,7 +1897,7 @@ local function view_saved_albums()
     session_push({view="saved-albums"})
     local entries = {}
     for i, a in ipairs(al) do entries[i] = display_album(a) end
-    view_browse(entries, al, "Saved Albums - " .. #al .. " albums", "album-list", "album", nil)
+    view_browse(entries, al, "Saved Albums" .. SEP .. #al .. " albums", "album-list", "album", nil)
     if seek_pending then session_pop() end
 end
 
@@ -1907,7 +1907,7 @@ local function view_followed_artists()
     session_push({view="followed-artists"})
     local entries = {}
     for i, a in ipairs(ar) do entries[i] = display_artist(a) end
-    view_browse(entries, ar, "Followed Artists - " .. #ar .. " artists", "artist-list", nil, nil)
+    view_browse(entries, ar, "Followed Artists" .. SEP .. #ar .. " artists", "artist-list", nil, nil)
     if seek_pending then session_pop() end
 end
 
@@ -1917,7 +1917,7 @@ local function view_weekly()
     session_push({view="discover-weekly"})
     local entries = {}
     for i, t in ipairs(tracks) do entries[i] = string.format("%2d. %s", i, display_track(t)) end
-    view_browse(entries, tracks, "Discover Weekly - " .. #tracks .. " tracks", "discover-weekly", nil, nil)
+    view_browse(entries, tracks, "Discover Weekly" .. SEP .. #tracks .. " tracks", "discover-weekly", nil, nil)
     if seek_pending then session_pop() end
 end
 
@@ -1927,7 +1927,7 @@ local function view_release_radar()
     session_push({view="release-radar"})
     local entries = {}
     for i, t in ipairs(tracks) do entries[i] = string.format("%2d. %s", i, display_track(t)) end
-    view_browse(entries, tracks, "Release Radar - " .. #tracks .. " tracks", "release-radar", nil, nil)
+    view_browse(entries, tracks, "Release Radar" .. SEP .. #tracks .. " tracks", "release-radar", nil, nil)
     if seek_pending then session_pop() end
 end
 
@@ -1937,7 +1937,7 @@ local function view_new_music_friday()
     session_push({view="new-music-friday"})
     local entries = {}
     for i, t in ipairs(tracks) do entries[i] = string.format("%2d. %s", i, display_track(t)) end
-    view_browse(entries, tracks, "New Music Friday - " .. #tracks .. " tracks", "new-music-friday", nil, nil)
+    view_browse(entries, tracks, "New Music Friday" .. SEP .. #tracks .. " tracks", "new-music-friday", nil, nil)
     if seek_pending then session_pop() end
 end
 
@@ -1948,7 +1948,7 @@ local function view_new_releases()
     local entries = {}
     for i, a in ipairs(albums) do entries[i] = display_album(a) end
     while true do
-        local idx = rofi_dmenu(entries, {prompt="New Releases", mesg="New Releases - " .. #albums .. " albums", custom=false, by_index=true, use_menu=true})
+        local idx = rofi_dmenu(entries, {prompt="New Releases", mesg="New Releases" .. SEP .. #albums .. " albums", custom=false, by_index=true, use_menu=true})
         if not idx then
             if seek_pending or jump_to_track_pending then session_pop() end
             return
@@ -1959,7 +1959,7 @@ local function view_new_releases()
                 session_push({view="album", album_id=albums[idx].id})
                 local te = {}
                 for i, t in ipairs(ad.tracks) do te[#te+1] = string.format("%2d. %s", i, display_track(t, true)) end
-                view_browse(te, ad.tracks, albums[idx].name .. " - " .. artist_names(albums[idx]), "album", "album", albums[idx].id)
+                view_browse(te, ad.tracks, albums[idx].name .. SEP .. artist_names(albums[idx]), "album", "album", albums[idx].id)
                 if seek_pending then session_pop(); return end
             end
         end
@@ -1973,7 +1973,7 @@ local function view_made_for_you()
     local entries = {}
     for i, pl in ipairs(playlists) do entries[i] = display_playlist(pl) end
     while true do
-        local idx = rofi_dmenu(entries, {prompt="Made For You", mesg="Made For You - " .. #playlists .. " playlists", custom=false, by_index=true, use_menu=true})
+        local idx = rofi_dmenu(entries, {prompt="Made For You", mesg="Made For You" .. SEP .. #playlists .. " playlists", custom=false, by_index=true, use_menu=true})
         if not idx then
             if seek_pending or jump_to_track_pending then session_pop() end
             return
@@ -1984,7 +1984,7 @@ local function view_made_for_you()
                 session_push({view="playlist", playlist_id=playlists[idx].id})
                 local te = {}
                 for i, t in ipairs(tracks) do te[#te+1] = string.format("%2d. %s", i, display_track(t)) end
-                view_browse(te, tracks, playlists[idx].name .. " - " .. #tracks .. " tracks", "playlist", "playlist", playlists[idx].id)
+                view_browse(te, tracks, playlists[idx].name .. SEP .. #tracks .. " tracks", "playlist", "playlist", playlists[idx].id)
                 if seek_pending then session_pop(); return end
             end
         end
@@ -2006,7 +2006,7 @@ local function view_your_queue()
     local entries = {}
     for i, t in ipairs(tracks) do entries[i] = string.format("%2d. %s", i, display_track(t)) end
     local user_q = d.queue and #d.queue or 0
-    local mesg = "Your Queue - " .. user_q .. " tracks"
+    local mesg = "Your Queue" .. SEP .. user_q .. " tracks"
     if user_q > 0 then mesg = mesg .. " (may include Spotify suggestions)" end
     view_browse(entries, tracks, mesg, "your-queue", nil, nil)
     if seek_pending then session_pop() end
@@ -2220,7 +2220,7 @@ local function replay_session()
                         if ad and ad.tracks and #ad.tracks > 0 then
                             local te = {}
                             for i, t in ipairs(ad.tracks) do te[#te+1] = string.format("%2d. %s", i, display_track(t, true)) end
-                            view_browse(te, ad.tracks, items[aidx].name .. " - " .. artist_names(items[aidx]), "album", "album", items[aidx].id)
+                            view_browse(te, ad.tracks, items[aidx].name .. SEP .. artist_names(items[aidx]), "album", "album", items[aidx].id)
                             if seek_pending then return end
                         end
                     end
@@ -2279,7 +2279,7 @@ local function replay_session()
                 if tracks then
                     local te = {}
                     for i, t in ipairs(tracks) do te[#te+1] = string.format("%2d. %s", i, display_track(t)) end
-                    view_browse(te, tracks, pl.name .. " - " .. #tracks .. " tracks", "playlist", "playlist", pl.id)
+                    view_browse(te, tracks, pl.name .. SEP .. #tracks .. " tracks", "playlist", "playlist", pl.id)
                     if seek_pending then return end
                 end
                 goto rp_act
