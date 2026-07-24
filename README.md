@@ -1,6 +1,8 @@
 <img width="1686" height="323" alt="zenworks" src="https://github.com/user-attachments/assets/b5ce90c4-8ec2-489c-8f47-1fc84abc154b" />
 
-<h3>This is my dotfile repo for all to use, and for my own convenience.</h3>
+<h3><p align="center">
+My dotfile repo for all to use, and for my own convenience
+</p></h3>
 
 ---
 
