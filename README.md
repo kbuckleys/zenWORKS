@@ -1,4 +1,7 @@
-<img width="1686" height="323" alt="zenworks" src="https://github.com/user-attachments/assets/b5ce90c4-8ec2-489c-8f47-1fc84abc154b" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/b5ce90c4-8ec2-489c-8f47-1fc84abc154b">
+  <img src="image-light.png" alt="">
+</picture>
 
 <h3><p align="center">
 My dotfile repo for all to use, and for my own convenience
